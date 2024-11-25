@@ -41,26 +41,19 @@ class Solver {
 
     private fun getMoves(state: SolverState, carIndex: Int): List<SolverState> {
         val car = state.activeCars[carIndex]
-        when (state.board[car.position.row, car.position.column]) {
+        return when (state.board[car.position.row, car.position.column]) {
             is Tile.Empty -> throw IllegalStateException("Car is not on a track")
             is Tile.EndingTrack -> throw IllegalStateException("Car is on an ending track")
-            is Tile.HorizontalTrack -> when (car.position.direction) {
+            is Tile.Obstacle -> throw IllegalStateException("Car is on an obstacle")
+            is Tile.HorizontalTrack -> when (car.direction) {
                 Direction.LEFT -> {
                     val newPosition = car.position.copy(column = car.position.column - 1)
-                    return if (newPosition.column >= 0) {
-                        state.moveCar(carIndex, newPosition)
-                    } else {
-                        emptyList()
-                    }
+                    state.moveCar(carIndex, newPosition)
                 }
 
                 Direction.RIGHT -> {
                     val newPosition = car.position.copy(column = car.position.column + 1)
-                    return if (newPosition.column < state.board.columns) {
-                        state.moveCar(carIndex, newPosition)
-                    } else {
-                        emptyList()
-                    }
+                    state.moveCar(carIndex, newPosition)
                 }
 
                 Direction.UP, Direction.DOWN ->
@@ -68,41 +61,115 @@ class Solver {
             }
 
             is Tile.VerticalTrack -> {
-                when (car.position.direction) {
+                when (car.direction) {
                     Direction.UP -> {
                         val newPosition = car.position.copy(row = car.position.row - 1)
-                        return if (newPosition.row >= 0) {
-                            state.moveCar(carIndex, newPosition)
-                        } else {
-                            emptyList()
-                        }
+                        state.moveCar(carIndex, newPosition)
                     }
 
                     Direction.DOWN -> {
                         val newPosition = car.position.copy(row = car.position.row + 1)
-                        return if (newPosition.row < state.board.rows) {
-                            state.moveCar(carIndex, newPosition)
-                        } else {
-                            emptyList()
-                        }
+                        state.moveCar(carIndex, newPosition)
                     }
 
                     Direction.LEFT, Direction.RIGHT ->
                         throw IllegalStateException("Car is on a vertical track but its direction is not vertical")
                 }
             }
-            Tile.BottomLeftTurn -> TODO()
-            Tile.BottomRightTurn -> TODO()
-            Tile.Obstacle -> TODO()
-            Tile.TopLeftTurn -> TODO()
-            Tile.TopRightTurn -> TODO()
+
+            Tile.DownLeftTurn -> when (car.direction) {
+                Direction.UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column - 1,
+                        direction = Direction.LEFT
+                    )
+                )
+
+                Direction.RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                        direction = Direction.DOWN
+                    )
+                )
+
+                Direction.DOWN -> throw IllegalStateException("Car is on a down left turn and its direction is down")
+                Direction.LEFT -> throw IllegalStateException("Car is on a down left turn and its direction is left")
+            }
+
+            Tile.DownRightTurn -> when (car.direction) {
+                Direction.UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column + 1,
+                        direction = Direction.RIGHT
+                    )
+                )
+
+                Direction.LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                        direction = Direction.DOWN
+                    )
+                )
+
+                Direction.DOWN -> throw IllegalStateException("Car is on a down right turn and its direction is down")
+                Direction.RIGHT -> throw IllegalStateException("Car is on a down right turn and its direction is right")
+            }
+
+            Tile.UpLeftTurn -> when (car.direction) {
+                Direction.DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column - 1,
+                        direction = Direction.LEFT
+                    )
+                )
+
+                Direction.RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                        direction = Direction.UP
+                    )
+                )
+
+                Direction.UP -> throw IllegalStateException("Car is on an up left turn and its direction is up")
+                Direction.LEFT -> throw IllegalStateException("Car is on an up left turn and its direction is left")
+            }
+
+            Tile.UpRightTurn -> when (car.direction) {
+                Direction.DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column + 1,
+                        direction = Direction.RIGHT
+                    )
+                )
+
+                Direction.LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                        direction = Direction.UP
+                    )
+                )
+
+                Direction.UP -> throw IllegalStateException("Car is on an up right turn and its direction is up")
+                Direction.RIGHT -> throw IllegalStateException("Car is on an up right turn and its direction is right")
+            }
         }
     }
 
     private fun SolverState.moveCar(carIndex: Int, newPosition: CarPosition): List<SolverState> {
-        val car = activeCars[carIndex]
+        if (newPosition.row < 0 || newPosition.row >= board.rows) return emptyList()
+        if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
+        val car = activeCars[carIndex].copy(position = newPosition)
         return when (board[newPosition.row, newPosition.column]) {
-            is Tile.Empty -> availableTilesByDirection.getValue(car.position.direction)
+            is Tile.Obstacle -> emptyList()
+            is Tile.Empty -> availableTilesByDirection.getValue(car.direction)
                 .filter { board.canInsert(newPosition.row, newPosition.column, it) }
                 .map {
                     copy(
@@ -113,8 +180,8 @@ class Solver {
                 }
 
             is Tile.EndingTrack -> {
-                return if (
-                    (car.position.direction == Direction.LEFT || car.position.direction == Direction.RIGHT) &&
+                if (
+                    (car.direction == Direction.LEFT || car.direction == Direction.RIGHT) &&
                     expectedCar[car.color] == car.number
                 ) {
                     val newCars = ArrayList(activeCars).apply { removeAt(carIndex) }
@@ -129,7 +196,7 @@ class Solver {
             }
 
             is Tile.HorizontalTrack -> {
-                return if (car.position.direction == Direction.LEFT || car.position.direction == Direction.RIGHT) {
+                if (car.direction == Direction.LEFT || car.direction == Direction.RIGHT) {
                     val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
                 } else {
@@ -138,20 +205,18 @@ class Solver {
             }
 
             is Tile.VerticalTrack -> {
-                return if (car.position.direction == Direction.UP || car.position.direction == Direction.DOWN) {
+                if (car.direction == Direction.UP || car.direction == Direction.DOWN) {
                     val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
                 } else {
                     emptyList()
                 }
-
             }
 
-            Tile.BottomLeftTurn -> TODO()
-            Tile.BottomRightTurn -> TODO()
-            Tile.Obstacle -> TODO()
-            Tile.TopLeftTurn -> TODO()
-            Tile.TopRightTurn -> TODO()
+            Tile.DownLeftTurn -> TODO()
+            Tile.DownRightTurn -> TODO()
+            Tile.UpLeftTurn -> TODO()
+            Tile.UpRightTurn -> TODO()
         }
     }
 
@@ -163,8 +228,8 @@ class Solver {
 }
 
 private val availableTilesByDirection = mapOf(
-    Direction.LEFT to setOf(Tile.HorizontalTrack, Tile.TopLeftTurn, Tile.BottomLeftTurn),
-    Direction.RIGHT to setOf(Tile.HorizontalTrack, Tile.TopRightTurn, Tile.BottomRightTurn),
-    Direction.UP to setOf(Tile.VerticalTrack, Tile.BottomLeftTurn, Tile.BottomRightTurn),
-    Direction.DOWN to setOf(Tile.VerticalTrack, Tile.TopLeftTurn, Tile.TopRightTurn),
+    Direction.LEFT to setOf(Tile.HorizontalTrack, Tile.UpRightTurn, Tile.DownRightTurn),
+    Direction.RIGHT to setOf(Tile.HorizontalTrack, Tile.UpLeftTurn, Tile.DownLeftTurn),
+    Direction.UP to setOf(Tile.VerticalTrack, Tile.DownLeftTurn, Tile.DownRightTurn),
+    Direction.DOWN to setOf(Tile.VerticalTrack, Tile.UpLeftTurn, Tile.UpRightTurn),
 )

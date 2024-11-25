@@ -31,9 +31,9 @@ class SolverTest {
             listOf(
                 Board(
                     arrayOf(
-                        arrayOf(BottomRightTurn, HorizontalTrack, BottomLeftTurn, Obstacle, BottomRightTurn, EndingTrack),
+                        arrayOf(DownRightTurn, HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
                         arrayOf(VerticalTrack, Obstacle, VerticalTrack, Obstacle, VerticalTrack, Obstacle),
-                        arrayOf(VerticalTrack, Obstacle, TopRightTurn, HorizontalTrack, TopLeftTurn, Obstacle),
+                        arrayOf(VerticalTrack, Obstacle, UpRightTurn, HorizontalTrack, UpLeftTurn, Obstacle),
                     )
                 )
             ),

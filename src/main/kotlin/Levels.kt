@@ -22,7 +22,7 @@ val cars1_1 = arrayListOf(
 val board1_2 = Board(
     arrayOf(
         arrayOf(Empty, Empty, Empty, Obstacle, Empty, EndingTrack),
-        arrayOf(Empty, Obstacle, Empty, Obstacle, Empty),
+        arrayOf(Empty, Obstacle, Empty, Obstacle, Empty, Obstacle),
         arrayOf(VerticalTrack, Obstacle, Empty, Empty, Empty, Obstacle),
     )
 )

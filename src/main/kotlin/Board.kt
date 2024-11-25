@@ -30,10 +30,17 @@ data class Board(val tiles: Array<Array<Tile>>) {
         if (row < 0 || row >= rows) return false
         if (column < 0 || column >= columns) return false
         if (tiles[row][column] !is Tile.Empty) return false
+
         if (Direction.UP in tile.attachments && row == 0) return false
         if (Direction.DOWN in tile.attachments && row == rows - 1) return false
         if (Direction.LEFT in tile.attachments && column == 0) return false
         if (Direction.RIGHT in tile.attachments && column == columns - 1) return false
+
+        if (Direction.UP in tile.attachments && tiles[row - 1][column] is Tile.Obstacle) return false
+        if (Direction.DOWN in tile.attachments && tiles[row + 1][column] is Tile.Obstacle) return false
+        if (Direction.LEFT in tile.attachments && tiles[row][column - 1] is Tile.Obstacle) return false
+        if (Direction.RIGHT in tile.attachments && tiles[row][column + 1] is Tile.Obstacle) return false
+
         return true // TODO add more checks
     }
 
