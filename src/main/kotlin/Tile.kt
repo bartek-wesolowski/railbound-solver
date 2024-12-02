@@ -1,15 +1,37 @@
 package com.bartoszwesolowski
 
+import com.bartoszwesolowski.Direction.DOWN
+import com.bartoszwesolowski.Direction.LEFT
+import com.bartoszwesolowski.Direction.RIGHT
+import com.bartoszwesolowski.Direction.UP
 import java.util.EnumSet
 
 sealed class Tile(val attachments: EnumSet<Direction>) {
-    data object Empty : Tile(EnumSet.noneOf(Direction::class.java))
-    data object VerticalTrack : Tile(EnumSet.of(Direction.UP, Direction.DOWN))
-    data object HorizontalTrack : Tile(EnumSet.of(Direction.LEFT, Direction.RIGHT))
-    data object DownRightTurn : Tile(EnumSet.of(Direction.DOWN, Direction.RIGHT))
-    data object DownLeftTurn : Tile(EnumSet.of(Direction.DOWN, Direction.LEFT))
-    data object UpRightTurn : Tile(EnumSet.of(Direction.UP, Direction.RIGHT))
-    data object UpLeftTurn : Tile(EnumSet.of(Direction.UP, Direction.LEFT))
-    data object Obstacle : Tile(EnumSet.noneOf(Direction::class.java))
-    data object EndingTrack : Tile(EnumSet.of(Direction.LEFT))
+    constructor(vararg directions: Direction) : this(EnumSet.copyOf(directions.asList()))
+
+    data object Empty : Tile()
+
+    // Straight tracks
+    data object VerticalTrack : Tile(UP, DOWN)
+    data object HorizontalTrack : Tile(LEFT, RIGHT)
+
+    // Turns
+    data object DownRightTurn : Tile(DOWN, RIGHT)
+    data object DownLeftTurn : Tile(DOWN, LEFT)
+    data object UpRightTurn : Tile(UP, RIGHT)
+    data object UpLeftTurn : Tile(UP, LEFT)
+
+    // Forks
+    data object DownLeftRightFork : Tile(DOWN, LEFT, RIGHT)
+    data object DownLeftUpFork : Tile(DOWN, LEFT, UP)
+    data object DownRightLeftFork : Tile(DOWN, LEFT, RIGHT)
+    data object DownRightUpFork : Tile(DOWN, LEFT, UP)
+    data object UpLeftRightFork : Tile(UP, LEFT, RIGHT)
+    data object UpLeftDownFork : Tile(UP, LEFT, DOWN)
+    data object UpRightLeftFork : Tile(UP, LEFT, RIGHT)
+    data object UpRightDOWNFork : Tile(UP, LEFT, DOWN)
+
+    // Other
+    data object Obstacle : Tile()
+    data object EndingTrack : Tile(LEFT)
 }
