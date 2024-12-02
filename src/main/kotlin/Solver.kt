@@ -1,5 +1,14 @@
 package com.bartoszwesolowski
 
+import com.bartoszwesolowski.Tile.DownLeftTurn
+import com.bartoszwesolowski.Tile.DownRightTurn
+import com.bartoszwesolowski.Tile.Empty
+import com.bartoszwesolowski.Tile.EndingTrack
+import com.bartoszwesolowski.Tile.HorizontalTrack
+import com.bartoszwesolowski.Tile.Obstacle
+import com.bartoszwesolowski.Tile.UpLeftTurn
+import com.bartoszwesolowski.Tile.UpRightTurn
+import com.bartoszwesolowski.Tile.VerticalTrack
 import java.util.EnumMap
 import java.util.PriorityQueue
 
@@ -42,10 +51,10 @@ class Solver {
     private fun getMoves(state: SolverState, carIndex: Int): List<SolverState> {
         val car = state.activeCars[carIndex]
         return when (state.board[car.position.row, car.position.column]) {
-            is Tile.Empty -> throw IllegalStateException("Car is not on a track")
-            is Tile.EndingTrack -> throw IllegalStateException("Car is on an ending track")
-            is Tile.Obstacle -> throw IllegalStateException("Car is on an obstacle")
-            is Tile.HorizontalTrack -> when (car.direction) {
+            is Empty -> throw IllegalStateException("Car is not on a track")
+            is EndingTrack -> throw IllegalStateException("Car is on an ending track")
+            is Obstacle -> throw IllegalStateException("Car is on an obstacle")
+            is HorizontalTrack -> when (car.direction) {
                 Direction.LEFT -> {
                     val newPosition = car.position.copy(column = car.position.column - 1)
                     state.moveCar(carIndex, newPosition)
@@ -60,7 +69,7 @@ class Solver {
                     throw IllegalStateException("Car is on a horizontal track but its direction is not horizontal")
             }
 
-            is Tile.VerticalTrack -> {
+            is VerticalTrack -> {
                 when (car.direction) {
                     Direction.UP -> {
                         val newPosition = car.position.copy(row = car.position.row - 1)
@@ -77,7 +86,7 @@ class Solver {
                 }
             }
 
-            Tile.DownLeftTurn -> when (car.direction) {
+            DownLeftTurn -> when (car.direction) {
                 Direction.UP -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -98,7 +107,7 @@ class Solver {
                 Direction.LEFT -> throw IllegalStateException("Car is on a down left turn and its direction is left")
             }
 
-            Tile.DownRightTurn -> when (car.direction) {
+            DownRightTurn -> when (car.direction) {
                 Direction.UP -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -119,7 +128,7 @@ class Solver {
                 Direction.RIGHT -> throw IllegalStateException("Car is on a down right turn and its direction is right")
             }
 
-            Tile.UpLeftTurn -> when (car.direction) {
+            UpLeftTurn -> when (car.direction) {
                 Direction.DOWN -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -140,7 +149,7 @@ class Solver {
                 Direction.LEFT -> throw IllegalStateException("Car is on an up left turn and its direction is left")
             }
 
-            Tile.UpRightTurn -> when (car.direction) {
+            UpRightTurn -> when (car.direction) {
                 Direction.DOWN -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -168,8 +177,8 @@ class Solver {
         if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
         val car = activeCars[carIndex].copy(position = newPosition)
         return when (board[newPosition.row, newPosition.column]) {
-            is Tile.Obstacle -> emptyList()
-            is Tile.Empty -> availableTilesByDirection.getValue(car.direction)
+            is Obstacle -> emptyList()
+            is Empty -> availableTilesByDirection.getValue(car.direction)
                 .filter { board.canInsert(newPosition.row, newPosition.column, it) }
                 .map {
                     copy(
@@ -179,7 +188,7 @@ class Solver {
                     )
                 }
 
-            is Tile.EndingTrack -> {
+            is EndingTrack -> {
                 if (
                     (car.direction == Direction.LEFT || car.direction == Direction.RIGHT) &&
                     expectedCar[car.color] == car.number
@@ -195,7 +204,7 @@ class Solver {
                 }
             }
 
-            is Tile.HorizontalTrack -> {
+            is HorizontalTrack -> {
                 if (car.direction == Direction.LEFT || car.direction == Direction.RIGHT) {
                     val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
@@ -204,7 +213,7 @@ class Solver {
                 }
             }
 
-            is Tile.VerticalTrack -> {
+            is VerticalTrack -> {
                 if (car.direction == Direction.UP || car.direction == Direction.DOWN) {
                     val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
@@ -213,10 +222,10 @@ class Solver {
                 }
             }
 
-            Tile.DownLeftTurn -> TODO()
-            Tile.DownRightTurn -> TODO()
-            Tile.UpLeftTurn -> TODO()
-            Tile.UpRightTurn -> TODO()
+            DownLeftTurn -> TODO()
+            DownRightTurn -> TODO()
+            UpLeftTurn -> TODO()
+            UpRightTurn -> TODO()
         }
     }
 
@@ -228,8 +237,8 @@ class Solver {
 }
 
 private val availableTilesByDirection = mapOf(
-    Direction.LEFT to setOf(Tile.HorizontalTrack, Tile.UpRightTurn, Tile.DownRightTurn),
-    Direction.RIGHT to setOf(Tile.HorizontalTrack, Tile.UpLeftTurn, Tile.DownLeftTurn),
-    Direction.UP to setOf(Tile.VerticalTrack, Tile.DownLeftTurn, Tile.DownRightTurn),
-    Direction.DOWN to setOf(Tile.VerticalTrack, Tile.UpLeftTurn, Tile.UpRightTurn),
+    Direction.LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
+    Direction.RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
+    Direction.UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
+    Direction.DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
 )
