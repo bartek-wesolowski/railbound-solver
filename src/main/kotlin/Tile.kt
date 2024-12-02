@@ -7,7 +7,13 @@ import com.bartoszwesolowski.Direction.UP
 import java.util.EnumSet
 
 sealed class Tile(val attachments: EnumSet<Direction>) {
-    constructor(vararg directions: Direction) : this(EnumSet.copyOf(directions.asList()))
+    constructor(vararg directions: Direction) : this(
+        if (directions.isNotEmpty()) {
+            EnumSet.copyOf(directions.asList())
+        } else {
+            EnumSet.noneOf(Direction::class.java)
+        }
+    )
 
     data object Empty : Tile()
 
