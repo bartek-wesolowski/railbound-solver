@@ -27,7 +27,7 @@ class SolverTest {
     @Test
     fun level1_1() {
         assertEquals(
-            listOf(
+            setOf(
                 Board(
                     arrayOf(
                         arrayOf(HorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack),
@@ -41,7 +41,7 @@ class SolverTest {
     @Test
     fun level1_2() {
         assertEquals(
-            listOf(
+            setOf(
                 Board(
                     arrayOf(
                         arrayOf(DownRightTurn, HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
@@ -57,7 +57,7 @@ class SolverTest {
     @Test
     fun level1_3() {
         assertEquals(
-            listOf(
+            setOf(
                 Board(
                     arrayOf(
                         arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, DownRightTurn, EndingTrack),
@@ -73,7 +73,7 @@ class SolverTest {
     @Test
     fun level1_4() {
         assertEquals(
-            listOf(
+            setOf(
                 Board(
                     arrayOf(
                         arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
