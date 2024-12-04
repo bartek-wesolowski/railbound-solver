@@ -3,14 +3,7 @@ package com.bartoszwesolowski
 import com.bartoszwesolowski.CarColor.Red
 import com.bartoszwesolowski.Direction.RIGHT
 import com.bartoszwesolowski.Direction.UP
-import com.bartoszwesolowski.Tile.DownLeftRightFork
-import com.bartoszwesolowski.Tile.Empty
-import com.bartoszwesolowski.Tile.EndingTrack
-import com.bartoszwesolowski.Tile.HorizontalTrack
-import com.bartoszwesolowski.Tile.Obstacle
-import com.bartoszwesolowski.Tile.UpLeftTurn
-import com.bartoszwesolowski.Tile.UpRightTurn
-import com.bartoszwesolowski.Tile.VerticalTrack
+import com.bartoszwesolowski.Tile.*
 
 val board1_1 = Board(
     arrayOf(
@@ -44,4 +37,18 @@ val board1_3 = Board(
 
 val cars1_3 = arrayListOf(
     Car(1, Red, CarPosition(0, 0, RIGHT)),
+)
+
+val board1_4 = Board(
+    arrayOf(
+        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+        arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
+        arrayOf(HorizontalTrack, Empty, Obstacle, Empty, EndingTrack),
+        arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
+        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+    )
+)
+
+val cars1_4 = arrayListOf(
+    Car(1, Red, CarPosition(2, 0, RIGHT)),
 )

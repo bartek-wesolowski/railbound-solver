@@ -13,9 +13,11 @@ import com.bartoszwesolowski.Tile.VerticalTrack
 import com.bartoszwesolowski.board1_1
 import com.bartoszwesolowski.board1_2
 import com.bartoszwesolowski.board1_3
+import com.bartoszwesolowski.board1_4
 import com.bartoszwesolowski.cars1_1
 import com.bartoszwesolowski.cars1_2
 import com.bartoszwesolowski.cars1_3
+import com.bartoszwesolowski.cars1_4
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -65,6 +67,33 @@ class SolverTest {
                 )
             ),
             solver.findSolutions(board1_3, cars1_3),
+        )
+    }
+
+    @Test
+    fun level1_4() {
+        assertEquals(
+            listOf(
+                Board(
+                    arrayOf(
+                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                        arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
+                        arrayOf(HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
+                        arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
+                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                    )
+                ),
+                Board(
+                    arrayOf(
+                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                        arrayOf(Empty, DownRightTurn, HorizontalTrack, DownLeftTurn, Empty),
+                        arrayOf(HorizontalTrack, UpLeftTurn, Obstacle, UpRightTurn, EndingTrack),
+                        arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
+                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                    )
+                )
+            ),
+            solver.findSolutions(board1_4, cars1_4),
         )
     }
 }
