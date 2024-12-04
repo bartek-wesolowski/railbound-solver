@@ -1,7 +1,9 @@
 import com.bartoszwesolowski.Board
 import com.bartoszwesolowski.Solver
+import com.bartoszwesolowski.Tile.DownLeftRightFork
 import com.bartoszwesolowski.Tile.DownLeftTurn
 import com.bartoszwesolowski.Tile.DownRightTurn
+import com.bartoszwesolowski.Tile.Empty
 import com.bartoszwesolowski.Tile.EndingTrack
 import com.bartoszwesolowski.Tile.HorizontalTrack
 import com.bartoszwesolowski.Tile.Obstacle
@@ -56,9 +58,9 @@ class SolverTest {
             listOf(
                 Board(
                     arrayOf(
-                        arrayOf(DownRightTurn, HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
-                        arrayOf(VerticalTrack, Obstacle, VerticalTrack, Obstacle, VerticalTrack, Obstacle),
-                        arrayOf(VerticalTrack, Obstacle, UpRightTurn, HorizontalTrack, UpLeftTurn, Obstacle),
+                        arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, DownRightTurn, EndingTrack),
+                        arrayOf(Empty, VerticalTrack, Empty, VerticalTrack, Empty),
+                        arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
                     )
                 )
             ),

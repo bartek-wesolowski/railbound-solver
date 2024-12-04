@@ -1,20 +1,14 @@
 package com.bartoszwesolowski
 
-import com.bartoszwesolowski.Tile.DownLeftTurn
-import com.bartoszwesolowski.Tile.DownRightTurn
-import com.bartoszwesolowski.Tile.Empty
-import com.bartoszwesolowski.Tile.EndingTrack
-import com.bartoszwesolowski.Tile.HorizontalTrack
-import com.bartoszwesolowski.Tile.Obstacle
-import com.bartoszwesolowski.Tile.UpLeftTurn
-import com.bartoszwesolowski.Tile.UpRightTurn
-import com.bartoszwesolowski.Tile.VerticalTrack
+import com.bartoszwesolowski.Direction.*
+import com.bartoszwesolowski.Tile.*
 import java.util.EnumMap
 import java.util.PriorityQueue
 
 class Solver {
     fun findSolutions(board: Board, cars: ArrayList<Car>): List<Board> {
         val statesToCheck = PriorityQueue<SolverState>(compareBy { it.tracksUsed })
+        val statesChecked = mutableSetOf<SolverState>()
         val expectedCar = EnumMap(cars.map { it.color }.toSet().associateWith { 1 })
         statesToCheck.add(SolverState(board, cars, 0, expectedCar))
         val solutions = mutableListOf<Board>()
@@ -25,9 +19,10 @@ class Solver {
                 solutions.add(state.board)
                 continue
             }
+            statesChecked.add(state)
             val nextStates = state.nextStates().toList()
             println("next states: $nextStates")
-            statesToCheck.addAll(nextStates)
+            statesToCheck.addAll(nextStates.toSet() - statesChecked)
         }
         return solutions
     }
@@ -55,120 +50,155 @@ class Solver {
             is EndingTrack -> throw IllegalStateException("Car is on an ending track")
             is Obstacle -> throw IllegalStateException("Car is on an obstacle")
             is HorizontalTrack -> when (car.direction) {
-                Direction.LEFT -> {
+                LEFT -> {
                     val newPosition = car.position.copy(column = car.position.column - 1)
                     state.moveCar(carIndex, newPosition)
                 }
 
-                Direction.RIGHT -> {
+                RIGHT -> {
                     val newPosition = car.position.copy(column = car.position.column + 1)
                     state.moveCar(carIndex, newPosition)
                 }
 
-                Direction.UP, Direction.DOWN ->
+                UP, DOWN ->
                     throw IllegalStateException("Car is on a horizontal track but its direction is not horizontal")
             }
 
             is VerticalTrack -> {
                 when (car.direction) {
-                    Direction.UP -> {
+                    UP -> {
                         val newPosition = car.position.copy(row = car.position.row - 1)
                         state.moveCar(carIndex, newPosition)
                     }
 
-                    Direction.DOWN -> {
+                    DOWN -> {
                         val newPosition = car.position.copy(row = car.position.row + 1)
                         state.moveCar(carIndex, newPosition)
                     }
 
-                    Direction.LEFT, Direction.RIGHT ->
+                    LEFT, RIGHT ->
                         throw IllegalStateException("Car is on a vertical track but its direction is not vertical")
                 }
             }
 
             DownLeftTurn -> when (car.direction) {
-                Direction.UP -> state.moveCar(
+                UP -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         column = car.position.column - 1,
-                        direction = Direction.LEFT
+                        direction = LEFT
                     )
                 )
 
-                Direction.RIGHT -> state.moveCar(
+                RIGHT -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         row = car.position.row + 1,
-                        direction = Direction.DOWN
+                        direction = DOWN
                     )
                 )
 
-                Direction.DOWN -> throw IllegalStateException("Car is on a down left turn and its direction is down")
-                Direction.LEFT -> throw IllegalStateException("Car is on a down left turn and its direction is left")
+                DOWN -> throw IllegalStateException("Car is on a down left turn and its direction is down")
+                LEFT -> throw IllegalStateException("Car is on a down left turn and its direction is left")
             }
 
             DownRightTurn -> when (car.direction) {
-                Direction.UP -> state.moveCar(
+                UP -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         column = car.position.column + 1,
-                        direction = Direction.RIGHT
+                        direction = RIGHT
                     )
                 )
 
-                Direction.LEFT -> state.moveCar(
+                LEFT -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         row = car.position.row + 1,
-                        direction = Direction.DOWN
+                        direction = DOWN
                     )
                 )
 
-                Direction.DOWN -> throw IllegalStateException("Car is on a down right turn and its direction is down")
-                Direction.RIGHT -> throw IllegalStateException("Car is on a down right turn and its direction is right")
+                DOWN -> throw IllegalStateException("Car is on a down right turn and its direction is down")
+                RIGHT -> throw IllegalStateException("Car is on a down right turn and its direction is right")
             }
 
             UpLeftTurn -> when (car.direction) {
-                Direction.DOWN -> state.moveCar(
+                DOWN -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         column = car.position.column - 1,
-                        direction = Direction.LEFT
+                        direction = LEFT
                     )
                 )
 
-                Direction.RIGHT -> state.moveCar(
+                RIGHT -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         row = car.position.row - 1,
-                        direction = Direction.UP
+                        direction = UP
                     )
                 )
 
-                Direction.UP -> throw IllegalStateException("Car is on an up left turn and its direction is up")
-                Direction.LEFT -> throw IllegalStateException("Car is on an up left turn and its direction is left")
+                UP -> throw IllegalStateException("Car is on an up left turn and its direction is up")
+                LEFT -> throw IllegalStateException("Car is on an up left turn and its direction is left")
             }
 
             UpRightTurn -> when (car.direction) {
-                Direction.DOWN -> state.moveCar(
+                DOWN -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         column = car.position.column + 1,
-                        direction = Direction.RIGHT
+                        direction = RIGHT
                     )
                 )
 
-                Direction.LEFT -> state.moveCar(
+                LEFT -> state.moveCar(
                     carIndex,
                     car.position.copy(
                         row = car.position.row - 1,
-                        direction = Direction.UP
+                        direction = UP
                     )
                 )
 
-                Direction.UP -> throw IllegalStateException("Car is on an up right turn and its direction is up")
-                Direction.RIGHT -> throw IllegalStateException("Car is on an up right turn and its direction is right")
+                UP -> throw IllegalStateException("Car is on an up right turn and its direction is up")
+                RIGHT -> throw IllegalStateException("Car is on an up right turn and its direction is right")
             }
+
+            DownLeftRightFork -> when (car.direction) {
+                UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column - 1,
+                        direction = LEFT
+                    )
+                )
+
+                LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.column - 1,
+                    )
+                )
+
+                RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                        direction = DOWN
+                    )
+                )
+
+                DOWN -> throw IllegalStateException("Car is on a down left right fork and its direction is down")
+            }
+
+            DownLeftUpFork -> TODO()
+            DownRightLeftFork -> TODO()
+            DownRightUpFork -> TODO()
+            UpLeftDownFork -> TODO()
+            UpLeftRightFork -> TODO()
+            UpRightDOWNFork -> TODO()
+            UpRightLeftFork -> TODO()
         }
     }
 
@@ -190,7 +220,7 @@ class Solver {
 
             is EndingTrack -> {
                 if (
-                    (car.direction == Direction.LEFT || car.direction == Direction.RIGHT) &&
+                    (car.direction == LEFT || car.direction == RIGHT) &&
                     expectedCar[car.color] == car.number
                 ) {
                     val newCars = ArrayList(activeCars).apply { removeAt(carIndex) }
@@ -205,7 +235,7 @@ class Solver {
             }
 
             is HorizontalTrack -> {
-                if (car.direction == Direction.LEFT || car.direction == Direction.RIGHT) {
+                if (car.direction == LEFT || car.direction == RIGHT) {
                     val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
                 } else {
@@ -214,7 +244,7 @@ class Solver {
             }
 
             is VerticalTrack -> {
-                if (car.direction == Direction.UP || car.direction == Direction.DOWN) {
+                if (car.direction == UP || car.direction == DOWN) {
                     val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
                 } else {
@@ -222,10 +252,48 @@ class Solver {
                 }
             }
 
-            DownLeftTurn -> TODO()
-            DownRightTurn -> TODO()
-            UpLeftTurn -> TODO()
-            UpRightTurn -> TODO()
+            DownLeftTurn -> if (car.direction == UP || car.direction == RIGHT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            DownRightTurn -> if (car.direction == UP || car.direction == LEFT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            UpLeftTurn -> if (car.direction == DOWN || car.direction == RIGHT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            UpRightTurn -> if (car.direction == DOWN || car.direction == LEFT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            DownLeftRightFork -> if (car.direction == UP || car.direction == RIGHT || car.direction == LEFT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            DownLeftUpFork -> TODO()
+            DownRightLeftFork -> TODO()
+            DownRightUpFork -> TODO()
+            UpLeftDownFork -> TODO()
+            UpLeftRightFork -> TODO()
+            UpRightDOWNFork -> TODO()
+            UpRightLeftFork -> TODO()
         }
     }
 
@@ -237,8 +305,8 @@ class Solver {
 }
 
 private val availableTilesByDirection = mapOf(
-    Direction.LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
-    Direction.RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
-    Direction.UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
-    Direction.DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
+    LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
+    RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
+    UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
+    DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
 )

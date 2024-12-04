@@ -37,7 +37,7 @@ val cars1_2 = arrayListOf(
 val board1_3 = Board(
     arrayOf(
         arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, Empty, EndingTrack),
-        arrayOf(Empty, VerticalTrack, Empty, Obstacle, Empty),
+        arrayOf(Empty, VerticalTrack, Empty, VerticalTrack, Empty),
         arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
     )
 )
