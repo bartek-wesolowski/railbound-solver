@@ -23,7 +23,12 @@ data class Board(val tiles: Array<Array<Tile>>) {
     }
 
     override fun toString(): String {
-        return tiles.contentDeepToString()
+        val sb = StringBuilder("[\n")
+        for (row in tiles) {
+            sb.appendLine("\t${row.contentDeepToString()}")
+        }
+        sb.append("]\n")
+        return sb.toString()
     }
 
     fun canInsert(row: Int, column: Int, tile: Tile): Boolean {
