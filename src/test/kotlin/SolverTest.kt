@@ -79,6 +79,17 @@ class SolverTest {
         )
     }
 
+    @Test
+    fun level1_6() {
+        solver.findSolutions(Levels.World1.levels[5]).assertSolutions(
+            Board.fromRows(
+                arrayOf(Empty, Empty, Empty, Empty, Empty),
+                arrayOf(HorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack),
+                arrayOf(Empty, Empty, Empty, Empty, Empty),
+            )
+        )
+    }
+
     private fun Set<Board>.assertSolutions(vararg actual: Board) {
         assertEquals(this, setOf(*actual))
     }

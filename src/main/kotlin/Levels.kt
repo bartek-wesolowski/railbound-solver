@@ -15,7 +15,8 @@ object Levels {
                 ),
                 cars = arrayListOf(
                     Car(1, Red, CarPosition(0, 0, RIGHT)),
-                )
+                ),
+                tracks = 3
             ),
             Level(
                 board = Board.fromRows(
@@ -25,7 +26,8 @@ object Levels {
                 ),
                 cars = arrayListOf(
                     Car(1, Red, CarPosition(2, 0, UP)),
-                )
+                ),
+                tracks = 10
             ),
             Level(
                 board = Board.fromRows(
@@ -35,7 +37,8 @@ object Levels {
                 ),
                 cars = arrayListOf(
                     Car(1, Red, CarPosition(0, 0, RIGHT)),
-                )
+                ),
+                tracks = 1
             ),
             Level(
                 board = Board.fromRows(
@@ -47,7 +50,8 @@ object Levels {
                 ),
                 cars = arrayListOf(
                     Car(1, Red, CarPosition(2, 0, RIGHT)),
-                )
+                ),
+                tracks = 4
             ),
             Level(
                 board = Board.fromRows(
@@ -57,8 +61,20 @@ object Levels {
                 ),
                 cars = arrayListOf(
                     Car(1, Red, CarPosition(2, 3, LEFT)),
-                )
+                ),
+                tracks = 7
             ),
+            Level(
+                board = Board.fromRows(
+                    arrayOf(Empty, Empty, Empty, Empty, Empty),
+                    arrayOf(HorizontalTrack, Empty, Empty, Empty, EndingTrack),
+                    arrayOf(Empty, Empty, Empty, Empty, Empty),
+                ),
+                cars = arrayListOf(
+                    Car(1, Red, CarPosition(1, 0, RIGHT)),
+                ),
+                tracks = 3
+            )
         )
     }
 }

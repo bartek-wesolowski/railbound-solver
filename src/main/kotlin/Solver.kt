@@ -20,7 +20,7 @@ class Solver {
                 continue
             }
             statesChecked.add(state)
-            val nextStates = state.nextStates().toList()
+            val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
             println("next states: $nextStates")
             statesToCheck.addAll(nextStates.toSet() - statesChecked)
         }
