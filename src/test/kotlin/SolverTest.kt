@@ -11,8 +11,8 @@ import com.bartoszwesolowski.Tile.Obstacle
 import com.bartoszwesolowski.Tile.UpLeftTurn
 import com.bartoszwesolowski.Tile.UpRightTurn
 import com.bartoszwesolowski.Tile.VerticalTrack
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class SolverTest {
     private val solver = Solver()
