@@ -1,6 +1,7 @@
 package com.bartoszwesolowski
 
 import com.bartoszwesolowski.CarColor.Red
+import com.bartoszwesolowski.Direction.DOWN
 import com.bartoszwesolowski.Direction.LEFT
 import com.bartoszwesolowski.Direction.RIGHT
 import com.bartoszwesolowski.Direction.UP
@@ -72,6 +73,17 @@ object Levels {
                 ),
                 cars = arrayListOf(
                     Car(1, Red, CarPosition(1, 0, RIGHT)),
+                ),
+                tracks = 3
+            ),
+            Level(
+                board = Board.fromRows(
+                    arrayOf(VerticalTrack, Empty, Empty),
+                    arrayOf(Empty, Obstacle, Empty),
+                    arrayOf(Empty, Empty, EndingTrack),
+                ),
+                cars = arrayListOf(
+                    Car(1, Red, CarPosition(0, 0, DOWN)),
                 ),
                 tracks = 3
             )
