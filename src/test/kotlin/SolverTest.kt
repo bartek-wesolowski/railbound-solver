@@ -14,10 +14,12 @@ import com.bartoszwesolowski.board1_1
 import com.bartoszwesolowski.board1_2
 import com.bartoszwesolowski.board1_3
 import com.bartoszwesolowski.board1_4
+import com.bartoszwesolowski.board1_5
 import com.bartoszwesolowski.cars1_1
 import com.bartoszwesolowski.cars1_2
 import com.bartoszwesolowski.cars1_3
 import com.bartoszwesolowski.cars1_4
+import com.bartoszwesolowski.cars1_5
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -71,6 +73,17 @@ class SolverTest {
                 arrayOf(HorizontalTrack, UpLeftTurn, Obstacle, UpRightTurn, EndingTrack),
                 arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
                 arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+            )
+        )
+    }
+
+    @Test
+    fun level1_5() {
+        solver.findSolutions(board1_5, cars1_5).assertSolutions(
+            Board.fromRows(
+                arrayOf(DownRightTurn, HorizontalTrack, HorizontalTrack, EndingTrack),
+                arrayOf(VerticalTrack, Obstacle, Obstacle, Obstacle),
+                arrayOf(UpRightTurn, HorizontalTrack, HorizontalTrack, HorizontalTrack),
             )
         )
     }

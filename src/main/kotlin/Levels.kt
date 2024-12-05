@@ -1,6 +1,7 @@
 package com.bartoszwesolowski
 
 import com.bartoszwesolowski.CarColor.Red
+import com.bartoszwesolowski.Direction.LEFT
 import com.bartoszwesolowski.Direction.RIGHT
 import com.bartoszwesolowski.Direction.UP
 import com.bartoszwesolowski.Tile.*
@@ -43,4 +44,14 @@ val board1_4 = Board.fromRows(
 
 val cars1_4 = arrayListOf(
     Car(1, Red, CarPosition(2, 0, RIGHT)),
+)
+
+val board1_5 = Board.fromRows(
+    arrayOf(Empty, Empty, Empty, EndingTrack),
+    arrayOf(Empty, Obstacle, Obstacle, Obstacle),
+    arrayOf(Empty, Empty, Empty, HorizontalTrack),
+)
+
+val cars1_5 = arrayListOf(
+    Car(1, Red, CarPosition(2, 3, LEFT)),
 )
