@@ -6,11 +6,11 @@ import java.util.EnumMap
 import java.util.PriorityQueue
 
 class Solver {
-    fun findSolutions(board: Board, cars: ArrayList<Car>): Set<Board> {
+    fun findSolutions(level: Level): Set<Board> {
         val statesToCheck = PriorityQueue<SolverState>(compareBy { it.tracksUsed })
         val statesChecked = mutableSetOf<SolverState>()
-        val expectedCar = EnumMap(cars.map { it.color }.toSet().associateWith { 1 })
-        statesToCheck.add(SolverState(board, cars, 0, expectedCar))
+        val expectedCar = EnumMap(level.cars.map { it.color }.toSet().associateWith { 1 })
+        statesToCheck.add(SolverState(level.board, level.cars, 0, expectedCar))
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.poll()

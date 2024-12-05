@@ -1,4 +1,5 @@
 import com.bartoszwesolowski.Board
+import com.bartoszwesolowski.Levels
 import com.bartoszwesolowski.Solver
 import com.bartoszwesolowski.Tile.DownLeftRightFork
 import com.bartoszwesolowski.Tile.DownLeftTurn
@@ -10,16 +11,6 @@ import com.bartoszwesolowski.Tile.Obstacle
 import com.bartoszwesolowski.Tile.UpLeftTurn
 import com.bartoszwesolowski.Tile.UpRightTurn
 import com.bartoszwesolowski.Tile.VerticalTrack
-import com.bartoszwesolowski.board1_1
-import com.bartoszwesolowski.board1_2
-import com.bartoszwesolowski.board1_3
-import com.bartoszwesolowski.board1_4
-import com.bartoszwesolowski.board1_5
-import com.bartoszwesolowski.cars1_1
-import com.bartoszwesolowski.cars1_2
-import com.bartoszwesolowski.cars1_3
-import com.bartoszwesolowski.cars1_4
-import com.bartoszwesolowski.cars1_5
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -28,7 +19,7 @@ class SolverTest {
 
     @Test
     fun level1_1() {
-        solver.findSolutions(board1_1, cars1_1).assertSolutions(
+        solver.findSolutions(Levels.World1.levels[0]).assertSolutions(
             Board.fromRows(
                 arrayOf(HorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack),
             )
@@ -37,7 +28,7 @@ class SolverTest {
 
     @Test
     fun level1_2() {
-        solver.findSolutions(board1_2, cars1_2).assertSolutions(
+        solver.findSolutions(Levels.World1.levels[1]).assertSolutions(
             Board.fromRows(
                 arrayOf(DownRightTurn, HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
                 arrayOf(VerticalTrack, Obstacle, VerticalTrack, Obstacle, VerticalTrack, Obstacle),
@@ -48,7 +39,7 @@ class SolverTest {
 
     @Test
     fun level1_3() {
-        solver.findSolutions(board1_3, cars1_3).assertSolutions(
+        solver.findSolutions(Levels.World1.levels[2]).assertSolutions(
             Board.fromRows(
                 arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, DownRightTurn, EndingTrack),
                 arrayOf(Empty, VerticalTrack, Empty, VerticalTrack, Empty),
@@ -59,7 +50,7 @@ class SolverTest {
 
     @Test
     fun level1_4() {
-        solver.findSolutions(board1_4, cars1_4).assertSolutions(
+        solver.findSolutions(Levels.World1.levels[3]).assertSolutions(
             Board.fromRows(
                 arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
                 arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
@@ -79,7 +70,7 @@ class SolverTest {
 
     @Test
     fun level1_5() {
-        solver.findSolutions(board1_5, cars1_5).assertSolutions(
+        solver.findSolutions(Levels.World1.levels[4]).assertSolutions(
             Board.fromRows(
                 arrayOf(DownRightTurn, HorizontalTrack, HorizontalTrack, EndingTrack),
                 arrayOf(VerticalTrack, Obstacle, Obstacle, Obstacle),
