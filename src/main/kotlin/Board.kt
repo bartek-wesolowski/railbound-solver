@@ -1,7 +1,6 @@
 package com.bartoszwesolowski
 
 data class Board(val tiles: Array<Array<Tile>>) {
-
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
     }
@@ -53,5 +52,11 @@ data class Board(val tiles: Array<Array<Tile>>) {
         val newTiles = tiles.map { it.copyOf() }.toTypedArray()
         newTiles[row][column] = tile
         return Board(newTiles)
+    }
+
+    companion object {
+        fun fromRows(vararg rows: Array<Tile>): Board {
+            return Board(arrayOf(*rows))
+        }
     }
 }

@@ -28,10 +28,8 @@ class SolverTest {
     fun level1_1() {
         assertEquals(
             setOf(
-                Board(
-                    arrayOf(
-                        arrayOf(HorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack),
-                    )
+                Board.fromRows(
+                    arrayOf(HorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack),
                 )
             ),
             solver.findSolutions(board1_1, cars1_1),
@@ -42,12 +40,10 @@ class SolverTest {
     fun level1_2() {
         assertEquals(
             setOf(
-                Board(
-                    arrayOf(
-                        arrayOf(DownRightTurn, HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
-                        arrayOf(VerticalTrack, Obstacle, VerticalTrack, Obstacle, VerticalTrack, Obstacle),
-                        arrayOf(VerticalTrack, Obstacle, UpRightTurn, HorizontalTrack, UpLeftTurn, Obstacle),
-                    )
+                Board.fromRows(
+                    arrayOf(DownRightTurn, HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
+                    arrayOf(VerticalTrack, Obstacle, VerticalTrack, Obstacle, VerticalTrack, Obstacle),
+                    arrayOf(VerticalTrack, Obstacle, UpRightTurn, HorizontalTrack, UpLeftTurn, Obstacle),
                 )
             ),
             solver.findSolutions(board1_2, cars1_2),
@@ -58,12 +54,10 @@ class SolverTest {
     fun level1_3() {
         assertEquals(
             setOf(
-                Board(
-                    arrayOf(
-                        arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, DownRightTurn, EndingTrack),
-                        arrayOf(Empty, VerticalTrack, Empty, VerticalTrack, Empty),
-                        arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
-                    )
+                Board.fromRows(
+                    arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, DownRightTurn, EndingTrack),
+                    arrayOf(Empty, VerticalTrack, Empty, VerticalTrack, Empty),
+                    arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
                 )
             ),
             solver.findSolutions(board1_3, cars1_3),
@@ -74,23 +68,19 @@ class SolverTest {
     fun level1_4() {
         assertEquals(
             setOf(
-                Board(
-                    arrayOf(
-                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
-                        arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
-                        arrayOf(HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
-                        arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
-                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
-                    )
+                Board.fromRows(
+                    arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                    arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
+                    arrayOf(HorizontalTrack, DownLeftTurn, Obstacle, DownRightTurn, EndingTrack),
+                    arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
+                    arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
                 ),
-                Board(
-                    arrayOf(
-                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
-                        arrayOf(Empty, DownRightTurn, HorizontalTrack, DownLeftTurn, Empty),
-                        arrayOf(HorizontalTrack, UpLeftTurn, Obstacle, UpRightTurn, EndingTrack),
-                        arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
-                        arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
-                    )
+                Board.fromRows(
+                    arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                    arrayOf(Empty, DownRightTurn, HorizontalTrack, DownLeftTurn, Empty),
+                    arrayOf(HorizontalTrack, UpLeftTurn, Obstacle, UpRightTurn, EndingTrack),
+                    arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
+                    arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
                 )
             ),
             solver.findSolutions(board1_4, cars1_4),
