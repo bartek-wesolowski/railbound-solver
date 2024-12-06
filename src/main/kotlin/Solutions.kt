@@ -2,6 +2,7 @@ package com.bartoszwesolowski
 
 import com.bartoszwesolowski.Tile.DownLeftRightFork
 import com.bartoszwesolowski.Tile.DownLeftTurn
+import com.bartoszwesolowski.Tile.DownRightLeftFork
 import com.bartoszwesolowski.Tile.DownRightTurn
 import com.bartoszwesolowski.Tile.Empty
 import com.bartoszwesolowski.Tile.EndingTrack
@@ -69,6 +70,13 @@ object Solutions {
                 arrayOf(UpRightTurn, HorizontalTrack, EndingTrack),
             )
         )
+        val level1_8 = setOf(
+            Board.fromRows(
+                arrayOf(HorizontalTrack, HorizontalTrack, DownRightLeftFork, EndingTrack),
+                arrayOf(Empty, Empty, VerticalTrack, Empty),
+                arrayOf(HorizontalTrack, HorizontalTrack, UpLeftTurn, Empty),
+            )
+        )
         val solutions = listOf(
             level1_1,
             level1_2,
@@ -76,7 +84,8 @@ object Solutions {
             level1_4,
             level1_5,
             level1_6,
-            level1_7
+            level1_7,
+            level1_8,
         )
     }
 }
