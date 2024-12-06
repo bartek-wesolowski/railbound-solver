@@ -69,5 +69,14 @@ object Solutions {
                 arrayOf(UpRightTurn, HorizontalTrack, EndingTrack),
             )
         )
+        val solutions = listOf(
+            level1_1,
+            level1_2,
+            level1_3,
+            level1_4,
+            level1_5,
+            level1_6,
+            level1_7
+        )
     }
 }
