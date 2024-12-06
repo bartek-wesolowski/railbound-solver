@@ -192,13 +192,194 @@ class Solver {
                 DOWN -> throw IllegalStateException("Car is on a down left right fork and its direction is down")
             }
 
-            DownLeftUpFork -> TODO()
-            DownRightLeftFork -> TODO()
-            DownRightUpFork -> TODO()
-            UpLeftDownFork -> TODO()
-            UpLeftRightFork -> TODO()
-            UpRightDOWNFork -> TODO()
-            UpRightLeftFork -> TODO()
+            DownLeftUpFork -> when (car.direction) {
+                UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column - 1,
+                        direction = LEFT
+                    )
+                )
+
+                RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                        direction = DOWN
+                    )
+                )
+
+                DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                    )
+                )
+
+                LEFT -> throw IllegalStateException("Car is on a down left up fork and its direction is left")
+            }
+
+            DownRightLeftFork -> when (car.direction) {
+                UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column + 1,
+                        direction = RIGHT
+                    )
+                )
+
+                LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                        direction = DOWN
+                    )
+                )
+
+                RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.column + 1,
+                    )
+                )
+
+                DOWN -> throw IllegalStateException("Car is on a down right left fork and its direction is down")
+            }
+
+            DownRightUpFork -> when (car.direction) {
+                UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column + 1,
+                        direction = RIGHT
+                    )
+                )
+
+                LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                        direction = DOWN
+                    )
+                )
+
+                DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row + 1,
+                    )
+                )
+
+                RIGHT -> throw IllegalStateException("Car is on a down right up fork and its direction is right")
+            }
+
+            UpLeftDownFork -> when (car.direction) {
+                DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column - 1,
+                        direction = LEFT
+                    )
+                )
+
+                RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                        direction = UP
+                    )
+                )
+
+                UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                    )
+                )
+
+                LEFT -> throw IllegalStateException("Car is on an up left down fork and its direction is left")
+            }
+
+            UpLeftRightFork -> when (car.direction) {
+                DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column - 1,
+                        direction = LEFT
+                    )
+                )
+
+                RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                        direction = UP
+                    )
+                )
+
+                LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.column - 1,
+                    )
+                )
+
+                UP -> throw IllegalStateException("Car is on an up left right fork and its direction is up")
+            }
+
+            UpRightDownFork -> when (car.direction) {
+                DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column + 1,
+                        direction = RIGHT
+                    )
+                )
+
+                LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                        direction = UP
+                    )
+                )
+
+                UP -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                    )
+                )
+
+                RIGHT -> throw IllegalStateException("Car is on an up right down fork and its direction is right")
+            }
+
+            UpRightLeftFork -> when (car.direction) {
+                DOWN -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        column = car.position.column + 1,
+                        direction = RIGHT
+                    )
+                )
+
+                LEFT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.row - 1,
+                        direction = UP
+                    )
+                )
+
+                RIGHT -> state.moveCar(
+                    carIndex,
+                    car.position.copy(
+                        row = car.position.column + 1,
+                    )
+                )
+
+                UP -> throw IllegalStateException("Car is on an up right left fork and its direction is up")
+            }
         }
     }
 
@@ -287,13 +468,54 @@ class Solver {
                 emptyList()
             }
 
-            DownLeftUpFork -> TODO()
-            DownRightLeftFork -> TODO()
-            DownRightUpFork -> TODO()
-            UpLeftDownFork -> TODO()
-            UpLeftRightFork -> TODO()
-            UpRightDOWNFork -> TODO()
-            UpRightLeftFork -> TODO()
+            DownLeftUpFork -> if (car.direction == UP || car.direction == RIGHT || car.direction == DOWN) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            DownRightLeftFork -> if (car.direction == UP || car.direction == LEFT || car.direction == RIGHT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            DownRightUpFork -> if (car.direction == UP || car.direction == LEFT || car.direction == DOWN) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            UpLeftDownFork -> if (car.direction == DOWN || car.direction == RIGHT || car.direction == UP) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            UpLeftRightFork -> if (car.direction == DOWN || car.direction == RIGHT || car.direction == LEFT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            UpRightDownFork -> if (car.direction == DOWN || car.direction == LEFT || car.direction == UP) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
+
+            UpRightLeftFork -> if (car.direction == DOWN || car.direction == LEFT || car.direction == RIGHT) {
+                val newCars = activeCars.updatePosition(carIndex, newPosition)
+                listOf(copy(activeCars = newCars))
+            } else {
+                emptyList()
+            }
         }
     }
 

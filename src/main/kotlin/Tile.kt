@@ -35,7 +35,7 @@ sealed class Tile(val attachments: EnumSet<Direction>) {
     data object UpLeftRightFork : Tile(UP, LEFT, RIGHT)
     data object UpLeftDownFork : Tile(UP, LEFT, DOWN)
     data object UpRightLeftFork : Tile(UP, LEFT, RIGHT)
-    data object UpRightDOWNFork : Tile(UP, LEFT, DOWN)
+    data object UpRightDownFork : Tile(UP, LEFT, DOWN)
 
     // Other
     data object Obstacle : Tile()

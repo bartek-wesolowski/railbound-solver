@@ -73,6 +73,11 @@ object Solutions {
         val level1_8 = setOf(
             Board.fromRows(
                 arrayOf(HorizontalTrack, HorizontalTrack, DownRightLeftFork, EndingTrack),
+                arrayOf(Empty, DownRightTurn, UpLeftTurn, Empty),
+                arrayOf(HorizontalTrack, UpLeftTurn, Empty, Empty),
+            ),
+            Board.fromRows(
+                arrayOf(HorizontalTrack, HorizontalTrack, DownRightLeftFork, EndingTrack),
                 arrayOf(Empty, Empty, VerticalTrack, Empty),
                 arrayOf(HorizontalTrack, HorizontalTrack, UpLeftTurn, Empty),
             )
