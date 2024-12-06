@@ -1,16 +1,6 @@
 package com.bartoszwesolowski
 
-import com.bartoszwesolowski.Tile.DownLeftRightFork
-import com.bartoszwesolowski.Tile.DownLeftTurn
-import com.bartoszwesolowski.Tile.DownRightLeftFork
-import com.bartoszwesolowski.Tile.DownRightTurn
-import com.bartoszwesolowski.Tile.Empty
-import com.bartoszwesolowski.Tile.EndingTrack
-import com.bartoszwesolowski.Tile.HorizontalTrack
-import com.bartoszwesolowski.Tile.Obstacle
-import com.bartoszwesolowski.Tile.UpLeftTurn
-import com.bartoszwesolowski.Tile.UpRightTurn
-import com.bartoszwesolowski.Tile.VerticalTrack
+import com.bartoszwesolowski.Tile.*
 
 object Solutions {
     object World1 {
@@ -82,6 +72,13 @@ object Solutions {
                 arrayOf(HorizontalTrack, HorizontalTrack, UpLeftTurn, Empty),
             )
         )
+        val level1_9 = setOf(
+            Board.fromRows(
+                arrayOf(VerticalTrack, Obstacle, VerticalTrack, Empty, Empty),
+                arrayOf(VerticalTrack, Obstacle, VerticalTrack, Empty, Empty),
+                arrayOf(UpRightTurn, HorizontalTrack, UpRightLeftFork, HorizontalTrack, EndingTrack),
+            )
+        )
         val solutions = listOf(
             level1_1,
             level1_2,
@@ -91,6 +88,7 @@ object Solutions {
             level1_6,
             level1_7,
             level1_8,
+            level1_9,
         )
     }
 }

@@ -6,7 +6,6 @@ import com.bartoszwesolowski.Direction.LEFT
 import com.bartoszwesolowski.Direction.RIGHT
 import com.bartoszwesolowski.Direction.UP
 import com.bartoszwesolowski.Tile.*
-import kotlin.math.E
 
 object Levels {
     object World1 {
@@ -98,6 +97,18 @@ object Levels {
             ),
             tracks = 3
         )
+        val level1_9 = Level(
+            board = Board.fromRows(
+                arrayOf(VerticalTrack, Obstacle, VerticalTrack, Empty, Empty),
+                arrayOf(Empty, Obstacle, VerticalTrack, Empty, Empty),
+                arrayOf(Empty, Empty, Empty, HorizontalTrack, EndingTrack),
+            ),
+            cars = arrayListOf(
+                Car(1, Red, CarPosition(0, 2, DOWN)),
+                Car(2, Red, CarPosition(0, 0, DOWN)),
+            ),
+            tracks = 4
+        )
         val levels = listOf(
             level1_1,
             level1_2,
@@ -107,6 +118,7 @@ object Levels {
             level1_6,
             level1_7,
             level1_8,
+            level1_9,
         )
     }
 }
