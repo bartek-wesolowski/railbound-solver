@@ -1,5 +1,7 @@
 package com.bartoszwesolowski
 
+import com.bartoszwesolowski.Direction.*
+
 data class Board(val tiles: Array<Array<Tile>>) {
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
@@ -35,17 +37,33 @@ data class Board(val tiles: Array<Array<Tile>>) {
         if (column < 0 || column >= columns) return false
         if (tiles[row][column] !is Tile.Empty) return false
 
-        if (Direction.UP in tile.outgoingAttachments && row == 0) return false
-        if (Direction.DOWN in tile.outgoingAttachments && row == rows - 1) return false
-        if (Direction.LEFT in tile.outgoingAttachments && column == 0) return false
-        if (Direction.RIGHT in tile.outgoingAttachments && column == columns - 1) return false
+        if (UP in tile.outgoingAttachments && row == 0) return false
+        if (DOWN in tile.outgoingAttachments && row == rows - 1) return false
+        if (LEFT in tile.outgoingAttachments && column == 0) return false
+        if (RIGHT in tile.outgoingAttachments && column == columns - 1) return false
 
-        if (Direction.UP in tile.outgoingAttachments && tiles[row - 1][column] is Tile.Obstacle) return false
-        if (Direction.DOWN in tile.outgoingAttachments && tiles[row + 1][column] is Tile.Obstacle) return false
-        if (Direction.LEFT in tile.outgoingAttachments && tiles[row][column - 1] is Tile.Obstacle) return false
-        if (Direction.RIGHT in tile.outgoingAttachments && tiles[row][column + 1] is Tile.Obstacle) return false
+        if (
+            UP in tile.outgoingAttachments &&
+            tiles[row - 1][column] != Tile.Empty &&
+            DOWN !in tiles[row - 1][column].incomingAttachments
+        ) return false
+        if (
+            DOWN in tile.outgoingAttachments &&
+            tiles[row + 1][column] != Tile.Empty &&
+            UP !in tiles[row + 1][column].incomingAttachments
+        ) return false
+        if (
+            LEFT in tile.outgoingAttachments &&
+            tiles[row][column - 1] != Tile.Empty &&
+            RIGHT !in tiles[row][column - 1].incomingAttachments
+        ) return false
+        if (
+            RIGHT in tile.outgoingAttachments &&
+            tiles[row][column + 1] != Tile.Empty &&
+            LEFT !in tiles[row][column + 1].incomingAttachments
+        ) return false
 
-        return true // TODO add more checks
+        return true
     }
 
     fun with(row: Int, column: Int, tile: Tile): Board {
