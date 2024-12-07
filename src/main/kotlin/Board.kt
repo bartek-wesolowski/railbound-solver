@@ -66,6 +66,12 @@ data class Board(val tiles: Array<Array<Tile>>) {
         return true
     }
 
+    fun withInserted(row: Int, column: Int, direction: Direction, tile: Tile): Board {
+        // TODO possibly also modify the neighbors
+        // TODO check if the next tile is properly attached when moving cars
+        return with(row, column, tile)
+    }
+
     fun with(row: Int, column: Int, tile: Tile): Board {
         val newTiles = tiles.map { it.copyOf() }.toTypedArray()
         newTiles[row][column] = tile
