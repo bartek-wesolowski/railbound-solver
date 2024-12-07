@@ -88,6 +88,13 @@ object Solutions {
                 arrayOf(FixedHorizontalTrack, HorizontalTrack, UpLeftTurn, Empty, Empty),
             )
         )
+        val level1_11 = setOf(
+            Board.fromRows(
+                arrayOf(DownRightTurn, FixedHorizontalTrack, DownLeftTurn, Empty),
+                arrayOf(VerticalTrack, Obstacle, UpRightTurn, EndingTrack),
+                arrayOf(UpRightTurn, FixedHorizontalTrack, Empty, Empty),
+            )
+        )
         val solutions = listOf(
             level1_1,
             level1_2,
@@ -99,6 +106,7 @@ object Solutions {
             level1_8,
             level1_9,
             level1_10,
+            level1_11,
         )
     }
 }
