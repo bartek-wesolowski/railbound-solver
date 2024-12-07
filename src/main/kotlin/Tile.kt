@@ -6,10 +6,18 @@ import com.bartoszwesolowski.Direction.RIGHT
 import com.bartoszwesolowski.Direction.UP
 import java.util.EnumSet
 
-sealed class Tile(val attachments: EnumSet<Direction>) {
-    constructor(vararg directions: Direction) : this(
-        if (directions.isNotEmpty()) {
-            EnumSet.copyOf(directions.asList())
+sealed class Tile(
+    val incomingAttachments: EnumSet<Direction>,
+    val outgoingAttachments: EnumSet<Direction>,
+) {
+    constructor(vararg outgoingAttachmentDirections: Direction) : this(
+        incomingAttachments = if (outgoingAttachmentDirections.isNotEmpty()) {
+            EnumSet.copyOf(outgoingAttachmentDirections.asList().map { it.opposite })
+        } else {
+            EnumSet.noneOf(Direction::class.java)
+        },
+        outgoingAttachments = if (outgoingAttachmentDirections.isNotEmpty()) {
+            EnumSet.copyOf(outgoingAttachmentDirections.asList())
         } else {
             EnumSet.noneOf(Direction::class.java)
         }

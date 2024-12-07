@@ -35,15 +35,15 @@ data class Board(val tiles: Array<Array<Tile>>) {
         if (column < 0 || column >= columns) return false
         if (tiles[row][column] !is Tile.Empty) return false
 
-        if (Direction.UP in tile.attachments && row == 0) return false
-        if (Direction.DOWN in tile.attachments && row == rows - 1) return false
-        if (Direction.LEFT in tile.attachments && column == 0) return false
-        if (Direction.RIGHT in tile.attachments && column == columns - 1) return false
+        if (Direction.UP in tile.outgoingAttachments && row == 0) return false
+        if (Direction.DOWN in tile.outgoingAttachments && row == rows - 1) return false
+        if (Direction.LEFT in tile.outgoingAttachments && column == 0) return false
+        if (Direction.RIGHT in tile.outgoingAttachments && column == columns - 1) return false
 
-        if (Direction.UP in tile.attachments && tiles[row - 1][column] is Tile.Obstacle) return false
-        if (Direction.DOWN in tile.attachments && tiles[row + 1][column] is Tile.Obstacle) return false
-        if (Direction.LEFT in tile.attachments && tiles[row][column - 1] is Tile.Obstacle) return false
-        if (Direction.RIGHT in tile.attachments && tiles[row][column + 1] is Tile.Obstacle) return false
+        if (Direction.UP in tile.outgoingAttachments && tiles[row - 1][column] is Tile.Obstacle) return false
+        if (Direction.DOWN in tile.outgoingAttachments && tiles[row + 1][column] is Tile.Obstacle) return false
+        if (Direction.LEFT in tile.outgoingAttachments && tiles[row][column - 1] is Tile.Obstacle) return false
+        if (Direction.RIGHT in tile.outgoingAttachments && tiles[row][column + 1] is Tile.Obstacle) return false
 
         return true // TODO add more checks
     }

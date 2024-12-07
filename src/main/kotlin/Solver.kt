@@ -51,10 +51,10 @@ class Solver {
     private fun getMoves(state: SolverState, carIndex: Int): List<SolverState> {
         val car = state.activeCars[carIndex]
         return when (state.board[car.position.row, car.position.column]) {
-            is Empty -> throw IllegalStateException("Car is not on a track")
-            is EndingTrack -> throw IllegalStateException("Car is on an ending track")
-            is Obstacle -> throw IllegalStateException("Car is on an obstacle")
-            is HorizontalTrack -> when (car.direction) {
+            Empty -> throw IllegalStateException("Car is not on a track")
+            EndingTrack -> throw IllegalStateException("Car is on an ending track")
+            Obstacle -> throw IllegalStateException("Car is on an obstacle")
+            HorizontalTrack -> when (car.direction) {
                 LEFT -> {
                     val newPosition = car.position.copy(column = car.position.column - 1)
                     state.moveCar(carIndex, newPosition)
@@ -69,7 +69,7 @@ class Solver {
                     throw IllegalStateException("Car is on a horizontal track but its direction is not horizontal")
             }
 
-            is VerticalTrack -> {
+            VerticalTrack -> {
                 when (car.direction) {
                     UP -> {
                         val newPosition = car.position.copy(row = car.position.row - 1)
@@ -393,9 +393,9 @@ class Solver {
         if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
         val car = activeCars[carIndex].copy(position = newPosition)
         val newCars = activeCars.updatePosition(carIndex, newPosition)
-        return when (board[newPosition.row, newPosition.column]) {
-            is Obstacle -> emptyList()
-            is Empty -> availableTilesByDirection.getValue(car.direction)
+        return when (val tile = board[newPosition.row, newPosition.column]) {
+            Obstacle -> emptyList()
+            Empty -> availableTilesByDirection.getValue(car.direction)
                 .filter { board.canInsert(newPosition.row, newPosition.column, it) }
                 .map {
                     copy(
@@ -405,104 +405,33 @@ class Solver {
                     )
                 }
 
-            is EndingTrack -> {
-                if (
-                    (car.direction == LEFT || car.direction == RIGHT) &&
-                    expectedCar[car.color] == car.number
-                ) {
-                    listOf(
-                        copy(
-                            activeCars = newCars,
-                            expectedCar = EnumMap(expectedCar).apply { put(car.color, get(car.color)!! + 1) })
-                    )
-                } else {
-                    emptyList()
-                }
-            }
-
-            is HorizontalTrack -> {
-                if (car.direction == LEFT || car.direction == RIGHT) {
-                    listOf(copy(activeCars = newCars))
-                } else {
-                    emptyList()
-                }
-            }
-
-            is VerticalTrack -> {
-                if (car.direction == UP || car.direction == DOWN) {
-                    listOf(copy(activeCars = newCars))
-                } else {
-                    emptyList()
-                }
-            }
-
-            DownLeftTurn -> if (car.direction == UP || car.direction == RIGHT) {
-                listOf(copy(activeCars = newCars))
+            EndingTrack -> if (
+                (car.direction in tile.incomingAttachments) &&
+                expectedCar[car.color] == car.number
+            ) {
+                listOf(
+                    copy(
+                        activeCars = ArrayList(activeCars).apply { removeAt(carIndex) },
+                        expectedCar = EnumMap(expectedCar).apply { put(car.color, get(car.color)!! + 1) })
+                )
             } else {
                 emptyList()
             }
 
-            DownRightTurn -> if (car.direction == UP || car.direction == LEFT) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            UpLeftTurn -> if (car.direction == DOWN || car.direction == RIGHT) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            UpRightTurn -> if (car.direction == DOWN || car.direction == LEFT) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            DownLeftRightFork -> if (car.direction == UP || car.direction == RIGHT || car.direction == LEFT) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            DownLeftUpFork -> if (car.direction == UP || car.direction == RIGHT || car.direction == DOWN) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            DownRightLeftFork -> if (car.direction == UP || car.direction == LEFT || car.direction == RIGHT) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            DownRightUpFork -> if (car.direction == UP || car.direction == LEFT || car.direction == DOWN) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            UpLeftDownFork -> if (car.direction == DOWN || car.direction == RIGHT || car.direction == UP) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            UpLeftRightFork -> if (car.direction == DOWN || car.direction == RIGHT || car.direction == LEFT) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            UpRightDownFork -> if (car.direction == DOWN || car.direction == LEFT || car.direction == UP) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
-            }
-
-            UpRightLeftFork -> if (car.direction == DOWN || car.direction == LEFT || car.direction == RIGHT) {
+            HorizontalTrack,
+            VerticalTrack,
+            DownLeftTurn,
+            DownRightTurn,
+            UpLeftTurn,
+            UpRightTurn,
+            DownLeftRightFork,
+            DownLeftUpFork,
+            DownRightLeftFork,
+            DownRightUpFork,
+            UpLeftDownFork,
+            UpLeftRightFork,
+            UpRightDownFork,
+            UpRightLeftFork -> if (car.direction in tile.incomingAttachments) {
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
