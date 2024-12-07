@@ -36,11 +36,16 @@ class Solver {
         for (carIndex in 1..activeCars.lastIndex) {
             val updatedNextStates = mutableListOf<SolverState>()
             for (state in nextStates) {
-                updatedNextStates.addAll(getMoves(state, carIndex))
+                val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
+                updatedNextStates.addAll(getMoves(state, adjustedCarIndex))
             }
-            nextStates = updatedNextStates
+            nextStates = updatedNextStates.filterNot { it.hasCarCollision() }
         }
         return nextStates
+    }
+
+    private fun SolverState.hasCarCollision(): Boolean {
+        return activeCars.groupBy { it.position }.any { it.value.size > 1 }
     }
 
     private fun getMoves(state: SolverState, carIndex: Int): List<SolverState> {
