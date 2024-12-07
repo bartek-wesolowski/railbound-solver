@@ -45,7 +45,7 @@ class Solver {
     }
 
     private fun SolverState.hasCarCollision(): Boolean {
-        return activeCars.groupBy { it.position }.any { it.value.size > 1 }
+        return activeCars.groupBy { it.position.row to it.position.column }.any { it.value.size > 1 }
     }
 
     private fun getMoves(state: SolverState, carIndex: Int): List<SolverState> {
