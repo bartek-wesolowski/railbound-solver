@@ -24,6 +24,10 @@ sealed class Tile(
     data object Empty : Tile()
 
     // Straight tracks
+    data object FixedVerticalTrack : Tile(UP, DOWN)
+
+    data object FixedHorizontalTrack : Tile(LEFT, RIGHT)
+
     data object VerticalTrack : Tile(
         incomingDirections = EnumSet.of(UP, DOWN),
         secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
@@ -41,6 +45,14 @@ sealed class Tile(
     ), ResetAfterModification
 
     // Turns
+    data object FixedDownRightTurn : Tile(UP, LEFT)
+
+    data object FixedDownLeftTurn : Tile(UP, RIGHT)
+
+    data object FixedUpRightTurn : Tile(DOWN, LEFT)
+
+    data object FixedUpLeftTurn : Tile(DOWN, RIGHT)
+
     data object DownRightTurn : Tile(
         incomingDirections = EnumSet.of(UP, LEFT),
         secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {

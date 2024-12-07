@@ -54,7 +54,7 @@ class Solver {
             Empty -> throw IllegalStateException("Car is not on a track")
             EndingTrack -> throw IllegalStateException("Car is on an ending track")
             Obstacle -> throw IllegalStateException("Car is on an obstacle")
-            HorizontalTrack -> when (car.direction) {
+            FixedHorizontalTrack, HorizontalTrack -> when (car.direction) {
                 LEFT -> {
                     val newPosition = car.position.copy(column = car.position.column - 1)
                     state.moveCar(carIndex, newPosition)
@@ -69,7 +69,7 @@ class Solver {
                     throw IllegalStateException("Car is on a horizontal track but its direction is not horizontal")
             }
 
-            VerticalTrack -> {
+            FixedVerticalTrack, VerticalTrack -> {
                 when (car.direction) {
                     UP -> {
                         val newPosition = car.position.copy(row = car.position.row - 1)
@@ -86,7 +86,7 @@ class Solver {
                 }
             }
 
-            DownLeftTurn -> when (car.direction) {
+            FixedDownLeftTurn, DownLeftTurn -> when (car.direction) {
                 UP -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -107,7 +107,7 @@ class Solver {
                 LEFT -> throw IllegalStateException("Car is on a down left turn and its direction is left")
             }
 
-            DownRightTurn -> when (car.direction) {
+            FixedDownRightTurn, DownRightTurn -> when (car.direction) {
                 UP -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -128,7 +128,7 @@ class Solver {
                 RIGHT -> throw IllegalStateException("Car is on a down right turn and its direction is right")
             }
 
-            UpLeftTurn -> when (car.direction) {
+            FixedUpLeftTurn, UpLeftTurn -> when (car.direction) {
                 DOWN -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -149,7 +149,7 @@ class Solver {
                 LEFT -> throw IllegalStateException("Car is on an up left turn and its direction is left")
             }
 
-            UpRightTurn -> when (car.direction) {
+            FixedUpRightTurn, UpRightTurn -> when (car.direction) {
                 DOWN -> state.moveCar(
                     carIndex,
                     car.position.copy(
@@ -418,6 +418,12 @@ class Solver {
                 emptyList()
             }
 
+            FixedHorizontalTrack,
+            FixedVerticalTrack,
+            FixedDownLeftTurn,
+            FixedDownRightTurn,
+            FixedUpLeftTurn,
+            FixedUpRightTurn,
             HorizontalTrack,
             VerticalTrack,
             DownLeftTurn,

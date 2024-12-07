@@ -11,7 +11,7 @@ object Levels {
     object World1 {
         val level1_1 = Level(
             board = Board.fromRows(
-                arrayOf(HorizontalTrack, Empty, Empty, Empty, EndingTrack),
+                arrayOf(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
@@ -22,7 +22,7 @@ object Levels {
             board = Board.fromRows(
                 arrayOf(Empty, Empty, Empty, Obstacle, Empty, EndingTrack),
                 arrayOf(Empty, Obstacle, Empty, Obstacle, Empty, Obstacle),
-                arrayOf(VerticalTrack, Obstacle, Empty, Empty, Empty, Obstacle),
+                arrayOf(FixedVerticalTrack, Obstacle, Empty, Empty, Empty, Obstacle),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(2, 0, UP)),
@@ -31,9 +31,9 @@ object Levels {
         )
         val level1_3 = Level(
             board = Board.fromRows(
-                arrayOf(HorizontalTrack, DownLeftRightFork, HorizontalTrack, Empty, EndingTrack),
-                arrayOf(Empty, VerticalTrack, Empty, VerticalTrack, Empty),
-                arrayOf(Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty),
+                arrayOf(FixedHorizontalTrack, DownLeftRightFork, FixedHorizontalTrack, Empty, EndingTrack),
+                arrayOf(Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty),
+                arrayOf(Empty, FixedUpRightTurn, FixedHorizontalTrack, FixedUpLeftTurn, Empty),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
@@ -42,11 +42,11 @@ object Levels {
         )
         val level1_4 = Level(
             board = Board.fromRows(
-                arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
-                arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
-                arrayOf(HorizontalTrack, Empty, Obstacle, Empty, EndingTrack),
-                arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
-                arrayOf(Empty, Empty, VerticalTrack, Empty, Empty),
+                arrayOf(Empty, Empty, FixedVerticalTrack, Empty, Empty),
+                arrayOf(Empty, FixedDownRightTurn, Empty, FixedDownLeftTurn, Empty),
+                arrayOf(FixedHorizontalTrack, Empty, Obstacle, Empty, EndingTrack),
+                arrayOf(Empty, FixedUpRightTurn, Empty, FixedUpLeftTurn, Empty),
+                arrayOf(Empty, Empty, FixedVerticalTrack, Empty, Empty),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(2, 0, RIGHT)),
@@ -57,7 +57,7 @@ object Levels {
             board = Board.fromRows(
                 arrayOf(Empty, Empty, Empty, EndingTrack),
                 arrayOf(Empty, Obstacle, Obstacle, Obstacle),
-                arrayOf(Empty, Empty, Empty, HorizontalTrack),
+                arrayOf(Empty, Empty, Empty, FixedHorizontalTrack),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(2, 3, LEFT)),
@@ -67,7 +67,7 @@ object Levels {
         val level1_6 = Level(
             board = Board.fromRows(
                 arrayOf(Empty, Empty, Empty, Empty, Empty),
-                arrayOf(HorizontalTrack, Empty, Empty, Empty, EndingTrack),
+                arrayOf(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack),
                 arrayOf(Empty, Empty, Empty, Empty, Empty),
             ),
             cars = arrayListOf(
@@ -77,7 +77,7 @@ object Levels {
         )
         val level1_7 = Level(
             board = Board.fromRows(
-                arrayOf(VerticalTrack, Empty, Empty),
+                arrayOf(FixedVerticalTrack, Empty, Empty),
                 arrayOf(Empty, Obstacle, Empty),
                 arrayOf(Empty, Empty, EndingTrack),
             ),
@@ -88,9 +88,9 @@ object Levels {
         )
         val level1_8 = Level(
             board = Board.fromRows(
-                arrayOf(HorizontalTrack, HorizontalTrack, DownRightLeftFork, EndingTrack),
+                arrayOf(FixedHorizontalTrack, FixedHorizontalTrack, DownRightLeftFork, EndingTrack),
                 arrayOf(Empty, Empty, Empty, Empty),
-                arrayOf(HorizontalTrack, Empty, Empty, Empty),
+                arrayOf(FixedHorizontalTrack, Empty, Empty, Empty),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(2, 0, RIGHT)),
@@ -99,9 +99,9 @@ object Levels {
         )
         val level1_9 = Level(
             board = Board.fromRows(
-                arrayOf(VerticalTrack, Obstacle, VerticalTrack, Empty, Empty),
-                arrayOf(Empty, Obstacle, VerticalTrack, Empty, Empty),
-                arrayOf(Empty, Empty, Empty, HorizontalTrack, EndingTrack),
+                arrayOf(FixedVerticalTrack, Obstacle, FixedVerticalTrack, Empty, Empty),
+                arrayOf(Empty, Obstacle, FixedVerticalTrack, Empty, Empty),
+                arrayOf(Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(0, 2, DOWN)),
@@ -111,11 +111,11 @@ object Levels {
         )
         val level1_10 = Level(
             board = Board.fromRows(
-                arrayOf(HorizontalTrack, Empty, Empty, Empty, Empty),
-                arrayOf(Empty, DownRightTurn, Empty, DownLeftTurn, Empty),
-                arrayOf(Empty, VerticalTrack, Obstacle, UpRightDownFork, EndingTrack),
-                arrayOf(Empty, UpRightTurn, Empty, UpLeftTurn, Empty),
-                arrayOf(HorizontalTrack, Empty, Empty, Empty, Empty),
+                arrayOf(FixedHorizontalTrack, Empty, Empty, Empty, Empty),
+                arrayOf(Empty, FixedDownRightTurn, Empty, FixedDownLeftTurn, Empty),
+                arrayOf(Empty, FixedVerticalTrack, Obstacle, UpRightDownFork, EndingTrack),
+                arrayOf(Empty, FixedUpRightTurn, Empty, FixedUpLeftTurn, Empty),
+                arrayOf(FixedHorizontalTrack, Empty, Empty, Empty, Empty),
             ),
             cars = arrayListOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
