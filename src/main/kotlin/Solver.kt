@@ -392,6 +392,7 @@ class Solver {
         if (newPosition.row < 0 || newPosition.row >= board.rows) return emptyList()
         if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
         val car = activeCars[carIndex].copy(position = newPosition)
+        val newCars = activeCars.updatePosition(carIndex, newPosition)
         return when (board[newPosition.row, newPosition.column]) {
             is Obstacle -> emptyList()
             is Empty -> availableTilesByDirection.getValue(car.direction)
@@ -409,7 +410,6 @@ class Solver {
                     (car.direction == LEFT || car.direction == RIGHT) &&
                     expectedCar[car.color] == car.number
                 ) {
-                    val newCars = ArrayList(activeCars).apply { removeAt(carIndex) }
                     listOf(
                         copy(
                             activeCars = newCars,
@@ -422,7 +422,6 @@ class Solver {
 
             is HorizontalTrack -> {
                 if (car.direction == LEFT || car.direction == RIGHT) {
-                    val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
                 } else {
                     emptyList()
@@ -431,7 +430,6 @@ class Solver {
 
             is VerticalTrack -> {
                 if (car.direction == UP || car.direction == DOWN) {
-                    val newCars = activeCars.updatePosition(carIndex, newPosition)
                     listOf(copy(activeCars = newCars))
                 } else {
                     emptyList()
@@ -439,84 +437,72 @@ class Solver {
             }
 
             DownLeftTurn -> if (car.direction == UP || car.direction == RIGHT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             DownRightTurn -> if (car.direction == UP || car.direction == LEFT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             UpLeftTurn -> if (car.direction == DOWN || car.direction == RIGHT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             UpRightTurn -> if (car.direction == DOWN || car.direction == LEFT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             DownLeftRightFork -> if (car.direction == UP || car.direction == RIGHT || car.direction == LEFT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             DownLeftUpFork -> if (car.direction == UP || car.direction == RIGHT || car.direction == DOWN) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             DownRightLeftFork -> if (car.direction == UP || car.direction == LEFT || car.direction == RIGHT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             DownRightUpFork -> if (car.direction == UP || car.direction == LEFT || car.direction == DOWN) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             UpLeftDownFork -> if (car.direction == DOWN || car.direction == RIGHT || car.direction == UP) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             UpLeftRightFork -> if (car.direction == DOWN || car.direction == RIGHT || car.direction == LEFT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             UpRightDownFork -> if (car.direction == DOWN || car.direction == LEFT || car.direction == UP) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
             }
 
             UpRightLeftFork -> if (car.direction == DOWN || car.direction == LEFT || car.direction == RIGHT) {
-                val newCars = activeCars.updatePosition(carIndex, newPosition)
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()
