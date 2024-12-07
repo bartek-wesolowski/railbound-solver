@@ -7,4 +7,8 @@ data class SolverState(
     val activeCars: ArrayList<Car>,
     val tracksUsed: Int,
     val expectedCar: EnumMap<CarColor, Int>
-)
+) {
+    override fun toString(): String {
+        return "SolverState(\nboard=$board,\nactiveCars=$activeCars,\ntracksUsed=$tracksUsed,\nexpectedCar=$expectedCar\n)"
+    }
+}

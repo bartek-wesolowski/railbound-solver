@@ -21,7 +21,7 @@ class Solver {
             }
             statesChecked.add(state)
             val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
-            println("next states: $nextStates")
+            if (nextStates.isEmpty()) println("no next states")
             statesToCheck.addAll(nextStates.toSet() - statesChecked)
         }
         return solutions
@@ -325,7 +325,7 @@ class Solver {
                 LEFT -> state.moveCar(
                     carIndex,
                     car.position.copy(
-                        row = car.position.column - 1,
+                        column = car.position.column - 1,
                     )
                 )
 
@@ -379,7 +379,7 @@ class Solver {
                 RIGHT -> state.moveCar(
                     carIndex,
                     car.position.copy(
-                        row = car.position.column + 1,
+                        column = car.position.column + 1,
                     )
                 )
 
@@ -406,7 +406,7 @@ class Solver {
                 }
 
             EndingTrack -> if (
-                (car.direction in tile.incomingAttachments) &&
+                (car.direction in tile.incomingDirections) &&
                 expectedCar[car.color] == car.number
             ) {
                 listOf(
@@ -423,7 +423,24 @@ class Solver {
             DownLeftTurn,
             DownRightTurn,
             UpLeftTurn,
-            UpRightTurn,
+            UpRightTurn -> when (car.direction) {
+                in tile.incomingDirections -> {
+                    listOf(copy(activeCars = newCars))
+                }
+
+                in tile.secondaryIncomingDirections -> {
+//                    if (tile is ResetAfterModification) TODO()
+                    tile.secondaryIncomingDirections.getValue(car.direction).map { modifiedTile ->
+                        copy(
+                            board = board.with(newPosition.row, newPosition.column, modifiedTile),
+                            activeCars = newCars,
+                        )
+                    }
+                }
+
+                else -> emptyList()
+            }
+
             DownLeftRightFork,
             DownLeftUpFork,
             DownRightLeftFork,
@@ -431,7 +448,7 @@ class Solver {
             UpLeftDownFork,
             UpLeftRightFork,
             UpRightDownFork,
-            UpRightLeftFork -> if (car.direction in tile.incomingAttachments) {
+            UpRightLeftFork -> if (car.direction in tile.incomingDirections) {
                 listOf(copy(activeCars = newCars))
             } else {
                 emptyList()

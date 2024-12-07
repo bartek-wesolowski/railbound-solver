@@ -28,7 +28,7 @@ data class Board(val tiles: Array<Array<Tile>>) {
         for (row in tiles) {
             sb.appendLine("\t${row.contentDeepToString()}")
         }
-        sb.append("]\n")
+        sb.append("]")
         return sb.toString()
     }
 
@@ -37,30 +37,30 @@ data class Board(val tiles: Array<Array<Tile>>) {
         if (column < 0 || column >= columns) return false
         if (tiles[row][column] !is Tile.Empty) return false
 
-        if (UP in tile.outgoingAttachments && row == 0) return false
-        if (DOWN in tile.outgoingAttachments && row == rows - 1) return false
-        if (LEFT in tile.outgoingAttachments && column == 0) return false
-        if (RIGHT in tile.outgoingAttachments && column == columns - 1) return false
+        if (DOWN in tile.incomingDirections && row == 0) return false
+        if (UP in tile.incomingDirections && row == rows - 1) return false
+        if (RIGHT in tile.incomingDirections && column == 0) return false
+        if (LEFT in tile.incomingDirections && column == columns - 1) return false
 
         if (
-            UP in tile.outgoingAttachments &&
+            DOWN in tile.incomingDirections &&
             tiles[row - 1][column] != Tile.Empty &&
-            DOWN !in tiles[row - 1][column].incomingAttachments
+            !tiles[row - 1][column].isValidIncomingDirection(UP)
         ) return false
         if (
-            DOWN in tile.outgoingAttachments &&
+            UP in tile.incomingDirections &&
             tiles[row + 1][column] != Tile.Empty &&
-            UP !in tiles[row + 1][column].incomingAttachments
+            !tiles[row + 1][column].isValidIncomingDirection(DOWN)
         ) return false
         if (
-            LEFT in tile.outgoingAttachments &&
+            RIGHT in tile.incomingDirections &&
             tiles[row][column - 1] != Tile.Empty &&
-            RIGHT !in tiles[row][column - 1].incomingAttachments
+            !tiles[row][column - 1].isValidIncomingDirection(LEFT)
         ) return false
         if (
-            RIGHT in tile.outgoingAttachments &&
+            LEFT in tile.incomingDirections &&
             tiles[row][column + 1] != Tile.Empty &&
-            LEFT !in tiles[row][column + 1].incomingAttachments
+            !tiles[row][column + 1].isValidIncomingDirection(RIGHT)
         ) return false
 
         return true
