@@ -61,7 +61,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -69,7 +69,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -77,7 +77,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -85,7 +85,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -99,7 +99,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -113,7 +113,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -127,7 +127,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -141,7 +141,7 @@ sealed class Tile(
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
@@ -151,7 +151,7 @@ sealed class Tile(
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
             LEFT -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object DownLeftUpFork : Tile(UP, RIGHT, DOWN) {
@@ -159,7 +159,7 @@ sealed class Tile(
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
             DOWN -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object DownRightLeftFork : Tile(UP, RIGHT, LEFT) {
@@ -167,7 +167,7 @@ sealed class Tile(
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
             RIGHT -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object DownRightUpFork : Tile(UP, RIGHT, DOWN) {
@@ -175,7 +175,7 @@ sealed class Tile(
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
             DOWN -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object UpLeftRightFork : Tile(DOWN, RIGHT, LEFT) {
@@ -183,7 +183,7 @@ sealed class Tile(
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
             LEFT -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object UpLeftDownFork : Tile(DOWN, RIGHT, UP) {
@@ -191,7 +191,7 @@ sealed class Tile(
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
             UP -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object UpRightLeftFork : Tile(DOWN, RIGHT, LEFT) {
@@ -199,7 +199,7 @@ sealed class Tile(
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
             RIGHT -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
     data object UpRightDownFork : Tile(DOWN, RIGHT, UP) {
@@ -207,7 +207,7 @@ sealed class Tile(
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
             UP -> position.moveForward()
-            else -> throw IllegalStateException("Invalid direction: ${position.direction}")
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
 
