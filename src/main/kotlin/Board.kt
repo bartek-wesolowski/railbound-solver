@@ -1,8 +1,14 @@
 package com.bartoszwesolowski
 
-import com.bartoszwesolowski.Direction.*
+import com.bartoszwesolowski.Direction.DOWN
+import com.bartoszwesolowski.Direction.LEFT
+import com.bartoszwesolowski.Direction.RIGHT
+import com.bartoszwesolowski.Direction.UP
+import com.danrusu.pods4k.immutableArrays.ImmutableArray
+import com.danrusu.pods4k.immutableArrays.buildImmutableArray
+import com.danrusu.pods4k.immutableArrays.toImmutableArray
 
-data class Board(val tiles: Array<Array<Tile>>) {
+data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
     }
@@ -10,23 +16,10 @@ data class Board(val tiles: Array<Array<Tile>>) {
     val rows: Int = tiles.size
     val columns: Int = tiles.first().size
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Board
-
-        return tiles.contentDeepEquals(other.tiles)
-    }
-
-    override fun hashCode(): Int {
-        return tiles.contentDeepHashCode()
-    }
-
     override fun toString(): String {
         val sb = StringBuilder("[\n")
         for (row in tiles) {
-            sb.appendLine("\t${row.contentDeepToString()}")
+            sb.appendLine("\t$row")
         }
         sb.append("]")
         return sb.toString()
@@ -73,14 +66,41 @@ data class Board(val tiles: Array<Array<Tile>>) {
     }
 
     fun with(row: Int, column: Int, tile: Tile): Board {
-        val newTiles = tiles.map { it.copyOf() }.toTypedArray()
-        newTiles[row][column] = tile
+        val newTiles = buildImmutableArray(tiles.size) {
+            for (r in tiles.indices) {
+                val tilesRow = tiles[r]
+                if (r != row) {
+                    add(tilesRow)
+                } else {
+                    add(
+                        buildImmutableArray(tilesRow.size) {
+                            for (c in tilesRow.indices) {
+                                if (c != column) {
+                                    add(tilesRow[c])
+                                } else {
+                                    add(tile)
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        }
         return Board(newTiles)
     }
 
     companion object {
-        fun fromRows(vararg rows: Array<Tile>): Board {
-            return Board(arrayOf(*rows))
+        fun buildBoard(
+            rows: Int,
+            initializer: ImmutableArray.Builder<ImmutableArray<Tile>>.() -> Unit
+        ) = Board(
+            buildImmutableArray(rows) {
+                initializer()
+            }
+        )
+
+        fun ImmutableArray.Builder<ImmutableArray<Tile>>.row(vararg tiles: Tile) {
+            add(tiles.toImmutableArray())
         }
     }
 }
