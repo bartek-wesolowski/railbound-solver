@@ -100,7 +100,7 @@ object Solutions {
         val level1_11A = setOf(
             buildBoard(rows = 7) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, FixedHorizontalTrack, DownRightLeftFork, Empty, Empty, Empty)
+                row(Empty, FixedHorizontalTrack, DownRightLeftFork, DownLeftTurn, Empty, Empty)
                 row(Empty, Empty, VerticalTrack, VerticalTrack, Obstacle, Empty)
                 row(Empty, FixedHorizontalTrack, UpLeftDownFork, UpRightTurn, HorizontalTrack, EndingTrack)
                 row(Empty, Empty, VerticalTrack, Empty, Obstacle, Empty)
