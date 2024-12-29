@@ -42,7 +42,7 @@ fun App(
 }
 
 fun main() = application {
-    val level = Levels.World1.level1_12A
+    val level = Levels.World1.level1_13
     val solver = Solver()
     Window(
         title = "Railbound Solver",

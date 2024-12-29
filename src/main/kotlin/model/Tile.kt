@@ -167,7 +167,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownRightUpFork : Tile(UP, RIGHT, DOWN) {
+    data object DownRightUpFork : Tile(UP, LEFT, DOWN) {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -199,7 +199,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpRightDownFork : Tile(DOWN, RIGHT, UP) {
+    data object UpRightDownFork : Tile(DOWN, LEFT, UP) {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
