@@ -24,18 +24,16 @@ fun App(
 ) {
     MaterialTheme {
         val iterator by remember { mutableStateOf(solverStates.iterator()) }
-        if (iterator.hasNext()) {
-            var state by remember { mutableStateOf(iterator.next()) }
-            SolverState(
-                state = state,
-                tileSize = 100.dp,
-                modifier = Modifier.onClick {
-                    if (iterator.hasNext()) {
-                        state = iterator.next()
-                    }
+        var state by remember { mutableStateOf(iterator.next()) }
+        SolverState(
+            state = state,
+            tileSize = 100.dp,
+            modifier = Modifier.onClick {
+                if (iterator.hasNext()) {
+                    state = iterator.next()
                 }
-            )
-        }
+            }
+        )
     }
 }
 

@@ -43,12 +43,12 @@ class Solver {
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val (state, depth) = statesToCheck.poll()
+            yield(state)
             if (state.isSolved()) {
                 solutions.add(state.board)
                 continue
             }
             statesChecked.add(state)
-            yield(state)
             val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
             statesToCheck.addAll((nextStates.toSet() - statesChecked).map { it to depth + 1 })
         }
