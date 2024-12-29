@@ -18,14 +18,12 @@ class Solver {
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.poll()
-            println("checking $state")
             if (state.isSolved()) {
                 solutions.add(state.board)
                 continue
             }
             statesChecked.add(state)
             val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
-            if (nextStates.isEmpty()) println("no next states")
             statesToCheck.addAll(nextStates.toSet() - statesChecked)
         }
         return solutions
