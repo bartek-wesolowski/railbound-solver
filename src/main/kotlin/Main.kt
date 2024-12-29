@@ -9,6 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import model.Levels
+import solver.Solver
 
 @Composable
 @Preview
@@ -25,6 +27,8 @@ fun App() {
 }
 
 fun main() = application {
+    val solver = Solver()
+    solver.findSolutions(Levels.World1.level1_11A)
     Window(onCloseRequest = ::exitApplication) {
         App()
     }

@@ -3,7 +3,6 @@ package compose
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -22,7 +21,7 @@ private const val trackStrokeWidthPercent = 0.05f
 @Composable
 fun Tile(
     tile: Tile,
-    size: Dp = 100.dp
+    size: Dp
 ) {
     Canvas(modifier = Modifier.size(size)) {
         drawBorder()
@@ -206,9 +205,8 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 @Preview
 @Composable
 private fun TilePreview() {
-    MaterialTheme {
-        Tile(
-            tile = UpLeftTurn
-        )
-    }
+    Tile(
+        tile = UpLeftTurn,
+        size = 100.dp
+    )
 }
