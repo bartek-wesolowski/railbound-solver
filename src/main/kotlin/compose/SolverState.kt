@@ -16,8 +16,9 @@ import java.util.EnumMap
 fun SolverState(
     state: SolverState,
     tileSize: Dp,
+    modifier: Modifier = Modifier,
 ) {
-    Box {
+    Box(modifier) {
         Board(state.board, tileSize)
         state.activeCars.forEach { car ->
             Car(

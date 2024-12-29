@@ -31,6 +31,29 @@ class Solver {
         return solutions
     }
 
+    fun getSolverStates(level: Level): Sequence<SolverState> = sequence {
+        val statesToCheck = PriorityQueue(Comparator<Pair<SolverState, Int>> { p1, p2 ->
+            val depth1 = p1.second
+            val depth2 = p2.second
+            depth2.compareTo(depth1)
+        })
+        val statesChecked = mutableSetOf<SolverState>()
+        val expectedCar = EnumMap(level.cars.map { it.color }.toSet().associateWith { 1 })
+        statesToCheck.add(SolverState(level.board, level.cars, 0, expectedCar) to 1)
+        val solutions = mutableSetOf<Board>()
+        while (statesToCheck.isNotEmpty()) {
+            val (state, depth) = statesToCheck.poll()
+            if (state.isSolved()) {
+                solutions.add(state.board)
+                continue
+            }
+            statesChecked.add(state)
+            yield(state)
+            val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
+            statesToCheck.addAll((nextStates.toSet() - statesChecked).map { it to depth + 1 })
+        }
+    }
+
     private fun SolverState.isSolved(): Boolean {
         return activeCars.isEmpty()
     }
