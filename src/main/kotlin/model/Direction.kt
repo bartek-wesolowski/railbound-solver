@@ -1,4 +1,4 @@
-package com.bartoszwesolowski
+package model
 
 enum class Direction {
     UP, DOWN, LEFT, RIGHT

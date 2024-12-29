@@ -1,9 +1,6 @@
-package com.bartoszwesolowski
+package model
 
-import com.bartoszwesolowski.Direction.DOWN
-import com.bartoszwesolowski.Direction.LEFT
-import com.bartoszwesolowski.Direction.RIGHT
-import com.bartoszwesolowski.Direction.UP
+import model.Direction.*
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.toImmutableArray

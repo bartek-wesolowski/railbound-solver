@@ -1,7 +1,11 @@
-package com.bartoszwesolowski
+package solver
 
-import com.bartoszwesolowski.Direction.*
-import com.bartoszwesolowski.Tile.*
+import model.Tile.*
+import model.Board
+import model.Car
+import model.CarPosition
+import model.Direction.*
+import model.Level
 import java.util.EnumMap
 import java.util.PriorityQueue
 
@@ -133,11 +137,14 @@ class Solver {
         newCars[carIndex] = newCars[carIndex].copy(position = newPosition)
         return newCars
     }
+
+    companion object {
+        private val availableTilesByDirection = mapOf(
+            LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
+            RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
+            UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
+            DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
+        )
+    }
 }
 
-private val availableTilesByDirection = mapOf(
-    LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
-    RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
-    UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
-    DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
-)

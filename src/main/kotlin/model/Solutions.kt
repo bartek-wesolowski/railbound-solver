@@ -1,8 +1,8 @@
-package com.bartoszwesolowski
+package model
 
-import com.bartoszwesolowski.Board.Companion.buildBoard
-import com.bartoszwesolowski.Board.Companion.row
-import com.bartoszwesolowski.Tile.*
+import model.Board.Companion.buildBoard
+import model.Board.Companion.row
+import model.Tile.*
 
 object Solutions {
     object World1 {

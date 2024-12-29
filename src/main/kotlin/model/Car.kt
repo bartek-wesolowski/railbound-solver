@@ -1,4 +1,4 @@
-package com.bartoszwesolowski
+package model
 
 data class Car(
     val number: Int,

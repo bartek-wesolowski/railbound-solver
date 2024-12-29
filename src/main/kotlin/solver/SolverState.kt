@@ -1,5 +1,8 @@
-package com.bartoszwesolowski
+package solver
 
+import model.Board
+import model.Car
+import model.CarColor
 import java.util.EnumMap
 
 data class SolverState(

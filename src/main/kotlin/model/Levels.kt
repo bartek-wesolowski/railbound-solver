@@ -1,13 +1,10 @@
-package com.bartoszwesolowski
+package model
 
-import com.bartoszwesolowski.Board.Companion.buildBoard
-import com.bartoszwesolowski.Board.Companion.row
-import com.bartoszwesolowski.CarColor.Red
-import com.bartoszwesolowski.Direction.DOWN
-import com.bartoszwesolowski.Direction.LEFT
-import com.bartoszwesolowski.Direction.RIGHT
-import com.bartoszwesolowski.Direction.UP
-import com.bartoszwesolowski.Tile.*
+import model.Board.Companion.buildBoard
+import model.Board.Companion.row
+import model.CarColor.*
+import model.Direction.*
+import model.Tile.*
 
 object Levels {
     object World1 {

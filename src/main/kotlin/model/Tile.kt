@@ -1,9 +1,6 @@
-package com.bartoszwesolowski
+package model
 
-import com.bartoszwesolowski.Direction.DOWN
-import com.bartoszwesolowski.Direction.LEFT
-import com.bartoszwesolowski.Direction.RIGHT
-import com.bartoszwesolowski.Direction.UP
+import model.Direction.*
 import java.util.EnumMap
 import java.util.EnumSet
 

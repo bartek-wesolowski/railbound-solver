@@ -1,9 +1,9 @@
-import com.bartoszwesolowski.Levels
-import com.bartoszwesolowski.Solutions
-import com.bartoszwesolowski.Solver
+import model.Levels
+import model.Solutions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import solver.Solver
 
 class SolverTest {
     private val solver = Solver()

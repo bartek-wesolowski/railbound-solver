@@ -1,4 +1,4 @@
-package com.bartoszwesolowski
+package model
 
 data class Level(
     val board: Board,
