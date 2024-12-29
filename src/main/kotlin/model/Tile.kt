@@ -36,8 +36,8 @@ sealed class Tile(
     data object VerticalTrack : Tile(
         incomingDirections = EnumSet.of(UP, DOWN),
         secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(LEFT, listOf(DownLeftUpFork, UpLeftRightFork))
-            put(RIGHT, listOf(DownRightUpFork, UpRightDownFork))
+            put(LEFT, listOf(DownRightUpFork, UpRightDownFork))
+            put(RIGHT, listOf(DownLeftUpFork, UpLeftDownFork))
         }
     ), ResetAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
