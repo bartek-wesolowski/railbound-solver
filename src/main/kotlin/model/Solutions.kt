@@ -108,6 +108,13 @@ object Solutions {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level1_12 = setOf(
+            buildBoard(rows = 3) {
+                row(FixedHorizontalTrack, HorizontalTrack, DownRightLeftFork, HorizontalTrack, EndingTrack)
+                row(Empty, Empty, UpRightTurn, DownLeftTurn, Empty)
+                row(Empty, Empty, FixedHorizontalTrack, UpLeftTurn, Empty)
+            },
+        )
         val solutions = listOf(
             level1_1,
             level1_2,
@@ -121,6 +128,7 @@ object Solutions {
             level1_10,
             level1_11,
             level1_11A,
+            level1_12,
         )
     }
 }
