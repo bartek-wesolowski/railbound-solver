@@ -8,13 +8,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import compose.SolverState
 import model.Levels
 import solver.Solver
 import solver.SolverState
+
+private val tileSize = 100.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -27,7 +31,7 @@ fun App(
         var state by remember { mutableStateOf(iterator.next()) }
         SolverState(
             state = state,
-            tileSize = 100.dp,
+            tileSize = tileSize,
             modifier = Modifier.onClick {
                 if (iterator.hasNext()) {
                     state = iterator.next()
@@ -38,14 +42,20 @@ fun App(
 }
 
 fun main() = application {
+    val level = Levels.World1.level1_11
     val solver = Solver()
-    val solverStates = solver.getSolverStates(Levels.World1.level1_11)
     Window(
         title = "Railbound Solver",
+        state = WindowState(
+            size = DpSize(
+                width = tileSize * level.board.columns,
+                height = tileSize * level.board.rows + 28.dp
+            )
+        ),
         onCloseRequest = ::exitApplication
     ) {
         App(
-            solverStates
+            solverStates = solver.getSolverStates(level)
         )
     }
 }
