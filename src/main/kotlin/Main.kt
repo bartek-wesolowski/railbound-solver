@@ -39,8 +39,11 @@ fun App(
 
 fun main() = application {
     val solver = Solver()
-    val solverStates = solver.getSolverStates(Levels.World1.level1_11A)
-    Window(onCloseRequest = ::exitApplication) {
+    val solverStates = solver.getSolverStates(Levels.World1.level1_11)
+    Window(
+        title = "Railbound Solver",
+        onCloseRequest = ::exitApplication
+    ) {
         App(
             solverStates
         )
