@@ -226,6 +226,17 @@ object Solutions {
                 row(FixedHorizontalTrack, FixedHorizontalTrack, UpRightLeftFork, UpRightLeftFork, FixedHorizontalTrack, EndingTrack)
             }
         )
+        val level1_15A = setOf(
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, DownLeftTurn, VerticalTrack, DownRightUpFork, FixedHorizontalTrack, FixedHorizontalTrack)
+                row(Empty, DownRightTurn, FixedUpLeftTurn, VerticalTrack, FixedUpRightTurn, DownLeftTurn, Empty)
+                row(Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty)
+                row(Empty, UpRightTurn, FixedDownLeftTurn, VerticalTrack, FixedDownRightTurn, UpLeftTurn, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, DownLeftUpFork, FixedVerticalTrack, UpRightTurn, FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty, Empty)
+            }
+        )
         val solutions = listOf(
             level1_1,
             level1_2,
@@ -247,6 +258,7 @@ object Solutions {
             level1_14,
             level1_14A,
             level1_15,
+            level1_15A,
         )
     }
 }
