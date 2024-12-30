@@ -13,7 +13,7 @@ import model.Levels
 import solver.Solver
 
 private val tileSize = 100.dp
-private val level = Levels.World1.level1_14
+private val level = Levels.World1.level1_14A
 private val solver = Solver()
 
 fun main() = application {
