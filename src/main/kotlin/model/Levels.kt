@@ -189,6 +189,22 @@ object Levels {
             ),
             tracks = 11
         )
+        val level1_13A = Level(
+            board = buildBoard(rows = 6) {
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
+            },
+            cars = arrayListOf(
+                Car(1, Red, CarPosition(1, 0, RIGHT)),
+                Car(2, Red, CarPosition(1, 4, LEFT)),
+                Car(3, Red, CarPosition(5, 0, RIGHT)),
+            ),
+            tracks = 14
+        )
         val levels = listOf(
             level1_1,
             level1_2,
@@ -205,6 +221,7 @@ object Levels {
             level1_12,
             level1_12A,
             level1_13,
+            level1_13A,
         )
     }
 }
