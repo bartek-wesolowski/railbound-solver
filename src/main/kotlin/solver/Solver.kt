@@ -6,6 +6,7 @@ import model.Car
 import model.CarPosition
 import model.Direction.*
 import model.Level
+import model.ResetCarsAfterModification
 import java.util.EnumMap
 import java.util.PriorityQueue
 
@@ -23,7 +24,8 @@ class Solver {
                 continue
             }
             statesChecked.add(state)
-            val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
+            val nextStates = state.nextStates(initialCars = level.cars)
+                .filter { it.tracksUsed <= level.tracks }
             statesToCheck.addAll(nextStates.toSet() - statesChecked)
         }
         return solutions
@@ -47,7 +49,8 @@ class Solver {
                 continue
             }
             statesChecked.add(state)
-            val nextStates = state.nextStates().filter { it.tracksUsed <= level.tracks }
+            val nextStates = state.nextStates(initialCars = level.cars)
+                .filter { it.tracksUsed <= level.tracks }
             statesToCheck.addAll((nextStates.toSet() - statesChecked).map { it to depth + 1 })
         }
     }
@@ -56,13 +59,17 @@ class Solver {
         return activeCars.isEmpty()
     }
 
-    private fun SolverState.nextStates(): List<SolverState> {
-        var nextStates = getMoves(this, 0)
+    private fun SolverState.nextStates(initialCars: ArrayList<Car>): List<SolverState> {
+        var nextStates = getMoves(this, 0, initialCars)
         for (carIndex in 1..activeCars.lastIndex) {
             val updatedNextStates = mutableListOf<SolverState>()
             for (state in nextStates) {
-                val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
-                updatedNextStates.addAll(getMoves(state, adjustedCarIndex))
+                if (state.activeCars === initialCars) {
+                    updatedNextStates.add(state)
+                } else {
+                    val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
+                    updatedNextStates.addAll(getMoves(state, adjustedCarIndex, initialCars))
+                }
             }
             nextStates = updatedNextStates.filterNot { it.hasCarCollision() }
         }
@@ -73,13 +80,17 @@ class Solver {
         return activeCars.groupBy { it.position.row to it.position.column }.any { it.value.size > 1 }
     }
 
-    private fun getMoves(state: SolverState, carIndex: Int): List<SolverState> {
+    private fun getMoves(state: SolverState, carIndex: Int, initialCars: ArrayList<Car>): List<SolverState> {
         val position = state.activeCars[carIndex].position
         val tile = state.board[position.row, position.column]
-        return state.moveCar(carIndex, tile.getNextPosition(position))
+        return state.moveCar(carIndex, tile.getNextPosition(position), initialCars)
     }
 
-    private fun SolverState.moveCar(carIndex: Int, newPosition: CarPosition): List<SolverState> {
+    private fun SolverState.moveCar(
+        carIndex: Int,
+        newPosition: CarPosition,
+        initialCars: ArrayList<Car>
+    ): List<SolverState> {
         if (newPosition.row < 0 || newPosition.row >= board.rows) return emptyList()
         if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
         val car = activeCars[carIndex].copy(position = newPosition)
@@ -126,11 +137,19 @@ class Solver {
                 }
 
                 in tile.secondaryIncomingDirections -> {
-//                    if (tile is ResetAfterModification) TODO()
                     tile.secondaryIncomingDirections.getValue(car.direction).map { modifiedTile ->
                         copy(
                             board = board.with(newPosition.row, newPosition.column, modifiedTile),
-                            activeCars = newCars,
+                            activeCars = if (tile is ResetCarsAfterModification) {
+                                initialCars
+                            } else {
+                                newCars
+                            },
+                            expectedCar = if (tile is ResetCarsAfterModification) {
+                                EnumMap(initialCars.map { it.color }.toSet().associateWith { 1 })
+                            } else {
+                                expectedCar
+                            }
                         )
                     }
                 }

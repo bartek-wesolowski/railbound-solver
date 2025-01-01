@@ -4,7 +4,7 @@ import model.Direction.*
 import java.util.EnumMap
 import java.util.EnumSet
 
-interface ResetAfterModification
+interface ResetCarsAfterModification
 
 sealed class Tile(
     val incomingDirections: EnumSet<Direction>,
@@ -21,6 +21,10 @@ sealed class Tile(
     data object Empty : Tile() {
         override fun getNextPosition(position: CarPosition): CarPosition {
             throw IllegalStateException("Empty tile should not be used")
+        }
+
+        override fun matches(solution: Tile): Boolean {
+            return true
         }
     }
 
@@ -39,7 +43,7 @@ sealed class Tile(
             put(LEFT, listOf(DownRightUpFork, UpRightDownFork))
             put(RIGHT, listOf(DownLeftUpFork, UpLeftDownFork))
         }
-    ), ResetAfterModification {
+    ), ResetCarsAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
         override fun matches(solution: Tile): Boolean {
@@ -61,7 +65,7 @@ sealed class Tile(
             put(UP, listOf(DownLeftRightFork, DownRightLeftFork))
             put(DOWN, listOf(UpLeftRightFork, UpRightLeftFork))
         }
-    ), ResetAfterModification {
+    ), ResetCarsAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
         override fun matches(solution: Tile): Boolean {
