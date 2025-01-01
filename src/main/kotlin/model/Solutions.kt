@@ -214,7 +214,7 @@ object Solutions {
         val level1_14A = setOf(
             buildBoard(rows = 3) {
                 row(DownRightTurn, HorizontalTrack, HorizontalTrack, DownRightLeftFork, HorizontalTrack, DownLeftTurn, Empty, Empty)
-                row(UpRightDownFork, FixedHorizontalTrack, FixedHorizontalTrack, DownLeftUpFork, Empty, UpRightTurn, EndingTrack, FixedHorizontalTrack)
+                row(UpRightDownFork, FixedHorizontalTrack, FixedHorizontalTrack, DownLeftUpFork, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
                 row(UpRightTurn, HorizontalTrack, HorizontalTrack, UpLeftTurn, Empty, Empty, Empty, Empty)
             },
         )
