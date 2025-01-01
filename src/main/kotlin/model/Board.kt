@@ -86,6 +86,15 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         return Board(newTiles)
     }
 
+    fun matches(solution: Board): Boolean {
+        for (r in tiles.indices) {
+            for (c in tiles[r].indices) {
+                if (!tiles[r][c].matches(solution.tiles[r][c])) return false
+            }
+        }
+        return true
+    }
+
     companion object {
         fun buildBoard(
             rows: Int,

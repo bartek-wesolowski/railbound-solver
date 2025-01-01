@@ -41,6 +41,18 @@ sealed class Tile(
         }
     ), ResetAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
+
+        override fun matches(solution: Tile): Boolean {
+            if (
+                solution is UpLeftDownFork ||
+                solution is UpRightDownFork ||
+                solution is DownLeftUpFork ||
+                solution is DownRightUpFork
+            ) {
+                return true
+            }
+            return super.matches(solution)
+        }
     }
 
     data object HorizontalTrack : Tile(
@@ -51,6 +63,18 @@ sealed class Tile(
         }
     ), ResetAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
+
+        override fun matches(solution: Tile): Boolean {
+            if (
+                solution is DownLeftRightFork ||
+                solution is DownRightLeftFork ||
+                solution is UpLeftRightFork ||
+                solution is UpRightLeftFork
+            ) {
+                return true
+            }
+            return super.matches(solution)
+        }
     }
 
     // Turns
@@ -98,6 +122,13 @@ sealed class Tile(
             LEFT -> position.turnLeft()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun matches(solution: Tile): Boolean {
+            if (solution is DownRightUpFork || solution is DownRightLeftFork) {
+                return true
+            }
+            return super.matches(solution)
+        }
     }
 
     data object DownLeftTurn : Tile(
@@ -111,6 +142,13 @@ sealed class Tile(
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+        }
+
+        override fun matches(solution: Tile): Boolean {
+            if (solution is DownLeftUpFork || solution is DownLeftRightFork) {
+                return true
+            }
+            return super.matches(solution)
         }
     }
 
@@ -126,6 +164,13 @@ sealed class Tile(
             LEFT -> position.turnRight()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun matches(solution: Tile): Boolean {
+            if (solution is UpRightDownFork || solution is UpRightLeftFork) {
+                return true
+            }
+            return super.matches(solution)
+        }
     }
 
     data object UpLeftTurn : Tile(
@@ -139,6 +184,13 @@ sealed class Tile(
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+        }
+
+        override fun matches(solution: Tile): Boolean {
+            if (solution is UpLeftDownFork || solution is UpLeftRightFork) {
+                return true
+            }
+            return super.matches(solution)
         }
     }
 
@@ -223,6 +275,8 @@ sealed class Tile(
     fun isValidIncomingDirection(direction: Direction): Boolean {
         return direction in incomingDirections || direction in secondaryIncomingDirections
     }
+
+    open fun matches(solution: Tile): Boolean = this == solution
 
     abstract fun getNextPosition(position: CarPosition): CarPosition
 }
