@@ -71,13 +71,38 @@ class Solver {
                     updatedNextStates.addAll(getMoves(state, adjustedCarIndex, initialCars))
                 }
             }
-            nextStates = updatedNextStates.filterNot { it.hasCarCollision() }
+            nextStates = updatedNextStates.filter { state ->
+                if (state.activeCars === initialCars) return@filter true
+                val carAIndex = state.activeCars.indexOfFirst {
+                    it.color == activeCars[carIndex].color && it.number == activeCars[carIndex].number
+                }
+                if (carAIndex == -1) return@filter true
+                val carA = state.activeCars[carAIndex]
+                for (carBIndex in 0 until carAIndex) {
+                    val carB = state.activeCars[carBIndex]
+                    if (carB.position.row == carA.position.row && carA.position.column == carB.position.column) {
+                        return@filter false
+                    }
+                    val initialCarBIndex = activeCars.indexOfFirst {
+                        it.color == carB.color && it.number == carB.number
+                    }
+                    if (initialCarBIndex != -1) {
+                        val initialCarA = activeCars[carIndex]
+                        val initialCarB = activeCars[initialCarBIndex]
+                        if (
+                            initialCarB.position.row == carA.position.row &&
+                            initialCarB.position.column == carA.position.column &&
+                            initialCarA.position.row == carB.position.row &&
+                            initialCarA.position.column == carB.position.column
+                            ) {
+                            return@filter false
+                        }
+                    }
+                }
+                true
+            }
         }
         return nextStates
-    }
-
-    private fun SolverState.hasCarCollision(): Boolean {
-        return activeCars.groupBy { it.position.row to it.position.column }.any { it.value.size > 1 }
     }
 
     private fun getMoves(state: SolverState, carIndex: Int, initialCars: ArrayList<Car>): List<SolverState> {
