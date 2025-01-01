@@ -9,9 +9,33 @@ class SolverTest {
     private val solver = Solver()
 
     @ParameterizedTest
-    @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
-    fun world1(levelNumber: Int) = assertEquals(
-        Solutions.World1.solutions[levelNumber - 1],
-        solver.findSolutions(Levels.World1.levels[levelNumber - 1])
+    @ValueSource(
+        strings = [
+            "1-1",
+            "1-2",
+            "1-3",
+            "1-4",
+            "1-5",
+            "1-6",
+            "1-7",
+            "1-8",
+            "1-9",
+            "1-10",
+            "1-11",
+            "1-11A",
+            "1-11B",
+            "1-12",
+            "1-12A",
+            "1-13",
+            "1-13A",
+            "1-14",
+            "1-14A",
+            "1-15",
+            "1-15A",
+        ]
+    )
+    fun world1(levelName: String) = assertEquals(
+        Solutions.World1.solutions.getValue(levelName),
+        solver.findSolutions(Levels.World1.levels.getValue(levelName))
     )
 }
