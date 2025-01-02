@@ -1,5 +1,10 @@
 package solver
 
+import com.danrusu.pods4k.immutableArrays.ImmutableArray
+import com.danrusu.pods4k.immutableArrays.buildImmutableArray
+import com.danrusu.pods4k.immutableArrays.indexOf
+import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
+import com.danrusu.pods4k.immutableArrays.toSet
 import model.Tile.*
 import model.Board
 import model.Car
@@ -59,12 +64,12 @@ class Solver {
         return activeCars.isEmpty()
     }
 
-    private fun SolverState.nextStates(initialCars: ArrayList<Car>): List<SolverState> {
+    private fun SolverState.nextStates(initialCars: ImmutableArray<Car>): List<SolverState> {
         var nextStates = getMoves(this, 0, initialCars)
         for (carIndex in 1..activeCars.lastIndex) {
             val updatedNextStates = mutableListOf<SolverState>()
             for (state in nextStates) {
-                if (state.activeCars === initialCars) {
+                if (state.activeCars == initialCars) {
                     updatedNextStates.add(state)
                 } else {
                     val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
@@ -72,7 +77,7 @@ class Solver {
                 }
             }
             nextStates = updatedNextStates.filter { state ->
-                if (state.activeCars === initialCars) return@filter true
+                if (state.activeCars == initialCars) return@filter true
                 val carAIndex = state.activeCars.indexOfFirst {
                     it.color == activeCars[carIndex].color && it.number == activeCars[carIndex].number
                 }
@@ -105,7 +110,11 @@ class Solver {
         return nextStates
     }
 
-    private fun getMoves(state: SolverState, carIndex: Int, initialCars: ArrayList<Car>): List<SolverState> {
+    private fun getMoves(
+        state: SolverState,
+        carIndex: Int,
+        initialCars: ImmutableArray<Car>
+    ): List<SolverState> {
         val position = state.activeCars[carIndex].position
         val tile = state.board[position.row, position.column]
         return state.moveCar(carIndex, tile.getNextPosition(position), initialCars)
@@ -114,7 +123,7 @@ class Solver {
     private fun SolverState.moveCar(
         carIndex: Int,
         newPosition: CarPosition,
-        initialCars: ArrayList<Car>
+        initialCars: ImmutableArray<Car>
     ): List<SolverState> {
         if (newPosition.row < 0 || newPosition.row >= board.rows) return emptyList()
         if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
@@ -138,7 +147,13 @@ class Solver {
             ) {
                 listOf(
                     copy(
-                        activeCars = ArrayList(activeCars).apply { removeAt(carIndex) },
+                        activeCars = buildImmutableArray {
+                            for (i in activeCars.indices) {
+                                if (i != carIndex) {
+                                    add(activeCars[i])
+                                }
+                            }
+                        },
                         expectedCar = EnumMap(expectedCar).apply { put(car.color, get(car.color)!! + 1) })
                 )
             } else {
@@ -197,10 +212,16 @@ class Solver {
         }
     }
 
-    private fun ArrayList<Car>.updatePosition(carIndex: Int, newPosition: CarPosition): ArrayList<Car> {
-        val newCars = ArrayList(this)
-        newCars[carIndex] = newCars[carIndex].copy(position = newPosition)
-        return newCars
+    private fun ImmutableArray<Car>.updatePosition(carIndex: Int, newPosition: CarPosition): ImmutableArray<Car> {
+        return buildImmutableArray {
+            for (i in indices) {
+                if (i == carIndex) {
+                    add(this@updatePosition[i].copy(position = newPosition))
+                } else {
+                    add(this@updatePosition[i])
+                }
+            }
+        }
     }
 
     companion object {
