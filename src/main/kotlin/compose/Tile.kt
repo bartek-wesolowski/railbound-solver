@@ -40,7 +40,7 @@ fun Tile(
             DownRightLeftFork -> drawDownRightLeftFork(size)
             DownRightUpFork -> drawDownRightUpFork(size)
             Empty -> {}
-            EndingTrack -> drawHorizontalTrack(size)
+            EndingTrack -> drawEndingTrack(size)
             FixedDownLeftTurn -> drawDownLeftTurn(size)
             FixedDownRightTurn -> drawDownRightTurn(size)
             FixedUpLeftTurn -> drawUpLeftTurn(size)
@@ -76,22 +76,26 @@ private fun DrawScope.drawVerticalTrack(size: Dp) {
     )
 }
 
-private fun DrawScope.drawHorizontalTrack(size: Dp) {
+private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color = trackColor) {
     val y1 = (size * 0.25f).toPx()
     val y2 = (size * 0.75f).toPx()
     val trackStrokeWidth = getTrackStrokeWidth(size)
     drawLine(
-        color = trackColor,
+        color = color,
         start = Offset(0f, y1),
         end = Offset(size.toPx(), y1),
         strokeWidth = trackStrokeWidth
     )
     drawLine(
-        color = trackColor,
+        color = color,
         start = Offset(0f, y2),
         end = Offset(size.toPx(), y2),
         strokeWidth = trackStrokeWidth
     )
+}
+
+private fun DrawScope.drawEndingTrack(size: Dp) {
+    drawHorizontalTrack(size, color = Color.Red)
 }
 
 private fun DrawScope.drawDownRightTurn(size: Dp) {
