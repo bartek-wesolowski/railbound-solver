@@ -10,8 +10,12 @@ import model.Board
 import model.Car
 import model.CarPosition
 import model.Direction.*
+import model.Fork
 import model.Level
 import model.ResetCarsAfterModification
+import model.StraightTrack
+import model.Tunnel
+import model.Turn
 import java.util.EnumMap
 import java.util.PriorityQueue
 
@@ -160,30 +164,10 @@ class Solver {
                 emptyList()
             }
 
-            FixedHorizontalTrack,
-            FixedVerticalTrack,
-            FixedDownLeftTurn,
-            FixedDownRightTurn,
-            FixedUpLeftTurn,
-            FixedUpRightTurn,
-            HorizontalTrack,
-            VerticalTrack,
-            DownLeftTurn,
-            DownRightTurn,
-            UpLeftTurn,
-            UpRightTurn,
-            DownLeftRightFork,
-            DownLeftUpFork,
-            DownRightLeftFork,
-            DownRightUpFork,
-            UpLeftDownFork,
-            UpLeftRightFork,
-            UpRightDownFork,
-            UpRightLeftFork,
-            is LeftTunnel,
-            is RightTunnel,
-            is UpTunnel,
-            is DownTunnel -> when (car.direction) {
+            is StraightTrack,
+            is Turn,
+            is Fork,
+            is Tunnel -> when (car.direction) {
                 in tile.incomingDirections -> {
                     listOf(copy(activeCars = newCars))
                 }

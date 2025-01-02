@@ -4,7 +4,15 @@ import model.Direction.*
 import java.util.EnumMap
 import java.util.EnumSet
 
-interface ResetCarsAfterModification
+sealed interface StraightTrack
+
+sealed interface Turn
+
+sealed interface Fork
+
+sealed interface Tunnel
+
+sealed interface ResetCarsAfterModification
 
 sealed class Tile(
     val incomingDirections: EnumSet<Direction>,
@@ -29,11 +37,11 @@ sealed class Tile(
     }
 
     // Straight tracks
-    data object FixedVerticalTrack : Tile(UP, DOWN) {
+    data object FixedVerticalTrack : Tile(UP, DOWN), StraightTrack {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
     }
 
-    data object FixedHorizontalTrack : Tile(LEFT, RIGHT) {
+    data object FixedHorizontalTrack : Tile(LEFT, RIGHT), StraightTrack {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
     }
 
@@ -43,7 +51,7 @@ sealed class Tile(
             put(LEFT, listOf(DownRightUpFork, UpRightDownFork))
             put(RIGHT, listOf(DownLeftUpFork, UpLeftDownFork))
         }
-    ), ResetCarsAfterModification {
+    ), StraightTrack, ResetCarsAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
         override fun matches(solution: Tile): Boolean {
@@ -65,7 +73,7 @@ sealed class Tile(
             put(UP, listOf(DownLeftRightFork, DownRightLeftFork))
             put(DOWN, listOf(UpLeftRightFork, UpRightLeftFork))
         }
-    ), ResetCarsAfterModification {
+    ), StraightTrack, ResetCarsAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
         override fun matches(solution: Tile): Boolean {
@@ -82,7 +90,7 @@ sealed class Tile(
     }
 
     // Turns
-    data object FixedDownRightTurn : Tile(UP, LEFT) {
+    data object FixedDownRightTurn : Tile(UP, LEFT), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -90,7 +98,7 @@ sealed class Tile(
         }
     }
 
-    data object FixedDownLeftTurn : Tile(UP, RIGHT) {
+    data object FixedDownLeftTurn : Tile(UP, RIGHT), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -98,7 +106,7 @@ sealed class Tile(
         }
     }
 
-    data object FixedUpRightTurn : Tile(DOWN, LEFT) {
+    data object FixedUpRightTurn : Tile(DOWN, LEFT), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
@@ -106,7 +114,7 @@ sealed class Tile(
         }
     }
 
-    data object FixedUpLeftTurn : Tile(DOWN, RIGHT) {
+    data object FixedUpLeftTurn : Tile(DOWN, RIGHT), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -120,7 +128,7 @@ sealed class Tile(
             put(DOWN, listOf(DownRightUpFork))
             put(RIGHT, listOf(DownRightLeftFork))
         }
-    ) {
+    ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -141,7 +149,7 @@ sealed class Tile(
             put(DOWN, listOf(DownLeftUpFork))
             put(LEFT, listOf(DownLeftRightFork))
         }
-    ) {
+    ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -162,7 +170,7 @@ sealed class Tile(
             put(UP, listOf(UpRightDownFork))
             put(RIGHT, listOf(UpRightLeftFork))
         }
-    ) {
+    ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
@@ -183,7 +191,7 @@ sealed class Tile(
             put(UP, listOf(UpLeftDownFork))
             put(LEFT, listOf(UpLeftRightFork))
         }
-    ) {
+    ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -199,7 +207,7 @@ sealed class Tile(
     }
 
     // Forks
-    data object DownLeftRightFork : Tile(UP, RIGHT, LEFT) {
+    data object DownLeftRightFork : Tile(UP, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -207,7 +215,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownLeftUpFork : Tile(UP, RIGHT, DOWN) {
+    data object DownLeftUpFork : Tile(UP, RIGHT, DOWN), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -215,7 +223,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownRightLeftFork : Tile(UP, RIGHT, LEFT) {
+    data object DownRightLeftFork : Tile(UP, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -223,7 +231,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownRightUpFork : Tile(UP, LEFT, DOWN) {
+    data object DownRightUpFork : Tile(UP, LEFT, DOWN), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -231,7 +239,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpLeftRightFork : Tile(DOWN, RIGHT, LEFT) {
+    data object UpLeftRightFork : Tile(DOWN, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -239,7 +247,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpLeftDownFork : Tile(DOWN, RIGHT, UP) {
+    data object UpLeftDownFork : Tile(DOWN, RIGHT, UP), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -247,7 +255,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpRightLeftFork : Tile(DOWN, RIGHT, LEFT) {
+    data object UpRightLeftFork : Tile(DOWN, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
@@ -255,7 +263,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpRightDownFork : Tile(DOWN, LEFT, UP) {
+    data object UpRightDownFork : Tile(DOWN, LEFT, UP), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
@@ -268,7 +276,7 @@ sealed class Tile(
     data class LeftTunnel(
         val color: TunnelColor,
         val exitPosition: CarPosition,
-    ) : Tile(RIGHT) {
+    ) : Tile(RIGHT), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
                 RIGHT -> exitPosition
@@ -281,7 +289,7 @@ sealed class Tile(
     data class RightTunnel(
         val color: TunnelColor,
         val exitPosition: CarPosition,
-    ) : Tile(LEFT) {
+    ) : Tile(LEFT), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
                 LEFT -> exitPosition
@@ -294,7 +302,7 @@ sealed class Tile(
     data class UpTunnel(
         val color: TunnelColor,
         val exitPosition: CarPosition,
-    ) : Tile(DOWN) {
+    ) : Tile(DOWN), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
                 DOWN -> exitPosition
@@ -307,7 +315,7 @@ sealed class Tile(
     data class DownTunnel(
         val color: TunnelColor,
         val exitPosition: CarPosition,
-    ) : Tile(UP) {
+    ) : Tile(UP), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
                 UP -> exitPosition
