@@ -17,6 +17,7 @@ import model.Tile.*
 import model.TunnelColor
 
 private val trackColor = Color.Gray
+private val fixedTrackColor = Color.Black
 private const val trackStrokeWidthPercent = 0.05f
 
 @Composable
@@ -27,8 +28,8 @@ fun Tile(
     Canvas(modifier = Modifier.size(size)) {
         drawBorder()
         when (tile) {
-            FixedHorizontalTrack -> drawHorizontalTrack(size)
-            FixedVerticalTrack -> drawVerticalTrack(size)
+            FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
+            FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
             HorizontalTrack -> drawHorizontalTrack(size)
             VerticalTrack -> drawVerticalTrack(size)
             DownRightTurn -> drawDownRightTurn(size)
@@ -41,10 +42,10 @@ fun Tile(
             DownRightUpFork -> drawDownRightUpFork(size)
             Empty -> {}
             EndingTrack -> drawEndingTrack(size)
-            FixedDownLeftTurn -> drawDownLeftTurn(size)
-            FixedDownRightTurn -> drawDownRightTurn(size)
-            FixedUpLeftTurn -> drawUpLeftTurn(size)
-            FixedUpRightTurn -> drawUpRightTurn(size)
+            FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
+            FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
+            FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
+            FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
             Obstacle -> drawObstacle(size)
             UpLeftDownFork -> drawUpLeftDownFork(size)
             UpLeftRightFork -> drawUpLeftRightFork(size)
@@ -58,18 +59,18 @@ fun Tile(
     }
 }
 
-private fun DrawScope.drawVerticalTrack(size: Dp) {
+private fun DrawScope.drawVerticalTrack(size: Dp, color: Color = trackColor) {
     val x1 = (size * 0.25f).toPx()
     val x2 = (size * 0.75f).toPx()
     val trackStrokeWidth = getTrackStrokeWidth(size)
     drawLine(
-        color = trackColor,
+        color = color,
         start = Offset(x1, 0f),
         end = Offset(x1, size.toPx()),
         strokeWidth = trackStrokeWidth
     )
     drawLine(
-        color = trackColor,
+        color = color,
         start = Offset(x2, 0f),
         end = Offset(x2, size.toPx()),
         strokeWidth = trackStrokeWidth
@@ -98,25 +99,26 @@ private fun DrawScope.drawEndingTrack(size: Dp) {
     drawHorizontalTrack(size, color = Color.Red)
 }
 
-private fun DrawScope.drawDownRightTurn(size: Dp) {
-    drawTurn(size, 180f)
+private fun DrawScope.drawDownRightTurn(size: Dp, color: Color = trackColor) {
+    drawTurn(size, 180f, color)
 }
 
-private fun DrawScope.drawDownLeftTurn(size: Dp) {
-    drawTurn(size, 270f)
+private fun DrawScope.drawDownLeftTurn(size: Dp, color: Color = trackColor) {
+    drawTurn(size, 270f, color)
 }
 
-private fun DrawScope.drawUpRightTurn(size: Dp) {
-    drawTurn(size, 90f)
+private fun DrawScope.drawUpRightTurn(size: Dp, color: Color = trackColor) {
+    drawTurn(size, 90f, color)
 }
 
-private fun DrawScope.drawUpLeftTurn(size: Dp) {
-    drawTurn(size, 0f)
+private fun DrawScope.drawUpLeftTurn(size: Dp, color: Color = trackColor) {
+    drawTurn(size, 0f, color)
 }
 
 private fun DrawScope.drawTurn(
     size: Dp,
     startAngle: Float,
+    color: Color,
 ) {
     val trackStrokeWidth = getTrackStrokeWidth(size)
     val size1 = (size * 0.5f).toPx()
@@ -136,7 +138,7 @@ private fun DrawScope.drawTurn(
         else -> throw IllegalArgumentException("startAngle not supported: $startAngle")
     }
     drawArc(
-        color = trackColor,
+        color = color,
         startAngle = startAngle,
         sweepAngle = 90f,
         useCenter = false,
@@ -145,7 +147,7 @@ private fun DrawScope.drawTurn(
         style = Stroke(width = trackStrokeWidth)
     )
     drawArc(
-        color = trackColor,
+        color = color,
         startAngle = startAngle,
         sweepAngle = 90f,
         useCenter = false,
