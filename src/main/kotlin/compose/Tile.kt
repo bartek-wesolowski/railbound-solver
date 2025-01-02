@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.Tile
 import model.Tile.*
+import model.TunnelColor
 
 private val trackColor = Color.Gray
 private const val trackStrokeWidthPercent = 0.05f
@@ -49,10 +50,10 @@ fun Tile(
             UpLeftRightFork -> drawUpLeftRightFork(size)
             UpRightDownFork -> drawUpRightDownFork(size)
             UpRightLeftFork -> drawUpRightLeftFork(size)
-            is DownTunnel -> drawDownTunnel()
-            is LeftTunnel -> drawLeftTunnel()
-            is RightTunnel -> drawRightTunnel()
-            is UpTunnel -> drawUpTunnel()
+            is DownTunnel -> drawDownTunnel(size, tile.color)
+            is LeftTunnel -> drawLeftTunnel(size, tile.color)
+            is RightTunnel -> drawRightTunnel(size, tile.color)
+            is UpTunnel -> drawUpTunnel(size, tile.color)
         }
     }
 }
@@ -190,31 +191,51 @@ private fun DrawScope.drawUpRightLeftFork(size: Dp) {
     drawHorizontalTrack(size)
 }
 
-private fun DrawScope.drawDownTunnel() {
-    drawRect(
-        color = Color.Gray,
-        style = Stroke(width = 1.dp.toPx())
+private fun DrawScope.drawDownTunnel(size: Dp, color: TunnelColor) {
+    drawHorizontalTrack(size)
+    drawArc(
+        color = color.toColor(),
+        startAngle = -150f,
+        sweepAngle = 120f,
+        useCenter = false,
+        topLeft = Offset(0f, 0f),
+        size = Size(size.toPx(), size.toPx()),
     )
 }
 
-private fun DrawScope.drawLeftTunnel() {
-    drawRect(
-        color = Color.Gray,
-        style = Stroke(width = 1.dp.toPx())
+private fun DrawScope.drawLeftTunnel(size: Dp, color: TunnelColor) {
+    drawHorizontalTrack(size)
+    drawArc(
+        color = color.toColor(),
+        startAngle = -60f,
+        sweepAngle = 120f,
+        useCenter = false,
+        topLeft = Offset(0f, 0f),
+        size = Size(size.toPx(), size.toPx()),
     )
 }
 
-private fun DrawScope.drawRightTunnel() {
-    drawRect(
-        color = Color.Gray,
-        style = Stroke(width = 1.dp.toPx())
+private fun DrawScope.drawRightTunnel(size: Dp, color: TunnelColor) {
+    drawHorizontalTrack(size)
+    drawArc(
+        color = color.toColor(),
+        startAngle = 120f,
+        sweepAngle = 120f,
+        useCenter = false,
+        topLeft = Offset(0f, 0f),
+        size = Size(size.toPx(), size.toPx()),
     )
 }
 
-private fun DrawScope.drawUpTunnel() {
-    drawRect(
-        color = Color.Gray,
-        style = Stroke(width = 1.dp.toPx())
+private fun DrawScope.drawUpTunnel(size: Dp, color: TunnelColor) {
+    drawHorizontalTrack(size)
+    drawArc(
+        color = color.toColor(),
+        startAngle = 30f,
+        sweepAngle = 120f,
+        useCenter = false,
+        topLeft = Offset(0f, 0f),
+        size = Size(size.toPx(), size.toPx()),
     )
 }
 
@@ -233,6 +254,10 @@ private fun DrawScope.drawBorder() {
 }
 
 private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStrokeWidthPercent).toPx()
+
+private fun TunnelColor.toColor(): Color = when (this) {
+    TunnelColor.GRAY -> Color.Gray
+}
 
 @Preview
 @Composable
