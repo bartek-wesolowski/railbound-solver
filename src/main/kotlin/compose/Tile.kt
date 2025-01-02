@@ -49,6 +49,10 @@ fun Tile(
             UpLeftRightFork -> drawUpLeftRightFork(size)
             UpRightDownFork -> drawUpRightDownFork(size)
             UpRightLeftFork -> drawUpRightLeftFork(size)
+            is DownTunnel -> drawDownTunnel()
+            is LeftTunnel -> drawLeftTunnel()
+            is RightTunnel -> drawRightTunnel()
+            is UpTunnel -> drawUpTunnel()
         }
     }
 }
@@ -184,6 +188,34 @@ private fun DrawScope.drawUpRightDownFork(size: Dp) {
 private fun DrawScope.drawUpRightLeftFork(size: Dp) {
     drawUpRightTurn(size)
     drawHorizontalTrack(size)
+}
+
+private fun DrawScope.drawDownTunnel() {
+    drawRect(
+        color = Color.Gray,
+        style = Stroke(width = 1.dp.toPx())
+    )
+}
+
+private fun DrawScope.drawLeftTunnel() {
+    drawRect(
+        color = Color.Gray,
+        style = Stroke(width = 1.dp.toPx())
+    )
+}
+
+private fun DrawScope.drawRightTunnel() {
+    drawRect(
+        color = Color.Gray,
+        style = Stroke(width = 1.dp.toPx())
+    )
+}
+
+private fun DrawScope.drawUpTunnel() {
+    drawRect(
+        color = Color.Gray,
+        style = Stroke(width = 1.dp.toPx())
+    )
 }
 
 private fun DrawScope.drawObstacle(size: Dp) {

@@ -264,6 +264,59 @@ sealed class Tile(
         }
     }
 
+    // Tunnels
+    data class LeftTunnel(
+        val color: TunnelColor,
+        val exitPosition: CarPosition,
+    ) : Tile(RIGHT) {
+        override fun getNextPosition(position: CarPosition): CarPosition {
+            return when (position.direction) {
+                RIGHT -> exitPosition
+                LEFT -> position.moveForward()
+                else -> throw IllegalStateException("Invalid direction in LeftTunnel: ${position.direction}")
+            }
+        }
+    }
+
+    data class RightTunnel(
+        val color: TunnelColor,
+        val exitPosition: CarPosition,
+    ) : Tile(LEFT) {
+        override fun getNextPosition(position: CarPosition): CarPosition {
+            return when (position.direction) {
+                LEFT -> exitPosition
+                RIGHT -> position.moveForward()
+                else -> throw IllegalStateException("Invalid direction in RightTunnel: ${position.direction}")
+            }
+        }
+    }
+
+    data class UpTunnel(
+        val color: TunnelColor,
+        val exitPosition: CarPosition,
+    ) : Tile(DOWN) {
+        override fun getNextPosition(position: CarPosition): CarPosition {
+            return when (position.direction) {
+                DOWN -> exitPosition
+                UP -> position.moveForward()
+                else -> throw IllegalStateException("Invalid direction in UpTunnel: ${position.direction}")
+            }
+        }
+    }
+
+    data class DownTunnel(
+        val color: TunnelColor,
+        val exitPosition: CarPosition,
+    ) : Tile(UP) {
+        override fun getNextPosition(position: CarPosition): CarPosition {
+            return when (position.direction) {
+                UP -> exitPosition
+                DOWN -> position.moveForward()
+                else -> throw IllegalStateException("Invalid direction in DownTunnel: ${position.direction}")
+            }
+        }
+    }
+
     // Other
     data object Obstacle : Tile() {
         override fun getNextPosition(position: CarPosition): Nothing {

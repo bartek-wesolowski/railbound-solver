@@ -171,7 +171,19 @@ class Solver {
             DownLeftTurn,
             DownRightTurn,
             UpLeftTurn,
-            UpRightTurn -> when (car.direction) {
+            UpRightTurn,
+            DownLeftRightFork,
+            DownLeftUpFork,
+            DownRightLeftFork,
+            DownRightUpFork,
+            UpLeftDownFork,
+            UpLeftRightFork,
+            UpRightDownFork,
+            UpRightLeftFork,
+            is LeftTunnel,
+            is RightTunnel,
+            is UpTunnel,
+            is DownTunnel -> when (car.direction) {
                 in tile.incomingDirections -> {
                     listOf(copy(activeCars = newCars))
                 }
@@ -195,19 +207,6 @@ class Solver {
                 }
 
                 else -> emptyList()
-            }
-
-            DownLeftRightFork,
-            DownLeftUpFork,
-            DownRightLeftFork,
-            DownRightUpFork,
-            UpLeftDownFork,
-            UpLeftRightFork,
-            UpRightDownFork,
-            UpRightLeftFork -> if (car.direction in tile.incomingDirections) {
-                listOf(copy(activeCars = newCars))
-            } else {
-                emptyList()
             }
         }
     }
