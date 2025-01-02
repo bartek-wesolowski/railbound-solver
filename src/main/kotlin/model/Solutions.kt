@@ -287,8 +287,18 @@ object Solutions {
                 row(FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, LeftTunnel(TunnelColor.GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
             },
         )
+        val level2_2 = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, DownRightTurn, EndingTrack)
+                row(Empty, Empty, Empty, VerticalTrack, Empty)
+                row(RightTunnel(TunnelColor.GRAY, CarPosition(2, 4, LEFT)), DownLeftTurn, Empty, UpRightTurn, LeftTunnel(TunnelColor.GRAY, CarPosition(2, 0, RIGHT)))
+                row(Empty, VerticalTrack, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, UpLeftTurn, Empty, Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "2-1" to level2_1,
+            "2-2" to level2_2,
         )
     }
 }

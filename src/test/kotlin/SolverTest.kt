@@ -42,7 +42,8 @@ class SolverTest {
     @ParameterizedTest(name = "{0}")
     @ValueSource(
         strings = [
-            "2-1"
+            "2-1",
+            "2-2",
         ]
     )
     fun world2(levelName: String) = assertEquals(
