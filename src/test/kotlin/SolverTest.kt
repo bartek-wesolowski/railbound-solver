@@ -8,7 +8,7 @@ import solver.Solver
 class SolverTest {
     private val solver = Solver()
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}")
     @ValueSource(
         strings = [
             "1-1",
