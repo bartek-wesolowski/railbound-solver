@@ -352,9 +352,25 @@ object Levels {
             ),
             tracks = 6
         )
+        val level2_3 = Level(
+            name = "2-3",
+            board = buildBoard(rows = 5) {
+                row(RightTunnel(TunnelColor.GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
+                row(RightTunnel(TunnelColor.GRAY, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
+            },
+            cars = immutableArrayOf(
+                Car(1, Red, CarPosition(2, 4, LEFT)),
+                Car(2, Red, CarPosition(4, 4, LEFT)),
+            ),
+            tracks = 6
+        )
         val levels = listOf(
             level2_1,
             level2_2,
+            level2_3,
         ).associateBy { it.name }
     }
 }

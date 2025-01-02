@@ -5,6 +5,7 @@ import model.Board.Companion.row
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Tile.*
+import model.TunnelColor.*
 
 object Solutions {
     object World1 {
@@ -281,24 +282,59 @@ object Solutions {
     object World2 {
         val level2_1 = setOf(
             buildBoard(rows = 4) {
-                row(Empty, Empty, Empty, RightTunnel(TunnelColor.GRAY, CarPosition(3, 3, LEFT)), HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, RightTunnel(GRAY, CarPosition(3, 3, LEFT)), HorizontalTrack, HorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, LeftTunnel(TunnelColor.GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, LeftTunnel(GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
             },
         )
         val level2_2 = setOf(
             buildBoard(rows = 5) {
                 row(Empty, Empty, Empty, DownRightTurn, EndingTrack)
                 row(Empty, Empty, Empty, VerticalTrack, Empty)
-                row(RightTunnel(TunnelColor.GRAY, CarPosition(2, 4, LEFT)), DownLeftTurn, Empty, UpRightTurn, LeftTunnel(TunnelColor.GRAY, CarPosition(2, 0, RIGHT)))
+                row(RightTunnel(GRAY, CarPosition(2, 4, LEFT)), DownLeftTurn, Empty, UpRightTurn, LeftTunnel(GRAY, CarPosition(2, 0, RIGHT)))
                 row(Empty, VerticalTrack, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, UpLeftTurn, Empty, Empty, Empty)
+            }
+        )
+        val level2_3 = setOf(
+            buildBoard(rows = 5) {
+                row(
+                    RightTunnel(GRAY, CarPosition(3, 0, RIGHT)),
+                    FixedHorizontalTrack,
+                    FixedHorizontalTrack,
+                    FixedHorizontalTrack,
+                    EndingTrack
+                )
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightTurn, HorizontalTrack, DownLeftRightFork, FixedHorizontalTrack)
+                row(RightTunnel(GRAY, CarPosition(0, 0, RIGHT)), UpLeftTurn, Empty, VerticalTrack, Empty)
+                row(Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack)
+            },
+            buildBoard(rows = 5) {
+                row(
+                    RightTunnel(color = GRAY, exitPosition = CarPosition(row = 3, column = 0, direction = RIGHT)),
+                    FixedHorizontalTrack,
+                    FixedHorizontalTrack,
+                    FixedHorizontalTrack,
+                    EndingTrack
+                )
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightTurn, DownLeftRightFork, FixedHorizontalTrack)
+                row(
+                    RightTunnel(color = GRAY, exitPosition = CarPosition(row = 0, column = 0, direction = RIGHT)),
+                    HorizontalTrack,
+                    UpLeftTurn,
+                    VerticalTrack,
+                    Empty
+                )
+                row(Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack)
             }
         )
         val solutions = mapOf(
             "2-1" to level2_1,
             "2-2" to level2_2,
+            "2-3" to level2_3,
         )
     }
 }
