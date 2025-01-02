@@ -38,4 +38,15 @@ class SolverTest {
         Solutions.World1.solutions.getValue(levelName),
         solver.findSolutions(Levels.World1.levels.getValue(levelName))
     )
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(
+        strings = [
+            "2-1"
+        ]
+    )
+    fun world2(levelName: String) = assertEquals(
+        Solutions.World2.solutions.getValue(levelName),
+        solver.findSolutions(Levels.World2.levels.getValue(levelName))
+    )
 }

@@ -300,28 +300,46 @@ object Levels {
             ),
             tracks = 15
         )
-        val levels = mapOf(
-            "1-1" to level1_1,
-            "1-2" to level1_2,
-            "1-3" to level1_3,
-            "1-4" to level1_4,
-            "1-5" to level1_5,
-            "1-6" to level1_6,
-            "1-7" to level1_7,
-            "1-8" to level1_8,
-            "1-9" to level1_9,
-            "1-10" to level1_10,
-            "1-11" to level1_11,
-            "1-11A" to level1_11A,
-            "1-11B" to level1_11B,
-            "1-12" to level1_12,
-            "1-12A" to level1_12A,
-            "1-13" to level1_13,
-            "1-13A" to level1_13A,
-            "1-14" to level1_14,
-            "1-14A" to level1_14A,
-            "1-15" to level1_15,
-            "1-15A" to level1_15A,
+        val levels = listOf(
+            level1_1,
+            level1_2,
+            level1_4,
+            level1_5,
+            level1_3,
+            level1_6,
+            level1_7,
+            level1_8,
+            level1_9,
+            level1_10,
+            level1_11,
+            level1_11A,
+            level1_11B,
+            level1_12,
+            level1_12A,
+            level1_13,
+            level1_13A,
+            level1_14,
+            level1_14A,
+            level1_15,
+            level1_15A,
+        ).associateBy { it.name }
+    }
+    object World2 {
+        val level2_1 = Level(
+            name = "2-1",
+            board = buildBoard(rows = 4) {
+                row(Empty, Empty, Empty, RightTunnel(TunnelColor.GRAY, CarPosition(3, 3, LEFT)), Empty, Empty, EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, LeftTunnel(TunnelColor.GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
+            },
+            cars = immutableArrayOf(
+                Car(1, Red, CarPosition(3, 0, RIGHT)),
+            ),
+            tracks = 4
         )
+        val levels = listOf(
+            level2_1
+        ).associateBy { it.name }
     }
 }

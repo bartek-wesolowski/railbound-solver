@@ -2,6 +2,8 @@ package model
 
 import model.Board.Companion.buildBoard
 import model.Board.Companion.row
+import model.Direction.LEFT
+import model.Direction.RIGHT
 import model.Tile.*
 
 object Solutions {
@@ -274,6 +276,19 @@ object Solutions {
             "1-14A" to level1_14A,
             "1-15" to level1_15,
             "1-15A" to level1_15A,
+        )
+    }
+    object World2 {
+        val level2_1 = setOf(
+            buildBoard(rows = 4) {
+                row(Empty, Empty, Empty, RightTunnel(TunnelColor.GRAY, CarPosition(3, 3, LEFT)), HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, LeftTunnel(TunnelColor.GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
+            },
+        )
+        val solutions = mapOf(
+            "2-1" to level2_1,
         )
     }
 }

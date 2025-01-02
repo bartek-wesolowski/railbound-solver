@@ -166,8 +166,7 @@ class Solver {
 
             is StraightTrack,
             is Turn,
-            is Fork,
-            is Tunnel -> when (car.direction) {
+            is Fork -> when (car.direction) {
                 in tile.incomingDirections -> {
                     listOf(copy(activeCars = newCars))
                 }
@@ -192,6 +191,8 @@ class Solver {
 
                 else -> emptyList()
             }
+
+            is Tunnel -> listOf(copy(activeCars = newCars))
         }
     }
 
