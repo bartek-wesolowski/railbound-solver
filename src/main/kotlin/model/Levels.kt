@@ -6,6 +6,7 @@ import model.Board.Companion.row
 import model.CarColor.*
 import model.Direction.*
 import model.Tile.*
+import model.TunnelColor.*
 
 object Levels {
     object World1 {
@@ -328,10 +329,10 @@ object Levels {
         val level2_1 = Level(
             name = "2-1",
             board = buildBoard(rows = 4) {
-                row(Empty, Empty, Empty, RightTunnel(TunnelColor.GRAY, CarPosition(3, 3, LEFT)), Empty, Empty, EndingTrack)
+                row(Empty, Empty, Empty, RightTunnel(GRAY, CarPosition(3, 3, LEFT)), Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(FixedHorizontalTrack, Empty, Empty, LeftTunnel(TunnelColor.GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, LeftTunnel(GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(3, 0, RIGHT)),
@@ -343,7 +344,7 @@ object Levels {
             board = buildBoard(rows = 5) {
                 row(Empty, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(RightTunnel(TunnelColor.GRAY, CarPosition(2, 4, LEFT)), Empty, Empty, Empty, LeftTunnel(TunnelColor.GRAY, CarPosition(2, 0, RIGHT)))
+                row(RightTunnel(GRAY, CarPosition(2, 4, LEFT)), Empty, Empty, Empty, LeftTunnel(GRAY, CarPosition(2, 0, RIGHT)))
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
             },
@@ -355,10 +356,10 @@ object Levels {
         val level2_3 = Level(
             name = "2-3",
             board = buildBoard(rows = 5) {
-                row(RightTunnel(TunnelColor.GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
-                row(RightTunnel(TunnelColor.GRAY, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
@@ -367,10 +368,25 @@ object Levels {
             ),
             tracks = 6
         )
+        val level2_4 = Level(
+            name = "2-4",
+            board = buildBoard(rows = 4) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(GRAY, CarPosition(2, 0, RIGHT)), Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
+            },
+            cars = immutableArrayOf(
+                Car(1, Red, CarPosition(1, 2, DOWN)),
+                Car(2, Red, CarPosition(3, 2, RIGHT)),
+            ),
+            tracks = 7
+        )
         val levels = listOf(
             level2_1,
             level2_2,
             level2_3,
+            level2_4,
         ).associateBy { it.name }
     }
 }

@@ -2,6 +2,7 @@ package model
 
 import model.Board.Companion.buildBoard
 import model.Board.Companion.row
+import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Tile.*
@@ -331,10 +332,19 @@ object Solutions {
                 row(Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack)
             }
         )
+        val level2_4 = setOf(
+            buildBoard(rows = 4) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(GRAY, CarPosition(2, 0, RIGHT)), Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, VerticalTrack, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), HorizontalTrack, UpLeftRightFork, DownLeftTurn, VerticalTrack, Empty)
+                row(Empty, Empty, FixedHorizontalTrack, UpLeftTurn, UpRightTurn, EndingTrack)
+            }
+        )
         val solutions = mapOf(
             "2-1" to level2_1,
             "2-2" to level2_2,
             "2-3" to level2_3,
+            "2-4" to level2_4,
         )
     }
 }
