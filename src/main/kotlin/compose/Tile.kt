@@ -198,7 +198,7 @@ private fun DrawScope.drawUpRightLeftFork(size: Dp) {
 }
 
 private fun DrawScope.drawDownTunnel(size: Dp, color: TunnelColor) {
-    drawHorizontalTrack(size, fixedTrackColor)
+    drawVerticalTrack(size, fixedTrackColor)
     drawArc(
         color = color.toColor(),
         startAngle = -150f,
@@ -234,7 +234,7 @@ private fun DrawScope.drawRightTunnel(size: Dp, color: TunnelColor) {
 }
 
 private fun DrawScope.drawUpTunnel(size: Dp, color: TunnelColor) {
-    drawHorizontalTrack(size, fixedTrackColor)
+    drawVerticalTrack(size, fixedTrackColor)
     drawArc(
         color = color.toColor(),
         startAngle = 30f,
