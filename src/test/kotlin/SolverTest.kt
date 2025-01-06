@@ -48,6 +48,7 @@ class SolverTest {
             "2-3A",
             "2-3B",
             "2-4",
+            "2-4A",
         ]
     )
     fun world2(levelName: String) = assertEquals(
