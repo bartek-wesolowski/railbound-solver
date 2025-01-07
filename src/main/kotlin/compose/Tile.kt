@@ -263,6 +263,7 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 
 private fun TunnelColor.toColor(): Color = when (this) {
     TunnelColor.GRAY -> Color.Gray
+    TunnelColor.BROWN -> Color.Gray // TODO
 }
 
 @Preview

@@ -5,6 +5,7 @@ import model.Board.Companion.row
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
+import model.Direction.UP
 import model.Tile.*
 import model.TunnelColor.*
 
@@ -409,6 +410,15 @@ object Solutions {
                 row(RightTunnel(color = GRAY, exitPosition = CarPosition(row = 0, column = 2, direction = DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
             }
         )
+        val level2_5 = setOf(
+            buildBoard(rows = 5) {
+                row(RightTunnel(BROWN, CarPosition(4, 4, UP)), DownLeftTurn, Empty, Empty, DownTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty, Empty)
+                row(Empty, FixedVerticalTrack, Empty, DownRightTurn, UpLeftDownFork, Empty, Empty)
+                row(Empty, FixedVerticalTrack, FixedVerticalTrack, FixedVerticalTrack, Empty, DownRightTurn, EndingTrack)
+                row(Empty, FixedVerticalTrack, UpRightTurn, UpLeftTurn, DownRightUpFork, UpLeftTurn, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), UpLeftTurn, Empty, Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "2-1" to level2_1,
             "2-2" to level2_2,
@@ -417,6 +427,7 @@ object Solutions {
             "2-3B" to level2_3B,
             "2-4" to level2_4,
             "2-4A" to level2_4A,
+            "2-5" to level2_5,
         )
     }
 }
