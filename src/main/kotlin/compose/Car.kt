@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ fun Car(
         Canvas(modifier = Modifier.size(tileSize)) {
             val color = when (car.color) {
                 CarColor.Red -> Red
+                CarColor.Blue -> Blue
             }
             val topLeft = when (car.direction) {
                 Direction.UP -> Offset(
