@@ -370,6 +370,43 @@ object Solutions {
                 row(Empty, UpRightTurn, DownLeftTurn, Empty, Empty)
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(0, 2, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+            },
+            buildBoard(rows = 6) {
+                row(Empty, Empty, DownTunnel(GRAY, CarPosition(5, 1, RIGHT)), Empty, Empty)
+                row(DownRightTurn, DownLeftTurn, FixedVerticalTrack, Empty, Empty)
+                row(UpRightTurn, UpRightLeftFork, UpLeftRightFork, DownLeftTurn, Empty)
+                row(Empty, Empty, DownRightTurn, UpLeftTurn, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 2, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+            },
+            buildBoard(rows = 6) {
+                row(Empty, Empty, DownTunnel(color = GRAY, exitPosition = CarPosition(row = 5, column = 1, direction = RIGHT)), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn, DownRightLeftFork, UpLeftRightFork, DownLeftTurn, Empty)
+                row(UpRightTurn, UpLeftTurn, DownRightTurn, UpLeftTurn, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(RightTunnel(color = GRAY, exitPosition = CarPosition(row = 0, column = 2, direction = DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+            }, buildBoard(rows = 6) {
+                row(Empty, Empty, DownTunnel(color = GRAY, exitPosition = CarPosition(row = 5, column = 1, direction = RIGHT)), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(Empty, DownRightTurn, UpRightLeftFork, DownLeftRightFork, DownLeftTurn)
+                row(Empty, UpRightTurn, DownLeftTurn, UpRightTurn, UpLeftTurn)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(RightTunnel(color = GRAY, exitPosition = CarPosition(row = 0, column = 2, direction = DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+            }, buildBoard(rows = 6) {
+                row(Empty, Empty, DownTunnel(color = GRAY, exitPosition = CarPosition(row = 5, column = 1, direction = RIGHT)), DownRightTurn, DownLeftTurn)
+                row(Empty, Empty, FixedVerticalTrack, DownRightUpFork, UpLeftTurn)
+                row(Empty, Empty, UpRightTurn, UpLeftDownFork, Empty)
+                row(Empty, Empty, DownRightTurn, UpLeftTurn, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(RightTunnel(color = GRAY, exitPosition = CarPosition(row = 0, column = 2, direction = DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+            }, buildBoard(rows = 6) {
+                row(DownRightTurn, DownLeftTurn, DownTunnel(color = GRAY, exitPosition = CarPosition(row = 5, column = 1, direction = RIGHT)), Empty, Empty)
+                row(UpRightTurn, DownLeftUpFork, FixedVerticalTrack, Empty, Empty)
+                row(Empty, UpRightDownFork, UpLeftTurn, Empty, Empty)
+                row(Empty, UpRightTurn, DownLeftTurn, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(RightTunnel(color = GRAY, exitPosition = CarPosition(row = 0, column = 2, direction = DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
             }
         )
         val solutions = mapOf(
