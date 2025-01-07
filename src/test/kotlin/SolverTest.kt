@@ -2,58 +2,37 @@ import model.Levels
 import model.Solutions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import solver.Solver
+import java.util.stream.Stream
 
 class SolverTest {
     private val solver = Solver()
 
     @ParameterizedTest(name = "{0}")
-    @ValueSource(
-        strings = [
-            "1-1",
-            "1-2",
-            "1-3",
-            "1-4",
-            "1-5",
-            "1-6",
-            "1-7",
-            "1-8",
-            "1-9",
-            "1-10",
-            "1-11",
-            "1-11A",
-            "1-11B",
-            "1-12",
-            "1-12A",
-            "1-13",
-            "1-13A",
-            "1-14",
-            "1-14A",
-            "1-15",
-            "1-15A",
-        ]
-    )
+    @MethodSource("getWorld1LevelNames")
     fun world1(levelName: String) = assertEquals(
         Solutions.World1.solutions.getValue(levelName),
         solver.findSolutions(Levels.World1.levels.getValue(levelName))
     )
 
     @ParameterizedTest(name = "{0}")
-    @ValueSource(
-        strings = [
-            "2-1",
-            "2-2",
-            "2-3",
-            "2-3A",
-            "2-3B",
-            "2-4",
-            "2-4A",
-            "2-5",
-        ]
-    )
+    @MethodSource("getWorld2LevelNames")
     fun world2(levelName: String) = assertEquals(
         Solutions.World2.solutions.getValue(levelName),
         solver.findSolutions(Levels.World2.levels.getValue(levelName))
     )
+
+    private companion object {
+        @JvmStatic
+        fun getWorld1LevelNames(): Stream<Arguments> {
+            return Solutions.World1.solutions.keys.stream().map { Arguments.of(it) }
+        }
+
+        @JvmStatic
+        fun getWorld2LevelNames(): Stream<Arguments> {
+            return Solutions.World2.solutions.keys.stream().map { Arguments.of(it) }
+        }
+    }
 }
