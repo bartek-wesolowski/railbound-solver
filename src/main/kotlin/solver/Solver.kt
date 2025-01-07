@@ -210,10 +210,10 @@ class Solver {
 
     companion object {
         private val availableTilesByDirection = mapOf(
-            LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
-            RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
-            UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
-            DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
+            LEFT to setOf(HorizontalTrack(), UpRightTurn(), DownRightTurn()),
+            RIGHT to setOf(HorizontalTrack(), UpLeftTurn(), DownLeftTurn()),
+            UP to setOf(VerticalTrack(), DownLeftTurn(), DownRightTurn()),
+            DOWN to setOf(VerticalTrack(), UpLeftTurn(), UpRightTurn()),
         )
     }
 }

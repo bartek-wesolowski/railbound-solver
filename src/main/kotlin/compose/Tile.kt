@@ -28,29 +28,23 @@ fun Tile(
     Canvas(modifier = Modifier.size(size)) {
         drawBorder()
         when (tile) {
-            FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
-            FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
-            HorizontalTrack -> drawHorizontalTrack(size)
-            VerticalTrack -> drawVerticalTrack(size)
-            DownRightTurn -> drawDownRightTurn(size)
-            DownLeftTurn -> drawDownLeftTurn(size)
-            UpRightTurn -> drawUpRightTurn(size)
-            UpLeftTurn -> drawUpLeftTurn(size)
-            DownLeftRightFork -> drawDownLeftRightFork(size)
-            DownLeftUpFork -> drawDownLeftUpFork(size)
-            DownRightLeftFork -> drawDownRightLeftFork(size)
-            DownRightUpFork -> drawDownRightUpFork(size)
+            is HorizontalTrack -> drawHorizontalTrack(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is VerticalTrack -> drawVerticalTrack(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownRightTurn -> drawDownRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownLeftTurn -> drawDownLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpRightTurn -> drawUpRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpLeftTurn -> drawUpLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownLeftRightFork -> drawDownLeftRightFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownLeftUpFork -> drawDownLeftUpFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownRightLeftFork -> drawDownRightLeftFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownRightUpFork -> drawDownRightUpFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpLeftDownFork -> drawUpLeftDownFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpLeftRightFork -> drawUpLeftRightFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpRightDownFork -> drawUpRightDownFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpRightLeftFork -> drawUpRightLeftFork(size, if (tile.fixed) fixedTrackColor else trackColor)
             Empty -> {}
             EndingTrack -> drawEndingTrack(size)
-            FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
-            FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
-            FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
-            FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
             Obstacle -> drawObstacle(size)
-            UpLeftDownFork -> drawUpLeftDownFork(size)
-            UpLeftRightFork -> drawUpLeftRightFork(size)
-            UpRightDownFork -> drawUpRightDownFork(size)
-            UpRightLeftFork -> drawUpRightLeftFork(size)
             is DownTunnel -> drawDownTunnel(size, tile.color)
             is LeftTunnel -> drawLeftTunnel(size, tile.color)
             is RightTunnel -> drawRightTunnel(size, tile.color)
@@ -59,7 +53,7 @@ fun Tile(
     }
 }
 
-private fun DrawScope.drawVerticalTrack(size: Dp, color: Color = trackColor) {
+private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
     val x1 = (size * 0.25f).toPx()
     val x2 = (size * 0.75f).toPx()
     val trackStrokeWidth = getTrackStrokeWidth(size)
@@ -77,7 +71,7 @@ private fun DrawScope.drawVerticalTrack(size: Dp, color: Color = trackColor) {
     )
 }
 
-private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color = trackColor) {
+private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color) {
     val y1 = (size * 0.25f).toPx()
     val y2 = (size * 0.75f).toPx()
     val trackStrokeWidth = getTrackStrokeWidth(size)
@@ -99,19 +93,19 @@ private fun DrawScope.drawEndingTrack(size: Dp) {
     drawHorizontalTrack(size, color = Color.Red)
 }
 
-private fun DrawScope.drawDownRightTurn(size: Dp, color: Color = trackColor) {
+private fun DrawScope.drawDownRightTurn(size: Dp, color: Color) {
     drawTurn(size, 180f, color)
 }
 
-private fun DrawScope.drawDownLeftTurn(size: Dp, color: Color = trackColor) {
+private fun DrawScope.drawDownLeftTurn(size: Dp, color: Color) {
     drawTurn(size, 270f, color)
 }
 
-private fun DrawScope.drawUpRightTurn(size: Dp, color: Color = trackColor) {
+private fun DrawScope.drawUpRightTurn(size: Dp, color: Color) {
     drawTurn(size, 90f, color)
 }
 
-private fun DrawScope.drawUpLeftTurn(size: Dp, color: Color = trackColor) {
+private fun DrawScope.drawUpLeftTurn(size: Dp, color: Color) {
     drawTurn(size, 0f, color)
 }
 
@@ -157,44 +151,44 @@ private fun DrawScope.drawTurn(
     )
 }
 
-private fun DrawScope.drawDownLeftRightFork(size: Dp) {
-    drawDownLeftTurn(size)
-    drawHorizontalTrack(size)
+private fun DrawScope.drawDownLeftRightFork(size: Dp, color: Color) {
+    drawDownLeftTurn(size, color)
+    drawHorizontalTrack(size, color)
 }
 
-private fun DrawScope.drawDownLeftUpFork(size: Dp) {
-    drawDownLeftTurn(size)
-    drawVerticalTrack(size)
+private fun DrawScope.drawDownLeftUpFork(size: Dp, color: Color) {
+    drawDownLeftTurn(size, color)
+    drawVerticalTrack(size, color)
 }
 
-private fun DrawScope.drawDownRightLeftFork(size: Dp) {
-    drawDownRightTurn(size)
-    drawHorizontalTrack(size)
+private fun DrawScope.drawDownRightLeftFork(size: Dp, color: Color) {
+    drawDownRightTurn(size, color)
+    drawHorizontalTrack(size, color)
 }
 
-private fun DrawScope.drawDownRightUpFork(size: Dp) {
-    drawDownRightTurn(size)
-    drawVerticalTrack(size)
+private fun DrawScope.drawDownRightUpFork(size: Dp, color: Color) {
+    drawDownRightTurn(size, color)
+    drawVerticalTrack(size, color)
 }
 
-private fun DrawScope.drawUpLeftDownFork(size: Dp) {
-    drawUpLeftTurn(size)
-    drawVerticalTrack(size)
+private fun DrawScope.drawUpLeftDownFork(size: Dp, color: Color) {
+    drawUpLeftTurn(size, color)
+    drawVerticalTrack(size, color)
 }
 
-private fun DrawScope.drawUpLeftRightFork(size: Dp) {
-    drawUpLeftTurn(size)
-    drawHorizontalTrack(size)
+private fun DrawScope.drawUpLeftRightFork(size: Dp, color: Color) {
+    drawUpLeftTurn(size, color)
+    drawHorizontalTrack(size, color)
 }
 
-private fun DrawScope.drawUpRightDownFork(size: Dp) {
-    drawUpRightTurn(size)
-    drawVerticalTrack(size)
+private fun DrawScope.drawUpRightDownFork(size: Dp, color: Color) {
+    drawUpRightTurn(size, color)
+    drawVerticalTrack(size, color)
 }
 
-private fun DrawScope.drawUpRightLeftFork(size: Dp) {
-    drawUpRightTurn(size)
-    drawHorizontalTrack(size)
+private fun DrawScope.drawUpRightLeftFork(size: Dp, color: Color) {
+    drawUpRightTurn(size, color)
+    drawHorizontalTrack(size, color)
 }
 
 private fun DrawScope.drawDownTunnel(size: Dp, color: TunnelColor) {
@@ -270,7 +264,7 @@ private fun TunnelColor.toColor(): Color = when (this) {
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = UpLeftTurn,
+        tile = UpLeftTurn(),
         size = 100.dp
     )
 }

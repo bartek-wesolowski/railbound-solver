@@ -37,24 +37,21 @@ sealed class Tile(
     }
 
     // Straight tracks
-    data object FixedVerticalTrack : Tile(UP, DOWN), StraightTrack {
-        override fun getNextPosition(position: CarPosition) = position.moveForward()
-    }
-
-    data object FixedHorizontalTrack : Tile(LEFT, RIGHT), StraightTrack {
-        override fun getNextPosition(position: CarPosition) = position.moveForward()
-    }
-
-    data object VerticalTrack : Tile(
+    data class VerticalTrack(val fixed: Boolean = false) : Tile(
         incomingDirections = EnumSet.of(UP, DOWN),
-        secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(LEFT, listOf(DownRightUpFork, UpRightDownFork))
-            put(RIGHT, listOf(DownLeftUpFork, UpLeftDownFork))
+        secondaryIncomingDirections = if (!fixed) {
+            EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(LEFT, listOf(DownRightUpFork(), UpRightDownFork()))
+                put(RIGHT, listOf(DownLeftUpFork(), UpLeftDownFork()))
+            }
+        } else {
+            EnumMap(Direction::class.java)
         }
     ), StraightTrack, ResetCarsAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
         override fun matches(solution: Tile): Boolean {
+            if (fixed) return super.matches(solution)
             if (
                 solution is UpLeftDownFork ||
                 solution is UpRightDownFork ||
@@ -67,16 +64,21 @@ sealed class Tile(
         }
     }
 
-    data object HorizontalTrack : Tile(
+    data class HorizontalTrack(val fixed: Boolean = false)  : Tile(
         incomingDirections = EnumSet.of(LEFT, RIGHT),
-        secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(UP, listOf(DownLeftRightFork, DownRightLeftFork))
-            put(DOWN, listOf(UpLeftRightFork, UpRightLeftFork))
+        secondaryIncomingDirections = if (!fixed) {
+            EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(UP, listOf(DownLeftRightFork(), DownRightLeftFork()))
+                put(DOWN, listOf(UpLeftRightFork(), UpRightLeftFork()))
+            }
+        } else {
+            EnumMap(Direction::class.java)
         }
     ), StraightTrack, ResetCarsAfterModification {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
         override fun matches(solution: Tile): Boolean {
+            if (fixed) return super.matches(solution)
             if (
                 solution is DownLeftRightFork ||
                 solution is DownRightLeftFork ||
@@ -90,43 +92,15 @@ sealed class Tile(
     }
 
     // Turns
-    data object FixedDownRightTurn : Tile(UP, LEFT), Turn {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            UP -> position.turnRight()
-            LEFT -> position.turnLeft()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-    }
-
-    data object FixedDownLeftTurn : Tile(UP, RIGHT), Turn {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            UP -> position.turnLeft()
-            RIGHT -> position.turnRight()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-    }
-
-    data object FixedUpRightTurn : Tile(DOWN, LEFT), Turn {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            DOWN -> position.turnLeft()
-            LEFT -> position.turnRight()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-    }
-
-    data object FixedUpLeftTurn : Tile(DOWN, RIGHT), Turn {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            DOWN -> position.turnRight()
-            RIGHT -> position.turnLeft()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-    }
-
-    data object DownRightTurn : Tile(
+    data class DownRightTurn(val fixed: Boolean = false)  : Tile(
         incomingDirections = EnumSet.of(UP, LEFT),
-        secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(DOWN, listOf(DownRightUpFork))
-            put(RIGHT, listOf(DownRightLeftFork))
+        secondaryIncomingDirections = if (!fixed) {
+            EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(DOWN, listOf(DownRightUpFork()))
+                put(RIGHT, listOf(DownRightLeftFork()))
+            }
+        } else {
+            EnumMap(Direction::class.java)
         }
     ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -136,6 +110,7 @@ sealed class Tile(
         }
 
         override fun matches(solution: Tile): Boolean {
+            if (fixed) return super.matches(solution)
             if (solution is DownRightUpFork || solution is DownRightLeftFork) {
                 return true
             }
@@ -143,11 +118,15 @@ sealed class Tile(
         }
     }
 
-    data object DownLeftTurn : Tile(
+    data class DownLeftTurn(val fixed: Boolean = false)  : Tile(
         incomingDirections = EnumSet.of(UP, RIGHT),
-        secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(DOWN, listOf(DownLeftUpFork))
-            put(LEFT, listOf(DownLeftRightFork))
+        secondaryIncomingDirections = if (!fixed) {
+            EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(DOWN, listOf(DownLeftUpFork()))
+                put(LEFT, listOf(DownLeftRightFork()))
+            }
+        } else {
+            EnumMap(Direction::class.java)
         }
     ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -157,6 +136,7 @@ sealed class Tile(
         }
 
         override fun matches(solution: Tile): Boolean {
+            if (fixed) return super.matches(solution)
             if (solution is DownLeftUpFork || solution is DownLeftRightFork) {
                 return true
             }
@@ -164,11 +144,15 @@ sealed class Tile(
         }
     }
 
-    data object UpRightTurn : Tile(
+    data class UpRightTurn(val fixed: Boolean = false)  : Tile(
         incomingDirections = EnumSet.of(DOWN, LEFT),
-        secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(UP, listOf(UpRightDownFork))
-            put(RIGHT, listOf(UpRightLeftFork))
+        secondaryIncomingDirections = if (!fixed) {
+            EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(UP, listOf(UpRightDownFork()))
+                put(RIGHT, listOf(UpRightLeftFork()))
+            }
+        } else {
+            EnumMap(Direction::class.java)
         }
     ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -178,6 +162,7 @@ sealed class Tile(
         }
 
         override fun matches(solution: Tile): Boolean {
+            if (fixed) return super.matches(solution)
             if (solution is UpRightDownFork || solution is UpRightLeftFork) {
                 return true
             }
@@ -185,11 +170,15 @@ sealed class Tile(
         }
     }
 
-    data object UpLeftTurn : Tile(
+    data class UpLeftTurn(val fixed: Boolean = false)  : Tile(
         incomingDirections = EnumSet.of(DOWN, RIGHT),
-        secondaryIncomingDirections = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-            put(UP, listOf(UpLeftDownFork))
-            put(LEFT, listOf(UpLeftRightFork))
+        secondaryIncomingDirections = if (!fixed) {
+            EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(UP, listOf(UpLeftDownFork()))
+                put(LEFT, listOf(UpLeftRightFork()))
+            }
+        } else {
+            EnumMap(Direction::class.java)
         }
     ), Turn {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -199,6 +188,7 @@ sealed class Tile(
         }
 
         override fun matches(solution: Tile): Boolean {
+            if (fixed) return super.matches(solution)
             if (solution is UpLeftDownFork || solution is UpLeftRightFork) {
                 return true
             }
@@ -207,7 +197,7 @@ sealed class Tile(
     }
 
     // Forks
-    data object DownLeftRightFork : Tile(UP, RIGHT, LEFT), Fork {
+    data class DownLeftRightFork(val fixed: Boolean = false)  : Tile(UP, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -215,7 +205,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownLeftUpFork : Tile(UP, RIGHT, DOWN), Fork {
+    data class DownLeftUpFork(val fixed: Boolean = false)  : Tile(UP, RIGHT, DOWN), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -223,7 +213,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownRightLeftFork : Tile(UP, RIGHT, LEFT), Fork {
+    data class DownRightLeftFork(val fixed: Boolean = false)  : Tile(UP, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -231,7 +221,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object DownRightUpFork : Tile(UP, LEFT, DOWN), Fork {
+    data class DownRightUpFork(val fixed: Boolean = false)  : Tile(UP, LEFT, DOWN), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -239,7 +229,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpLeftRightFork : Tile(DOWN, RIGHT, LEFT), Fork {
+    data class UpLeftRightFork(val fixed: Boolean = false)  : Tile(DOWN, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -247,7 +237,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpLeftDownFork : Tile(DOWN, RIGHT, UP), Fork {
+    data class UpLeftDownFork(val fixed: Boolean = false)  : Tile(DOWN, RIGHT, UP), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -255,7 +245,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpRightLeftFork : Tile(DOWN, RIGHT, LEFT), Fork {
+    data class UpRightLeftFork(val fixed: Boolean = false)  : Tile(DOWN, RIGHT, LEFT), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
@@ -263,7 +253,7 @@ sealed class Tile(
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
     }
-    data object UpRightDownFork : Tile(DOWN, LEFT, UP), Fork {
+    data class UpRightDownFork(val fixed: Boolean = false)  : Tile(DOWN, LEFT, UP), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
