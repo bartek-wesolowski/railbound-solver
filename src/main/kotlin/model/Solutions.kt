@@ -455,6 +455,22 @@ object Solutions {
                 row(RightTunnel(GRAY, CarPosition(0, 5, DOWN)), UpLeftTurn(), UpRightTurn(), HorizontalTrack(fixed = true), Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty)
             }
         )
+        val level2_7 = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, DownTunnel(GRAY, CarPosition(4, 4, UP)), Empty, Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
+                row(Empty, VerticalTrack(), Empty, Empty, VerticalTrack(), Empty, Empty)
+                row(HorizontalTrack(fixed = true), UpLeftDownFork(), Empty, HorizontalTrack(fixed = true), UpLeftTurn(), DownRightTurn(), EndingTrack)
+                row(Empty, VerticalTrack(), Empty, Empty, DownRightTurn(), UpLeftTurn(), Empty)
+                row(Empty, UpTunnel(BROWN, CarPosition(0, 4, DOWN)), Empty, Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, DownTunnel(GRAY, CarPosition(4, 4, UP)), Empty, Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
+                row(Empty, VerticalTrack(), Empty, Empty, UpRightTurn(), DownLeftTurn(), Empty)
+                row(HorizontalTrack(fixed = true), DownLeftUpFork(), Empty, HorizontalTrack(fixed = true), DownLeftTurn(), UpRightTurn(), EndingTrack)
+                row(Empty, VerticalTrack(), Empty, Empty, VerticalTrack(), Empty, Empty)
+                row(Empty, UpTunnel(BROWN, CarPosition(0, 4, DOWN)), Empty, Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "2-1" to level2_1,
             "2-2" to level2_2,
@@ -468,6 +484,7 @@ object Solutions {
             "2-5B" to level2_5B,
             "2-6" to level2_6,
             "2-6A" to level2_6A,
+            "2-7" to level2_7,
         )
     }
 }
