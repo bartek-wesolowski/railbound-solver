@@ -13,7 +13,7 @@ import model.Levels
 import solver.Solver
 
 private val tileSize = 100.dp
-private const val levelName = "2-3A"
+private const val levelName = "2-5B"
 private val level = Levels.World2.levels.getValue(levelName)
 private val solver = Solver()
 
