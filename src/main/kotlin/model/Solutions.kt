@@ -471,6 +471,22 @@ object Solutions {
                 row(Empty, UpTunnel(BROWN, CarPosition(0, 4, DOWN)), Empty, Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, Empty)
             }
         )
+        val level2_7A = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, DownTunnel(GRAY, CarPosition(4, 3, UP)), Empty, DownTunnel(PURPLE, CarPosition(4, 5, UP)), Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
+                row(Empty, VerticalTrack(), Empty, VerticalTrack(), Obstacle, UpRightTurn(), DownLeftTurn(), Empty)
+                row(HorizontalTrack(fixed = true), DownLeftUpFork(), HorizontalTrack(fixed = true), DownLeftUpFork(), HorizontalTrack(fixed = true), DownLeftTurn(), UpRightTurn(), EndingTrack)
+                row(Empty, VerticalTrack(), Empty, VerticalTrack(), Obstacle, VerticalTrack(), Empty, Empty)
+                row(Empty, UpTunnel(BROWN, CarPosition(0, 5, DOWN)), Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, UpTunnel(PURPLE, CarPosition(0, 3, DOWN)), Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, DownTunnel(GRAY, CarPosition(4, 3, UP)), Empty, DownTunnel(PURPLE, CarPosition(4, 5, UP)), Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack(), Obstacle, UpRightTurn(), DownLeftTurn(), Empty)
+                row(HorizontalTrack(fixed = true), DownLeftTurn(), HorizontalTrack(fixed = true), DownLeftUpFork(), HorizontalTrack(fixed = true), DownLeftTurn(), UpRightTurn(), EndingTrack)
+                row(Empty, DownRightUpFork(), HorizontalTrack(), UpLeftTurn(), Obstacle, VerticalTrack(), Empty, Empty)
+                row(Empty, UpTunnel(BROWN, CarPosition(0, 5, DOWN)), Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, UpTunnel(PURPLE, CarPosition(0, 3, DOWN)), Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "2-1" to level2_1,
             "2-2" to level2_2,
@@ -485,6 +501,7 @@ object Solutions {
             "2-6" to level2_6,
             "2-6A" to level2_6A,
             "2-7" to level2_7,
+            "2-7A" to level2_7A,
         )
     }
 }
