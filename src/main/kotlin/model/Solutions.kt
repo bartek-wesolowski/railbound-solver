@@ -494,6 +494,41 @@ object Solutions {
                 row(HorizontalTrack(fixed = true), DownLeftUpFork(), HorizontalTrack(fixed = true), UpLeftTurn(), HorizontalTrack(fixed = true), DownLeftTurn(), UpRightTurn(), EndingTrack)
                 row(Empty, UpRightTurn(), DownLeftTurn(), Empty, DownRightTurn(), UpLeftTurn(), Empty, Empty)
                 row(Empty, Empty, UpTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=4, column=4, direction=UP)), Empty, DownTunnel(color=GRAY, exitPosition=CarPosition(row=4, column=2, direction=UP)), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed=false), DownLeftTurn(fixed=false), UpRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, Empty)
+                row(HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), DownRightTurn(fixed=false), EndingTrack)
+                row(Empty, UpRightTurn(fixed=false), DownRightLeftFork(fixed=false), HorizontalTrack(fixed=false), DownRightLeftFork(fixed=false), HorizontalTrack(fixed=false), UpLeftTurn(fixed=false), Empty)
+                row(Empty, Empty, UpTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=4, direction=DOWN)), Empty, UpTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=2, direction=DOWN)), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=4, column=4, direction=UP)), Empty, DownTunnel(color=GRAY, exitPosition=CarPosition(row=4, column=2, direction=UP)), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed=false), DownLeftRightFork(fixed=false), HorizontalTrack(fixed=false), DownLeftTurn(fixed=false), Empty, Empty)
+                row(HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), DownRightTurn(fixed=false), EndingTrack)
+                row(Empty, UpRightTurn(fixed=false), HorizontalTrack(fixed=false), HorizontalTrack(fixed=false), DownRightLeftFork(fixed=false), HorizontalTrack(fixed=false), UpLeftTurn(fixed=false), Empty)
+                row(Empty, Empty, UpTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=4, direction=DOWN)), Empty, UpTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=2, direction=DOWN)), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=4, column=4, direction=UP)), Empty, DownTunnel(color=GRAY, exitPosition=CarPosition(row=4, column=2, direction=UP)), Empty, Empty, Empty)
+                row(Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, UpRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, Empty)
+                row(HorizontalTrack(fixed=true), UpLeftDownFork(fixed=false), HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), DownRightTurn(fixed=false), EndingTrack)
+                row(Empty, UpRightTurn(fixed=false), DownLeftRightFork(fixed=false), UpLeftTurn(fixed=false), DownRightTurn(fixed=false), HorizontalTrack(fixed=false), UpLeftTurn(fixed=false), Empty)
+                row(Empty, Empty, UpTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=4, direction=DOWN)), Empty, UpTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=2, direction=DOWN)), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=4, column=4, direction=UP)), Empty, DownTunnel(color=GRAY, exitPosition=CarPosition(row=4, column=2, direction=UP)), Empty, Empty, Empty)
+                row(Empty, DownRightTurn(fixed=false), UpRightLeftFork(fixed=false), HorizontalTrack(fixed=false), UpRightLeftFork(fixed=false), HorizontalTrack(fixed=false), DownLeftTurn(fixed=false), Empty)
+                row(HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), UpRightTurn(fixed=false), EndingTrack)
+                row(Empty, Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty)
+                row(Empty, Empty, UpTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=4, direction=DOWN)), Empty, UpTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=2, direction=DOWN)), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=4, column=4, direction=UP)), Empty, DownTunnel(color=GRAY, exitPosition=CarPosition(row=4, column=2, direction=UP)), Empty, Empty, Empty)
+                row(Empty, DownRightTurn(fixed=false), HorizontalTrack(fixed=false), HorizontalTrack(fixed=false), UpRightLeftFork(fixed=false), HorizontalTrack(fixed=false), DownLeftTurn(fixed=false), Empty)
+                row(HorizontalTrack(fixed=true), UpLeftTurn(fixed=false), HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), HorizontalTrack(fixed=true), DownLeftTurn(fixed=false), UpRightTurn(fixed=false), EndingTrack)
+                row(Empty, Empty, DownRightTurn(fixed=false), UpLeftRightFork(fixed=false), HorizontalTrack(fixed=false), UpLeftTurn(fixed=false), Empty, Empty)
+                row(Empty, Empty, UpTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=4, direction=DOWN)), Empty, UpTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=2, direction=DOWN)), Empty, Empty, Empty)
             }
         )
         val solutions = mapOf(
