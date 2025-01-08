@@ -10,12 +10,16 @@ import androidx.compose.ui.window.application
 import compose.Solutions
 import compose.SolverStates
 import model.Levels
+import model.Solutions
 import solver.Solver
 
 private val tileSize = 70.dp
-private const val levelName = "2-7B"
+private const val levelName = "2-8"
 private val level = Levels.World2.levels.getValue(levelName)
+private val predefinedSolutions = Solutions.World2.solutions.getValue(levelName)
+private val predefinedSolution = predefinedSolutions.first()
 private val solver = Solver()
+private val solverSolutions = solver.findSolutions(level)
 
 fun main() = application {
     Window(
@@ -31,11 +35,12 @@ fun main() = application {
         MaterialTheme {
             Row {
                 SolverStates(
-                    solverStates = solver.getSolverStates(level),
+                    solverStates = solver.getSolverStates(level)
+                        .filter { it.board.matches(predefinedSolution) },
                     tileSize = tileSize,
                 )
                 Solutions(
-                    solutions = solver.findSolutions(level),
+                    solutions = if (solverSolutions.isNotEmpty()) solverSolutions else predefinedSolutions,
                     tileSize = tileSize,
                     modifier = Modifier.padding(start = 16.dp)
                 )
