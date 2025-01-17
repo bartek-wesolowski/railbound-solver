@@ -354,7 +354,7 @@ private fun BarrierColor.toColor(): Color = when (this) {
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = HorizontalBarrierSwitch(BarrierColor.GREEN),
+        tile = HorizontalBarrierSwitch(BarrierColor.GREEN, 0, 0),
         size = 100.dp
     )
 }

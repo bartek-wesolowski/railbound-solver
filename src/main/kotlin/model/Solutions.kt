@@ -581,7 +581,7 @@ object Solutions {
         val level3_1 = setOf(
             buildBoard(rows = 4) {
                 row(FixedHorizontalTrack, HorizontalBarrier(GREEN, false), HorizontalTrack, DownRightLeftFork(), HorizontalTrack, HorizontalTrack, EndingTrack)
-                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN, 0, 1), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, VerticalTrack, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
             }

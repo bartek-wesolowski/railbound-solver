@@ -89,6 +89,8 @@ sealed class Tile(
 
         data class VerticalBarrierSwitch(
             val color: BarrierColor,
+            val barrierRow: Int,
+            val barrierColumn: Int,
         ) : BaseVerticalTrack()
     }
 
@@ -136,6 +138,8 @@ sealed class Tile(
 
         data class HorizontalBarrierSwitch(
             val color: BarrierColor,
+            val barrierRow: Int,
+            val barrierColumn: Int,
         ) : BaseHorizontalTrack()
     }
 

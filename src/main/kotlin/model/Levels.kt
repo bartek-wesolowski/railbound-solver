@@ -624,7 +624,7 @@ object Levels {
             name = "3-1",
             board = buildBoard(rows = 4) {
                 row(FixedHorizontalTrack, HorizontalBarrier(GREEN, false), Empty, Empty, Empty, HorizontalTrack, EndingTrack)
-                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN, 0, 1), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
             },
