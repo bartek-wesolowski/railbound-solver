@@ -20,7 +20,7 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 0, RIGHT)),
+                Car(1, RED, CarPosition(0, 0, RIGHT)),
             ),
             tracks = 3
         )
@@ -32,7 +32,7 @@ object Levels {
                 row(FixedVerticalTrack, Obstacle, Empty, Empty, Empty, Obstacle)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(2, 0, UP)),
+                Car(1, RED, CarPosition(2, 0, UP)),
             ),
             tracks = 10
         )
@@ -44,7 +44,7 @@ object Levels {
                 row(Empty, UpRightTurn(fixed = true), FixedHorizontalTrack, UpLeftTurn(fixed = true), Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 0, RIGHT)),
+                Car(1, RED, CarPosition(0, 0, RIGHT)),
             ),
             tracks = 1
         )
@@ -58,7 +58,7 @@ object Levels {
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(2, 0, RIGHT)),
+                Car(1, RED, CarPosition(2, 0, RIGHT)),
             ),
             tracks = 4
         )
@@ -70,7 +70,7 @@ object Levels {
                 row(Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(2, 3, LEFT)),
+                Car(1, RED, CarPosition(2, 3, LEFT)),
             ),
             tracks = 7
         )
@@ -82,7 +82,7 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 0, RIGHT)),
+                Car(1, RED, CarPosition(1, 0, RIGHT)),
             ),
             tracks = 3
         )
@@ -94,7 +94,7 @@ object Levels {
                 row(Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 0, DOWN)),
+                Car(1, RED, CarPosition(0, 0, DOWN)),
             ),
             tracks = 3
         )
@@ -106,7 +106,7 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(2, 0, RIGHT)),
+                Car(1, RED, CarPosition(2, 0, RIGHT)),
             ),
             tracks = 3
         )
@@ -118,8 +118,8 @@ object Levels {
                 row(Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 2, DOWN)),
-                Car(2, Red, CarPosition(0, 0, DOWN)),
+                Car(1, RED, CarPosition(0, 2, DOWN)),
+                Car(2, RED, CarPosition(0, 0, DOWN)),
             ),
             tracks = 4
         )
@@ -133,8 +133,8 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 0, RIGHT)),
-                Car(2, Red, CarPosition(4, 0, RIGHT)),
+                Car(1, RED, CarPosition(0, 0, RIGHT)),
+                Car(2, RED, CarPosition(4, 0, RIGHT)),
             ),
             tracks = 6
         )
@@ -146,8 +146,8 @@ object Levels {
                 row(Empty, FixedHorizontalTrack, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 1, RIGHT)),
-                Car(2, Red, CarPosition(2, 1, LEFT)),
+                Car(1, RED, CarPosition(0, 1, RIGHT)),
+                Car(2, RED, CarPosition(2, 1, LEFT)),
             ),
             tracks = 5
         )
@@ -163,9 +163,9 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 1, RIGHT)),
-                Car(2, Red, CarPosition(3, 1, RIGHT)),
-                Car(3, Red, CarPosition(5, 1, RIGHT)),
+                Car(1, RED, CarPosition(1, 1, RIGHT)),
+                Car(2, RED, CarPosition(3, 1, RIGHT)),
+                Car(3, RED, CarPosition(5, 1, RIGHT)),
             ),
             tracks = 9
         )
@@ -181,9 +181,9 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 1, LEFT)),
-                Car(2, Red, CarPosition(3, 1, RIGHT)),
-                Car(3, Red, CarPosition(5, 1, LEFT)),
+                Car(1, RED, CarPosition(1, 1, LEFT)),
+                Car(2, RED, CarPosition(3, 1, RIGHT)),
+                Car(3, RED, CarPosition(5, 1, LEFT)),
             ),
             tracks = 15
         )
@@ -195,8 +195,8 @@ object Levels {
                 row(Empty, Empty, FixedHorizontalTrack, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 0, RIGHT)),
-                Car(2, Red, CarPosition(2, 2, RIGHT)),
+                Car(1, RED, CarPosition(0, 0, RIGHT)),
+                Car(2, RED, CarPosition(2, 2, RIGHT)),
             ),
             tracks = 6
         )
@@ -208,8 +208,8 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 0, RIGHT)),
-                Car(2, Red, CarPosition(1, 3, LEFT)),
+                Car(1, RED, CarPosition(1, 0, RIGHT)),
+                Car(2, RED, CarPosition(1, 3, LEFT)),
             ),
             tracks = 4
         )
@@ -223,8 +223,8 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(0, 0, RIGHT)),
-                Car(2, Red, CarPosition(0, 4, LEFT)),
+                Car(1, RED, CarPosition(0, 0, RIGHT)),
+                Car(2, RED, CarPosition(0, 4, LEFT)),
             ),
             tracks = 11
         )
@@ -239,9 +239,9 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 0, RIGHT)),
-                Car(2, Red, CarPosition(1, 4, LEFT)),
-                Car(3, Red, CarPosition(5, 0, RIGHT)),
+                Car(1, RED, CarPosition(1, 0, RIGHT)),
+                Car(2, RED, CarPosition(1, 4, LEFT)),
+                Car(3, RED, CarPosition(5, 0, RIGHT)),
             ),
             tracks = 14
         )
@@ -253,8 +253,8 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 1, LEFT)),
-                Car(2, Red, CarPosition(1, 2, RIGHT)),
+                Car(1, RED, CarPosition(1, 1, LEFT)),
+                Car(2, RED, CarPosition(1, 2, RIGHT)),
             ),
             tracks = 12
         )
@@ -266,9 +266,9 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 1, LEFT)),
-                Car(2, Red, CarPosition(1, 2, RIGHT)),
-                Car(3, Red, CarPosition(1, 6, LEFT)),
+                Car(1, RED, CarPosition(1, 1, LEFT)),
+                Car(2, RED, CarPosition(1, 2, RIGHT)),
+                Car(3, RED, CarPosition(1, 6, LEFT)),
             ),
             tracks = 13
         )
@@ -281,9 +281,9 @@ object Levels {
                 row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(3, 0, RIGHT)),
-                Car(2, Red, CarPosition(0, 5, LEFT)),
-                Car(3, Red, CarPosition(0, 0, RIGHT)),
+                Car(1, RED, CarPosition(3, 0, RIGHT)),
+                Car(2, RED, CarPosition(0, 5, LEFT)),
+                Car(3, RED, CarPosition(0, 0, RIGHT)),
             ),
             tracks = 8
         )
@@ -299,9 +299,9 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(1, 6, LEFT)),
-                Car(2, Red, CarPosition(5, 0, RIGHT)),
-                Car(3, Red, CarPosition(1, 0, RIGHT)),
+                Car(1, RED, CarPosition(1, 6, LEFT)),
+                Car(2, RED, CarPosition(5, 0, RIGHT)),
+                Car(3, RED, CarPosition(1, 0, RIGHT)),
             ),
             tracks = 15
         )
@@ -339,7 +339,7 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, LeftTunnel(GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(3, 0, RIGHT)),
+                Car(1, BLUE, CarPosition(3, 0, RIGHT)),
             ),
             tracks = 4
         )
@@ -353,7 +353,7 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(4, 0, RIGHT)),
+                Car(1, BLUE, CarPosition(4, 0, RIGHT)),
             ),
             tracks = 6
         )
@@ -367,8 +367,8 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(2, 4, LEFT)),
-                Car(2, Blue, CarPosition(4, 4, LEFT)),
+                Car(1, BLUE, CarPosition(2, 4, LEFT)),
+                Car(2, BLUE, CarPosition(4, 4, LEFT)),
             ),
             tracks = 6
         )
@@ -384,9 +384,9 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(4, 4, LEFT)),
-                Car(2, Blue, CarPosition(6, 4, LEFT)),
-                Car(3, Blue, CarPosition(2, 2, LEFT)),
+                Car(1, BLUE, CarPosition(4, 4, LEFT)),
+                Car(2, BLUE, CarPosition(6, 4, LEFT)),
+                Car(3, BLUE, CarPosition(2, 2, LEFT)),
             ),
             tracks = 12
         )
@@ -402,9 +402,9 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(4, 0, RIGHT)),
-                Car(2, Blue, CarPosition(6, 0, RIGHT)),
-                Car(3, Blue, CarPosition(2, 4, LEFT)),
+                Car(1, BLUE, CarPosition(4, 0, RIGHT)),
+                Car(2, BLUE, CarPosition(6, 0, RIGHT)),
+                Car(3, BLUE, CarPosition(2, 4, LEFT)),
             ),
             tracks = 15
         )
@@ -417,8 +417,8 @@ object Levels {
                 row(Empty, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(1, 2, DOWN)),
-                Car(2, Blue, CarPosition(3, 2, RIGHT)),
+                Car(1, BLUE, CarPosition(1, 2, DOWN)),
+                Car(2, BLUE, CarPosition(3, 2, RIGHT)),
             ),
             tracks = 7
         )
@@ -433,8 +433,8 @@ object Levels {
                 row(RightTunnel(GRAY, CarPosition(0, 2, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(1, 2, DOWN)),
-                Car(2, Blue, CarPosition(4, 2, UP)),
+                Car(1, BLUE, CarPosition(1, 2, DOWN)),
+                Car(2, BLUE, CarPosition(4, 2, UP)),
             ),
             tracks = 8
         )
@@ -448,8 +448,8 @@ object Levels {
                 row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, Empty, Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(2, 3, UP)),
-                Car(2, Blue, CarPosition(2, 2, DOWN)),
+                Car(1, BLUE, CarPosition(2, 3, UP)),
+                Car(2, BLUE, CarPosition(2, 2, DOWN)),
             ),
             tracks = 7
         )
@@ -463,9 +463,9 @@ object Levels {
                 row(FixedVerticalTrack, Empty, UpTunnel(GRAY, CarPosition(0, 2, DOWN)), Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(4, 0, UP)),
-                Car(2, Blue, CarPosition(0, 4, DOWN)),
-                Car(3, Blue, CarPosition(0, 0, DOWN)),
+                Car(1, BLUE, CarPosition(4, 0, UP)),
+                Car(2, BLUE, CarPosition(0, 4, DOWN)),
+                Car(3, BLUE, CarPosition(0, 0, DOWN)),
             ),
             tracks = 12
         )
@@ -479,9 +479,9 @@ object Levels {
                 row(FixedVerticalTrack, Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(4, 0, UP)),
-                Car(2, Blue, CarPosition(0, 4, DOWN)),
-                Car(3, Blue, CarPosition(0, 0, DOWN)),
+                Car(1, BLUE, CarPosition(4, 0, UP)),
+                Car(2, BLUE, CarPosition(0, 4, DOWN)),
+                Car(3, BLUE, CarPosition(0, 0, DOWN)),
             ),
             tracks = 12
         )
@@ -495,8 +495,8 @@ object Levels {
                 row(FixedHorizontalTrack, Empty, LeftTunnel(GRAY, CarPosition(0, 5, DOWN)), Empty, Empty, UpTunnel(BROWN, CarPosition(0, 2, LEFT)), Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(4, 0, RIGHT)),
-                Car(2, Blue, CarPosition(0, 0, RIGHT)),
+                Car(1, BLUE, CarPosition(4, 0, RIGHT)),
+                Car(2, BLUE, CarPosition(0, 0, RIGHT)),
             ),
             tracks = 7
         )
@@ -510,8 +510,8 @@ object Levels {
                 row(RightTunnel(GRAY, CarPosition(0, 5, DOWN)), Empty, Empty, FixedHorizontalTrack, Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(0, 3, LEFT)),
-                Car(2, Blue, CarPosition(4, 3, LEFT)),
+                Car(1, BLUE, CarPosition(0, 3, LEFT)),
+                Car(2, BLUE, CarPosition(4, 3, LEFT)),
             ),
             tracks = 8
         )
@@ -525,8 +525,8 @@ object Levels {
                 row(Empty, UpTunnel(BROWN, CarPosition(0, 4, DOWN)), Empty, Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(2, 0, RIGHT)),
-                Car(2, Blue, CarPosition(2, 3, RIGHT)),
+                Car(1, BLUE, CarPosition(2, 0, RIGHT)),
+                Car(2, BLUE, CarPosition(2, 3, RIGHT)),
             ),
             tracks = 8
         )
@@ -540,9 +540,9 @@ object Levels {
                 row(Empty, UpTunnel(BROWN, CarPosition(0, 5, DOWN)), Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, UpTunnel(PURPLE, CarPosition(0, 3, DOWN)), Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(2, 0, RIGHT)),
-                Car(2, Blue, CarPosition(2, 2, RIGHT)),
-                Car(3, Blue, CarPosition(2, 4, RIGHT)),
+                Car(1, BLUE, CarPosition(2, 0, RIGHT)),
+                Car(2, BLUE, CarPosition(2, 2, RIGHT)),
+                Car(3, BLUE, CarPosition(2, 4, RIGHT)),
             ),
             tracks = 11
         )
@@ -556,9 +556,9 @@ object Levels {
                 row(Empty, Empty, UpTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(2, 0, RIGHT)),
-                Car(2, Blue, CarPosition(2, 2, RIGHT)),
-                Car(3, Blue, CarPosition(2, 4, RIGHT)),
+                Car(1, BLUE, CarPosition(2, 0, RIGHT)),
+                Car(2, BLUE, CarPosition(2, 2, RIGHT)),
+                Car(3, BLUE, CarPosition(2, 4, RIGHT)),
             ),
             tracks = 14
         )
@@ -573,9 +573,9 @@ object Levels {
                 row(RightTunnel(GRAY, CarPosition(1, 2, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(1, 0, RIGHT)),
-                Car(2, Blue, CarPosition(3, 2, UP)),
-                Car(3, Blue, CarPosition(1, 5, LEFT)),
+                Car(1, BLUE, CarPosition(1, 0, RIGHT)),
+                Car(2, BLUE, CarPosition(3, 2, UP)),
+                Car(3, BLUE, CarPosition(1, 5, LEFT)),
             ),
             tracks = 10
         )
@@ -592,9 +592,9 @@ object Levels {
                 row(RightTunnel(BROWN, CarPosition(0, 6, DOWN)), Empty, Empty, Empty, LeftTunnel(GRAY, CarPosition(3, 0, RIGHT)), Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Blue, CarPosition(3, 3, RIGHT)),
-                Car(2, Blue, CarPosition(5, 2, DOWN)),
-                Car(3, Blue, CarPosition(0, 4, DOWN)),
+                Car(1, BLUE, CarPosition(3, 3, RIGHT)),
+                Car(2, BLUE, CarPosition(5, 2, DOWN)),
+                Car(3, BLUE, CarPosition(0, 4, DOWN)),
             ),
             tracks = 12
         )
@@ -629,8 +629,8 @@ object Levels {
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
-                Car(1, Red, CarPosition(3, 3, UP)),
-                Car(2, Red, CarPosition(0, 0, RIGHT)),
+                Car(1, RED, CarPosition(3, 3, UP)),
+                Car(2, RED, CarPosition(0, 0, RIGHT)),
             ),
             tracks = 4
         )

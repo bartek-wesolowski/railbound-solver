@@ -36,8 +36,8 @@ fun Car(
     ) {
         Canvas(modifier = Modifier.size(tileSize)) {
             val color = when (car.color) {
-                CarColor.Red -> Red
-                CarColor.Blue -> Blue
+                CarColor.RED -> Red
+                CarColor.BLUE -> Blue
             }
             val topLeft = when (car.direction) {
                 Direction.UP -> Offset(
@@ -97,7 +97,7 @@ private fun CarPreview() {
     Car(
         Car(
             number = 1,
-            color = CarColor.Red,
+            color = CarColor.RED,
             position = CarPosition(0, 0, Direction.LEFT),
         ),
         100.dp,

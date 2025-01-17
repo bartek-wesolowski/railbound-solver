@@ -1,6 +1,6 @@
 package model
 
 enum class CarColor {
-    Red,
-    Blue
+    RED,
+    BLUE
 }
