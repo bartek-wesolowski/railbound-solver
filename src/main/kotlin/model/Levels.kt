@@ -6,6 +6,8 @@ import model.Board.Companion.row
 import model.CarColor.*
 import model.Direction.*
 import model.Tile.*
+import model.Tile.BaseHorizontalTrack.*
+import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.TunnelColor.*
 
 object Levels {
@@ -13,7 +15,7 @@ object Levels {
         val level1_1 = Level(
             name = "1-1",
             board = buildBoard(rows = 1) {
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
@@ -25,7 +27,7 @@ object Levels {
             board = buildBoard(rows = 3) {
                 row(Empty, Empty, Empty, Obstacle, Empty, EndingTrack)
                 row(Empty, Obstacle, Empty, Obstacle, Empty, Obstacle)
-                row(VerticalTrack(fixed = true), Obstacle, Empty, Empty, Empty, Obstacle)
+                row(FixedVerticalTrack, Obstacle, Empty, Empty, Empty, Obstacle)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(2, 0, UP)),
@@ -35,9 +37,9 @@ object Levels {
         val level1_3 = Level(
             name = "1-3",
             board = buildBoard(rows = 3) {
-                row(HorizontalTrack(fixed = true), DownLeftRightFork(), HorizontalTrack(fixed = true), Empty, EndingTrack)
-                row(Empty, VerticalTrack(fixed = true), Empty, VerticalTrack(fixed = true), Empty)
-                row(Empty, UpRightTurn(fixed = true), HorizontalTrack(fixed = true), UpLeftTurn(fixed = true), Empty)
+                row(FixedHorizontalTrack, DownLeftRightFork(), FixedHorizontalTrack, Empty, EndingTrack)
+                row(Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty)
+                row(Empty, UpRightTurn(fixed = true), FixedHorizontalTrack, UpLeftTurn(fixed = true), Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
@@ -47,11 +49,11 @@ object Levels {
         val level1_4 = Level(
             name = "1-4",
             board = buildBoard(rows = 5) {
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, DownRightTurn(fixed = true), Empty, DownLeftTurn(fixed = true), Empty)
-                row(HorizontalTrack(fixed = true), Empty, Obstacle, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, Obstacle, Empty, EndingTrack)
                 row(Empty, UpRightTurn(fixed = true), Empty, UpLeftTurn(fixed = true), Empty)
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(2, 0, RIGHT)),
@@ -63,7 +65,7 @@ object Levels {
             board = buildBoard(rows = 3) {
                 row(Empty, Empty, Empty, EndingTrack)
                 row(Empty, Obstacle, Obstacle, Obstacle)
-                row(Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(2, 3, LEFT)),
@@ -74,7 +76,7 @@ object Levels {
             name = "1-6",
             board = buildBoard(rows = 3) {
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -85,7 +87,7 @@ object Levels {
         val level1_7 = Level(
             name = "1-7",
             board = buildBoard(rows = 3) {
-                row(VerticalTrack(fixed = true), Empty, Empty)
+                row(FixedVerticalTrack, Empty, Empty)
                 row(Empty, Obstacle, Empty)
                 row(Empty, Empty, EndingTrack)
             },
@@ -97,9 +99,9 @@ object Levels {
         val level1_8 = Level(
             name = "1-8",
             board = buildBoard(rows = 3) {
-                row(HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), DownRightLeftFork(), EndingTrack)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, DownRightLeftFork(), EndingTrack)
                 row(Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(2, 0, RIGHT)),
@@ -109,9 +111,9 @@ object Levels {
         val level1_9 = Level(
             name = "1-9",
             board = buildBoard(rows = 3) {
-                row(VerticalTrack(fixed = true), Obstacle, VerticalTrack(fixed = true), Empty, Empty)
-                row(Empty, Obstacle, VerticalTrack(fixed = true), Empty, Empty)
-                row(Empty, Empty, Empty, HorizontalTrack(fixed = true), EndingTrack)
+                row(FixedVerticalTrack, Obstacle, FixedVerticalTrack, Empty, Empty)
+                row(Empty, Obstacle, FixedVerticalTrack, Empty, Empty)
+                row(Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(0, 2, DOWN)),
@@ -122,11 +124,11 @@ object Levels {
         val level1_10 = Level(
             name = "1-10",
             board = buildBoard(rows = 5) {
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, DownRightTurn(fixed = true), Empty, DownLeftTurn(fixed = true), Empty)
-                row(Empty, VerticalTrack(fixed = true), Obstacle, UpRightDownFork(), EndingTrack)
+                row(Empty, FixedVerticalTrack, Obstacle, UpRightDownFork(), EndingTrack)
                 row(Empty, UpRightTurn(fixed = true), Empty, UpLeftTurn(fixed = true), Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
@@ -137,9 +139,9 @@ object Levels {
         val level1_11 = Level(
             name = "1-11",
             board = buildBoard(rows = 3) {
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty)
+                row(Empty, FixedHorizontalTrack, Empty, Empty)
                 row(Empty, Obstacle, Empty, EndingTrack)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty)
+                row(Empty, FixedHorizontalTrack, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(0, 1, RIGHT)),
@@ -151,11 +153,11 @@ object Levels {
             name = "1-11A",
             board = buildBoard(rows = 7) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -169,11 +171,11 @@ object Levels {
             name = "1-11B",
             board = buildBoard(rows = 7) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty)
-                row(Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -186,9 +188,9 @@ object Levels {
         val level1_12 = Level(
             name = "1-12",
             board = buildBoard(rows = 3) {
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, HorizontalTrack(fixed = true), Empty, Empty)
+                row(Empty, Empty, FixedHorizontalTrack, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(0, 0, RIGHT)),
@@ -200,7 +202,7 @@ object Levels {
             name = "1-12A",
             board = buildBoard(rows = 3) {
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, HorizontalTrack(fixed = true), EndingTrack)
+                row(FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -212,7 +214,7 @@ object Levels {
         val level1_13 = Level(
             name = "1-13",
             board = buildBoard(rows = 5) {
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Obstacle, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Obstacle, Empty, Empty)
@@ -228,11 +230,11 @@ object Levels {
             name = "1-13A",
             board = buildBoard(rows = 6) {
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(1, 0, RIGHT)),
@@ -245,7 +247,7 @@ object Levels {
             name = "1-14",
             board = buildBoard(rows = 3) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), Empty, Empty, EndingTrack)
+                row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -258,7 +260,7 @@ object Levels {
             name = "1-14A",
             board = buildBoard(rows = 3) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), Empty, Empty, Empty, HorizontalTrack(fixed = true), EndingTrack)
+                row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -271,10 +273,10 @@ object Levels {
         val level1_15 = Level(
             name = "1-15",
             board = buildBoard(rows = 4) {
-                row(HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), Empty, Empty, HorizontalTrack(fixed = true), HorizontalTrack(fixed = true))
+                row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, FixedHorizontalTrack)
                 row(Empty, Empty, UpLeftTurn(fixed = true), UpRightTurn(fixed = true), Empty, Empty)
                 row(Empty, Empty, DownLeftTurn(fixed = true), DownRightTurn(fixed = true), Empty, Empty)
-                row(HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), Empty, Empty, HorizontalTrack(fixed = true), EndingTrack)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Red, CarPosition(3, 0, RIGHT)),
@@ -287,11 +289,11 @@ object Levels {
             name = "1-15A",
             board = buildBoard(rows = 7) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), Empty, Empty, Empty, HorizontalTrack(fixed = true), HorizontalTrack(fixed = true))
+                row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack, FixedHorizontalTrack)
                 row(Empty, Empty, UpLeftTurn(fixed = true), Empty, UpRightTurn(fixed = true), Empty, Empty)
-                row(Empty, VerticalTrack(fixed = true), Empty, VerticalTrack(fixed = true), Empty, VerticalTrack(fixed = true), Empty)
+                row(Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty)
                 row(Empty, Empty, DownLeftTurn(fixed = true), Empty, DownRightTurn(fixed = true), Empty, Empty)
-                row(HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), Empty, VerticalTrack(fixed = true), Empty, HorizontalTrack(fixed = true), EndingTrack)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, FixedVerticalTrack, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -332,7 +334,7 @@ object Levels {
                 row(Empty, Empty, Empty, RightTunnel(GRAY, CarPosition(3, 3, LEFT)), Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, LeftTunnel(GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, LeftTunnel(GRAY, CarPosition(0, 3, RIGHT)), Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(3, 0, RIGHT)),
@@ -346,7 +348,7 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(2, 4, LEFT)), Empty, Empty, Empty, LeftTunnel(GRAY, CarPosition(2, 0, RIGHT)))
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(4, 0, RIGHT)),
@@ -356,11 +358,11 @@ object Levels {
         val level2_3 = Level(
             name = "2-3",
             board = buildBoard(rows = 5) {
-                row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), EndingTrack)
+                row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(RightTunnel(GRAY, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
-                row(Empty, Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(2, 4, LEFT)),
@@ -371,13 +373,13 @@ object Levels {
         val level2_3A = Level(
             name = "2-3A",
             board = buildBoard(rows = 7) {
-                row(RightTunnel(GRAY, CarPosition(5, 0, RIGHT)), Empty, Empty, HorizontalTrack(fixed = true), EndingTrack)
-                row(Obstacle, VerticalTrack(fixed = true), Empty, Empty, Empty)
-                row(Obstacle, Empty, HorizontalTrack(fixed = true), Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(5, 0, RIGHT)), Empty, Empty, FixedHorizontalTrack, EndingTrack)
+                row(Obstacle, FixedVerticalTrack, Empty, Empty, Empty)
+                row(Obstacle, Empty, FixedHorizontalTrack, Empty, Empty)
                 row(Obstacle, Obstacle, Obstacle, Empty, Empty)
-                row(Empty, Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(RightTunnel(GRAY, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
-                row(Empty, Empty, Empty, Empty, HorizontalTrack(fixed = true))
+                row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(4, 4, LEFT)),
@@ -389,13 +391,13 @@ object Levels {
         val level2_3B = Level(
             name = "2-3B",
             board = buildBoard(rows = 7) {
-                row(Empty, Empty, RightTunnel(GRAY, CarPosition(5, 6, LEFT)), Empty, Empty, HorizontalTrack(fixed = true), EndingTrack)
+                row(Empty, Empty, RightTunnel(GRAY, CarPosition(5, 6, LEFT)), Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Obstacle, Empty, Empty, Obstacle, Empty)
-                row(Empty, Empty, Obstacle, Empty, HorizontalTrack(fixed = true), Obstacle, Empty)
+                row(Empty, Empty, Obstacle, Empty, FixedHorizontalTrack, Obstacle, Empty)
                 row(Empty, Empty, Obstacle, Empty, Empty, Obstacle, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, LeftTunnel(GRAY, CarPosition(0, 2, RIGHT)))
-                row(HorizontalTrack(fixed = true), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(4, 0, RIGHT)),
@@ -408,9 +410,9 @@ object Levels {
             name = "2-4",
             board = buildBoard(rows = 4) {
                 row(Empty, Empty, Empty, Empty, DownTunnel(GRAY, CarPosition(2, 0, RIGHT)), Empty)
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, HorizontalTrack(fixed = true), Empty, Empty, EndingTrack)
+                row(Empty, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(1, 2, DOWN)),
@@ -422,11 +424,11 @@ object Levels {
             name = "2-4A",
             board = buildBoard(rows = 6) {
                 row(Empty, Empty, DownTunnel(GRAY, CarPosition(5, 1, RIGHT)), Empty, Empty)
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty)
-                row(RightTunnel(GRAY, CarPosition(0, 2, DOWN)), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), EndingTrack)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 2, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(1, 2, DOWN)),
@@ -438,9 +440,9 @@ object Levels {
             name = "2-5",
             board = buildBoard(rows = 5) {
                 row(RightTunnel(BROWN, CarPosition(4, 4, UP)), Empty, Empty, Empty, DownTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty, Empty)
-                row(Empty, VerticalTrack(fixed = true), Empty, Empty, UpLeftDownFork(fixed = true), Empty, Empty)
-                row(Empty, VerticalTrack(fixed = true), VerticalTrack(fixed = true), VerticalTrack(fixed = true), Empty, Empty, EndingTrack)
-                row(Empty, VerticalTrack(fixed = true), Empty, Empty, DownRightUpFork(fixed = true), Empty, Empty)
+                row(Empty, FixedVerticalTrack, Empty, Empty, UpLeftDownFork(fixed = true), Empty, Empty)
+                row(Empty, FixedVerticalTrack, FixedVerticalTrack, FixedVerticalTrack, Empty, Empty, EndingTrack)
+                row(Empty, FixedVerticalTrack, Empty, Empty, DownRightUpFork(fixed = true), Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, Empty, Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty, Empty)
             },
             cars = immutableArrayOf(
@@ -452,11 +454,11 @@ object Levels {
         val level2_5A = Level(
             name = "2-5A",
             board = buildBoard(rows = 5) {
-                row(VerticalTrack(fixed = true), Empty, DownTunnel(GRAY, CarPosition(4, 2, UP)), Empty, VerticalTrack(fixed = true))
+                row(FixedVerticalTrack, Empty, DownTunnel(GRAY, CarPosition(4, 2, UP)), Empty, FixedVerticalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Obstacle, Empty, Empty, Empty, Obstacle)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(VerticalTrack(fixed = true), Empty, UpTunnel(GRAY, CarPosition(0, 2, DOWN)), Empty, EndingTrack)
+                row(FixedVerticalTrack, Empty, UpTunnel(GRAY, CarPosition(0, 2, DOWN)), Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(4, 0, UP)),
@@ -468,11 +470,11 @@ object Levels {
         val level2_5B = Level(
             name = "2-5B",
             board = buildBoard(rows = 5) {
-                row(VerticalTrack(fixed = true), Empty, DownTunnel(BROWN, CarPosition(4, 2, UP)), Empty, VerticalTrack(fixed = true))
+                row(FixedVerticalTrack, Empty, DownTunnel(BROWN, CarPosition(4, 2, UP)), Empty, FixedVerticalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(2, 4, LEFT)), Empty, Obstacle, Empty, LeftTunnel(GRAY, CarPosition(2, 0, RIGHT)))
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(VerticalTrack(fixed = true), Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, EndingTrack)
+                row(FixedVerticalTrack, Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(4, 0, UP)),
@@ -484,11 +486,11 @@ object Levels {
         val level2_6 = Level(
             name = "2-6",
             board = buildBoard(rows = 5) {
-                row(HorizontalTrack(fixed = true), Empty, LeftTunnel(BROWN, CarPosition(4, 5, UP)), Empty, Empty, DownTunnel(GRAY, CarPosition(4, 2, LEFT)), Empty)
+                row(FixedHorizontalTrack, Empty, LeftTunnel(BROWN, CarPosition(4, 5, UP)), Empty, Empty, DownTunnel(GRAY, CarPosition(4, 2, LEFT)), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Obstacle, Obstacle, Empty, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, LeftTunnel(GRAY, CarPosition(0, 5, DOWN)), Empty, Empty, UpTunnel(BROWN, CarPosition(0, 2, LEFT)), Empty)
+                row(FixedHorizontalTrack, Empty, LeftTunnel(GRAY, CarPosition(0, 5, DOWN)), Empty, Empty, UpTunnel(BROWN, CarPosition(0, 2, LEFT)), Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(4, 0, RIGHT)),
@@ -499,11 +501,11 @@ object Levels {
         val level2_6A = Level(
             name = "2-6A",
             board = buildBoard(rows = 5) {
-                row(RightTunnel(BROWN, CarPosition(4, 5, UP)), Empty, Empty, HorizontalTrack(fixed = true), Empty, DownTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty)
-                row(Empty, Empty, Empty, Empty, Empty, VerticalTrack(fixed = true), Empty)
+                row(RightTunnel(BROWN, CarPosition(4, 5, UP)), Empty, Empty, FixedHorizontalTrack, Empty, DownTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty)
+                row(Empty, Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty)
                 row(Empty, Obstacle, Obstacle, Obstacle, Empty, DownRightUpFork(fixed = true), EndingTrack)
-                row(Empty, Empty, Empty, Empty, Empty, VerticalTrack(fixed = true), Empty)
-                row(RightTunnel(GRAY, CarPosition(0, 5, DOWN)), Empty, Empty, HorizontalTrack(fixed = true), Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty)
+                row(Empty, Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 5, DOWN)), Empty, Empty, FixedHorizontalTrack, Empty, UpTunnel(BROWN, CarPosition(0, 0, RIGHT)), Empty)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(0, 3, LEFT)),
@@ -516,7 +518,7 @@ object Levels {
             board = buildBoard(rows = 5) {
                 row(Empty, DownTunnel(GRAY, CarPosition(4, 4, UP)), Empty, Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, Empty, HorizontalTrack(fixed = true), Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, UpTunnel(BROWN, CarPosition(0, 4, DOWN)), Empty, Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, Empty)
             },
@@ -531,7 +533,7 @@ object Levels {
             board = buildBoard(rows = 5) {
                 row(Empty, DownTunnel(GRAY, CarPosition(4, 3, UP)), Empty, DownTunnel(PURPLE, CarPosition(4, 5, UP)), Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, HorizontalTrack(fixed = true), Empty, HorizontalTrack(fixed = true), Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty, Empty, Empty)
                 row(Empty, UpTunnel(BROWN, CarPosition(0, 5, DOWN)), Empty, UpTunnel(GRAY, CarPosition(0, 1, DOWN)), Empty, UpTunnel(PURPLE, CarPosition(0, 3, DOWN)), Empty, Empty)
             },
@@ -547,7 +549,7 @@ object Levels {
             board = buildBoard(rows = 5) {
                 row(Empty, Empty, DownTunnel(BROWN, CarPosition(4, 4, UP)), Empty, DownTunnel(GRAY, CarPosition(4, 2, UP)), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, HorizontalTrack(fixed = true), Empty, HorizontalTrack(fixed = true), Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, UpTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, Empty, Empty)
             },
@@ -562,11 +564,11 @@ object Levels {
             name = "2-8",
             board = buildBoard(rows = 6) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(HorizontalTrack(fixed = true), Empty, RightTunnel(GRAY, CarPosition(5, 0, RIGHT)), Empty, Empty, HorizontalTrack(fixed = true))
+                row(FixedHorizontalTrack, Empty, RightTunnel(GRAY, CarPosition(5, 0, RIGHT)), Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(RightTunnel(GRAY, CarPosition(1, 2, RIGHT)), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), HorizontalTrack(fixed = true), EndingTrack)
+                row(RightTunnel(GRAY, CarPosition(1, 2, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, Blue, CarPosition(1, 0, RIGHT)),
@@ -578,12 +580,12 @@ object Levels {
         val level2_9 = Level(
             name = "2-9",
             board = buildBoard(rows = 8) {
-                row(Empty, Empty, Empty, Empty, VerticalTrack(fixed = true), Empty, DownTunnel(BROWN, CarPosition(7, 0, RIGHT)), Empty)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, DownTunnel(BROWN, CarPosition(7, 0, RIGHT)), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(RightTunnel(GRAY, CarPosition(7, 4, LEFT)), Empty, Empty, HorizontalTrack(fixed = true), Empty, Empty, Empty, EndingTrack)
+                row(RightTunnel(GRAY, CarPosition(7, 4, LEFT)), Empty, Empty, FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, VerticalTrack(fixed = true), Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(BROWN, CarPosition(0, 6, DOWN)), Empty, Empty, Empty, LeftTunnel(GRAY, CarPosition(3, 0, RIGHT)), Empty, Empty, Empty)
             },

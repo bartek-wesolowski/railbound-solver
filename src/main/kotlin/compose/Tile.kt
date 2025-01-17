@@ -12,8 +12,11 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import model.BarrierColor
 import model.Tile
 import model.Tile.*
+import model.Tile.BaseHorizontalTrack.*
+import model.Tile.BaseVerticalTrack.*
 import model.TunnelColor
 
 private val trackColor = Color.Gray
@@ -28,8 +31,12 @@ fun Tile(
     Canvas(modifier = Modifier.size(size)) {
         drawBorder()
         when (tile) {
-            is HorizontalTrack -> drawHorizontalTrack(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is VerticalTrack -> drawVerticalTrack(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
+            is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
+            is HorizontalBarrier -> drawHorizontalBarrier(size, tile.color, tile.open)
+            is VerticalTrack -> drawVerticalTrack(size, trackColor)
+            is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
+            is VerticalBarrier -> drawVerticalBarrier(size, tile.color, tile.open)
             is DownRightTurn -> drawDownRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftTurn -> drawDownLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is UpRightTurn -> drawUpRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
@@ -71,6 +78,33 @@ private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
     )
 }
 
+private fun DrawScope.drawVerticalBarrier(size: Dp, color: BarrierColor, open: Boolean) {
+    drawVerticalTrack(size, fixedTrackColor)
+    val trackStrokeWidth = getTrackStrokeWidth(size)
+    if (open) {
+        val x1 = (size * 0.25f).toPx()
+        val y1 = (size / 2).toPx()
+        val x2 = (size * 0.35f).toPx()
+        val y2 = (size * 0.05f).toPx()
+        drawLine(
+            color = color.toColor(),
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    } else {
+        val x1 = (size * 0.25f).toPx()
+        val x2 = (size * 0.75f).toPx()
+        val y = (size / 2).toPx()
+        drawLine(
+            color = color.toColor(),
+            start = Offset(x1, y),
+            end = Offset(x2, y),
+            strokeWidth = trackStrokeWidth
+        )
+    }
+}
+
 private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color) {
     val y1 = (size * 0.25f).toPx()
     val y2 = (size * 0.75f).toPx()
@@ -87,6 +121,33 @@ private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color) {
         end = Offset(size.toPx(), y2),
         strokeWidth = trackStrokeWidth
     )
+}
+
+private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open: Boolean) {
+    drawHorizontalTrack(size, fixedTrackColor)
+    val trackStrokeWidth = getTrackStrokeWidth(size)
+    if (open) {
+        val x1 = (size / 2).toPx()
+        val y1 = (size * 0.75f).toPx()
+        val y2 = (size * 0.65f).toPx()
+        val x2 = (size * 0.95f).toPx()
+        drawLine(
+            color = color.toColor(),
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    } else {
+        val y1 = (size * 0.25f).toPx()
+        val y2 = (size * 0.75f).toPx()
+        val x = (size / 2).toPx()
+        drawLine(
+            color = color.toColor(),
+            start = Offset(x, y1),
+            end = Offset(x, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    }
 }
 
 private fun DrawScope.drawEndingTrack(size: Dp) {
@@ -261,11 +322,15 @@ private fun TunnelColor.toColor(): Color = when (this) {
     TunnelColor.PURPLE -> Color.Magenta
 }
 
+private fun BarrierColor.toColor(): Color = when (this) {
+    BarrierColor.GREEN -> Color.Green
+}
+
 @Preview
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = UpLeftTurn(),
+        tile = HorizontalBarrier(BarrierColor.GREEN, open = true),
         size = 100.dp
     )
 }

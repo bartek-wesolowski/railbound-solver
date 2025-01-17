@@ -14,6 +14,8 @@ import model.Fork
 import model.Level
 import model.ResetCarsAfterModification
 import model.StraightTrack
+import model.Tile.BaseHorizontalTrack.*
+import model.Tile.BaseVerticalTrack.*
 import model.Tunnel
 import model.Turn
 import java.util.EnumMap
@@ -210,10 +212,10 @@ class Solver {
 
     companion object {
         private val availableTilesByDirection = mapOf(
-            LEFT to setOf(HorizontalTrack(), UpRightTurn(), DownRightTurn()),
-            RIGHT to setOf(HorizontalTrack(), UpLeftTurn(), DownLeftTurn()),
-            UP to setOf(VerticalTrack(), DownLeftTurn(), DownRightTurn()),
-            DOWN to setOf(VerticalTrack(), UpLeftTurn(), UpRightTurn()),
+            LEFT to setOf(HorizontalTrack, UpRightTurn(), DownRightTurn()),
+            RIGHT to setOf(HorizontalTrack, UpLeftTurn(), DownLeftTurn()),
+            UP to setOf(VerticalTrack, DownLeftTurn(), DownRightTurn()),
+            DOWN to setOf(VerticalTrack, UpLeftTurn(), UpRightTurn()),
         )
     }
 }
