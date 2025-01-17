@@ -17,9 +17,9 @@ private val tileSize = 70.dp
 private const val levelName = "2-9"
 private val level = Levels.World2.levels.getValue(levelName)
 private val predefinedSolutions = Solutions.World2.solutions.getValue(levelName)
-private val predefinedSolution = predefinedSolutions.first()
 private val solver = Solver()
 private val solverSolutions = solver.findSolutions(level)
+private val solutions = solverSolutions.ifEmpty { predefinedSolutions }
 
 fun main() = application {
     Window(
@@ -36,11 +36,11 @@ fun main() = application {
             Row {
                 SolverStates(
                     solverStates = solver.getSolverStates(level)
-                        .filter { it.board.matches(predefinedSolution) },
+                        .filter { state -> solutions.any { state.board.matches(it) } },
                     tileSize = tileSize,
                 )
                 Solutions(
-                    solutions = if (solverSolutions.isNotEmpty()) solverSolutions else predefinedSolutions,
+                    solutions = solutions,
                     tileSize = tileSize,
                     modifier = Modifier.padding(start = 16.dp)
                 )
