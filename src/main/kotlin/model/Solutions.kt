@@ -1,5 +1,6 @@
 package model
 
+import model.BarrierColor.GREEN
 import model.Board.Companion.buildBoard
 import model.Board.Companion.row
 import model.Direction.DOWN
@@ -573,6 +574,20 @@ object Solutions {
             "2-7B" to level2_7B,
             "2-8" to level2_8,
             "2-9" to level2_9,
+        )
+    }
+
+    object World3 {
+        val level3_1 = setOf(
+            buildBoard(rows = 4) {
+                row(FixedHorizontalTrack, HorizontalBarrier(GREEN, false), HorizontalTrack, DownRightLeftFork(), HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
+            }
+        )
+        val solutions = mapOf(
+            "3-1" to level3_1
         )
     }
 }

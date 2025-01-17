@@ -34,9 +34,11 @@ fun Tile(
             is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
             is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
             is HorizontalBarrier -> drawHorizontalBarrier(size, tile.color, tile.open)
+            is HorizontalBarrierSwitch -> drawHorizontalBarrierSwitch(size, tile.color)
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
             is VerticalBarrier -> drawVerticalBarrier(size, tile.color, tile.open)
+            is VerticalBarrierSwitch -> drawVerticalBarrierSwitch(size, tile.color)
             is DownRightTurn -> drawDownRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftTurn -> drawDownLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is UpRightTurn -> drawUpRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
@@ -105,6 +107,23 @@ private fun DrawScope.drawVerticalBarrier(size: Dp, color: BarrierColor, open: B
     }
 }
 
+private fun DrawScope.drawVerticalBarrierSwitch(size: Dp, color: BarrierColor) {
+    drawVerticalTrack(size, fixedTrackColor)
+    drawSwitch(size, color)
+}
+
+private fun DrawScope.drawSwitch(
+    size: Dp,
+    color: BarrierColor
+) {
+    val squareSize = (size * 0.3f).toPx()
+    drawRect(
+        color = color.toColor(),
+        topLeft = Offset((size * 0.35f).toPx(), (size * 0.35f).toPx()),
+        size = Size(squareSize, squareSize)
+    )
+}
+
 private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color) {
     val y1 = (size * 0.25f).toPx()
     val y2 = (size * 0.75f).toPx()
@@ -148,6 +167,11 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open:
             strokeWidth = trackStrokeWidth
         )
     }
+}
+
+private fun DrawScope.drawHorizontalBarrierSwitch(size: Dp, color: BarrierColor) {
+    drawHorizontalTrack(size, fixedTrackColor)
+    drawSwitch(size, color)
 }
 
 private fun DrawScope.drawEndingTrack(size: Dp) {
@@ -330,7 +354,7 @@ private fun BarrierColor.toColor(): Color = when (this) {
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = HorizontalBarrier(BarrierColor.GREEN, open = true),
+        tile = HorizontalBarrierSwitch(BarrierColor.GREEN),
         size = 100.dp
     )
 }

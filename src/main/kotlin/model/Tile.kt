@@ -86,6 +86,10 @@ sealed class Tile(
                 }
             }
         }
+
+        data class VerticalBarrierSwitch(
+            val color: BarrierColor,
+        ) : BaseVerticalTrack()
     }
 
     sealed class BaseHorizontalTrack(
@@ -128,9 +132,11 @@ sealed class Tile(
                     position
                 }
             }
-
-            override fun matches(solution: Tile): Boolean = this == solution
         }
+
+        data class HorizontalBarrierSwitch(
+            val color: BarrierColor,
+        ) : BaseHorizontalTrack()
     }
 
     // Turns
