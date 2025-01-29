@@ -5,17 +5,26 @@ import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.indexOf
 import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
 import com.danrusu.pods4k.immutableArrays.toSet
-import model.Tile.*
 import model.Board
 import model.Car
 import model.CarPosition
-import model.Direction.*
+import model.Direction.DOWN
+import model.Direction.LEFT
+import model.Direction.RIGHT
+import model.Direction.UP
 import model.Fork
 import model.Level
 import model.ResetCarsAfterModification
 import model.StraightTrack
-import model.Tile.BaseHorizontalTrack.*
-import model.Tile.BaseVerticalTrack.*
+import model.Tile.BaseHorizontalTrack.HorizontalTrack
+import model.Tile.BaseVerticalTrack.VerticalTrack
+import model.Tile.DownLeftTurn
+import model.Tile.DownRightTurn
+import model.Tile.Empty
+import model.Tile.EndingTrack
+import model.Tile.Obstacle
+import model.Tile.UpLeftTurn
+import model.Tile.UpRightTurn
 import model.Tunnel
 import model.Turn
 import java.util.EnumMap
@@ -123,44 +132,37 @@ class Solver {
     ): List<SolverState> {
         val position = state.activeCars[carIndex].position
         val tile = state.board[position.row, position.column]
-        return state.moveCar(carIndex, tile.getNextPosition(position), initialCars)
-    }
-
-    private fun SolverState.moveCar(
-        carIndex: Int,
-        newPosition: CarPosition,
-        initialCars: ImmutableArray<Car>
-    ): List<SolverState> {
-        if (newPosition.row < 0 || newPosition.row >= board.rows) return emptyList()
-        if (newPosition.column < 0 || newPosition.column >= board.columns) return emptyList()
-        val car = activeCars[carIndex].copy(position = newPosition)
-        val newCars = activeCars.updatePosition(carIndex, newPosition)
-        return when (val tile = board[newPosition.row, newPosition.column]) {
+        val newPosition = tile.getNextPosition(position)
+        if (newPosition.row < 0 || newPosition.row >= state.board.rows) return emptyList()
+        if (newPosition.column < 0 || newPosition.column >= state.board.columns) return emptyList()
+        val car = state.activeCars[carIndex].copy(position = newPosition)
+        val newCars = state.activeCars.updatePosition(carIndex, newPosition)
+        return when (val newTile = state.board[newPosition.row, newPosition.column]) {
             Obstacle -> emptyList()
             Empty -> availableTilesByDirection.getValue(car.direction)
-                .filter { board.canInsert(newPosition.row, newPosition.column, it) }
+                .filter { state.board.canInsert(newPosition.row, newPosition.column, it) }
                 .map {
-                    copy(
-                        board = board.withInserted(newPosition.row, newPosition.column, car.direction,  it),
-                        activeCars = activeCars.updatePosition(carIndex, newPosition),
-                        tracksUsed = tracksUsed + 1
+                    state.copy(
+                        board = state.board.withInserted(newPosition.row, newPosition.column, car.direction,  it),
+                        activeCars = state.activeCars.updatePosition(carIndex, newPosition),
+                        tracksUsed = state.tracksUsed + 1
                     )
                 }
 
             EndingTrack -> if (
-                (car.direction in tile.incomingDirections) &&
-                expectedCar[car.color] == car.number
+                (car.direction in newTile.incomingDirections) &&
+                state.expectedCar[car.color] == car.number
             ) {
                 listOf(
-                    copy(
+                    state.copy(
                         activeCars = buildImmutableArray {
-                            for (i in activeCars.indices) {
+                            for (i in state.activeCars.indices) {
                                 if (i != carIndex) {
-                                    add(activeCars[i])
+                                    add(state.activeCars[i])
                                 }
                             }
                         },
-                        expectedCar = EnumMap(expectedCar).apply { put(car.color, get(car.color)!! + 1) })
+                        expectedCar = EnumMap(state.expectedCar).apply { put(car.color, get(car.color)!! + 1) })
                 )
             } else {
                 emptyList()
@@ -169,23 +171,23 @@ class Solver {
             is StraightTrack,
             is Turn,
             is Fork -> when (car.direction) {
-                in tile.incomingDirections -> {
-                    listOf(copy(activeCars = newCars))
+                in newTile.incomingDirections -> {
+                    listOf(state.copy(activeCars = newCars))
                 }
 
-                in tile.secondaryIncomingDirections -> {
-                    tile.secondaryIncomingDirections.getValue(car.direction).map { modifiedTile ->
-                        copy(
-                            board = board.with(newPosition.row, newPosition.column, modifiedTile),
-                            activeCars = if (tile is ResetCarsAfterModification) {
+                in newTile.secondaryIncomingDirections -> {
+                    newTile.secondaryIncomingDirections.getValue(car.direction).map { modifiedTile ->
+                        state.copy(
+                            board = state.board.with(newPosition.row, newPosition.column, modifiedTile),
+                            activeCars = if (newTile is ResetCarsAfterModification) {
                                 initialCars
                             } else {
                                 newCars
                             },
-                            expectedCar = if (tile is ResetCarsAfterModification) {
+                            expectedCar = if (newTile is ResetCarsAfterModification) {
                                 EnumMap(initialCars.map { it.color }.toSet().associateWith { 1 })
                             } else {
-                                expectedCar
+                                state.expectedCar
                             }
                         )
                     }
@@ -194,7 +196,7 @@ class Solver {
                 else -> emptyList()
             }
 
-            is Tunnel -> listOf(copy(activeCars = newCars))
+            is Tunnel -> listOf(state.copy(activeCars = newCars))
         }
     }
 
