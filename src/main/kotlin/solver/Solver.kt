@@ -27,6 +27,7 @@ import model.Tile.UpLeftTurn
 import model.Tile.UpRightTurn
 import model.Tunnel
 import model.Turn
+import util.removeAt
 import java.util.EnumMap
 import java.util.PriorityQueue
 
@@ -155,13 +156,7 @@ class Solver {
             ) {
                 listOf(
                     state.copy(
-                        activeCars = buildImmutableArray {
-                            for (i in state.activeCars.indices) {
-                                if (i != carIndex) {
-                                    add(state.activeCars[i])
-                                }
-                            }
-                        },
+                        activeCars = state.activeCars.removeAt(carIndex),
                         expectedCar = EnumMap(state.expectedCar).apply { put(car.color, get(car.color)!! + 1) })
                 )
             } else {
