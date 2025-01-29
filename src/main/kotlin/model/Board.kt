@@ -1,9 +1,13 @@
 package model
 
-import model.Direction.*
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.toImmutableArray
+import model.Direction.DOWN
+import model.Direction.LEFT
+import model.Direction.RIGHT
+import model.Direction.UP
+import util.mapAt
 
 data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
     operator fun get(row: Int, column: Int): Tile {
@@ -62,29 +66,11 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         return with(row, column, tile)
     }
 
-    fun with(row: Int, column: Int, tile: Tile): Board {
-        val newTiles = buildImmutableArray(tiles.size) {
-            for (r in tiles.indices) {
-                val tilesRow = tiles[r]
-                if (r != row) {
-                    add(tilesRow)
-                } else {
-                    add(
-                        buildImmutableArray(tilesRow.size) {
-                            for (c in tilesRow.indices) {
-                                if (c != column) {
-                                    add(tilesRow[c])
-                                } else {
-                                    add(tile)
-                                }
-                            }
-                        }
-                    )
-                }
-            }
+    fun with(row: Int, column: Int, tile: Tile): Board = Board(
+        tiles.mapAt(row) { rowTiles ->
+            rowTiles.mapAt(column) { tile }
         }
-        return Board(newTiles)
-    }
+    )
 
     fun matches(solution: Board): Boolean {
         for (r in tiles.indices) {
