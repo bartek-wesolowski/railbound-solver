@@ -7,10 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import model.CarColor
+import model.ExpectedCars
 import model.Levels
 import solver.SolverState
-import java.util.EnumMap
 
 @Composable
 fun SolverState(
@@ -42,7 +41,7 @@ private fun SolverStatePreview() {
             board = level.board,
             activeCars = level.cars,
             tracksUsed = 0,
-            expectedCar = EnumMap(CarColor::class.java)
+            expectedCars = ExpectedCars(level.cars)
         ),
         tileSize = 100.dp
     )

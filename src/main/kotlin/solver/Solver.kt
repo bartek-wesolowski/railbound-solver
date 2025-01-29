@@ -2,14 +2,13 @@ package solver
 
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.indexOf
-import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
-import com.danrusu.pods4k.immutableArrays.toSet
 import model.Board
 import model.Car
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
+import model.ExpectedCars
 import model.Fork
 import model.Level
 import model.ResetCarsAfterModification
@@ -27,15 +26,13 @@ import model.Tunnel
 import model.Turn
 import util.mapAt
 import util.removeAt
-import java.util.EnumMap
 import java.util.PriorityQueue
 
 class Solver {
     fun findSolutions(level: Level): Set<Board> {
         val statesToCheck = PriorityQueue<SolverState>(compareBy { it.tracksUsed })
         val statesChecked = mutableSetOf<SolverState>()
-        val expectedCar = EnumMap(level.cars.map { it.color }.toSet().associateWith { 1 })
-        statesToCheck.add(SolverState(level.board, level.cars, 0, expectedCar))
+        statesToCheck.add(SolverState(level.board, level.cars, 0, ExpectedCars(level.cars)))
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.poll()
@@ -58,8 +55,7 @@ class Solver {
             depth2.compareTo(depth1)
         })
         val statesChecked = mutableSetOf<SolverState>()
-        val expectedCar = EnumMap(level.cars.map { it.color }.toSet().associateWith { 1 })
-        statesToCheck.add(SolverState(level.board, level.cars, 0, expectedCar) to 1)
+        statesToCheck.add(SolverState(level.board, level.cars, 0, ExpectedCars(level.cars)) to 1)
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val (state, depth) = statesToCheck.poll()
@@ -150,13 +146,14 @@ class Solver {
                 }
 
             EndingTrack -> if (
-                (car.direction in newTile.incomingDirections) &&
-                state.expectedCar[car.color] == car.number
+                car.direction in newTile.incomingDirections &&
+                state.expectedCars.isExpected(car)
             ) {
                 listOf(
                     state.copy(
                         activeCars = state.activeCars.removeAt(carIndex),
-                        expectedCar = EnumMap(state.expectedCar).apply { put(car.color, get(car.color)!! + 1) })
+                        expectedCars = state.expectedCars.withNextExpected(car.color)
+                    )
                 )
             } else {
                 emptyList()
@@ -178,10 +175,10 @@ class Solver {
                             } else {
                                 newCars
                             },
-                            expectedCar = if (newTile is ResetCarsAfterModification) {
-                                EnumMap(initialCars.map { it.color }.toSet().associateWith { 1 })
+                            expectedCars = if (newTile is ResetCarsAfterModification) {
+                                ExpectedCars(initialCars)
                             } else {
-                                state.expectedCar
+                                state.expectedCars
                             }
                         )
                     }
