@@ -10,3 +10,9 @@ fun <T> ImmutableArray<T>.removeAt(index: Int): ImmutableArray<T> = buildImmutab
         }
     }
 }
+
+fun <T> ImmutableArray<T>.mapAt(index: Int, transform: (T) -> T): ImmutableArray<T> = buildImmutableArray(size) {
+    for (i in indices) {
+        add(if (i == index) transform(this@mapAt[i]) else this@mapAt[i])
+    }
+}

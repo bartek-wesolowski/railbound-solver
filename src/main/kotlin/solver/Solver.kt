@@ -1,13 +1,11 @@
 package solver
 
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
-import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.indexOf
 import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
 import com.danrusu.pods4k.immutableArrays.toSet
 import model.Board
 import model.Car
-import model.CarPosition
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
@@ -27,6 +25,7 @@ import model.Tile.UpLeftTurn
 import model.Tile.UpRightTurn
 import model.Tunnel
 import model.Turn
+import util.mapAt
 import util.removeAt
 import java.util.EnumMap
 import java.util.PriorityQueue
@@ -137,7 +136,7 @@ class Solver {
         if (newPosition.row < 0 || newPosition.row >= state.board.rows) return emptyList()
         if (newPosition.column < 0 || newPosition.column >= state.board.columns) return emptyList()
         val car = state.activeCars[carIndex].copy(position = newPosition)
-        val newCars = state.activeCars.updatePosition(carIndex, newPosition)
+        val newCars = state.activeCars.mapAt(carIndex) { it.copy(position = newPosition) }
         return when (val newTile = state.board[newPosition.row, newPosition.column]) {
             Obstacle -> emptyList()
             Empty -> availableTilesByDirection.getValue(car.direction)
@@ -145,7 +144,7 @@ class Solver {
                 .map {
                     state.copy(
                         board = state.board.withInserted(newPosition.row, newPosition.column, car.direction,  it),
-                        activeCars = state.activeCars.updatePosition(carIndex, newPosition),
+                        activeCars = state.activeCars.mapAt(carIndex) { it.copy(position = newPosition) },
                         tracksUsed = state.tracksUsed + 1
                     )
                 }
@@ -192,18 +191,6 @@ class Solver {
             }
 
             is Tunnel -> listOf(state.copy(activeCars = newCars))
-        }
-    }
-
-    private fun ImmutableArray<Car>.updatePosition(carIndex: Int, newPosition: CarPosition): ImmutableArray<Car> {
-        return buildImmutableArray {
-            for (i in indices) {
-                if (i == carIndex) {
-                    add(this@updatePosition[i].copy(position = newPosition))
-                } else {
-                    add(this@updatePosition[i])
-                }
-            }
         }
     }
 
