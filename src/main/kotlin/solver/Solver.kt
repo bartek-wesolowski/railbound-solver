@@ -76,18 +76,26 @@ class Solver {
     }
 
     private fun SolverState.nextStates(initialCars: ImmutableArray<Car>): List<SolverState> {
-        var nextStates = getMoves(this, 0, initialCars)
+        var partialStates = getMoves(PartialSolverState(this, emptyList()), 0, initialCars)
         for (carIndex in 1..activeCars.lastIndex) {
-            val updatedNextStates = mutableListOf<SolverState>()
-            for (state in nextStates) {
+            val updatedNextStates = mutableListOf<PartialSolverState>()
+            for (partialState in partialStates) {
+                val state = partialState.state
                 if (state.activeCars == initialCars) {
-                    updatedNextStates.add(state)
+                    updatedNextStates.add(partialState)
                 } else {
                     val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
-                    updatedNextStates.addAll(getMoves(state, adjustedCarIndex, initialCars))
+                    updatedNextStates.addAll(
+                        getMoves(
+                            PartialSolverState(state, emptyList()),
+                            adjustedCarIndex,
+                            initialCars
+                        )
+                    )
                 }
             }
-            nextStates = updatedNextStates.filter { state ->
+            partialStates = updatedNextStates.filter { partialState ->
+                val state = partialState.state
                 if (state.activeCars == initialCars) return@filter true
                 val carAIndex = state.activeCars.indexOfFirst {
                     it.color == activeCars[carIndex].color && it.number == activeCars[carIndex].number
@@ -110,7 +118,7 @@ class Solver {
                             initialCarB.position.column == carA.position.column &&
                             initialCarA.position.row == carB.position.row &&
                             initialCarA.position.column == carB.position.column
-                            ) {
+                        ) {
                             return@filter false
                         }
                     }
@@ -118,14 +126,15 @@ class Solver {
                 true
             }
         }
-        return nextStates
+        return partialStates.map { it.applyActions() }
     }
 
     private fun getMoves(
-        state: SolverState,
+        partialState: PartialSolverState,
         carIndex: Int,
         initialCars: ImmutableArray<Car>
-    ): List<SolverState> {
+    ): List<PartialSolverState> {
+        val state = partialState.state
         val position = state.activeCars[carIndex].position
         val tile = state.board[position.row, position.column]
         val newPosition = tile.getNextPosition(position)
@@ -138,10 +147,13 @@ class Solver {
             Empty -> availableTilesByDirection.getValue(car.direction)
                 .filter { state.board.canInsert(newPosition.row, newPosition.column, it) }
                 .map {
-                    state.copy(
-                        board = state.board.withInserted(newPosition.row, newPosition.column, car.direction,  it),
-                        activeCars = state.activeCars.mapAt(carIndex) { it.copy(position = newPosition) },
-                        tracksUsed = state.tracksUsed + 1
+                    PartialSolverState(
+                        state.copy(
+                            board = state.board.withInserted(newPosition.row, newPosition.column, car.direction, it),
+                            activeCars = state.activeCars.mapAt(carIndex) { it.copy(position = newPosition) },
+                            tracksUsed = state.tracksUsed + 1
+                        ),
+                        partialState.actions
                     )
                 }
 
@@ -150,9 +162,12 @@ class Solver {
                 state.expectedCars.isExpected(car)
             ) {
                 listOf(
-                    state.copy(
-                        activeCars = state.activeCars.removeAt(carIndex),
-                        expectedCars = state.expectedCars.withNextExpected(car.color)
+                    PartialSolverState(
+                        state.copy(
+                            activeCars = state.activeCars.removeAt(carIndex),
+                            expectedCars = state.expectedCars.withNextExpected(car.color)
+                        ),
+                        partialState.actions
                     )
                 )
             } else {
@@ -163,23 +178,26 @@ class Solver {
             is Turn,
             is Fork -> when (car.direction) {
                 in newTile.incomingDirections -> {
-                    listOf(state.copy(activeCars = newCars))
+                    listOf(PartialSolverState(state.copy(activeCars = newCars), partialState.actions))
                 }
 
                 in newTile.secondaryIncomingDirections -> {
                     newTile.secondaryIncomingDirections.getValue(car.direction).map { modifiedTile ->
-                        state.copy(
-                            board = state.board.with(newPosition.row, newPosition.column, modifiedTile),
-                            activeCars = if (newTile is ResetCarsAfterModification) {
-                                initialCars
-                            } else {
-                                newCars
-                            },
-                            expectedCars = if (newTile is ResetCarsAfterModification) {
-                                ExpectedCars(initialCars)
-                            } else {
-                                state.expectedCars
-                            }
+                        PartialSolverState(
+                            state.copy(
+                                board = state.board.with(newPosition.row, newPosition.column, modifiedTile),
+                                activeCars = if (newTile is ResetCarsAfterModification) {
+                                    initialCars
+                                } else {
+                                    newCars
+                                },
+                                expectedCars = if (newTile is ResetCarsAfterModification) {
+                                    ExpectedCars(initialCars)
+                                } else {
+                                    state.expectedCars
+                                }
+                            ),
+                            partialState.actions
                         )
                     }
                 }
@@ -187,7 +205,7 @@ class Solver {
                 else -> emptyList()
             }
 
-            is Tunnel -> listOf(state.copy(activeCars = newCars))
+            is Tunnel -> listOf(PartialSolverState(state.copy(activeCars = newCars), partialState.actions))
         }
     }
 

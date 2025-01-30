@@ -81,6 +81,11 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         return true
     }
 
+    fun apply(action: Action): Board {
+        // TODO
+        return this
+    }
+
     companion object {
         fun buildBoard(
             rows: Int,
