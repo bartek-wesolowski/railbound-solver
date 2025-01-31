@@ -1,7 +1,9 @@
 package solver
 
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
+import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import com.danrusu.pods4k.immutableArrays.indexOf
+import com.danrusu.pods4k.immutableArrays.plus
 import model.Action.ToggleBarrier
 import model.BarrierSwitch
 import model.Board
@@ -78,7 +80,7 @@ class Solver {
     }
 
     private fun SolverState.nextStates(initialCars: ImmutableArray<Car>): List<SolverState> {
-        var partialStates = getMoves(PartialSolverState(this, emptyList()), 0, initialCars)
+        var partialStates = getMoves(PartialSolverState(this, immutableArrayOf()), 0, initialCars)
         for (carIndex in 1..activeCars.lastIndex) {
             val updatedPartialStates = mutableListOf<PartialSolverState>()
             for (partialState in partialStates) {

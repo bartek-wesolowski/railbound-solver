@@ -1,10 +1,11 @@
 package solver
 
+import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import model.Action
 
 data class PartialSolverState(
     val state: SolverState,
-    val actions: List<Action>,
+    val actions: ImmutableArray<Action>,
 ) {
     fun applyActions(): SolverState {
         var newState = state
