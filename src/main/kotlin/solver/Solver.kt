@@ -78,14 +78,14 @@ class Solver {
     private fun SolverState.nextStates(initialCars: ImmutableArray<Car>): List<SolverState> {
         var partialStates = getMoves(PartialSolverState(this, emptyList()), 0, initialCars)
         for (carIndex in 1..activeCars.lastIndex) {
-            val updatedNextStates = mutableListOf<PartialSolverState>()
+            val updatedPartialStates = mutableListOf<PartialSolverState>()
             for (partialState in partialStates) {
                 val state = partialState.state
                 if (state.activeCars == initialCars) {
-                    updatedNextStates.add(partialState)
+                    updatedPartialStates.add(partialState)
                 } else {
                     val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
-                    updatedNextStates.addAll(
+                    updatedPartialStates.addAll(
                         getMoves(
                             PartialSolverState(state, emptyList()),
                             adjustedCarIndex,
@@ -94,40 +94,48 @@ class Solver {
                     )
                 }
             }
-            partialStates = updatedNextStates.filter { partialState ->
-                val state = partialState.state
-                if (state.activeCars == initialCars) return@filter true
-                val carAIndex = state.activeCars.indexOfFirst {
-                    it.color == activeCars[carIndex].color && it.number == activeCars[carIndex].number
-                }
-                if (carAIndex == -1) return@filter true
-                val carA = state.activeCars[carAIndex]
-                for (carBIndex in 0 until carAIndex) {
-                    val carB = state.activeCars[carBIndex]
-                    if (carB.position.row == carA.position.row && carA.position.column == carB.position.column) {
-                        return@filter false
-                    }
-                    val initialCarBIndex = activeCars.indexOfFirst {
-                        it.color == carB.color && it.number == carB.number
-                    }
-                    if (initialCarBIndex != -1) {
-                        val initialCarA = activeCars[carIndex]
-                        val initialCarB = activeCars[initialCarBIndex]
-                        if (
-                            initialCarB.position.row == carA.position.row &&
-                            initialCarB.position.column == carA.position.column &&
-                            initialCarA.position.row == carB.position.row &&
-                            initialCarA.position.column == carB.position.column
-                        ) {
-                            return@filter false
-                        }
-                    }
-                }
-                true
-            }
+            partialStates = updatedPartialStates.filterNoCollisions(this, carIndex, initialCars)
         }
         return partialStates.map { it.applyActions() }
     }
+
+    private fun List<PartialSolverState>.filterNoCollisions(
+        previousState: SolverState,
+        carIndex: Int,
+        initialCars: ImmutableArray<Car>
+    ): List<PartialSolverState> = filter { partialState ->
+        val state = partialState.state
+        if (state.activeCars == initialCars) return@filter true
+        val carAIndex = state.activeCars.indexOfFirst {
+            it.color == previousState.activeCars[carIndex].color &&
+                    it.number == previousState.activeCars[carIndex].number
+        }
+        if (carAIndex == -1) return@filter true
+        val carA = state.activeCars[carAIndex]
+        for (carBIndex in 0 until carAIndex) {
+            val carB = state.activeCars[carBIndex]
+            if (carB.position.row == carA.position.row && carA.position.column == carB.position.column) {
+                return@filter false
+            }
+            val initialCarBIndex = previousState.activeCars.indexOfFirst {
+                it.color == carB.color && it.number == carB.number
+            }
+            if (initialCarBIndex != -1) {
+                val initialCarA = previousState.activeCars[carIndex]
+                val initialCarB = previousState.activeCars[initialCarBIndex]
+                if (
+                    initialCarB.position.row == carA.position.row &&
+                    initialCarB.position.column == carA.position.column &&
+                    initialCarA.position.row == carB.position.row &&
+                    initialCarA.position.column == carB.position.column
+                ) {
+                    return@filter false
+                }
+            }
+        }
+        true
+    }
+
 
     private fun getMoves(
         partialState: PartialSolverState,
