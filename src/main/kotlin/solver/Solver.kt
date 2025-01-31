@@ -2,6 +2,8 @@ package solver
 
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.indexOf
+import model.Action.ToggleBarrier
+import model.BarrierSwitch
 import model.Board
 import model.Car
 import model.Direction.DOWN
@@ -87,7 +89,7 @@ class Solver {
                     val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
                     updatedPartialStates.addAll(
                         getMoves(
-                            PartialSolverState(state, emptyList()),
+                            PartialSolverState(state, partialState.actions),
                             adjustedCarIndex,
                             initialCars
                         )
@@ -181,12 +183,16 @@ class Solver {
             } else {
                 emptyList()
             }
-
             is StraightTrack,
             is Turn,
             is Fork -> when (car.direction) {
                 in newTile.incomingDirections -> {
-                    listOf(PartialSolverState(state.copy(activeCars = newCars), partialState.actions))
+                    val actions = if (newTile is BarrierSwitch) {
+                        partialState.actions + ToggleBarrier(newTile.barrierRow, newTile.barrierColumn)
+                    } else {
+                        partialState.actions
+                    }
+                    listOf(PartialSolverState(state.copy(activeCars = newCars), actions))
                 }
 
                 in newTile.secondaryIncomingDirections -> {

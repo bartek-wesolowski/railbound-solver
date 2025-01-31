@@ -3,10 +3,13 @@ package model
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.toImmutableArray
+import model.Action.ToggleBarrier
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
+import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseVerticalTrack.VerticalBarrier
 import util.mapAt
 
 data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
@@ -82,8 +85,16 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
     }
 
     fun apply(action: Action): Board {
-        // TODO
-        return this
+        return when (action) {
+            is ToggleBarrier -> {
+                val tile = tiles[action.row][action.column]
+                if (tile !is Barrier) throw IllegalStateException("Cannot toggle a non-barrier tile")
+                when (tile) {
+                    is HorizontalBarrier -> with(action.row, action.column, tile.toggled())
+                    is VerticalBarrier -> with(action.row, action.column, tile.toggled())
+                }
+            }
+        }
     }
 
     companion object {

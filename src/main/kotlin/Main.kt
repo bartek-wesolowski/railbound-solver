@@ -14,9 +14,9 @@ import model.Solutions
 import solver.Solver
 
 private val tileSize = 70.dp
-private const val levelName = "2-9"
-private val level = Levels.World2.levels.getValue(levelName)
-private val predefinedSolutions = Solutions.World2.solutions.getValue(levelName)
+private const val levelName = "3-1"
+private val level = Levels.World3.levels.getValue(levelName)
+private val predefinedSolutions = Solutions.World3.solutions.getValue(levelName)
 private val solver = Solver()
 private val solverSolutions = solver.findSolutions(level)
 private val solutions = solverSolutions.ifEmpty { predefinedSolutions }
