@@ -190,7 +190,7 @@ class Solver {
             is Fork -> when (car.direction) {
                 in newTile.incomingDirections -> {
                     val actions = if (newTile is BarrierSwitch) {
-                        partialState.actions + ToggleBarrier(newTile.barrierRow, newTile.barrierColumn)
+                        partialState.actions + ToggleBarrier(newTile.color)
                     } else {
                         partialState.actions
                     }

@@ -1,6 +1,9 @@
 package model
 
-import model.Direction.*
+import model.Direction.DOWN
+import model.Direction.LEFT
+import model.Direction.RIGHT
+import model.Direction.UP
 import java.util.EnumMap
 import java.util.EnumSet
 
@@ -14,12 +17,14 @@ sealed interface Tunnel
 
 sealed interface ResetCarsAfterModification
 
-sealed interface Barrier
+sealed interface Barrier {
+    val color: BarrierColor
+    val open: Boolean
+    fun toggled(): Barrier
+}
 
 sealed interface BarrierSwitch {
     val color: BarrierColor
-    val barrierRow: Int
-    val barrierColumn: Int
 }
 
 sealed class Tile(
@@ -75,8 +80,8 @@ sealed class Tile(
         data object FixedVerticalTrack : BaseVerticalTrack()
 
         data class VerticalBarrier(
-            val color: BarrierColor,
-            val open: Boolean,
+            override val color: BarrierColor,
+            override val open: Boolean,
         ) : BaseVerticalTrack(), Barrier {
             override fun getNextPosition(position: CarPosition): CarPosition {
                 return if (open) {
@@ -86,21 +91,11 @@ sealed class Tile(
                 }
             }
 
-            override fun matches(solution: Tile): Boolean {
-                return if (solution is VerticalBarrier) {
-                    solution.color == color
-                } else {
-                    false
-                }
-            }
-
-            fun toggled() = VerticalBarrier(color, !open)
+            override fun toggled() = VerticalBarrier(color, !open)
         }
 
         data class VerticalBarrierSwitch(
             override val color: BarrierColor,
-            override val barrierRow: Int,
-            override val barrierColumn: Int,
         ) : BaseVerticalTrack(), BarrierSwitch
     }
 
@@ -134,8 +129,8 @@ sealed class Tile(
         data object FixedHorizontalTrack : BaseHorizontalTrack()
 
         data class HorizontalBarrier(
-            val color: BarrierColor,
-            val open: Boolean,
+            override val color: BarrierColor,
+            override val open: Boolean,
         ) : BaseHorizontalTrack(), Barrier {
             override fun getNextPosition(position: CarPosition): CarPosition {
                 return if (open) {
@@ -145,21 +140,11 @@ sealed class Tile(
                 }
             }
 
-            override fun matches(solution: Tile): Boolean {
-                return if (solution is HorizontalBarrier) {
-                    solution.color == color
-                } else {
-                    false
-                }
-            }
-
-            fun toggled() = HorizontalBarrier(color, !open)
+            override fun toggled() = HorizontalBarrier(color, !open)
         }
 
         data class HorizontalBarrierSwitch(
-            override val color: BarrierColor,
-            override val barrierRow: Int,
-            override val barrierColumn: Int,
+            override val color: BarrierColor
         ) : BaseHorizontalTrack(), BarrierSwitch
     }
 

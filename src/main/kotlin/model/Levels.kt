@@ -623,7 +623,7 @@ object Levels {
             name = "3-1",
             board = buildBoard(rows = 4) {
                 row(FixedHorizontalTrack, HorizontalBarrier(GREEN, false), Empty, Empty, Empty, HorizontalTrack, EndingTrack)
-                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN, 0, 1), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrierSwitch(GREEN), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
             },
@@ -640,7 +640,7 @@ object Levels {
                 row(Empty, Empty, Empty, VerticalBarrier(GREEN, false), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
-                row(FixedHorizontalTrack, Empty, HorizontalBarrierSwitch(GREEN, 1, 3), Empty, Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, HorizontalBarrierSwitch(GREEN), Empty, Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, RED, CarPosition(0, 3, DOWN)),
@@ -652,7 +652,7 @@ object Levels {
             name = "3-3",
             board = buildBoard(rows = 3) {
                 row(Empty, HorizontalBarrier(GREEN, false), FixedHorizontalTrack, Empty, DownLeftRightFork(fixed = true), FixedHorizontalTrack)
-                row(Empty, Empty, Empty, Empty, VerticalBarrierSwitch(GREEN, 0, 1), Empty)
+                row(Empty, Empty, Empty, Empty, VerticalBarrierSwitch(GREEN), Empty)
                 row(Empty, Empty, Empty, Empty, UpRightTurn(fixed = true), EndingTrack)
             },
             cars = immutableArrayOf(
@@ -668,7 +668,7 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, VerticalBarrier(GREEN, false), Empty, Empty)
-                row(Empty, Empty, FixedHorizontalTrack, Empty, HorizontalBarrierSwitch(GREEN, 3, 3), EndingTrack)
+                row(Empty, Empty, FixedHorizontalTrack, Empty, HorizontalBarrierSwitch(GREEN), EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, RED, CarPosition(4, 2, LEFT)),
@@ -681,7 +681,7 @@ object Levels {
             board = buildBoard(rows = 5) {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty, HorizontalBarrier(GREEN, false), DownLeftTurn())
                 row(Empty, Empty, Empty, Empty, Empty, Empty, DownRightTurn(fixed = true), UpLeftTurn(fixed = true))
-                row(Empty, HorizontalBarrierSwitch(GREEN, 0, 6), Empty, Empty, HorizontalBarrierSwitch(GREEN, 0, 6), Empty, UpRightTurn(fixed = true), DownLeftTurn(fixed = true))
+                row(Empty, HorizontalBarrierSwitch(GREEN,), Empty, Empty, HorizontalBarrierSwitch(GREEN), Empty, UpRightTurn(fixed = true), DownLeftTurn(fixed = true))
                 row(Empty, Empty, Empty, Empty, Empty, Empty, DownRightTurn(fixed = true), UpLeftTurn(fixed = true))
                 row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, UpRightTurn(fixed = true), EndingTrack)
             },
@@ -696,7 +696,7 @@ object Levels {
             board = buildBoard(rows = 3) {
                 row(FixedHorizontalTrack, HorizontalBarrier(GREEN, false), Empty, Empty, HorizontalBarrier(GREEN, true), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, HorizontalBarrierSwitch(GREEN, 0, 1), FixedHorizontalTrack, HorizontalBarrier(GREEN, true), Empty, EndingTrack)
+                row(Empty, Empty, HorizontalBarrierSwitch(GREEN), FixedHorizontalTrack, HorizontalBarrier(GREEN, true), Empty, EndingTrack)
             },
             cars = immutableArrayOf(
                 Car(1, RED, CarPosition(2, 3, LEFT)),

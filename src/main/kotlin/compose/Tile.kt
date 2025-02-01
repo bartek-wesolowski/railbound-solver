@@ -14,9 +14,33 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.BarrierColor
 import model.Tile
-import model.Tile.*
-import model.Tile.BaseHorizontalTrack.*
-import model.Tile.BaseVerticalTrack.*
+import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
+import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseHorizontalTrack.HorizontalBarrierSwitch
+import model.Tile.BaseHorizontalTrack.HorizontalTrack
+import model.Tile.BaseVerticalTrack.FixedVerticalTrack
+import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalBarrierSwitch
+import model.Tile.BaseVerticalTrack.VerticalTrack
+import model.Tile.DownLeftRightFork
+import model.Tile.DownLeftTurn
+import model.Tile.DownLeftUpFork
+import model.Tile.DownRightLeftFork
+import model.Tile.DownRightTurn
+import model.Tile.DownRightUpFork
+import model.Tile.DownTunnel
+import model.Tile.Empty
+import model.Tile.EndingTrack
+import model.Tile.LeftTunnel
+import model.Tile.Obstacle
+import model.Tile.RightTunnel
+import model.Tile.UpLeftDownFork
+import model.Tile.UpLeftRightFork
+import model.Tile.UpLeftTurn
+import model.Tile.UpRightDownFork
+import model.Tile.UpRightLeftFork
+import model.Tile.UpRightTurn
+import model.Tile.UpTunnel
 import model.TunnelColor
 
 private val trackColor = Color.Gray
@@ -354,7 +378,7 @@ private fun BarrierColor.toColor(): Color = when (this) {
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = HorizontalBarrierSwitch(BarrierColor.GREEN, 0, 0),
+        tile = HorizontalBarrierSwitch(BarrierColor.GREEN),
         size = 100.dp
     )
 }

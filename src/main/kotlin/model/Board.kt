@@ -8,11 +8,27 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
-import model.Tile.BaseHorizontalTrack.HorizontalBarrier
-import model.Tile.BaseVerticalTrack.VerticalBarrier
 import util.mapAt
 
 data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
+
+    private val barriers: Map<BarrierColor, List<Position>> = buildMap {
+    for (r in tiles.indices) {
+        for (c in tiles[r].indices) {
+            val tile = tiles[r][c]
+            if (tile is Barrier) {
+                val position = Position(r, c)
+                if (tile.color in keys) {
+                    put(tile.color, getValue(tile.color) + position)
+                } else {
+                    put(tile.color, listOf(Position(r, c)))
+                }
+            }
+        }
+    }
+   require(values.all { it.isNotEmpty() })
+}
+
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
     }
@@ -87,12 +103,16 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
     fun apply(action: Action): Board {
         return when (action) {
             is ToggleBarrier -> {
-                val tile = tiles[action.row][action.column]
-                if (tile !is Barrier) throw IllegalStateException("Cannot toggle a non-barrier tile")
-                when (tile) {
-                    is HorizontalBarrier -> with(action.row, action.column, tile.toggled())
-                    is VerticalBarrier -> with(action.row, action.column, tile.toggled())
+                val positions = barriers.getValue(action.color)
+                var updatedBoard: Board = this
+                for (position in positions) {
+                    updatedBoard = updatedBoard.with(
+                        position.row,
+                        position.column,
+                        (tiles[position.row][position.column] as Barrier).toggled() as Tile
+                    )
                 }
+                updatedBoard
             }
         }
     }
