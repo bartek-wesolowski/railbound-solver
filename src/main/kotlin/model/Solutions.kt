@@ -639,11 +639,6 @@ object Solutions {
         )
         val level3_5 = setOf(
             buildBoard(rows = 3) {
-                row(FixedHorizontalTrack, HorizontalBarrier(color = GREEN, open = false), HorizontalTrack, DownLeftTurn(), HorizontalBarrier(color = GREEN, open = true), Empty, Empty)
-                row(DownRightTurn(), DownLeftRightFork(), HorizontalTrack, UpLeftTurn(), Empty, Empty, Empty)
-                row(UpRightTurn(), UpRightLeftFork(), HorizontalBarrierSwitch(color = GREEN), FixedHorizontalTrack, HorizontalBarrier(color = GREEN, open = true), HorizontalTrack, EndingTrack)
-            },
-            buildBoard(rows = 3) {
                 row(FixedHorizontalTrack, HorizontalBarrier(GREEN, false), HorizontalTrack, HorizontalTrack, HorizontalBarrier(GREEN, true), DownLeftTurn(), Empty)
                 row(DownRightTurn(), DownLeftTurn(), Empty, Empty, Empty, VerticalTrack, Empty)
                 row(UpRightTurn(), UpRightLeftFork(), HorizontalBarrierSwitch(GREEN), FixedHorizontalTrack, HorizontalBarrier(GREEN, true), UpRightLeftFork(), EndingTrack)
