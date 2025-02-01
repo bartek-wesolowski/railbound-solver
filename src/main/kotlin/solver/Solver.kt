@@ -5,6 +5,7 @@ import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import com.danrusu.pods4k.immutableArrays.indexOf
 import com.danrusu.pods4k.immutableArrays.plus
 import model.Action.ToggleBarrier
+import model.Barrier
 import model.BarrierSwitch
 import model.Board
 import model.Car
@@ -185,16 +186,21 @@ class Solver {
             } else {
                 emptyList()
             }
+
             is StraightTrack,
             is Turn,
             is Fork -> when (car.direction) {
                 in newTile.incomingDirections -> {
-                    val actions = if (newTile is BarrierSwitch) {
-                        partialState.actions + ToggleBarrier(newTile.color)
+                    if (newTile is Barrier && !newTile.open) {
+                        listOf(PartialSolverState(state, partialState.actions))
                     } else {
-                        partialState.actions
+                        val actions = if (newTile is BarrierSwitch) {
+                            partialState.actions + ToggleBarrier(newTile.color)
+                        } else {
+                            partialState.actions
+                        }
+                        listOf(PartialSolverState(state.copy(activeCars = newCars), actions))
                     }
-                    listOf(PartialSolverState(state.copy(activeCars = newCars), actions))
                 }
 
                 in newTile.secondaryIncomingDirections -> {

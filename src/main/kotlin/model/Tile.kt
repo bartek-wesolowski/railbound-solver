@@ -83,14 +83,6 @@ sealed class Tile(
             override val color: BarrierColor,
             override val open: Boolean,
         ) : BaseVerticalTrack(), Barrier {
-            override fun getNextPosition(position: CarPosition): CarPosition {
-                return if (open) {
-                    position.moveForward()
-                } else {
-                    position
-                }
-            }
-
             override fun toggled() = VerticalBarrier(color, !open)
         }
 
@@ -132,14 +124,6 @@ sealed class Tile(
             override val color: BarrierColor,
             override val open: Boolean,
         ) : BaseHorizontalTrack(), Barrier {
-            override fun getNextPosition(position: CarPosition): CarPosition {
-                return if (open) {
-                    position.moveForward()
-                } else {
-                    position
-                }
-            }
-
             override fun toggled() = HorizontalBarrier(color, !open)
         }
 
