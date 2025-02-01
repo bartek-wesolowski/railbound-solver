@@ -13,21 +13,21 @@ import util.mapAt
 data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
 
     private val barriers: Map<BarrierColor, List<Position>> = buildMap {
-    for (r in tiles.indices) {
-        for (c in tiles[r].indices) {
-            val tile = tiles[r][c]
-            if (tile is Barrier) {
-                val position = Position(r, c)
-                if (tile.color in keys) {
-                    put(tile.color, getValue(tile.color) + position)
-                } else {
-                    put(tile.color, listOf(Position(r, c)))
+        for (r in tiles.indices) {
+            for (c in tiles[r].indices) {
+                val tile = tiles[r][c]
+                if (tile is Barrier) {
+                    val position = Position(r, c)
+                    if (tile.color in keys) {
+                        put(tile.color, getValue(tile.color) + position)
+                    } else {
+                        put(tile.color, listOf(Position(r, c)))
+                    }
                 }
             }
         }
+        require(values.all { it.isNotEmpty() })
     }
-   require(values.all { it.isNotEmpty() })
-}
 
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
