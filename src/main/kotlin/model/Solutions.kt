@@ -586,8 +586,18 @@ object Solutions {
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
             }
         )
+        val level3_2 = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(GREEN, true), Empty, Empty)
+                row(Empty, Empty, DownRightTurn(), UpRightLeftFork(), DownLeftTurn(), Empty)
+                row(Empty, Empty, UpRightTurn(), DownLeftTurn(), VerticalTrack, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalBarrierSwitch(GREEN, 1, 3), UpLeftTurn(), UpRightTurn(), EndingTrack)
+            }
+        )
         val solutions = mapOf(
-            "3-1" to level3_1
+            "3-1" to level3_1,
+            "3-2" to level3_2,
         )
     }
 }

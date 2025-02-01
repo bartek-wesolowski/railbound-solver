@@ -8,8 +8,7 @@ import model.CarColor.*
 import model.Direction.*
 import model.Tile.*
 import model.Tile.BaseHorizontalTrack.*
-import model.Tile.BaseVerticalTrack.FixedVerticalTrack
-import model.Tile.BaseVerticalTrack.VerticalBarrierSwitch
+import model.Tile.BaseVerticalTrack.*
 import model.TunnelColor.*
 
 object Levels {
@@ -634,8 +633,24 @@ object Levels {
             ),
             tracks = 4
         )
+        val level3_2 = Level(
+            name = "3-2",
+            board = buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(GREEN, false), Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, HorizontalBarrierSwitch(GREEN, 1, 3), Empty, Empty, EndingTrack)
+            },
+            cars = immutableArrayOf(
+                Car(1, RED, CarPosition(0, 3, DOWN)),
+                Car(2, RED, CarPosition(4, 0, RIGHT)),
+            ),
+            tracks = 9
+        )
         val levels = listOf(
             level3_1,
+            level3_2,
         ).associateBy { it.name }
     }
 }
