@@ -4,7 +4,6 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
-import model.Tile.BaseHorizontalTrack.HorizontalBarrierSwitch
 import java.util.EnumMap
 import java.util.EnumSet
 
