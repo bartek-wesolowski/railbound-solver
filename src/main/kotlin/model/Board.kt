@@ -33,6 +33,10 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         return tiles[row][column]
     }
 
+    operator fun get(position: Position): Tile {
+        return tiles[position.row][position.column]
+    }
+
     val rows: Int = tiles.size
     val columns: Int = tiles.first().size
 
@@ -91,6 +95,8 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         }
     )
 
+    fun with(position: Position, tile: Tile): Board = with(position.row, position.column, tile)
+
     fun matches(solution: Board): Boolean {
         for (r in tiles.indices) {
             for (c in tiles[r].indices) {
@@ -107,8 +113,7 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
                 var updatedBoard: Board = this
                 for (position in positions) {
                     updatedBoard = updatedBoard.with(
-                        position.row,
-                        position.column,
+                        position,
                         (tiles[position.row][position.column] as Barrier).toggled() as Tile
                     )
                 }
