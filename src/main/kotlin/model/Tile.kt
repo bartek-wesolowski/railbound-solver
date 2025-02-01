@@ -4,6 +4,7 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
+import model.Tile.BaseHorizontalTrack.HorizontalBarrierSwitch
 import java.util.EnumMap
 import java.util.EnumSet
 
@@ -84,11 +85,15 @@ sealed class Tile(
             override val open: Boolean,
         ) : BaseVerticalTrack(), Barrier {
             override fun toggled() = VerticalBarrier(color, !open)
+
+            override fun matches(solution: Tile): Boolean {
+                return solution is VerticalBarrier && solution.color == color
+            }
         }
 
         data class VerticalBarrierSwitch(
             override val color: BarrierColor,
-        ) : BaseVerticalTrack(), BarrierSwitch
+        ) : BaseVerticalTrack(), BarrierSwitch {}
     }
 
     sealed class BaseHorizontalTrack(
@@ -125,6 +130,10 @@ sealed class Tile(
             override val open: Boolean,
         ) : BaseHorizontalTrack(), Barrier {
             override fun toggled() = HorizontalBarrier(color, !open)
+
+            override fun matches(solution: Tile): Boolean {
+                return solution is HorizontalBarrier && solution.color == color
+            }
         }
 
         data class HorizontalBarrierSwitch(
