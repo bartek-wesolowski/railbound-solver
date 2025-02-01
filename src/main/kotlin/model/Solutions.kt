@@ -612,10 +612,20 @@ object Solutions {
                 row(UpRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, UpRightTurn(fixed=true), EndingTrack)
             }
         )
+        val level3_3A = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, DownRightTurn(), DownLeftTurn(), Empty)
+                row(Empty, Empty, Empty, DownRightUpFork(), UpLeftTurn(), Empty)
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn(), DownLeftTurn(), Empty, VerticalBarrier(GREEN, false), Empty, Empty)
+                row(UpRightTurn(), UpRightLeftFork(), FixedHorizontalTrack, UpRightLeftFork(), HorizontalBarrierSwitch(GREEN, 3, 3), EndingTrack)
+            }
+        )
         val solutions = mapOf(
             "3-1" to level3_1,
             "3-2" to level3_2,
             "3-3" to level3_3,
+            "3-3A" to level3_3A,
         )
     }
 }
