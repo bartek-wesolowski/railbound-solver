@@ -29,6 +29,16 @@ fun SolverState(
                 )
             )
         }
+        // uncomment to show traverse directions
+//        for ((position, directions) in state.traverseDirections) {
+//            Text(
+//                directions.toString(),
+//                Modifier.offset(
+//                    x = tileSize * position.column,
+//                    y = tileSize * position.row
+//                )
+//            )
+//        }
     }
 }
 
@@ -41,7 +51,8 @@ private fun SolverStatePreview() {
             board = level.board,
             activeCars = level.cars,
             tracksUsed = 0,
-            expectedCars = ExpectedCars(level.cars)
+            expectedCars = ExpectedCars(level.cars),
+            traverseDirections = emptyMap(),
         ),
         tileSize = 100.dp
     )

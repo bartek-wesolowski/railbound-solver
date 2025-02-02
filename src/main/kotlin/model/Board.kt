@@ -9,6 +9,7 @@ import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
 import util.mapAt
+import java.util.EnumSet
 
 data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
 
@@ -49,7 +50,7 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         return sb.toString()
     }
 
-    fun canInsert(row: Int, column: Int, tile: Tile): Boolean {
+    fun canInsert(row: Int, column: Int, tile: Tile, traverseDirections: EnumSet<Direction>): Boolean {
         if (row < 0 || row >= rows) return false
         if (column < 0 || column >= columns) return false
         if (tiles[row][column] !is Tile.Empty) return false
@@ -62,22 +63,22 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         if (
             DOWN in tile.incomingDirections &&
             tiles[row - 1][column] != Tile.Empty &&
-            !tiles[row - 1][column].isValidIncomingDirection(UP)
+            !tiles[row - 1][column].isValidIncomingDirection(UP, traverseDirections)
         ) return false
         if (
             UP in tile.incomingDirections &&
             tiles[row + 1][column] != Tile.Empty &&
-            !tiles[row + 1][column].isValidIncomingDirection(DOWN)
+            !tiles[row + 1][column].isValidIncomingDirection(DOWN, traverseDirections)
         ) return false
         if (
             RIGHT in tile.incomingDirections &&
             tiles[row][column - 1] != Tile.Empty &&
-            !tiles[row][column - 1].isValidIncomingDirection(LEFT)
+            !tiles[row][column - 1].isValidIncomingDirection(LEFT, traverseDirections)
         ) return false
         if (
             LEFT in tile.incomingDirections &&
             tiles[row][column + 1] != Tile.Empty &&
-            !tiles[row][column + 1].isValidIncomingDirection(RIGHT)
+            !tiles[row][column + 1].isValidIncomingDirection(RIGHT, traverseDirections)
         ) return false
 
         return true

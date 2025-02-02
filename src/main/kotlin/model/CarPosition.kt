@@ -7,6 +7,8 @@ data class CarPosition(
     val column: Int,
     val direction: Direction,
 ) {
+    fun asPosition(): Position = Position(row, column)
+
     fun moveForward(): CarPosition = when (direction) {
         UP -> copy(row = row - 1)
         DOWN -> copy(row = row + 1)
