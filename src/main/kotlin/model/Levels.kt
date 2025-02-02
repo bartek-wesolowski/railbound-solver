@@ -713,4 +713,8 @@ object Levels {
             level3_5,
         ).associateBy { it.name }
     }
+
+    val levels = World1.levels +
+            World2.levels +
+            World3.levels
 }

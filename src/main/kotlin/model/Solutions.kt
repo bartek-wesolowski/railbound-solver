@@ -653,4 +653,7 @@ object Solutions {
             "3-5" to level3_5,
         )
     }
+    val solutions = World1.solutions +
+            World2.solutions +
+            World3.solutions
 }
