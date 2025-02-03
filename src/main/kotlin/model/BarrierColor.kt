@@ -1,5 +1,6 @@
 package model
 
 enum class BarrierColor {
-    GREEN
+    DARK_GREEN,
+    LIGHT_GREEN,
 }

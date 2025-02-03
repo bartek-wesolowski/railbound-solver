@@ -308,6 +308,17 @@ sealed class Tile(
         }
     }
 
+    data class DownLeftRightBarrierSwitch(
+        override val color: BarrierColor
+    ) : Tile(UP, RIGHT, LEFT), Fork, BarrierSwitch {
+        override fun getNextPosition(position: CarPosition) = when (position.direction) {
+            UP -> position.turnLeft()
+            RIGHT -> position.turnRight()
+            LEFT -> position.moveForward()
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+        }
+    }
+
     data class DownLeftUpFork(val fixed: Boolean = false) : Tile(UP, RIGHT, DOWN), Fork {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()

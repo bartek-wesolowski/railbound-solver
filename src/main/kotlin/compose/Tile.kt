@@ -22,6 +22,7 @@ import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
 import model.Tile.BaseVerticalTrack.VerticalBarrierSwitch
 import model.Tile.BaseVerticalTrack.VerticalTrack
+import model.Tile.DownLeftRightBarrierSwitch
 import model.Tile.DownLeftRightFork
 import model.Tile.DownLeftTurn
 import model.Tile.DownLeftUpFork
@@ -59,6 +60,7 @@ fun Tile(
             is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
             is HorizontalBarrier -> drawHorizontalBarrier(size, tile.color, tile.open)
             is HorizontalBarrierSwitch -> drawHorizontalBarrierSwitch(size, tile.color)
+            is DownLeftRightBarrierSwitch -> drawDownLeftRightBarrierSwitch(size, tile.color)
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
             is VerticalBarrier -> drawVerticalBarrier(size, tile.color, tile.open)
@@ -194,6 +196,12 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open:
 }
 
 private fun DrawScope.drawHorizontalBarrierSwitch(size: Dp, color: BarrierColor) {
+    drawHorizontalTrack(size, fixedTrackColor)
+    drawSwitch(size, color)
+}
+
+private fun DrawScope.drawDownLeftRightBarrierSwitch(size: Dp, color: BarrierColor) {
+    drawDownLeftTurn(size, fixedTrackColor)
     drawHorizontalTrack(size, fixedTrackColor)
     drawSwitch(size, color)
 }
@@ -371,14 +379,15 @@ private fun TunnelColor.toColor(): Color = when (this) {
 }
 
 private fun BarrierColor.toColor(): Color = when (this) {
-    BarrierColor.GREEN -> Color.Green
+    BarrierColor.DARK_GREEN -> Color(0xFF59BCA3)
+    BarrierColor.LIGHT_GREEN -> Color(0xFFD3DC41)
 }
 
 @Preview
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = HorizontalBarrierSwitch(BarrierColor.GREEN),
+        tile = HorizontalBarrierSwitch(BarrierColor.DARK_GREEN),
         size = 100.dp
     )
 }
