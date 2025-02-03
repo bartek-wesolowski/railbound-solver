@@ -381,6 +381,7 @@ private fun TunnelColor.toColor(): Color = when (this) {
 private fun BarrierColor.toColor(): Color = when (this) {
     BarrierColor.DARK_GREEN -> Color(0xFF59BCA3)
     BarrierColor.LIGHT_GREEN -> Color(0xFFD3DC41)
+    BarrierColor.PINK -> Color(0xFFFF3475)
 }
 
 @Preview

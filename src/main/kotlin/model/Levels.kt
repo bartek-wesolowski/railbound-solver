@@ -3,6 +3,7 @@ package model
 import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import model.BarrierColor.DARK_GREEN
 import model.BarrierColor.LIGHT_GREEN
+import model.BarrierColor.PINK
 import model.Board.Companion.buildBoard
 import model.Board.Companion.row
 import model.CarColor.*
@@ -749,6 +750,22 @@ object Levels {
             ),
             tracks = 9
         )
+        val level3_8 = Level(
+            name = "3-8",
+            board = buildBoard(rows = 6) {
+                row(Empty, FixedVerticalTrack, Empty, Empty, FixedVerticalTrack, Empty)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty)
+                row(Empty, Empty, Empty, Empty, VerticalBarrier(DARK_GREEN, false), Empty)
+                row(VerticalBarrierSwitch(PINK), VerticalBarrierSwitch(LIGHT_GREEN), VerticalBarrierSwitch(DARK_GREEN), Empty, VerticalBarrier(LIGHT_GREEN, false), Empty)
+                row(Empty, Empty, Empty, Empty, VerticalBarrier(PINK, false), Empty)
+                row(Empty, Empty, Empty, Empty, UpRightLeftFork(fixed = true), EndingTrack)
+            },
+            cars = immutableArrayOf(
+                Car(1, RED, CarPosition(0, 4, DOWN)),
+                Car(2, RED, CarPosition(0, 1, DOWN)),
+            ),
+            tracks = 12
+        )
         val levels = listOf(
             level3_1,
             level3_2,
@@ -759,6 +776,7 @@ object Levels {
             level3_6,
             level3_7,
             level3_7A,
+            level3_8,
         ).associateBy { it.name }
     }
 
