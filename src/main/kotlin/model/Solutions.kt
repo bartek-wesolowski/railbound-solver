@@ -689,6 +689,15 @@ object Solutions {
                 row(UpRightTurn(), HorizontalBarrierSwitch(PINK), UpRightLeftFork(), HorizontalBarrierSwitch(LIGHT_GREEN), Empty, HorizontalBarrierSwitch(DARK_GREEN), UpLeftTurn())
             }
         )
+        val level3_8B = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, DownRightTurn(), HorizontalBarrierSwitch(DARK_GREEN), DownLeftTurn(), HorizontalBarrierSwitch(BarrierColor.PURPLE), DownRightTurn(), HorizontalBarrierSwitch(DARK_GREEN), HorizontalTrack, HorizontalBarrierSwitch(BarrierColor.PURPLE), DownLeftTurn(), Empty)
+                row(FixedHorizontalTrack, UpLeftTurn(), Obstacle, VerticalBarrierSwitch(DARK_GREEN), Obstacle, VerticalBarrierSwitch(LIGHT_GREEN), Obstacle, VerticalBarrierSwitch(PINK), Obstacle, UpRightTurn(), LeftTunnel(BROWN, CarPosition(4, 0, RIGHT)))
+                row(Empty, Empty, HorizontalBarrierSwitch(LIGHT_GREEN), UpRightTurn(), HorizontalBarrierSwitch(PINK), UpLeftTurn(), HorizontalBarrierSwitch(LIGHT_GREEN), Empty, HorizontalBarrierSwitch(PINK), Empty, Empty)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
+                row(RightTunnel(BROWN, CarPosition(1, 10, LEFT)), FixedHorizontalTrack, HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(BarrierColor.PURPLE, true), HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(BarrierColor.PURPLE, true), HorizontalBarrier(PINK, true), FixedHorizontalTrack, EndingTrack)
+            }
+        )
         val solutions = mapOf(
             "3-1" to level3_1,
             "3-2" to level3_2,
@@ -701,6 +710,7 @@ object Solutions {
             "3-7A" to level3_7A,
             "3-8" to level3_8,
             "3-8A" to level3_8A,
+            "3-8B" to level3_8B,
         )
     }
     val solutions = World1.solutions +

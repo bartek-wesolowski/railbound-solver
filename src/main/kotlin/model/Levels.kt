@@ -778,6 +778,21 @@ object Levels {
             ),
             tracks = 11
         )
+        val level3_8B = Level(
+            name = "3-8B",
+            board = buildBoard(rows = 5) {
+                row(Empty, Empty, HorizontalBarrierSwitch(DARK_GREEN), Empty, HorizontalBarrierSwitch(BarrierColor.PURPLE), Empty, HorizontalBarrierSwitch(DARK_GREEN), Empty, HorizontalBarrierSwitch(BarrierColor.PURPLE), Empty, Empty)
+                row(FixedHorizontalTrack, Empty, Obstacle, VerticalBarrierSwitch(DARK_GREEN), Obstacle, VerticalBarrierSwitch(LIGHT_GREEN), Obstacle, VerticalBarrierSwitch(PINK), Obstacle, Empty, LeftTunnel(BROWN, CarPosition(4, 0, RIGHT)))
+                row(Empty, Empty, HorizontalBarrierSwitch(LIGHT_GREEN), Empty, HorizontalBarrierSwitch(PINK), Empty, HorizontalBarrierSwitch(LIGHT_GREEN), Empty, HorizontalBarrierSwitch(PINK), Empty, Empty)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
+                row(RightTunnel(BROWN, CarPosition(1, 10, LEFT)), FixedHorizontalTrack, HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(BarrierColor.PURPLE, false), HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(BarrierColor.PURPLE, false), HorizontalBarrier(PINK, false), FixedHorizontalTrack, EndingTrack)
+            },
+            cars = immutableArrayOf(
+                Car(1, RED, CarPosition(4, 1, RIGHT)),
+                Car(2, RED, CarPosition(1, 0, RIGHT)),
+            ),
+            tracks = 9
+        )
         val levels = listOf(
             level3_1,
             level3_2,
@@ -790,6 +805,7 @@ object Levels {
             level3_7A,
             level3_8,
             level3_8A,
+            level3_8B,
         ).associateBy { it.name }
     }
 
