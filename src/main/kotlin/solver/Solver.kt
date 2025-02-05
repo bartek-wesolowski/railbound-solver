@@ -1,6 +1,5 @@
 package solver
 
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.asList
 import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import com.danrusu.pods4k.immutableArrays.indexOf
@@ -10,7 +9,6 @@ import model.Action.ToggleBarrier
 import model.Barrier
 import model.BarrierSwitch
 import model.Board
-import model.Car
 import model.Direction
 import model.Direction.DOWN
 import model.Direction.LEFT
@@ -52,7 +50,7 @@ class Solver {
                 continue
             }
             statesChecked.add(state)
-            val nextStates = state.nextStates(initialCars = level.cars)
+            val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
             statesToCheck.addAll(nextStates.toSet() - statesChecked)
         }
@@ -76,7 +74,7 @@ class Solver {
                 continue
             }
             statesChecked.add(state)
-            val nextStates = state.nextStates(initialCars = level.cars)
+            val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
             statesToCheck.addAll((nextStates.toSet() - statesChecked).map { it to depth + 1 })
         }
@@ -86,15 +84,12 @@ class Solver {
         return activeCars.isEmpty()
     }
 
-    private fun SolverState.nextStates(initialCars: ImmutableArray<Car>): List<SolverState> {
+    private fun SolverState.nextStates(): List<SolverState> {
         var partialStates = getMoves(PartialSolverState(this, immutableArrayOf()), 0)
         for (carIndex in 1..activeCars.lastIndex) {
             val updatedPartialStates = mutableListOf<PartialSolverState>()
             for (partialState in partialStates) {
                 val state = partialState.state
-                if (state.activeCars == initialCars) {
-                    updatedPartialStates.add(partialState)
-                } else {
                     val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
                     updatedPartialStates.addAll(
                         getMoves(
@@ -102,20 +97,17 @@ class Solver {
                             adjustedCarIndex
                         )
                     )
-                }
             }
-            partialStates = updatedPartialStates.filterNoCollisions(this, carIndex, initialCars)
+            partialStates = updatedPartialStates.filterNoCollisions(this, carIndex)
         }
         return partialStates.map { it.applyActions() }
     }
 
     private fun List<PartialSolverState>.filterNoCollisions(
         previousState: SolverState,
-        carIndex: Int,
-        initialCars: ImmutableArray<Car>
+        carIndex: Int
     ): List<PartialSolverState> = filter { partialState ->
         val state = partialState.state
-        if (state.activeCars == initialCars) return@filter true
         val carAIndex = state.activeCars.indexOfFirst {
             it.color == previousState.activeCars[carIndex].color &&
                     it.number == previousState.activeCars[carIndex].number
