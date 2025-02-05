@@ -815,6 +815,15 @@ object Solutions {
                 row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
             }
         )
+        val level3_10 = setOf(
+            buildBoard(rows = 5) {
+                row(DownTunnel(BROWN, CarPosition(4, 3, RIGHT)), Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
+                row(UpRightDownFork(), DownLeftTurn(), Empty, Empty, VerticalTrack, Empty, Empty, Empty)
+                row(VerticalBarrierSwitch(DARK_GREEN), VerticalTrack, Empty, Empty, VerticalTrack, Empty, Empty, Empty)
+                row(UpRightTurn(), UpLeftTurn(), Empty, Empty, DownRightUpFork(), HorizontalTrack, HorizontalBarrier(DARK_GREEN, false), EndingTrack)
+                row(Empty, Empty, Empty, RightTunnel(BROWN, CarPosition(0, 0, DOWN)), UpLeftTurn(), Empty, Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "3-1" to level3_1,
             "3-2" to level3_2,
@@ -829,6 +838,7 @@ object Solutions {
             "3-8A" to level3_8A,
             "3-8B" to level3_8B,
             "3-9" to level3_9,
+            "3-10" to level3_10,
         )
     }
     val solutions = World1.solutions +

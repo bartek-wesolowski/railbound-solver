@@ -810,6 +810,20 @@ object Levels {
             ),
             tracks = 15
         )
+        val level3_10 = Level(
+            name = "3-10",
+            board = buildBoard(rows = 5) {
+                row(DownTunnel(BROWN, CarPosition(4, 3, RIGHT)), Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(VerticalBarrierSwitch(DARK_GREEN), Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, HorizontalBarrier(DARK_GREEN, false), EndingTrack)
+                row(Empty, Empty, Empty, RightTunnel(BROWN, CarPosition(0, 0, DOWN)), Empty, Empty, Empty, Empty)
+            },
+            cars = immutableArrayOf(
+                Car(1, RED, CarPosition(0, 4, DOWN)),
+            ),
+            tracks = 10
+        )
         val levels = listOf(
             level3_1,
             level3_2,
@@ -824,6 +838,7 @@ object Levels {
             level3_8A,
             level3_8B,
             level3_9,
+            level3_10,
         ).associateBy { it.name }
     }
 
