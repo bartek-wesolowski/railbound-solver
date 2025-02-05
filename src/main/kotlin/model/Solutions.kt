@@ -705,6 +705,116 @@ object Solutions {
                 row(RightTunnel(BROWN, CarPosition(1, 10, LEFT)), FixedHorizontalTrack, HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(BarrierColor.PURPLE, true), HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(BarrierColor.PURPLE, true), HorizontalBarrier(PINK, true), FixedHorizontalTrack, EndingTrack)
             }
         )
+        val level3_9 = setOf(
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), UpRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), HorizontalTrack, DownLeftTurn(fixed = false), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), Empty, VerticalTrack, Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn(fixed = false), Empty, VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), HorizontalTrack, DownLeftTurn(fixed = false), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), Empty, VerticalTrack, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), UpRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn(fixed = false), Empty, VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), UpRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn(fixed = false), Empty, VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), UpRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), UpRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), UpRightTurn(fixed = false), DownLeftTurn(fixed = false), Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn(fixed = false), Empty, VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), HorizontalTrack, DownLeftTurn(fixed = false), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), Empty, VerticalTrack, Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn(fixed = false), Empty, VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), HorizontalTrack, DownLeftTurn(fixed = false), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), Empty, VerticalTrack, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), HorizontalTrack, DownLeftTurn(fixed = false), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), Empty, VerticalTrack, Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn(fixed = false), Empty, VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, UpRightTurn(fixed = false), HorizontalTrack, UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), DownLeftTurn(fixed = false), Empty, VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed = false), HorizontalTrack, DownLeftTurn(fixed = false), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalBarrier(color = PINK, open = true), Empty, VerticalTrack, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrierSwitch(color = LIGHT_GREEN), Empty, VerticalBarrierSwitch(color = DARK_GREEN), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), DownRightTurn(fixed = false), UpRightLeftFork(fixed = false), HorizontalBarrier(color = DARK_GREEN, open = true), EndingTrack)
+                row(FixedHorizontalTrack, HorizontalBarrier(color = LIGHT_GREEN, open = true), HorizontalTrack, DownLeftTurn(fixed = false), VerticalBarrier(color = DARK_GREEN, open = true), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, VerticalBarrierSwitch(color = PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, UpRightTurn(fixed = false), UpLeftTurn(fixed = false), Empty, Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "3-1" to level3_1,
             "3-2" to level3_2,
@@ -718,6 +828,7 @@ object Solutions {
             "3-8" to level3_8,
             "3-8A" to level3_8A,
             "3-8B" to level3_8B,
+            "3-9" to level3_9,
         )
     }
     val solutions = World1.solutions +
