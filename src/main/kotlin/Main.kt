@@ -41,6 +41,7 @@ fun main() = application {
                 )
                 Solutions(
                     solutions = solutions,
+                    cars = level.cars,
                     tileSize = tileSize,
                     modifier = Modifier.padding(start = 16.dp)
                 )
