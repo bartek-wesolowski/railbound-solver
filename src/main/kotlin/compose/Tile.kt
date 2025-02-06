@@ -360,9 +360,10 @@ private fun DrawScope.drawBorder() {
 private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStrokeWidthPercent).toPx()
 
 private fun TunnelColor.toColor(): Color = when (this) {
-    TunnelColor.GRAY -> Color.Gray
-    TunnelColor.BROWN -> Color(0xFF964B00)
-    TunnelColor.PURPLE -> Color.Magenta
+    TunnelColor.GRAY -> Color(0xFF83ADA0)
+    TunnelColor.BROWN -> Color(0xFFE16E72)
+    TunnelColor.PURPLE -> Color(0xFFAC666D)
+    TunnelColor.GREEN -> Color(0xFFA4AF53)
 }
 
 private fun BarrierColor.toColor(): Color = when (this) {
