@@ -882,6 +882,22 @@ object Solutions {
                 row(Empty, Empty, UpTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, UpTunnel(BROWN, CarPosition(0, 2, DOWN)), Empty, Empty)
             },
         )
+        val level3_11A = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(BROWN, CarPosition(4, 4, UP)), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, DownRightTurn(), DownLeftUpFork(), Empty, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalBarrierSwitch(LIGHT_GREEN), DownLeftUpFork(), UpRightTurn(), HorizontalBarrier(LIGHT_GREEN, true), FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, UpRightTurn(), DownLeftTurn(), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, UpTunnel(BROWN, CarPosition(0, 4, DOWN)), Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=4, column=4, direction=UP)), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), UpLeftDownFork(fixed=false), DownRightTurn(fixed=false), HorizontalBarrier(color=LIGHT_GREEN, open=true), FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, UpRightTurn(fixed=false), UpLeftDownFork(fixed=false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, UpTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=4, direction=DOWN)), Empty, Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "3-1" to level3_1,
             "3-2" to level3_2,
@@ -901,6 +917,7 @@ object Solutions {
             "3-10B" to level3_10B,
             "3-10C" to level3_10C,
             "3-11" to level3_11,
+            "3-11A" to level3_11A,
         )
     }
     val solutions = World1.solutions +
