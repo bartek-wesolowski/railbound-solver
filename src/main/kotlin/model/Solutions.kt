@@ -833,6 +833,35 @@ object Solutions {
                 row(Empty, RightTunnel(GRAY, CarPosition(0, 3, RIGHT)), HorizontalBarrierSwitch(LIGHT_GREEN), LeftTunnel(BROWN, CarPosition(0, 1, DOWN)), Empty, Empty, Empty)
             }
         )
+        val level3_10B = setOf(
+            buildBoard(rows = 7) {
+                row(FixedVerticalTrack, Empty, Empty, DownTunnel(BROWN, CarPosition(5, 3, LEFT)), Empty, Empty, Empty)
+                row(UpRightTurn(fixed = true), HorizontalBarrier(DARK_GREEN, true), HorizontalTrack, UpLeftTurn(), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightTurn(), FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(Empty, DownRightTurn(), UpLeftDownFork(), Empty, Empty, Empty, Empty)
+                row(Empty, VerticalTrack, UpRightDownFork(), LeftTunnel(BROWN, CarPosition(0, 3, DOWN)), Empty, Empty, Empty)
+                row(Empty, UpRightBarrierSwitch(DARK_GREEN), UpLeftTurn(), Empty, Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(FixedVerticalTrack, Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=5, column=3, direction=LEFT)), Empty, Empty, Empty)
+                row(UpRightTurn(fixed=true), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalTrack, UpLeftTurn(fixed=false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightTurn(fixed=false), HorizontalTrack, FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(Empty, VerticalTrack, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, UpRightDownFork(fixed=false), DownLeftRightFork(fixed=false), LeftTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=3, direction=DOWN)), Empty, Empty, Empty)
+                row(Empty, UpRightBarrierSwitch(color=DARK_GREEN), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+            },
+            buildBoard(rows = 7) {
+                row(FixedVerticalTrack, Empty, Empty, DownTunnel(color=BROWN, exitPosition=CarPosition(row=5, column=3, direction=LEFT)), Empty, Empty, Empty)
+                row(UpRightTurn(fixed=true), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalTrack, UpLeftTurn(fixed=false), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightTurn(fixed=false), FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+                row(Empty, UpRightDownFork(fixed=false), DownLeftRightFork(fixed=false), LeftTunnel(color=BROWN, exitPosition=CarPosition(row=0, column=3, direction=DOWN)), Empty, Empty, Empty)
+                row(Empty, UpRightBarrierSwitch(color=DARK_GREEN), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "3-1" to level3_1,
             "3-2" to level3_2,
@@ -849,6 +878,7 @@ object Solutions {
             "3-9" to level3_9,
             "3-10" to level3_10,
             "3-10A" to level3_10A,
+            "3-10B" to level3_10B,
         )
     }
     val solutions = World1.solutions +

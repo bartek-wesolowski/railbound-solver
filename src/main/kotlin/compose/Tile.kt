@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.BarrierColor
 import model.Tile
+import model.Tile.*
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
 import model.Tile.BaseHorizontalTrack.HorizontalBarrierSwitch
@@ -22,26 +23,6 @@ import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
 import model.Tile.BaseVerticalTrack.VerticalBarrierSwitch
 import model.Tile.BaseVerticalTrack.VerticalTrack
-import model.Tile.DownLeftRightBarrierSwitch
-import model.Tile.DownLeftRightFork
-import model.Tile.DownLeftTurn
-import model.Tile.DownLeftUpFork
-import model.Tile.DownRightLeftFork
-import model.Tile.DownRightTurn
-import model.Tile.DownRightUpFork
-import model.Tile.DownTunnel
-import model.Tile.Empty
-import model.Tile.EndingTrack
-import model.Tile.LeftTunnel
-import model.Tile.Obstacle
-import model.Tile.RightTunnel
-import model.Tile.UpLeftDownFork
-import model.Tile.UpLeftRightFork
-import model.Tile.UpLeftTurn
-import model.Tile.UpRightDownFork
-import model.Tile.UpRightLeftFork
-import model.Tile.UpRightTurn
-import model.Tile.UpTunnel
 import model.TunnelColor
 
 private val trackColor = Color.Gray
@@ -68,6 +49,7 @@ fun Tile(
             is DownRightTurn -> drawDownRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftTurn -> drawDownLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is UpRightTurn -> drawUpRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is UpRightBarrierSwitch -> drawUpRightBarrierSwitch(size, tile.color)
             is UpLeftTurn -> drawUpLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftRightFork -> drawDownLeftRightFork(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftUpFork -> drawDownLeftUpFork(size, if (tile.fixed) fixedTrackColor else trackColor)
@@ -220,6 +202,11 @@ private fun DrawScope.drawDownLeftTurn(size: Dp, color: Color) {
 
 private fun DrawScope.drawUpRightTurn(size: Dp, color: Color) {
     drawTurn(size, 90f, color)
+}
+
+private fun DrawScope.drawUpRightBarrierSwitch(size: Dp, color: BarrierColor) {
+    drawTurn(size, 90f, fixedTrackColor)
+    drawSwitch(size, color)
 }
 
 private fun DrawScope.drawUpLeftTurn(size: Dp, color: Color) {

@@ -267,6 +267,18 @@ sealed class Tile(
         }
     }
 
+    data class UpRightBarrierSwitch(
+        override val color: BarrierColor
+    ): Tile(
+        incomingDirections = EnumSet.of(DOWN, LEFT),
+    ), Turn, BarrierSwitch {
+        override fun getNextPosition(position: CarPosition) = when (position.direction) {
+            DOWN -> position.turnLeft()
+            LEFT -> position.turnRight()
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+        }
+    }
+
     data class UpLeftTurn(val fixed: Boolean = false) : Tile(
         incomingDirections = EnumSet.of(DOWN, RIGHT),
     ), Turn, ModifiableTile {
