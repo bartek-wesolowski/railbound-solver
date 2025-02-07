@@ -886,7 +886,7 @@ object Solutions {
                 row(DownTunnel(BROWN, CarPosition(4, 3, RIGHT)), Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(UpRightDownFork(), DownLeftTurn(), Empty, Empty, VerticalTrack, Empty, Empty, Empty)
                 row(VerticalBarrierSwitch(DARK_GREEN), VerticalTrack, Empty, Empty, VerticalTrack, Empty, Empty, Empty)
-                row(UpRightTurn(), UpLeftTurn(), Empty, Empty, DownRightUpFork(), HorizontalTrack, HorizontalBarrier(DARK_GREEN, false), EndingTrack)
+                row(UpRightTurn(), UpLeftTurn(), Empty, Empty, DownRightUpFork(), HorizontalTrack, HorizontalBarrier(DARK_GREEN, true), EndingTrack)
                 row(Empty, Empty, Empty, RightTunnel(BROWN, CarPosition(0, 0, DOWN)), UpLeftTurn(), Empty, Empty, Empty)
             }
         )
