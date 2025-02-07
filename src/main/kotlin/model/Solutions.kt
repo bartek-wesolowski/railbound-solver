@@ -653,6 +653,13 @@ object Solutions {
         )
         val level3_4 = setOf(
             buildBoard(rows = 5) {
+                row(FixedHorizontalTrack, DownLeftTurn(fixed=false), Empty, Empty, Empty, DownRightTurn(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), DownLeftTurn(fixed=false))
+                row(DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, VerticalTrack, DownRightTurn(fixed=true), UpLeftTurn(fixed=true))
+                row(DownRightUpFork(fixed=false), HorizontalBarrierSwitch(color=DARK_GREEN), DownRightLeftFork(fixed=false), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), UpLeftTurn(fixed=false), UpRightTurn(fixed=true), DownLeftTurn(fixed=true))
+                row(UpRightDownFork(fixed=false), HorizontalTrack, UpLeftTurn(fixed=false), Empty, Empty, Empty, DownRightTurn(fixed=true), UpLeftTurn(fixed=true))
+                row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, UpRightTurn(fixed=true), EndingTrack)
+            },
+            buildBoard(rows = 5) {
                 row(FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, DownLeftTurn(), Empty, DownRightTurn(), HorizontalBarrier(DARK_GREEN, true), DownLeftTurn())
                 row(Empty, Empty, DownRightTurn(), UpLeftTurn(), Empty, VerticalTrack, DownRightTurn(fixed = true), UpLeftTurn(fixed = true))
                 row(DownRightTurn(), HorizontalBarrierSwitch(DARK_GREEN), UpRightLeftFork(), HorizontalTrack, HorizontalBarrierSwitch(DARK_GREEN), UpLeftTurn(), UpRightTurn(fixed = true), DownLeftTurn(fixed = true))
