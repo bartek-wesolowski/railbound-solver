@@ -16,6 +16,16 @@ data class SolverState(
     val expectedCars: ExpectedCars,
     val traverseDirections: Map<Position, EnumSet<Direction>>,
 ) {
+    private val hashCode by lazy(LazyThreadSafetyMode.NONE) {
+        var result = board.hashCode()
+        result = 31 * result + activeCars.hashCode()
+        result = 31 * result + tracksUsed
+        result = 31 * result + expectedCars.hashCode()
+        result
+    }
+
+    override fun hashCode(): Int = hashCode
+
     override fun toString(): String {
         return "SolverState(\nboard=$board,\nactiveCars=$activeCars,\ntracksUsed=$tracksUsed,\nexpectedCar=$expectedCars\n)"
     }
