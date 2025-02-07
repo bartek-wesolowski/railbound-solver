@@ -11,24 +11,29 @@ import model.Direction.UP
 import util.mapAt
 import java.util.EnumSet
 
-data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
-
-    private val barriers: Map<BarrierColor, List<Position>> = buildMap {
-        for (r in tiles.indices) {
-            for (c in tiles[r].indices) {
-                val tile = tiles[r][c]
-                if (tile is Barrier) {
-                    val position = Position(r, c)
-                    if (tile.color in keys) {
-                        put(tile.color, getValue(tile.color) + position)
-                    } else {
-                        put(tile.color, listOf(Position(r, c)))
+data class Board(
+    val tiles: ImmutableArray<ImmutableArray<Tile>>,
+    val barriers: Map<BarrierColor, List<Position>>
+) {
+    constructor(tiles: ImmutableArray<ImmutableArray<Tile>>) : this(
+        tiles = tiles,
+        barriers = buildMap {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    if (tile is Barrier) {
+                        val position = Position(r, c)
+                        if (tile.color in keys) {
+                            put(tile.color, getValue(tile.color) + position)
+                        } else {
+                            put(tile.color, listOf(Position(r, c)))
+                        }
                     }
                 }
             }
+            require(values.all { it.isNotEmpty() })
         }
-        require(values.all { it.isNotEmpty() })
-    }
+    )
 
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
@@ -89,8 +94,8 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
         return with(row, column, tile)
     }
 
-    fun with(row: Int, column: Int, tile: Tile): Board = Board(
-        tiles.mapAt(row) { rowTiles ->
+    fun with(row: Int, column: Int, tile: Tile): Board = copy(
+        tiles = tiles.mapAt(row) { rowTiles ->
             rowTiles.mapAt(column) { tile }
         }
     )
