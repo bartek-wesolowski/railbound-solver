@@ -154,11 +154,11 @@ class Solver {
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
             Empty -> availableTilesByDirection.getValue(car.direction)
-                .filter {
+                .filter { availableTile ->
                     state.board.canInsert(
                         newCarPosition.row,
                         newCarPosition.column,
-                        it,
+                        availableTile,
                         state.traverseDirections.getOrDefault(newPosition, EnumSet.noneOf(Direction::class.java))
                     )
                 }
@@ -227,7 +227,8 @@ class Solver {
                             )
                         )
                     }
-                } else if (newTile is ModifiableTile) {
+                }
+                if (newTile is ModifiableTile) {
                     val incomingDirectionsAfterModification = newTile.getIncomingDirectionsAfterModification(
                         state.traverseDirections.getOrDefault(
                             newPosition,
@@ -238,6 +239,17 @@ class Solver {
                         addAll(
                             incomingDirectionsAfterModification
                                 .getValue(car.direction)
+                                .filter { modifiedTile ->
+                                    state.board.canInsert(
+                                        newCarPosition.row,
+                                        newCarPosition.column,
+                                        modifiedTile,
+                                        state.traverseDirections.getOrDefault(
+                                            newPosition,
+                                            EnumSet.noneOf(Direction::class.java)
+                                        )
+                                    )
+                                }
                                 .map { modifiedTile ->
                                     PartialSolverState(
                                         state.copy(

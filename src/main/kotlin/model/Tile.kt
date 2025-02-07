@@ -81,6 +81,12 @@ sealed class Tile(
                             if (DOWN !in traverseDirections) add(UpLeftDownFork())
                         }
                     )
+                    if (UP !in traverseDirections) {
+                        put(UP, immutableArrayOf(DownLeftUpFork(), DownRightUpFork()))
+                    }
+                    if (DOWN !in traverseDirections) {
+                        put(DOWN, immutableArrayOf(UpLeftDownFork(), UpRightDownFork()))
+                    }
                 }
             }
 
@@ -124,6 +130,7 @@ sealed class Tile(
             override fun getIncomingDirectionsAfterModification(
                 traverseDirections: EnumSet<Direction>
             ): EnumMap<Direction, ImmutableArray<Tile>> {
+                if (LEFT in traverseDirections && RIGHT in traverseDirections) return EnumMap(Direction::class.java)
                 return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
                     put(
                         UP,
@@ -139,6 +146,12 @@ sealed class Tile(
                             if (RIGHT !in traverseDirections) add(UpLeftRightFork())
                         }
                     )
+                    if (LEFT !in traverseDirections) {
+                        put(LEFT, immutableArrayOf(UpRightLeftFork(), DownRightLeftFork()))
+                    }
+                    if (RIGHT !in traverseDirections) {
+                        put(RIGHT, immutableArrayOf(UpLeftRightFork(), DownLeftRightFork()))
+                    }
                 }
             }
 

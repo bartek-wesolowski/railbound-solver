@@ -53,7 +53,6 @@ data class Board(val tiles: ImmutableArray<ImmutableArray<Tile>>) {
     fun canInsert(row: Int, column: Int, tile: Tile, traverseDirections: EnumSet<Direction>): Boolean {
         if (row < 0 || row >= rows) return false
         if (column < 0 || column >= columns) return false
-        if (tiles[row][column] !is Tile.Empty) return false
 
         if (DOWN in tile.incomingDirections && row == 0) return false
         if (UP in tile.incomingDirections && row == rows - 1) return false
