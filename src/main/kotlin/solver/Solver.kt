@@ -51,7 +51,8 @@ class Solver {
             statesChecked.add(state)
             val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
-            statesToCheck.addAll(nextStates.toSet() - statesChecked)
+                .filter { it !in statesChecked }
+            statesToCheck.addAll(nextStates)
         }
         return solutions
     }
