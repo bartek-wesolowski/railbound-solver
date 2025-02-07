@@ -930,10 +930,73 @@ object Solutions {
         )
         val level3_10C = setOf(
             buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), DownLeftRightFork(fixed=false), HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, UpRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightUpFork(fixed=false), DownRightLeftFork(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, UpLeftTurn(fixed=false), UpRightTurn(fixed=false), DownRightLeftFork(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, Empty, Empty, Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, HorizontalTrack, UpLeftTurn(fixed=false), DownRightTurn(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn(fixed=false), HorizontalTrack, HorizontalTrack, DownLeftTurn(fixed=false), Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), UpLeftTurn(fixed=false), LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), DownRightTurn(fixed=false), HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, VerticalTrack, Empty, Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, UpRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, UpLeftTurn(fixed=false), Empty, DownRightTurn(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn(fixed=false), HorizontalTrack, HorizontalTrack, DownLeftTurn(fixed=false), Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), UpLeftTurn(fixed=false), LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, Empty, Empty, Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, DownLeftTurn(fixed=false), UpRightTurn(fixed=false), DownRightLeftFork(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, DownRightTurn(fixed=false), UpLeftDownFork(fixed=false), Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, UpRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, Empty, Empty, Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, DownLeftTurn(fixed=false), UpRightTurn(fixed=false), DownRightLeftFork(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, Empty, UpRightDownFork(fixed=false), DownLeftTurn(fixed=false), FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), DownRightTurn(fixed=false), HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, UpRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, UpLeftTurn(fixed=false), Empty, DownRightTurn(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn(fixed=false), HorizontalTrack, HorizontalTrack, DownLeftTurn(fixed=false), Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), UpLeftTurn(fixed=false), LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
+                row(RightTunnel(color=GREEN, exitPosition=CarPosition(row=1, column=4, direction=DOWN)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), HorizontalTrack, LeftTunnel(color=GRAY, exitPosition=CarPosition(row=6, column=0, direction=RIGHT)))
+                row(Empty, Empty, Empty, Empty, DownTunnel(color=GREEN, exitPosition=CarPosition(row=0, column=0, direction=RIGHT)), Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightTurn(fixed=false), HorizontalTrack, UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
+                row(RightTunnel(color=BROWN, exitPosition=CarPosition(row=6, column=8, direction=LEFT)), FixedHorizontalTrack, UpLeftTurn(fixed=false), Empty, DownRightTurn(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrier(color=PINK, open=true), EndingTrack)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn(fixed=false), HorizontalTrack, HorizontalTrack, DownLeftTurn(fixed=false), Empty)
+                row(RightTunnel(color=GRAY, exitPosition=CarPosition(row=0, column=8, direction=LEFT)), HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(color=PINK), UpLeftTurn(fixed=false), LeftTunnel(color=BROWN, exitPosition=CarPosition(row=3, column=0, direction=RIGHT)))
+            },
+            buildBoard(rows = 7) {
                 row(RightTunnel(GREEN, CarPosition(1, 4, DOWN)), HorizontalTrack, HorizontalBarrierSwitch(DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalBarrierSwitch(PINK), HorizontalTrack, LeftTunnel(GRAY, CarPosition(6, 0, RIGHT)))
                 row(Empty, DownRightTurn(), DownLeftTurn(), Empty, DownTunnel(GREEN, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
                 row(Empty, UpRightTurn(), DownLeftUpFork(), DownRightTurn(), UpLeftTurn(), Empty, Empty, Empty, Empty)
-                row(RightTunnel(BROWN, CarPosition(6, 8, LEFT)), FixedHorizontalTrack, UpLeftTurn(), UpRightTurn(), DownRightLeftFork(), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(PINK, true), EndingTrack)
+                row(RightTunnel(BROWN, CarPosition(6, 8, LEFT)), FixedHorizontalTrack, UpLeftTurn(), UpRightTurn(), DownRightLeftFork(), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(PINK, true), EndingTrack)
                 row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(0, 8, LEFT)), HorizontalTrack, HorizontalBarrierSwitch(DARK_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(LIGHT_GREEN), FixedHorizontalTrack, HorizontalBarrierSwitch(PINK), HorizontalTrack, LeftTunnel(BROWN, CarPosition(3, 0, RIGHT)))
