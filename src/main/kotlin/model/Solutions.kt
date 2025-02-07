@@ -750,9 +750,9 @@ object Solutions {
         )
         val level3_8A = setOf(
             buildBoard(rows = 3) {
-                row(DownRightTurn(), FixedHorizontalTrack, DownRightTurn(), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(PINK, false), EndingTrack)
+                row(DownRightTurn(), FixedHorizontalTrack, DownRightTurn(), HorizontalBarrier(DARK_GREEN, true), HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(PINK, true), EndingTrack)
                 row(VerticalTrack, Empty, VerticalTrack, Empty, DownRightTurn(), HorizontalTrack, DownLeftTurn())
-                row(UpRightTurn(), HorizontalBarrierSwitch(PINK), UpRightLeftFork(), HorizontalBarrierSwitch(LIGHT_GREEN), Empty, HorizontalBarrierSwitch(DARK_GREEN), UpLeftTurn())
+                row(UpRightTurn(), HorizontalBarrierSwitch(PINK), UpRightLeftFork(), HorizontalBarrierSwitch(LIGHT_GREEN), UpLeftRightFork(), HorizontalBarrierSwitch(DARK_GREEN), UpLeftTurn())
             }
         )
         val level3_8B = setOf(
