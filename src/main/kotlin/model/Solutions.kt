@@ -619,8 +619,36 @@ object Solutions {
                 row(Empty, Empty, Empty, DownRightTurn(), DownLeftTurn(), Empty)
                 row(Empty, Empty, Empty, DownRightUpFork(), UpLeftTurn(), Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
-                row(DownRightTurn(), DownLeftTurn(), Empty, VerticalBarrier(DARK_GREEN, true), Empty, Empty)
+                row(DownRightTurn(), DownLeftTurn(), Empty, VerticalBarrier(DARK_GREEN, false), Empty, Empty)
                 row(UpRightTurn(), UpRightLeftFork(), FixedHorizontalTrack, UpRightLeftFork(), HorizontalBarrierSwitch(DARK_GREEN), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed=false), DownLeftUpFork(fixed=false), Empty, Empty)
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, VerticalBarrier(color=DARK_GREEN, open=false), Empty, Empty)
+                row(UpRightTurn(fixed=false), UpRightLeftFork(fixed=false), FixedHorizontalTrack, UpRightLeftFork(fixed=false), HorizontalBarrierSwitch(color=DARK_GREEN), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, Empty)
+                row(Empty, Empty, VerticalTrack, FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn(fixed=false), DownLeftRightFork(fixed=false), UpLeftTurn(fixed=false), VerticalBarrier(color=DARK_GREEN, open=false), Empty, Empty)
+                row(UpRightTurn(fixed=false), UpRightLeftFork(fixed=false), FixedHorizontalTrack, HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightTurn(fixed=false), HorizontalTrack, DownLeftTurn(fixed=false), Empty, Empty)
+                row(Empty, VerticalTrack, Empty, FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn(fixed=false), DownLeftUpFork(fixed=false), Empty, VerticalBarrier(color=DARK_GREEN, open=false), Empty, Empty)
+                row(UpRightTurn(fixed=false), UpRightLeftFork(fixed=false), FixedHorizontalTrack, HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, DownRightTurn(fixed=false), DownLeftTurn(fixed=false), Empty, Empty)
+                row(Empty, DownRightTurn(fixed=false), UpLeftTurn(fixed=false), FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn(fixed=false), DownLeftUpFork(fixed=false), Empty, VerticalBarrier(color=DARK_GREEN, open=false), Empty, Empty)
+                row(UpRightTurn(fixed=false), UpRightLeftFork(fixed=false), FixedHorizontalTrack, HorizontalTrack, HorizontalBarrierSwitch(color=DARK_GREEN), EndingTrack)
             }
         )
         val level3_4 = setOf(
