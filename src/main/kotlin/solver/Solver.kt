@@ -1,6 +1,5 @@
 package solver
 
-import com.danrusu.pods4k.immutableArrays.asList
 import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import com.danrusu.pods4k.immutableArrays.indexOf
 import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
@@ -203,7 +202,7 @@ class Solver {
 
             is StraightTrack,
             is Turn,
-            is Fork -> {
+            is Fork -> buildList {
                 if (car.direction in newTile.incomingDirections) {
                     val traverseDirections = if (newTile is VerticalTrack || newTile is HorizontalTrack) {
                         partialState.state.traverseDirections.with(newPosition, car.direction)
@@ -211,14 +210,14 @@ class Solver {
                         partialState.state.traverseDirections
                     }
                     if (newTile is Barrier && !newTile.open) {
-                        listOf(PartialSolverState(state, partialState.actions))
+                        add(PartialSolverState(state, partialState.actions))
                     } else {
                         val actions = if (newTile is BarrierSwitch) {
                             partialState.actions + ToggleBarrier(newTile.color)
                         } else {
                             partialState.actions
                         }
-                        listOf(
+                        add(
                             PartialSolverState(
                                 state.copy(
                                     activeCars = newCars,
@@ -236,24 +235,26 @@ class Solver {
                         )
                     )
                     if (car.direction in incomingDirectionsAfterModification) {
-                        incomingDirectionsAfterModification
-                            .getValue(car.direction)
-                            .map { modifiedTile ->
-                                PartialSolverState(
-                                    state.copy(
-                                        board = state.board.with(newCarPosition.row, newCarPosition.column, modifiedTile),
-                                        activeCars = newCars,
-                                        expectedCars = state.expectedCars
-                                    ),
-                                    partialState.actions
-                                )
-                            }
-                            .asList()
-                    } else {
-                        emptyList()
+                        addAll(
+                            incomingDirectionsAfterModification
+                                .getValue(car.direction)
+                                .map { modifiedTile ->
+                                    PartialSolverState(
+                                        state.copy(
+                                            board = state.board.with(
+                                                newCarPosition.row,
+                                                newCarPosition.column,
+                                                modifiedTile
+                                            ),
+                                            activeCars = newCars,
+                                            expectedCars = state.expectedCars
+                                        ),
+                                        partialState.actions
+                                    )
+                                }
+                                .asIterable()
+                        )
                     }
-                } else {
-                    emptyList()
                 }
             }
 
