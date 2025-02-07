@@ -697,6 +697,13 @@ object Solutions {
                 row(DownRightUpFork(), FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack)
                 row(UpRightTurn(), HorizontalTrack, HorizontalBarrier(DARK_GREEN, true), DownLeftRightBarrierSwitch(LIGHT_GREEN), DownLeftRightFork(), FixedHorizontalTrack)
                 row(Empty, Empty, Empty, UpRightTurn(), UpLeftTurn(), Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(DownRightTurn(fixed=false), HorizontalTrack, HorizontalTrack, HorizontalBarrier(color=LIGHT_GREEN, open=true), HorizontalBarrierSwitch(color=DARK_GREEN), FixedHorizontalTrack)
+                row(DownRightUpFork(fixed=false), FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack)
+                row(UpRightDownFork(fixed=false), DownLeftRightFork(fixed=false), HorizontalBarrier(color=DARK_GREEN, open=true), DownLeftRightBarrierSwitch(color=LIGHT_GREEN), HorizontalTrack, FixedHorizontalTrack)
+                row(UpRightTurn(fixed=false), UpLeftTurn(fixed=false), Empty, Empty, Empty, Empty)
             }
         )
         val level3_7A = setOf(
