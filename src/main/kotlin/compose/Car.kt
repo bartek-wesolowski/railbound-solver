@@ -27,6 +27,7 @@ private const val carHeightPercent = 0.75f
 @Composable
 fun Car(
     car: Car,
+    carColor: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier,
 ) {
@@ -35,7 +36,7 @@ fun Car(
         modifier = modifier.size(tileSize)
     ) {
         Canvas(modifier = Modifier.size(tileSize)) {
-            val color = when (car.color) {
+            val color = when (carColor) {
                 CarColor.RED -> Red
                 CarColor.BLUE -> Blue
             }
@@ -97,9 +98,9 @@ private fun CarPreview() {
     Car(
         Car(
             number = 1,
-            color = CarColor.RED,
             position = CarPosition(0, 0, Direction.LEFT),
         ),
+        CarColor.RED,
         100.dp,
     )
 }

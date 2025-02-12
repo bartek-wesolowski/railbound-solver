@@ -6,19 +6,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import model.ExpectedCars
+import model.CarColor
 import model.Levels
 import solver.SolverState
 
 @Composable
 fun SolverState(
     state: SolverState,
+    carColor: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier) {
         Board(state.board, tileSize)
-        Cars(state.activeCars, tileSize)
+        Cars(state.activeCars, carColor, tileSize)
         // uncomment to show traverse directions
 //        for ((position, directions) in state.traverseDirections) {
 //            Text(
@@ -41,9 +42,10 @@ private fun SolverStatePreview() {
             board = level.board,
             activeCars = level.cars,
             tracksUsed = 0,
-            expectedCars = ExpectedCars(level.cars),
+            expectedCar = 1,
             traverseDirections = emptyMap(),
         ),
+        carColor = CarColor.RED,
         tileSize = 100.dp
     )
 }

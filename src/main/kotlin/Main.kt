@@ -37,12 +37,14 @@ fun main() = application {
                 SolverStates(
                     solverStates = solver.getSolverStates(level)
                         .filter { state -> solutions.any { state.board.matches(it) } },
+                    carColor = level.carColor,
                     tileSize = tileSize,
                 )
                 Solutions(
                     solutions = solutions,
                     cars = level.cars,
                     tileSize = tileSize,
+                    carColor = level.carColor,
                     modifier = Modifier.padding(start = 16.dp)
                 )
             }

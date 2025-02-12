@@ -13,12 +13,14 @@ import androidx.compose.ui.unit.Dp
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import model.Board
 import model.Car
+import model.CarColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Solutions(
     solutions: Iterable<Board>,
     cars: ImmutableArray<Car>,
+    carColor: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier,
 ) {
@@ -35,6 +37,6 @@ fun Solutions(
             board = solution,
             tileSize = tileSize,
         )
-        Cars(cars, tileSize)
+        Cars(cars, carColor, tileSize)
     }
 }

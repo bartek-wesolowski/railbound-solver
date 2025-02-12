@@ -13,7 +13,6 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
-import model.ExpectedCars
 import model.Fork
 import model.Level
 import model.ModifiableTile
@@ -40,7 +39,7 @@ class Solver {
     fun findSolutions(level: Level): Set<Board> {
         val statesToCheck = PriorityQueue<SolverState>(compareBy { it.tracksUsed })
         val statesChecked = mutableSetOf<SolverState>()
-        statesToCheck.add(SolverState(level.board, level.cars, 0, ExpectedCars(level.cars), emptyMap()))
+        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap()))
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.poll()
@@ -64,7 +63,7 @@ class Solver {
             depth2.compareTo(depth1)
         })
         val statesChecked = mutableSetOf<SolverState>()
-        statesToCheck.add(SolverState(level.board, level.cars, 0, ExpectedCars(level.cars), emptyMap()) to 1)
+        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap()) to 1)
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val (state, depth) = statesToCheck.poll()
@@ -109,8 +108,7 @@ class Solver {
     ): List<PartialSolverState> = filter { partialState ->
         val state = partialState.state
         val carAIndex = state.activeCars.indexOfFirst {
-            it.color == previousState.activeCars[carIndex].color &&
-                    it.number == previousState.activeCars[carIndex].number
+            it.number == previousState.activeCars[carIndex].number
         }
         if (carAIndex == -1) return@filter true
         val carA = state.activeCars[carAIndex]
@@ -120,7 +118,7 @@ class Solver {
                 return@filter false
             }
             val initialCarBIndex = previousState.activeCars.indexOfFirst {
-                it.color == carB.color && it.number == carB.number
+                it.number == carB.number
             }
             if (initialCarBIndex != -1) {
                 val initialCarA = previousState.activeCars[carIndex]
@@ -186,13 +184,13 @@ class Solver {
 
             EndingTrack -> if (
                 car.direction in newTile.incomingDirections &&
-                state.expectedCars.isExpected(car)
+                state.expectedCar == car.number
             ) {
                 listOf(
                     PartialSolverState(
                         state.copy(
                             activeCars = state.activeCars.removeAt(carIndex),
-                            expectedCars = state.expectedCars.withNextExpected(car.color)
+                            expectedCar = state.expectedCar + 1
                         ),
                         partialState.actions
                     )
@@ -260,7 +258,6 @@ class Solver {
                                                 modifiedTile
                                             ),
                                             activeCars = newCars,
-                                            expectedCars = state.expectedCars
                                         ),
                                         partialState.actions
                                     )
