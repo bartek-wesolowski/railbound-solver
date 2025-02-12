@@ -114,7 +114,7 @@ class Solver {
         val carA = state.activeCars[carAIndex]
         for (carBIndex in 0 until carAIndex) {
             val carB = state.activeCars[carBIndex]
-            if (carB.position.row == carA.position.row && carA.position.column == carB.position.column) {
+            if (carB.row == carA.row && carA.column == carB.column) {
                 return@filter false
             }
             val initialCarBIndex = previousState.activeCars.indexOfFirst {
@@ -124,10 +124,10 @@ class Solver {
                 val initialCarA = previousState.activeCars[carIndex]
                 val initialCarB = previousState.activeCars[initialCarBIndex]
                 if (
-                    initialCarB.position.row == carA.position.row &&
-                    initialCarB.position.column == carA.position.column &&
-                    initialCarA.position.row == carB.position.row &&
-                    initialCarA.position.column == carB.position.column
+                    initialCarB.row == carA.row &&
+                    initialCarB.column == carA.column &&
+                    initialCarA.row == carB.row &&
+                    initialCarA.column == carB.column
                 ) {
                     return@filter false
                 }

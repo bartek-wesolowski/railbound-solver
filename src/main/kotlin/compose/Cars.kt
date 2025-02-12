@@ -23,8 +23,8 @@ fun Cars(
                 carColor,
                 tileSize,
                 Modifier.offset(
-                    x = tileSize * car.position.column,
-                    y = tileSize * car.position.row
+                    x = tileSize * car.column,
+                    y = tileSize * car.row
                 )
             )
         }
