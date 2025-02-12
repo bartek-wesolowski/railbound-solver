@@ -107,30 +107,25 @@ class Solver {
         carIndex: Int
     ): List<PartialSolverState> = filter { partialState ->
         val state = partialState.state
-        val carAIndex = state.activeCars.indexOfFirst {
+        val carA = state.activeCars.firstOrNull {
             it.number == previousState.activeCars[carIndex].number
-        }
-        if (carAIndex == -1) return@filter true
-        val carA = state.activeCars[carAIndex]
-        for (carBIndex in 0 until carAIndex) {
-            val carB = state.activeCars[carBIndex]
+        } ?: return@filter true
+        for (carB in state.activeCars) {
+            if (carB == carA) break
             if (carB.row == carA.row && carA.column == carB.column) {
                 return@filter false
             }
-            val initialCarBIndex = previousState.activeCars.indexOfFirst {
+            val initialCarB = previousState.activeCars.firstOrNull {
                 it.number == carB.number
-            }
-            if (initialCarBIndex != -1) {
-                val initialCarA = previousState.activeCars[carIndex]
-                val initialCarB = previousState.activeCars[initialCarBIndex]
-                if (
-                    initialCarB.row == carA.row &&
-                    initialCarB.column == carA.column &&
-                    initialCarA.row == carB.row &&
-                    initialCarA.column == carB.column
-                ) {
-                    return@filter false
-                }
+            } ?: continue
+            val initialCarA = previousState.activeCars[carIndex]
+            if (
+                initialCarB.row == carA.row &&
+                initialCarB.column == carA.column &&
+                initialCarA.row == carB.row &&
+                initialCarA.column == carB.column
+            ) {
+                return@filter false
             }
         }
         true
