@@ -16,7 +16,10 @@ sealed interface Turn
 
 sealed interface Fork
 
-sealed interface Tunnel
+sealed interface Tunnel {
+    val color: TunnelColor
+    val exitPosition: CarPosition
+}
 
 sealed interface ModifiableTile {
     fun getIncomingDirectionsAfterModification(
@@ -409,12 +412,12 @@ sealed class Tile(
 
     // Tunnels
     data class LeftTunnel(
-        val color: TunnelColor,
-        val exitPosition: CarPosition,
+        override val color: TunnelColor,
+        override val exitPosition: CarPosition,
     ) : Tile(RIGHT), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
-                RIGHT -> exitPosition
+                RIGHT -> exitPosition.moveForward()
                 LEFT -> position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in LeftTunnel: ${position.direction}")
             }
@@ -422,12 +425,12 @@ sealed class Tile(
     }
 
     data class RightTunnel(
-        val color: TunnelColor,
-        val exitPosition: CarPosition,
+        override val color: TunnelColor,
+        override val exitPosition: CarPosition,
     ) : Tile(LEFT), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
-                LEFT -> exitPosition
+                LEFT -> exitPosition.moveForward()
                 RIGHT -> position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in RightTunnel: ${position.direction}")
             }
@@ -435,12 +438,12 @@ sealed class Tile(
     }
 
     data class UpTunnel(
-        val color: TunnelColor,
-        val exitPosition: CarPosition,
+        override val color: TunnelColor,
+        override val exitPosition: CarPosition,
     ) : Tile(DOWN), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
-                DOWN -> exitPosition
+                DOWN -> exitPosition.moveForward()
                 UP -> position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in UpTunnel: ${position.direction}")
             }
@@ -448,12 +451,12 @@ sealed class Tile(
     }
 
     data class DownTunnel(
-        val color: TunnelColor,
-        val exitPosition: CarPosition,
+        override val color: TunnelColor,
+        override val exitPosition: CarPosition,
     ) : Tile(UP), Tunnel {
         override fun getNextPosition(position: CarPosition): CarPosition {
             return when (position.direction) {
-                UP -> exitPosition
+                UP -> exitPosition.moveForward()
                 DOWN -> position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in DownTunnel: ${position.direction}")
             }

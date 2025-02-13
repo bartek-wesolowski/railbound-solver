@@ -8,6 +8,7 @@ import model.Action.ToggleBarrier
 import model.Barrier
 import model.BarrierSwitch
 import model.Board
+import model.Car
 import model.Direction
 import model.Direction.DOWN
 import model.Direction.LEFT
@@ -97,12 +98,13 @@ class Solver {
                         )
                     )
             }
-            partialStates = updatedPartialStates.filterNoCollisions(this, carIndex)
+            partialStates = updatedPartialStates.filterNoCollisions(board, this, carIndex)
         }
         return partialStates.map { it.applyActions() }
     }
 
     private fun List<PartialSolverState>.filterNoCollisions(
+        board: Board,
         previousState: SolverState,
         carIndex: Int
     ): List<PartialSolverState> = filter { partialState ->
@@ -115,22 +117,32 @@ class Solver {
             if (carB.row == carA.row && carA.column == carB.column) {
                 return@filter false
             }
-            val initialCarB = previousState.activeCars.firstOrNull {
+            val initialCarB = previousState.activeCars.first {
                 it.number == carB.number
-            } ?: continue
+            }
             val initialCarA = previousState.activeCars[carIndex]
-            if (
-                initialCarB.row == carA.row &&
-                initialCarB.column == carA.column &&
-                initialCarA.row == carB.row &&
-                initialCarA.column == carB.column
-            ) {
-                return@filter false
+            val initialTileA = board[initialCarA.row, initialCarA.column]
+            val initialTileB = board[initialCarB.row, initialCarB.column]
+            if (initialTileA is Tunnel) {
+                if (initialTileB is Tunnel && initialTileA.color == initialTileB.color) return@filter false
+                val tileB = board[carB.row, carB.column]
+                if (tileB is Tunnel && initialTileA.color == tileB.color && initialTileA != tileB) return@filter false
+            } else if (initialTileB is Tunnel) {
+                val tileA = board[carA.row, carA.column]
+                if (tileA is Tunnel && initialTileB.color == tileA.color && initialTileB != tileA) return@filter false
+            } else {
+                if (arePositionsSwitched(initialCarA, carA, initialCarB, carB)) return@filter false
             }
         }
         true
     }
 
+    private fun arePositionsSwitched(initialCarA: Car, carA: Car, initialCarB: Car, carB: Car): Boolean {
+        return initialCarB.row == carA.row &&
+                initialCarB.column == carA.column &&
+                initialCarA.row == carB.row &&
+                initialCarA.column == carB.column
+    }
 
     private fun getMoves(
         partialState: PartialSolverState,
