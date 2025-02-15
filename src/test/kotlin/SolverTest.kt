@@ -31,6 +31,13 @@ class SolverTest {
         solver.findSolutions(Levels.World3.levels.getValue(levelName))
     )
 
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("getWorld4LevelNames")
+    fun world4(levelName: String) = assertEquals(
+        Solutions.World4.solutions.getValue(levelName),
+        solver.findSolutions(Levels.World4.levels.getValue(levelName))
+    )
+
     private companion object {
         @JvmStatic
         fun getWorld1LevelNames(): Stream<Arguments> {
@@ -45,6 +52,11 @@ class SolverTest {
         @JvmStatic
         fun getWorld3LevelNames(): Stream<Arguments> {
             return Solutions.World3.solutions.keys.stream().map { Arguments.of(it) }
+        }
+
+        @JvmStatic
+        fun getWorld4LevelNames(): Stream<Arguments> {
+            return Solutions.World4.solutions.keys.stream().map { Arguments.of(it) }
         }
     }
 }

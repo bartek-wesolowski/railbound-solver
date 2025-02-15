@@ -14,7 +14,10 @@ sealed interface StraightTrack
 
 sealed interface Turn
 
-sealed interface Fork
+sealed interface Fork {
+    val color: ForkColor?
+    fun toggled(): Fork
+}
 
 sealed interface Tunnel {
     val color: TunnelColor
@@ -33,8 +36,8 @@ sealed interface Barrier {
     fun toggled(): Barrier
 }
 
-sealed interface BarrierSwitch {
-    val color: BarrierColor
+sealed interface HasAction {
+    val action: Action?
 }
 
 sealed class Tile(
@@ -64,7 +67,9 @@ sealed class Tile(
     ), StraightTrack {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
-        data object VerticalTrack : BaseVerticalTrack(), ModifiableTile {
+        data class VerticalTrack(
+            override val action: Action? = null,
+        ) : BaseVerticalTrack(), ModifiableTile, HasAction {
             override fun getIncomingDirectionsAfterModification(
                 traverseDirections: EnumSet<Direction>
             ): EnumMap<Direction, ImmutableArray<Tile>> {
@@ -106,7 +111,9 @@ sealed class Tile(
             }
         }
 
-        data object FixedVerticalTrack : BaseVerticalTrack()
+        data class FixedVerticalTrack(
+            override val action: Action? = null,
+        ) : BaseVerticalTrack(), HasAction
 
         data class VerticalBarrier(
             override val color: BarrierColor,
@@ -118,10 +125,6 @@ sealed class Tile(
                 return solution is VerticalBarrier && solution.color == color
             }
         }
-
-        data class VerticalBarrierSwitch(
-            override val color: BarrierColor,
-        ) : BaseVerticalTrack(), BarrierSwitch
     }
 
     sealed class BaseHorizontalTrack : Tile(
@@ -171,7 +174,9 @@ sealed class Tile(
             }
         }
 
-        data object FixedHorizontalTrack : BaseHorizontalTrack()
+        data class FixedHorizontalTrack(
+            override val action: Action? = null,
+        ) : BaseHorizontalTrack(), HasAction
 
         data class HorizontalBarrier(
             override val color: BarrierColor,
@@ -183,16 +188,15 @@ sealed class Tile(
                 return solution is HorizontalBarrier && solution.color == color
             }
         }
-
-        data class HorizontalBarrierSwitch(
-            override val color: BarrierColor
-        ) : BaseHorizontalTrack(), BarrierSwitch
     }
 
     // Turns
-    data class DownRightTurn(val fixed: Boolean = false) : Tile(
+    data class DownRightTurn(
+        val fixed: Boolean = false,
+        override val action: Action? = null,
+    ) : Tile(
         incomingDirections = EnumSet.of(UP, LEFT),
-    ), Turn, ModifiableTile {
+    ), Turn, ModifiableTile, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
@@ -221,9 +225,12 @@ sealed class Tile(
         }
     }
 
-    data class DownLeftTurn(val fixed: Boolean = false) : Tile(
+    data class DownLeftTurn(
+        val fixed: Boolean = false,
+        override val action: Action? = null,
+    ) : Tile(
         incomingDirections = EnumSet.of(UP, RIGHT),
-    ), Turn, ModifiableTile {
+    ), Turn, ModifiableTile, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
@@ -252,9 +259,12 @@ sealed class Tile(
         }
     }
 
-    data class UpRightTurn(val fixed: Boolean = false) : Tile(
+    data class UpRightTurn(
+        val fixed: Boolean = false,
+        override val action: Action? = null,
+    ) : Tile(
         incomingDirections = EnumSet.of(DOWN, LEFT),
-    ), Turn, ModifiableTile {
+    ), Turn, ModifiableTile, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
@@ -283,21 +293,12 @@ sealed class Tile(
         }
     }
 
-    data class UpRightBarrierSwitch(
-        override val color: BarrierColor
-    ): Tile(
-        incomingDirections = EnumSet.of(DOWN, LEFT),
-    ), Turn, BarrierSwitch {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            DOWN -> position.turnLeft()
-            LEFT -> position.turnRight()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-    }
-
-    data class UpLeftTurn(val fixed: Boolean = false) : Tile(
+    data class UpLeftTurn(
+        val fixed: Boolean = false,
+        override val action: Action? = null,
+    ) : Tile(
         incomingDirections = EnumSet.of(DOWN, RIGHT),
-    ), Turn, ModifiableTile {
+    ), Turn, ModifiableTile, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
@@ -327,87 +328,124 @@ sealed class Tile(
     }
 
     // Forks
-    data class DownLeftRightFork(val fixed: Boolean = false) : Tile(UP, RIGHT, LEFT), Fork {
+    data class DownLeftRightFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(UP, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
             LEFT -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = DownRightLeftFork(fixed, color, action)
     }
 
-    data class DownLeftRightBarrierSwitch(
-        override val color: BarrierColor
-    ) : Tile(UP, RIGHT, LEFT), Fork, BarrierSwitch {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            UP -> position.turnLeft()
-            RIGHT -> position.turnRight()
-            LEFT -> position.moveForward()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-    }
-
-    data class DownLeftUpFork(val fixed: Boolean = false) : Tile(UP, RIGHT, DOWN), Fork {
+    data class DownLeftUpFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(UP, RIGHT, DOWN), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnLeft()
             RIGHT -> position.turnRight()
             DOWN -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = UpLeftDownFork(fixed, color, action)
     }
 
-    data class DownRightLeftFork(val fixed: Boolean = false) : Tile(UP, RIGHT, LEFT), Fork {
+    data class DownRightLeftFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(UP, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
             RIGHT -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = DownLeftRightFork(fixed, color, action)
     }
 
-    data class DownRightUpFork(val fixed: Boolean = false) : Tile(UP, LEFT, DOWN), Fork {
+    data class DownRightUpFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(UP, LEFT, DOWN), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             UP -> position.turnRight()
             LEFT -> position.turnLeft()
             DOWN -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = UpRightDownFork(fixed, color, action)
     }
 
-    data class UpLeftRightFork(val fixed: Boolean = false) : Tile(DOWN, RIGHT, LEFT), Fork {
+    data class UpLeftRightFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(DOWN, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
             LEFT -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = UpRightLeftFork(fixed, color, action)
     }
 
-    data class UpLeftDownFork(val fixed: Boolean = false) : Tile(DOWN, RIGHT, UP), Fork {
+    data class UpLeftDownFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(DOWN, RIGHT, UP), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnRight()
             RIGHT -> position.turnLeft()
             UP -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = DownLeftUpFork(fixed, color, action)
     }
 
-    data class UpRightLeftFork(val fixed: Boolean = false) : Tile(DOWN, RIGHT, LEFT), Fork {
+    data class UpRightLeftFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(DOWN, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
             RIGHT -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = UpLeftRightFork(fixed, color, action)
     }
 
-    data class UpRightDownFork(val fixed: Boolean = false) : Tile(DOWN, LEFT, UP), Fork {
+    data class UpRightDownFork(
+        val fixed: Boolean = false,
+        override val color: ForkColor? = null,
+        override val action: Action? = null,
+    ) : Tile(DOWN, LEFT, UP), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
             DOWN -> position.turnLeft()
             LEFT -> position.turnRight()
             UP -> position.moveForward()
             else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
         }
+
+        override fun toggled() = DownRightUpFork(fixed, color, action)
     }
 
     // Tunnels

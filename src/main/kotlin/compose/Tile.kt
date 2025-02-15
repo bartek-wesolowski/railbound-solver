@@ -12,16 +12,18 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import model.Action
+import model.Action.*
 import model.BarrierColor
+import model.ForkColor
+import model.HasAction
 import model.Tile
 import model.Tile.*
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
-import model.Tile.BaseHorizontalTrack.HorizontalBarrierSwitch
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
-import model.Tile.BaseVerticalTrack.VerticalBarrierSwitch
 import model.Tile.BaseVerticalTrack.VerticalTrack
 import model.TunnelColor
 
@@ -40,16 +42,12 @@ fun Tile(
             is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
             is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
             is HorizontalBarrier -> drawHorizontalBarrier(size, tile.color, tile.open)
-            is HorizontalBarrierSwitch -> drawHorizontalBarrierSwitch(size, tile.color)
-            is DownLeftRightBarrierSwitch -> drawDownLeftRightBarrierSwitch(size, tile.color)
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
             is VerticalBarrier -> drawVerticalBarrier(size, tile.color, tile.open)
-            is VerticalBarrierSwitch -> drawVerticalBarrierSwitch(size, tile.color)
             is DownRightTurn -> drawDownRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftTurn -> drawDownLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is UpRightTurn -> drawUpRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpRightBarrierSwitch -> drawUpRightBarrierSwitch(size, tile.color)
             is UpLeftTurn -> drawUpLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftRightFork -> drawDownLeftRightFork(size, if (tile.fixed) fixedTrackColor else trackColor)
             is DownLeftUpFork -> drawDownLeftUpFork(size, if (tile.fixed) fixedTrackColor else trackColor)
@@ -66,6 +64,9 @@ fun Tile(
             is LeftTunnel -> drawLeftTunnel(size, tile.color)
             is RightTunnel -> drawRightTunnel(size, tile.color)
             is UpTunnel -> drawUpTunnel(size, tile.color)
+        }
+        if (tile is HasAction) {
+            drawAction(size, tile.action)
         }
     }
 }
@@ -115,18 +116,38 @@ private fun DrawScope.drawVerticalBarrier(size: Dp, color: BarrierColor, open: B
     }
 }
 
-private fun DrawScope.drawVerticalBarrierSwitch(size: Dp, color: BarrierColor) {
-    drawVerticalTrack(size, fixedTrackColor)
-    drawSwitch(size, color)
+private fun DrawScope.drawAction(
+    size: Dp,
+    action: Action?,
+) {
+    when (action) {
+        is ToggleBarrier -> drawBarrierSwitch(size, action.color)
+        is ToggleFork -> drawForkSwitch(size, action.color)
+        null -> Unit
+    }
+}
+
+private fun DrawScope.drawBarrierSwitch(
+    size: Dp,
+    color: BarrierColor
+) {
+    drawSwitch(size, color.toColor())
+}
+
+private fun DrawScope.drawForkSwitch(
+    size: Dp,
+    color: ForkColor
+) {
+    drawSwitch(size, color.toColor())
 }
 
 private fun DrawScope.drawSwitch(
     size: Dp,
-    color: BarrierColor
+    color: Color
 ) {
     val squareSize = (size * 0.3f).toPx()
     drawRect(
-        color = color.toColor(),
+        color = color,
         topLeft = Offset((size * 0.35f).toPx(), (size * 0.35f).toPx()),
         size = Size(squareSize, squareSize)
     )
@@ -177,17 +198,6 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open:
     }
 }
 
-private fun DrawScope.drawHorizontalBarrierSwitch(size: Dp, color: BarrierColor) {
-    drawHorizontalTrack(size, fixedTrackColor)
-    drawSwitch(size, color)
-}
-
-private fun DrawScope.drawDownLeftRightBarrierSwitch(size: Dp, color: BarrierColor) {
-    drawDownLeftTurn(size, fixedTrackColor)
-    drawHorizontalTrack(size, fixedTrackColor)
-    drawSwitch(size, color)
-}
-
 private fun DrawScope.drawEndingTrack(size: Dp) {
     drawHorizontalTrack(size, color = Color.Red)
 }
@@ -202,11 +212,6 @@ private fun DrawScope.drawDownLeftTurn(size: Dp, color: Color) {
 
 private fun DrawScope.drawUpRightTurn(size: Dp, color: Color) {
     drawTurn(size, 90f, color)
-}
-
-private fun DrawScope.drawUpRightBarrierSwitch(size: Dp, color: BarrierColor) {
-    drawTurn(size, 90f, fixedTrackColor)
-    drawSwitch(size, color)
 }
 
 private fun DrawScope.drawUpLeftTurn(size: Dp, color: Color) {
@@ -373,11 +378,16 @@ private fun BarrierColor.toColor(): Color = when (this) {
     BarrierColor.PURPLE -> Color(0xFFB75F9E)
 }
 
+private fun ForkColor.toColor(): Color = when (this) {
+    ForkColor.PURPLE -> Color(0xFFB6548A)
+    ForkColor.ORANGE -> Color(0xFFE5B01F)
+}
+
 @Preview
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = HorizontalBarrierSwitch(BarrierColor.DARK_GREEN),
+        tile = FixedHorizontalTrack(ToggleBarrier(BarrierColor.DARK_GREEN)),
         size = 100.dp
     )
 }

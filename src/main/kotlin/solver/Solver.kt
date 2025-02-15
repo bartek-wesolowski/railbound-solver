@@ -4,9 +4,7 @@ import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import com.danrusu.pods4k.immutableArrays.indexOf
 import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
 import com.danrusu.pods4k.immutableArrays.plus
-import model.Action.ToggleBarrier
 import model.Barrier
-import model.BarrierSwitch
 import model.Board
 import model.Car
 import model.Direction
@@ -15,6 +13,7 @@ import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
 import model.Fork
+import model.HasAction
 import model.Level
 import model.ModifiableTile
 import model.Position
@@ -218,8 +217,8 @@ class Solver {
                     if (newTile is Barrier && !newTile.open) {
                         add(PartialSolverState(state, partialState.actions))
                     } else {
-                        val actions = if (newTile is BarrierSwitch) {
-                            partialState.actions + ToggleBarrier(newTile.color)
+                        val actions = if (newTile is HasAction && newTile.action != null) {
+                            partialState.actions + newTile.action!!
                         } else {
                             partialState.actions
                         }
@@ -294,8 +293,8 @@ class Solver {
         private val availableTilesByDirection = mapOf<Direction, Set<Tile>>(
             LEFT to setOf(HorizontalTrack, UpRightTurn(), DownRightTurn()),
             RIGHT to setOf(HorizontalTrack, UpLeftTurn(), DownLeftTurn()),
-            UP to setOf(VerticalTrack, DownLeftTurn(), DownRightTurn()),
-            DOWN to setOf(VerticalTrack, UpLeftTurn(), UpRightTurn()),
+            UP to setOf(VerticalTrack(), DownLeftTurn(), DownRightTurn()),
+            DOWN to setOf(VerticalTrack(), UpLeftTurn(), UpRightTurn()),
         )
     }
 }

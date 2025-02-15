@@ -4,6 +4,7 @@ import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.toImmutableArray
 import model.Action.ToggleBarrier
+import model.Action.ToggleFork
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
@@ -13,7 +14,8 @@ import java.util.EnumSet
 
 data class Board(
     val tiles: ImmutableArray<ImmutableArray<Tile>>,
-    val barriers: Map<BarrierColor, List<Position>>
+    val barriers: Map<BarrierColor, List<Position>>,
+    val toggleableForks: Map<ForkColor, List<Position>>,
 ) {
     constructor(tiles: ImmutableArray<ImmutableArray<Tile>>) : this(
         tiles = tiles,
@@ -27,6 +29,23 @@ data class Board(
                             put(tile.color, getValue(tile.color) + position)
                         } else {
                             put(tile.color, listOf(Position(r, c)))
+                        }
+                    }
+                }
+            }
+            require(values.all { it.isNotEmpty() })
+        },
+        toggleableForks = buildMap {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    if (tile is Fork && tile.color != null) {
+                        val color = tile.color!!
+                        val position = Position(r, c)
+                        if (tile.color in keys) {
+                            put(color, getValue(color) + position)
+                        } else {
+                            put(color, listOf(Position(r, c)))
                         }
                     }
                 }
@@ -120,6 +139,18 @@ data class Board(
                     updatedBoard = updatedBoard.with(
                         position,
                         (tiles[position.row][position.column] as Barrier).toggled() as Tile
+                    )
+                }
+                updatedBoard
+            }
+
+            is ToggleFork -> {
+                val positions = toggleableForks.getValue(action.color)
+                var updatedBoard: Board = this
+                for (position in positions) {
+                    updatedBoard = updatedBoard.with(
+                        position,
+                        (tiles[position.row][position.column] as Fork).toggled() as Tile
                     )
                 }
                 updatedBoard
