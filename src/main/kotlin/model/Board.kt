@@ -18,8 +18,8 @@ import java.util.EnumSet
 
 data class Board(
     val tiles: ImmutableArray<ImmutableArray<Tile>>,
-    val barriers: Map<BarrierColor, List<Position>>,
-    val toggleableForks: Map<ForkColor, List<Position>>,
+    val barriers: Map<Color, List<Position>>,
+    val toggleableForks: Map<Color, List<Position>>,
 ) {
     constructor(tiles: ImmutableArray<ImmutableArray<Tile>>, requireFixed: Boolean) : this(
         tiles = tiles,

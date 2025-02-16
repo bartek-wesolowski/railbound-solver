@@ -3,18 +3,45 @@ package model
 import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import model.Action.ToggleBarrier
 import model.Action.ToggleFork
-import model.BarrierColor.DARK_GREEN
-import model.BarrierColor.LIGHT_GREEN
-import model.BarrierColor.PINK
 import model.Board.Companion.buildBoard
 import model.Board.Companion.row
-import model.CarColor.*
-import model.Direction.*
-import model.ForkColor.ORANGE
-import model.Tile.*
-import model.Tile.BaseHorizontalTrack.*
-import model.Tile.BaseVerticalTrack.*
-import model.TunnelColor.*
+import model.CarColor.BLUE
+import model.CarColor.RED
+import model.Color.DARK_GREEN
+import model.Color.LIGHT_GREEN
+import model.Color.ORANGE
+import model.Color.PINK
+import model.Direction.DOWN
+import model.Direction.LEFT
+import model.Direction.RIGHT
+import model.Direction.UP
+import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
+import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseVerticalTrack.FixedVerticalTrack
+import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.DownLeftRightFork
+import model.Tile.DownLeftTurn
+import model.Tile.DownLeftUpFork
+import model.Tile.DownRightLeftFork
+import model.Tile.DownRightTurn
+import model.Tile.DownRightUpFork
+import model.Tile.DownTunnel
+import model.Tile.Empty
+import model.Tile.EndingTrack
+import model.Tile.LeftTunnel
+import model.Tile.Obstacle
+import model.Tile.RightTunnel
+import model.Tile.UpLeftDownFork
+import model.Tile.UpLeftRightFork
+import model.Tile.UpLeftTurn
+import model.Tile.UpRightDownFork
+import model.Tile.UpRightLeftFork
+import model.Tile.UpRightTurn
+import model.Tile.UpTunnel
+import model.TunnelColor.BROWN
+import model.TunnelColor.GRAY
+import model.TunnelColor.GREEN
+import model.TunnelColor.PURPLE
 
 object Levels {
     object World1 {
@@ -833,11 +860,11 @@ object Levels {
         val level3_8B = Level(
             name = "3-8B",
             board = buildBoard(rows = 5, requireFixed = true) {
-                row(Empty, Empty, FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)), Empty, FixedHorizontalTrack(ToggleBarrier(BarrierColor.PURPLE)), Empty, FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)), Empty, FixedHorizontalTrack(ToggleBarrier(BarrierColor.PURPLE)), Empty, Empty)
+                row(Empty, Empty, FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)), Empty, FixedHorizontalTrack(ToggleBarrier(Color.PURPLE)), Empty, FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)), Empty, FixedHorizontalTrack(ToggleBarrier(Color.PURPLE)), Empty, Empty)
                 row(FixedHorizontalTrack(), Empty, Obstacle, FixedVerticalTrack(ToggleBarrier(DARK_GREEN)), Obstacle, FixedVerticalTrack(ToggleBarrier(LIGHT_GREEN)), Obstacle, FixedVerticalTrack(ToggleBarrier(PINK)), Obstacle, Empty, LeftTunnel(BROWN, CarPosition(4, 0, RIGHT)))
                 row(Empty, Empty, FixedHorizontalTrack(ToggleBarrier(LIGHT_GREEN)), Empty, FixedHorizontalTrack(ToggleBarrier(PINK)), Empty, FixedHorizontalTrack(ToggleBarrier(LIGHT_GREEN)), Empty, FixedHorizontalTrack(ToggleBarrier(PINK)), Empty, Empty)
                 row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
-                row(RightTunnel(BROWN, CarPosition(1, 10, LEFT)), FixedHorizontalTrack(), HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(BarrierColor.PURPLE, false), HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(BarrierColor.PURPLE, false), HorizontalBarrier(PINK, false), FixedHorizontalTrack(), EndingTrack)
+                row(RightTunnel(BROWN, CarPosition(1, 10, LEFT)), FixedHorizontalTrack(), HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(Color.PURPLE, false), HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(Color.PURPLE, false), HorizontalBarrier(PINK, false), FixedHorizontalTrack(), EndingTrack)
             },
             carColor = RED,
             cars = immutableArrayOf(
@@ -1007,9 +1034,9 @@ object Levels {
         val level4_1 = Level(
             name = "4-1",
             board = buildBoard(rows = 5, requireFixed = true) {
-                row(Empty, FixedHorizontalTrack(ToggleFork(ForkColor.PURPLE)), Empty, Empty, FixedHorizontalTrack())
+                row(Empty, FixedHorizontalTrack(ToggleFork(Color.PURPLE)), Empty, Empty, FixedHorizontalTrack())
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(DownRightUpFork(fixed = true, color = ForkColor.PURPLE), FixedHorizontalTrack(), EndingTrack, FixedHorizontalTrack(), FixedHorizontalTrack())
+                row(DownRightUpFork(fixed = true, color = Color.PURPLE), FixedHorizontalTrack(), EndingTrack, FixedHorizontalTrack(), FixedHorizontalTrack())
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedVerticalTrack(), Empty, Empty, Empty, Empty)
             },
@@ -1025,9 +1052,9 @@ object Levels {
             board = buildBoard(rows = 5, requireFixed = true) {
                 row(FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(Obstacle, Obstacle, FixedVerticalTrack(ToggleFork(ForkColor.PURPLE)), Empty, Empty)
+                row(Obstacle, Obstacle, FixedVerticalTrack(ToggleFork(Color.PURPLE)), Empty, Empty)
                 row(Empty, Empty, FixedVerticalTrack(), Empty, Empty)
-                row(Empty, Empty, UpRightLeftFork(fixed = true, color = ForkColor.PURPLE), Empty, EndingTrack)
+                row(Empty, Empty, UpRightLeftFork(fixed = true, color = Color.PURPLE), Empty, EndingTrack)
             },
             carColor = RED,
             cars = immutableArrayOf(
@@ -1040,9 +1067,9 @@ object Levels {
             name = "4-3",
             board = buildBoard(rows = 4, requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(FixedHorizontalTrack(), DownLeftUpFork(fixed = true, color = ForkColor.PURPLE), Obstacle, UpRightDownFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(FixedHorizontalTrack(), DownLeftUpFork(fixed = true, color = Color.PURPLE), Obstacle, UpRightDownFork(fixed = true, color = Color.PURPLE), EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(Empty, UpLeftTurn(fixed = true, action = ToggleFork(ForkColor.PURPLE)), Empty, UpLeftTurn(fixed = true), Empty)
+                row(Empty, UpLeftTurn(fixed = true, action = ToggleFork(Color.PURPLE)), Empty, UpLeftTurn(fixed = true), Empty)
             },
             carColor = RED,
             cars = immutableArrayOf(
@@ -1055,7 +1082,7 @@ object Levels {
             board = buildBoard(rows = 5, requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(FixedVerticalTrack(), DownRightTurn(fixed = true, action = ToggleFork(ForkColor.PURPLE)), DownLeftTurn(fixed = true, action = ToggleFork(ForkColor.PURPLE)), DownRightUpFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(FixedVerticalTrack(), DownRightTurn(fixed = true, action = ToggleFork(Color.PURPLE)), DownLeftTurn(fixed = true, action = ToggleFork(Color.PURPLE)), DownRightUpFork(fixed = true, color = Color.PURPLE), EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
             },
@@ -1069,8 +1096,8 @@ object Levels {
             name = "4-5",
             board = buildBoard(rows = 5, requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, Empty, Empty, Empty, FixedVerticalTrack(ToggleFork(ForkColor.PURPLE)), Empty, Empty)
-                row(FixedHorizontalTrack(), Empty, FixedHorizontalTrack(), Empty, UpLeftRightFork(fixed = true, color = ORANGE), DownLeftRightFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack(ToggleFork(Color.PURPLE)), Empty, Empty)
+                row(FixedHorizontalTrack(), Empty, FixedHorizontalTrack(), Empty, UpLeftRightFork(fixed = true, color = ORANGE), DownLeftRightFork(fixed = true, color = Color.PURPLE), EndingTrack)
                 row(Empty, Empty, DownRightTurn(fixed = true), Empty, Empty, UpLeftTurn(fixed = true, action = ToggleFork(ORANGE)), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
             },

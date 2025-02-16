@@ -18,7 +18,7 @@ sealed interface Turn {
 
 sealed interface Fork {
     val fixed: Boolean
-    val color: ForkColor?
+    val color: Color?
     fun toggled(): Fork
 }
 
@@ -34,7 +34,7 @@ sealed interface ModifiableTile {
 }
 
 sealed interface Barrier {
-    val color: BarrierColor
+    val color: Color
     val open: Boolean
     fun toggled(): Barrier
 }
@@ -119,7 +119,7 @@ sealed class Tile(
         ) : BaseVerticalTrack(), HasAction
 
         data class VerticalBarrier(
-            override val color: BarrierColor,
+            override val color: Color,
             override val open: Boolean,
         ) : BaseVerticalTrack(), Barrier {
             override fun toggled() = VerticalBarrier(color, !open)
@@ -184,7 +184,7 @@ sealed class Tile(
         ) : BaseHorizontalTrack(), HasAction
 
         data class HorizontalBarrier(
-            override val color: BarrierColor,
+            override val color: Color,
             override val open: Boolean,
         ) : BaseHorizontalTrack(), Barrier {
             override fun toggled() = HorizontalBarrier(color, !open)
@@ -335,7 +335,7 @@ sealed class Tile(
     // Forks
     data class DownLeftRightFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(UP, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -350,7 +350,7 @@ sealed class Tile(
 
     data class DownLeftUpFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(UP, RIGHT, DOWN), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -365,7 +365,7 @@ sealed class Tile(
 
     data class DownRightLeftFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(UP, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -380,7 +380,7 @@ sealed class Tile(
 
     data class DownRightUpFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(UP, LEFT, DOWN), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -395,7 +395,7 @@ sealed class Tile(
 
     data class UpLeftRightFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -410,7 +410,7 @@ sealed class Tile(
 
     data class UpLeftDownFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, RIGHT, UP), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -425,7 +425,7 @@ sealed class Tile(
 
     data class UpRightLeftFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, RIGHT, LEFT), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {
@@ -440,7 +440,7 @@ sealed class Tile(
 
     data class UpRightDownFork(
         override val fixed: Boolean = false,
-        override val color: ForkColor? = null,
+        override val color: Color? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, LEFT, UP), Fork, HasAction {
         override fun getNextPosition(position: CarPosition) = when (position.direction) {

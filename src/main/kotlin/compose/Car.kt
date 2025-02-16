@@ -25,7 +25,7 @@ private const val carHeightPercent = 0.75f
 @Composable
 fun Car(
     car: Car,
-    carColor: CarColor,
+    color: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier,
 ) {
@@ -34,10 +34,6 @@ fun Car(
         modifier = modifier.size(tileSize)
     ) {
         Canvas(modifier = Modifier.size(tileSize)) {
-            val color = when (carColor) {
-                CarColor.RED -> Color(0xFFB83B3D)
-                CarColor.BLUE -> Color(0xFF157F8B)
-            }
             val topLeft = when (car.direction) {
                 Direction.UP -> Offset(
                     x = (tileSize.toPx() * (1 - carWidthPercent) / 2),
@@ -71,7 +67,7 @@ fun Car(
                 )
             }
             drawRect(
-                color = color,
+                color = Color(color.color),
                 topLeft = topLeft,
                 size = size
             )

@@ -14,9 +14,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.Action
 import model.Action.*
-import model.BarrierColor
+import model.Color.DARK_GREEN
 import model.Fork
-import model.ForkColor
 import model.HasAction
 import model.Tile
 import model.Tile.*
@@ -78,7 +77,7 @@ private fun Turn.getColor(): Color {
 }
 
 private fun Fork.getColor(): Color {
-    return if (color != null) color!!.toColor() else (if (fixed) fixedTrackColor else trackColor)
+    return if (color != null) Color(color!!.color) else (if (fixed) fixedTrackColor else trackColor)
 }
 
 private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
@@ -99,7 +98,7 @@ private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
     )
 }
 
-private fun DrawScope.drawVerticalBarrier(size: Dp, color: BarrierColor, open: Boolean) {
+private fun DrawScope.drawVerticalBarrier(size: Dp, color: model.Color, open: Boolean) {
     drawVerticalTrack(size, fixedTrackColor)
     val trackStrokeWidth = getTrackStrokeWidth(size)
     if (open) {
@@ -108,7 +107,7 @@ private fun DrawScope.drawVerticalBarrier(size: Dp, color: BarrierColor, open: B
         val x2 = (size * 0.35f).toPx()
         val y2 = (size * 0.05f).toPx()
         drawLine(
-            color = color.toColor(),
+            color = Color(color.color),
             start = Offset(x1, y1),
             end = Offset(x2, y2),
             strokeWidth = trackStrokeWidth
@@ -118,7 +117,7 @@ private fun DrawScope.drawVerticalBarrier(size: Dp, color: BarrierColor, open: B
         val x2 = (size * 0.75f).toPx()
         val y = (size / 2).toPx()
         drawLine(
-            color = color.toColor(),
+            color = Color(color.color),
             start = Offset(x1, y),
             end = Offset(x2, y),
             strokeWidth = trackStrokeWidth
@@ -139,16 +138,16 @@ private fun DrawScope.drawAction(
 
 private fun DrawScope.drawBarrierSwitch(
     size: Dp,
-    color: BarrierColor
+    color: model.Color
 ) {
-    drawSwitch(size, color.toColor())
+    drawSwitch(size, Color(color.color))
 }
 
 private fun DrawScope.drawForkSwitch(
     size: Dp,
-    color: ForkColor
+    color: model.Color
 ) {
-    drawSwitch(size, color.toColor())
+    drawSwitch(size, Color(color.color))
 }
 
 private fun DrawScope.drawSwitch(
@@ -181,7 +180,7 @@ private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color) {
     )
 }
 
-private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open: Boolean) {
+private fun DrawScope.drawHorizontalBarrier(size: Dp, color: model.Color, open: Boolean) {
     drawHorizontalTrack(size, fixedTrackColor)
     val trackStrokeWidth = getTrackStrokeWidth(size)
     if (open) {
@@ -190,7 +189,7 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open:
         val y2 = (size * 0.65f).toPx()
         val x2 = (size * 0.95f).toPx()
         drawLine(
-            color = color.toColor(),
+            color = Color(color.color),
             start = Offset(x1, y1),
             end = Offset(x2, y2),
             strokeWidth = trackStrokeWidth
@@ -200,7 +199,7 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: BarrierColor, open:
         val y2 = (size * 0.75f).toPx()
         val x = (size / 2).toPx()
         drawLine(
-            color = color.toColor(),
+            color = Color(color.color),
             start = Offset(x, y1),
             end = Offset(x, y2),
             strokeWidth = trackStrokeWidth
@@ -313,7 +312,7 @@ private fun DrawScope.drawUpRightLeftFork(size: Dp, color: Color) {
 private fun DrawScope.drawDownTunnel(size: Dp, color: TunnelColor) {
     drawVerticalTrack(size, fixedTrackColor)
     drawArc(
-        color = color.toColor(),
+        color = Color(color.color),
         startAngle = -150f,
         sweepAngle = 120f,
         useCenter = false,
@@ -325,7 +324,7 @@ private fun DrawScope.drawDownTunnel(size: Dp, color: TunnelColor) {
 private fun DrawScope.drawLeftTunnel(size: Dp, color: TunnelColor) {
     drawHorizontalTrack(size, fixedTrackColor)
     drawArc(
-        color = color.toColor(),
+        color = Color(color.color),
         startAngle = -60f,
         sweepAngle = 120f,
         useCenter = false,
@@ -337,7 +336,7 @@ private fun DrawScope.drawLeftTunnel(size: Dp, color: TunnelColor) {
 private fun DrawScope.drawRightTunnel(size: Dp, color: TunnelColor) {
     drawHorizontalTrack(size, fixedTrackColor)
     drawArc(
-        color = color.toColor(),
+        color = Color(color.color),
         startAngle = 120f,
         sweepAngle = 120f,
         useCenter = false,
@@ -349,7 +348,7 @@ private fun DrawScope.drawRightTunnel(size: Dp, color: TunnelColor) {
 private fun DrawScope.drawUpTunnel(size: Dp, color: TunnelColor) {
     drawVerticalTrack(size, fixedTrackColor)
     drawArc(
-        color = color.toColor(),
+        color = Color(color.color),
         startAngle = 30f,
         sweepAngle = 120f,
         useCenter = false,
@@ -374,30 +373,11 @@ private fun DrawScope.drawBorder() {
 
 private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStrokeWidthPercent).toPx()
 
-private fun TunnelColor.toColor(): Color = when (this) {
-    TunnelColor.GRAY -> Color(0xFF83ADA0)
-    TunnelColor.BROWN -> Color(0xFFE16E72)
-    TunnelColor.PURPLE -> Color(0xFFAC666D)
-    TunnelColor.GREEN -> Color(0xFFA4AF53)
-}
-
-private fun BarrierColor.toColor(): Color = when (this) {
-    BarrierColor.DARK_GREEN -> Color(0xFF59BCA3)
-    BarrierColor.LIGHT_GREEN -> Color(0xFFD3DC41)
-    BarrierColor.PINK -> Color(0xFFFF3475)
-    BarrierColor.PURPLE -> Color(0xFFB75F9E)
-}
-
-private fun ForkColor.toColor(): Color = when (this) {
-    ForkColor.PURPLE -> Color(0xFFB6548A)
-    ForkColor.ORANGE -> Color(0xFFE5B01F)
-}
-
 @Preview
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = FixedHorizontalTrack(ToggleBarrier(BarrierColor.DARK_GREEN)),
+        tile = FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)),
         size = 100.dp
     )
 }

@@ -1,6 +1,6 @@
 package model
 
 sealed class Action {
-    data class ToggleBarrier(val color: BarrierColor) : Action()
-    data class ToggleFork(val color: ForkColor) : Action()
+    data class ToggleBarrier(val color: Color) : Action()
+    data class ToggleFork(val color: Color) : Action()
 }
