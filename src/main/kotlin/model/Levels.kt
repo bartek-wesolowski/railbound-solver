@@ -10,6 +10,7 @@ import model.Board.Companion.buildBoard
 import model.Board.Companion.row
 import model.CarColor.*
 import model.Direction.*
+import model.ForkColor.ORANGE
 import model.Tile.*
 import model.Tile.BaseHorizontalTrack.*
 import model.Tile.BaseVerticalTrack.*
@@ -1064,12 +1065,29 @@ object Levels {
             ),
             tracks = 7
         )
+        val level4_5 = Level(
+            name = "4-5",
+            board = buildBoard(rows = 5, requireFixed = true) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, FixedVerticalTrack(ToggleFork(ForkColor.PURPLE)), Empty, Empty)
+                row(FixedHorizontalTrack(), Empty, FixedHorizontalTrack(), Empty, UpLeftRightFork(fixed = true, color = ORANGE), DownLeftRightFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(Empty, Empty, DownRightTurn(fixed = true), Empty, Empty, UpLeftTurn(fixed = true, action = ToggleFork(ORANGE)), Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(2, 2, RIGHT)),
+                Car(2, CarPosition(2, 0, RIGHT)),
+            ),
+            tracks = 12
+        )
 
         val levels = listOf(
             level4_1,
             level4_2,
             level4_3,
             level4_4,
+            level4_5,
         ).associateBy { it.name }
     }
 

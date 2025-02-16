@@ -11,6 +11,7 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
+import model.ForkColor.ORANGE
 import model.Tile.*
 import model.Tile.BaseHorizontalTrack.*
 import model.Tile.BaseVerticalTrack.*
@@ -1166,11 +1167,35 @@ object Solutions {
                 row(Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level4_5 = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownRightTurn(fixed=false, action=null), DownRightLeftFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), Empty, Empty)
+                row(Empty, Empty, UpRightTurn(fixed=false, action=null), UpLeftDownFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=ToggleFork(color=ForkColor.PURPLE)), Empty, Empty)
+                row(FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=false, color=null, action=null), FixedHorizontalTrack(action=null), UpLeftRightFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=ForkColor.PURPLE, action=null), EndingTrack)
+                row(Empty, VerticalTrack(action=null), DownRightTurn(fixed=true, action=null), HorizontalTrack(action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=true, action=ToggleFork(color=ORANGE)), Empty)
+                row(Empty, UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), Empty, Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, DownRightTurn(), DownLeftTurn(), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack(), FixedVerticalTrack(ToggleFork(ForkColor.PURPLE)), Empty, Empty)
+                row(FixedHorizontalTrack(), DownLeftTurn(), FixedHorizontalTrack(), UpRightLeftFork(), UpRightLeftFork(fixed = true, color = ORANGE), DownRightLeftFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(DownRightTurn(), UpLeftTurn(), DownRightTurn(fixed = true), HorizontalTrack(), HorizontalTrack(), UpLeftTurn(fixed = true, action = ToggleFork(ORANGE)), Empty)
+                row(UpRightTurn(), HorizontalTrack(), UpLeftTurn(), Empty, Empty, Empty, Empty)
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, Empty, DownRightTurn(fixed=false, action=null), DownLeftTurn(fixed=false, action=null), Empty, Empty)
+                row(Empty, Empty, Empty, VerticalTrack(action=null), FixedVerticalTrack(action=ToggleFork(color=ForkColor.PURPLE)), Empty, Empty)
+                row(FixedHorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=ForkColor.PURPLE, action=null), EndingTrack)
+                row(Empty, VerticalTrack(action=null), DownRightTurn(fixed=true, action=null), DownLeftTurn(fixed=false, action=null), DownRightTurn(fixed=false, action=null), UpLeftTurn(fixed=true, action=ToggleFork(color=ORANGE)), Empty)
+                row(Empty, UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), Empty, Empty)
+            }
+        )
         val solutions = mapOf(
             "4-1" to level4_1,
             "4-2" to level4_2,
             "4-3" to level4_3,
             "4-4" to level4_4,
+            "4-5" to level4_5,
         )
     }
 
