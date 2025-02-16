@@ -1019,13 +1019,31 @@ object Levels {
             ),
             tracks = 5
         )
+        val level4_2 = Level(
+            name = "4-2",
+            board = buildBoard(rows = 5) {
+                row(FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Obstacle, Obstacle, FixedVerticalTrack(ToggleFork(ForkColor.PURPLE)), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack(), Empty, Empty)
+                row(Empty, Empty, UpRightLeftFork(fixed = true, color = ForkColor.PURPLE), Empty, EndingTrack)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(0, 0, DOWN)),
+                Car(2, CarPosition(0, 2, DOWN)),
+            ),
+            tracks = 8
+        )
 
         val levels = listOf(
             level4_1,
+            level4_2,
         ).associateBy { it.name }
     }
 
     val levels = World1.levels +
             World2.levels +
-            World3.levels
+            World3.levels +
+            World4.levels
 }
