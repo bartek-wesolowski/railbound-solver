@@ -1149,9 +1149,18 @@ object Solutions {
                 row(UpRightTurn(), UpRightLeftFork(), UpRightLeftFork(fixed = true, color = ForkColor.PURPLE), HorizontalTrack, EndingTrack)
             }
         )
+        val level4_3 = setOf(
+            buildBoard(rows = 4) {
+                row(Empty, DownRightTurn(), HorizontalTrack, DownLeftTurn(), Empty)
+                row(FixedHorizontalTrack(), UpLeftDownFork(fixed = true, color = ForkColor.PURPLE), Obstacle, DownRightUpFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(DownRightTurn(), UpLeftDownFork(), DownRightTurn(), UpLeftDownFork(), Empty)
+                row(UpRightTurn(), UpLeftTurn(fixed = true, action = ToggleFork(ForkColor.PURPLE)), UpRightTurn(), UpLeftTurn(fixed = true), Empty)
+            }
+        )
         val solutions = mapOf(
             "4-1" to level4_1,
             "4-2" to level4_2,
+            "4-3" to level4_3,
         )
     }
 

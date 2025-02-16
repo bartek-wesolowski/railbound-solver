@@ -1035,10 +1035,25 @@ object Levels {
             ),
             tracks = 8
         )
+        val level4_3 = Level(
+            name = "4-3",
+            board = buildBoard(rows = 4) {
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack(), DownLeftUpFork(fixed = true, color = ForkColor.PURPLE), Obstacle, UpRightDownFork(fixed = true, color = ForkColor.PURPLE), EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, UpLeftTurn(fixed = true, action = ToggleFork(ForkColor.PURPLE)), Empty, UpLeftTurn(fixed = true), Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(1, 0, RIGHT)),
+            ),
+            tracks = 9
+        )
 
         val levels = listOf(
             level4_1,
             level4_2,
+            level4_3,
         ).associateBy { it.name }
     }
 
