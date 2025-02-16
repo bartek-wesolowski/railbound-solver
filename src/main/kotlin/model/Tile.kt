@@ -12,9 +12,12 @@ import java.util.EnumSet
 
 sealed interface StraightTrack
 
-sealed interface Turn
+sealed interface Turn {
+    val fixed: Boolean
+}
 
 sealed interface Fork {
+    val fixed: Boolean
     val color: ForkColor?
     fun toggled(): Fork
 }
@@ -194,7 +197,7 @@ sealed class Tile(
 
     // Turns
     data class DownRightTurn(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val action: Action? = null,
     ) : Tile(
         incomingDirections = EnumSet.of(UP, LEFT),
@@ -228,7 +231,7 @@ sealed class Tile(
     }
 
     data class DownLeftTurn(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val action: Action? = null,
     ) : Tile(
         incomingDirections = EnumSet.of(UP, RIGHT),
@@ -262,7 +265,7 @@ sealed class Tile(
     }
 
     data class UpRightTurn(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val action: Action? = null,
     ) : Tile(
         incomingDirections = EnumSet.of(DOWN, LEFT),
@@ -296,7 +299,7 @@ sealed class Tile(
     }
 
     data class UpLeftTurn(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val action: Action? = null,
     ) : Tile(
         incomingDirections = EnumSet.of(DOWN, RIGHT),
@@ -331,7 +334,7 @@ sealed class Tile(
 
     // Forks
     data class DownLeftRightFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(UP, RIGHT, LEFT), Fork, HasAction {
@@ -346,7 +349,7 @@ sealed class Tile(
     }
 
     data class DownLeftUpFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(UP, RIGHT, DOWN), Fork, HasAction {
@@ -361,7 +364,7 @@ sealed class Tile(
     }
 
     data class DownRightLeftFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(UP, RIGHT, LEFT), Fork, HasAction {
@@ -376,7 +379,7 @@ sealed class Tile(
     }
 
     data class DownRightUpFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(UP, LEFT, DOWN), Fork, HasAction {
@@ -391,7 +394,7 @@ sealed class Tile(
     }
 
     data class UpLeftRightFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, RIGHT, LEFT), Fork, HasAction {
@@ -406,7 +409,7 @@ sealed class Tile(
     }
 
     data class UpLeftDownFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, RIGHT, UP), Fork, HasAction {
@@ -421,7 +424,7 @@ sealed class Tile(
     }
 
     data class UpRightLeftFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, RIGHT, LEFT), Fork, HasAction {
@@ -436,7 +439,7 @@ sealed class Tile(
     }
 
     data class UpRightDownFork(
-        val fixed: Boolean = false,
+        override val fixed: Boolean = false,
         override val color: ForkColor? = null,
         override val action: Action? = null,
     ) : Tile(DOWN, LEFT, UP), Fork, HasAction {

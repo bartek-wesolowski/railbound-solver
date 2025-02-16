@@ -9,6 +9,10 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
+import model.Tile.*
+import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
+import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseVerticalTrack.*
 import util.mapAt
 import java.util.EnumSet
 
@@ -17,7 +21,7 @@ data class Board(
     val barriers: Map<BarrierColor, List<Position>>,
     val toggleableForks: Map<ForkColor, List<Position>>,
 ) {
-    constructor(tiles: ImmutableArray<ImmutableArray<Tile>>) : this(
+    constructor(tiles: ImmutableArray<ImmutableArray<Tile>>, requireFixed: Boolean) : this(
         tiles = tiles,
         barriers = buildMap {
             for (r in tiles.indices) {
@@ -51,8 +55,30 @@ data class Board(
                 }
             }
             require(values.all { it.isNotEmpty() })
+        },
+    ) {
+        if (requireFixed) {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    require(
+                        tile is Empty ||
+                        tile is EndingTrack ||
+                        tile is Obstacle ||
+                        tile is Tunnel ||
+                        tile is HorizontalBarrier ||
+                        tile is VerticalBarrier ||
+                        tile is FixedHorizontalTrack ||
+                                tile is FixedVerticalTrack ||
+                                (tile is Turn && tile.fixed) ||
+                                (tile is Fork && tile.fixed)
+                    ) {
+                        "All tiles must be fixed, but found $tile at $r, $c"
+                    }
+                }
+            }
         }
-    )
+    }
 
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
@@ -85,22 +111,22 @@ data class Board(
 
         if (
             DOWN in tile.incomingDirections &&
-            tiles[row - 1][column] != Tile.Empty &&
+            tiles[row - 1][column] != Empty &&
             !tiles[row - 1][column].isValidIncomingDirection(UP, traverseDirections)
         ) return false
         if (
             UP in tile.incomingDirections &&
-            tiles[row + 1][column] != Tile.Empty &&
+            tiles[row + 1][column] != Empty &&
             !tiles[row + 1][column].isValidIncomingDirection(DOWN, traverseDirections)
         ) return false
         if (
             RIGHT in tile.incomingDirections &&
-            tiles[row][column - 1] != Tile.Empty &&
+            tiles[row][column - 1] != Empty &&
             !tiles[row][column - 1].isValidIncomingDirection(LEFT, traverseDirections)
         ) return false
         if (
             LEFT in tile.incomingDirections &&
-            tiles[row][column + 1] != Tile.Empty &&
+            tiles[row][column + 1] != Empty &&
             !tiles[row][column + 1].isValidIncomingDirection(RIGHT, traverseDirections)
         ) return false
 
@@ -161,11 +187,13 @@ data class Board(
     companion object {
         fun buildBoard(
             rows: Int,
+            requireFixed: Boolean = false,
             initializer: ImmutableArray.Builder<ImmutableArray<Tile>>.() -> Unit
         ) = Board(
             buildImmutableArray(rows) {
                 initializer()
-            }
+            },
+            requireFixed
         )
 
         fun ImmutableArray.Builder<ImmutableArray<Tile>>.row(vararg tiles: Tile) {
