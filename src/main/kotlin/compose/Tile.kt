@@ -130,24 +130,9 @@ private fun DrawScope.drawAction(
     action: Action?,
 ) {
     when (action) {
-        is ToggleBarrier -> drawBarrierSwitch(size, action.color)
-        is ToggleFork -> drawForkSwitch(size, action.color)
+        is Toggle -> drawSwitch(size, Color(action.color.color))
         null -> Unit
     }
-}
-
-private fun DrawScope.drawBarrierSwitch(
-    size: Dp,
-    color: model.Color
-) {
-    drawSwitch(size, Color(color.color))
-}
-
-private fun DrawScope.drawForkSwitch(
-    size: Dp,
-    color: model.Color
-) {
-    drawSwitch(size, Color(color.color))
 }
 
 private fun DrawScope.drawSwitch(
@@ -377,7 +362,7 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)),
+        tile = FixedHorizontalTrack(Toggle(DARK_GREEN)),
         size = 100.dp
     )
 }

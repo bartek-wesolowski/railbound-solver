@@ -16,10 +16,15 @@ sealed interface Turn {
     val fixed: Boolean
 }
 
-sealed interface Fork {
-    val fixed: Boolean
+sealed interface Toggleable {
     val color: Color?
-    fun toggled(): Fork
+    fun toggled(): Tile
+}
+
+sealed interface Fork: Toggleable {
+    val fixed: Boolean
+    override val color: Color?
+    override fun toggled(): Tile
 }
 
 sealed interface Tunnel {
@@ -33,10 +38,10 @@ sealed interface ModifiableTile {
     ): EnumMap<Direction, ImmutableArray<Tile>>
 }
 
-sealed interface Barrier {
-    val color: Color
+sealed interface Barrier: Toggleable {
+    override val color: Color
     val open: Boolean
-    fun toggled(): Barrier
+    override fun toggled(): Tile
 }
 
 sealed interface HasAction {

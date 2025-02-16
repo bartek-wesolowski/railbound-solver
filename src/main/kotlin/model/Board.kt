@@ -3,8 +3,7 @@ package model
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.toImmutableArray
-import model.Action.ToggleBarrier
-import model.Action.ToggleFork
+import model.Action.Toggle
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
@@ -18,38 +17,21 @@ import java.util.EnumSet
 
 data class Board(
     val tiles: ImmutableArray<ImmutableArray<Tile>>,
-    val barriers: Map<Color, List<Position>>,
-    val toggleableForks: Map<Color, List<Position>>,
+    val toggleables: Map<Color, List<Position>>,
 ) {
     constructor(tiles: ImmutableArray<ImmutableArray<Tile>>, requireFixed: Boolean) : this(
         tiles = tiles,
-        barriers = buildMap {
+        toggleables = buildMap {
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
                     val tile = tiles[r][c]
-                    if (tile is Barrier) {
-                        val position = Position(r, c)
-                        if (tile.color in keys) {
-                            put(tile.color, getValue(tile.color) + position)
-                        } else {
-                            put(tile.color, listOf(Position(r, c)))
-                        }
-                    }
-                }
-            }
-            require(values.all { it.isNotEmpty() })
-        },
-        toggleableForks = buildMap {
-            for (r in tiles.indices) {
-                for (c in tiles[r].indices) {
-                    val tile = tiles[r][c]
-                    if (tile is Fork && tile.color != null) {
+                    if (tile is Toggleable && tile.color != null) {
                         val color = tile.color!!
                         val position = Position(r, c)
-                        if (tile.color in keys) {
+                        if (color in keys) {
                             put(color, getValue(color) + position)
                         } else {
-                            put(color, listOf(Position(r, c)))
+                            put(color, listOf(position))
                         }
                     }
                 }
@@ -158,25 +140,13 @@ data class Board(
 
     fun apply(action: Action): Board {
         return when (action) {
-            is ToggleBarrier -> {
-                val positions = barriers.getValue(action.color)
+            is Toggle -> {
+                val barrierPositions = toggleables.get(action.color).orEmpty()
                 var updatedBoard: Board = this
-                for (position in positions) {
+                for (position in barrierPositions) {
                     updatedBoard = updatedBoard.with(
                         position,
-                        (tiles[position.row][position.column] as Barrier).toggled() as Tile
-                    )
-                }
-                updatedBoard
-            }
-
-            is ToggleFork -> {
-                val positions = toggleableForks.getValue(action.color)
-                var updatedBoard: Board = this
-                for (position in positions) {
-                    updatedBoard = updatedBoard.with(
-                        position,
-                        (tiles[position.row][position.column] as Fork).toggled() as Tile
+                        (tiles[position.row][position.column] as Toggleable).toggled()
                     )
                 }
                 updatedBoard
