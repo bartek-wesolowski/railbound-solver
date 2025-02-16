@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import model.Action
 import model.Action.*
 import model.BarrierColor
+import model.Fork
 import model.ForkColor
 import model.HasAction
 import model.Tile
@@ -26,6 +27,7 @@ import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
 import model.Tile.BaseVerticalTrack.VerticalTrack
 import model.TunnelColor
+import model.Turn
 
 private val trackColor = Color.Gray
 private val fixedTrackColor = Color.Black
@@ -45,18 +47,18 @@ fun Tile(
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
             is VerticalBarrier -> drawVerticalBarrier(size, tile.color, tile.open)
-            is DownRightTurn -> drawDownRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is DownLeftTurn -> drawDownLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpRightTurn -> drawUpRightTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpLeftTurn -> drawUpLeftTurn(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is DownLeftRightFork -> drawDownLeftRightFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is DownLeftUpFork -> drawDownLeftUpFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is DownRightLeftFork -> drawDownRightLeftFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is DownRightUpFork -> drawDownRightUpFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpLeftDownFork -> drawUpLeftDownFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpLeftRightFork -> drawUpLeftRightFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpRightDownFork -> drawUpRightDownFork(size, if (tile.fixed) fixedTrackColor else trackColor)
-            is UpRightLeftFork -> drawUpRightLeftFork(size, if (tile.fixed) fixedTrackColor else trackColor)
+            is DownRightTurn -> drawDownRightTurn(size, tile.getColor())
+            is DownLeftTurn -> drawDownLeftTurn(size, tile.getColor())
+            is UpRightTurn -> drawUpRightTurn(size, tile.getColor())
+            is UpLeftTurn -> drawUpLeftTurn(size, tile.getColor())
+            is DownLeftRightFork -> drawDownLeftRightFork(size, tile.getColor())
+            is DownLeftUpFork -> drawDownLeftUpFork(size, tile.getColor())
+            is DownRightLeftFork -> drawDownRightLeftFork(size, tile.getColor())
+            is DownRightUpFork -> drawDownRightUpFork(size, tile.getColor())
+            is UpLeftDownFork -> drawUpLeftDownFork(size, tile.getColor())
+            is UpLeftRightFork -> drawUpLeftRightFork(size, tile.getColor())
+            is UpRightDownFork -> drawUpRightDownFork(size, tile.getColor())
+            is UpRightLeftFork -> drawUpRightLeftFork(size, tile.getColor())
             Empty -> {}
             EndingTrack -> drawEndingTrack(size)
             Obstacle -> drawObstacle(size)
@@ -69,6 +71,14 @@ fun Tile(
             drawAction(size, tile.action)
         }
     }
+}
+
+private fun Turn.getColor(): Color {
+    return if (fixed) fixedTrackColor else trackColor
+}
+
+private fun Fork.getColor(): Color {
+    return if (color != null) color!!.toColor() else (if (fixed) fixedTrackColor else trackColor)
 }
 
 private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
