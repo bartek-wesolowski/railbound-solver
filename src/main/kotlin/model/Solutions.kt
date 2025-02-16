@@ -1198,6 +1198,92 @@ object Solutions {
                 row(UpRightTurn(), UpRightLeftFork(), UpRightLeftFork(fixed = true, color = Color.PURPLE), UpLeftTurn(), Empty, Empty)
             }
         )
+        val level4_7 = setOf(
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), DownLeftRightFork(fixed=false, color=null, action=null), DownLeftUpFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(VerticalTrack(action=null), UpRightTurn(fixed=false, action=null), UpLeftDownFork(fixed=false, color=null, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), DownLeftUpFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftDownFork(fixed=false, color=null, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(DownRightUpFork(fixed=false, color=null, action=null), DownRightLeftFork(fixed=false, color=null, action=null), UpLeftDownFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), UpLeftTurn(fixed=false, action=null), VerticalTrack(action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(DownRightUpFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftDownFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftDownFork(fixed=false, color=null, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), HorizontalTrack(action=null), UpLeftDownFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(DownRightTurn(fixed=false, action=null), HorizontalTrack(action=null), UpLeftDownFork(fixed=false, color=null, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(VerticalTrack(action=null), DownRightTurn(fixed=false, action=null), DownLeftUpFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), UpLeftRightFork(fixed=false, color=null, action=null), UpLeftDownFork(fixed=false, color=null, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(VerticalTrack(action=null), DownRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), UpLeftRightFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightDownFork(fixed=false, color=null, action=null), DownLeftRightFork(fixed=false, color=null, action=null), UpLeftTurn(fixed=false, action=null), FixedVerticalTrack(action=null), Empty)
+                row(VerticalTrack(action=null), UpRightTurn(fixed=false, action=null), DownLeftTurn(fixed=false, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), DownLeftTurn(fixed=false, action=null), VerticalTrack(action=null), FixedVerticalTrack(action=null), Empty)
+                row(DownRightTurn(fixed=false, action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpLeftDownFork(fixed=false, color=null, action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
+                row(UpRightDownFork(fixed=true, color=Color.PURPLE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), DownLeftUpFork(fixed=true, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), DownRightLeftFork(fixed=false, color=null, action=null), UpLeftDownFork(fixed=false, color=null, action=null), FixedVerticalTrack(action=null), Empty)
+                row(DownRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), VerticalTrack(action=null), VerticalBarrier(color=Color.PURPLE, open=true), Empty)
+                row(FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), UpRightTurn(fixed=true, action=null), EndingTrack)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed = true), FixedHorizontalTrack(), DownRightLeftFork(fixed = true), DownLeftTurn(fixed = true), Empty)
+                row(UpRightDownFork(fixed = true, color = Color.PURPLE), FixedHorizontalTrack(Toggle(Color.PURPLE)), DownLeftUpFork(fixed = true), FixedVerticalTrack(), Empty)
+                row(DownRightUpFork(), DownLeftTurn(), VerticalTrack(), FixedVerticalTrack(), Empty)
+                row(UpRightDownFork(), UpRightLeftFork(), UpLeftDownFork(), VerticalBarrier(Color.PURPLE, true), Empty)
+                row(FixedVerticalTrack(), Empty, FixedVerticalTrack(), UpRightTurn(fixed = true), EndingTrack)
+            }
+        )
         val solutions = mapOf(
             "4-1" to level4_1,
             "4-2" to level4_2,
@@ -1205,6 +1291,7 @@ object Solutions {
             "4-4" to level4_4,
             "4-5" to level4_5,
             "4-6" to level4_6,
+            "4-7" to level4_7,
         )
     }
 
