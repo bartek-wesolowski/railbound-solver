@@ -774,7 +774,7 @@ object Levels {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, HorizontalBarrier(LIGHT_GREEN, false), FixedHorizontalTrack(ToggleBarrier(DARK_GREEN)), FixedHorizontalTrack())
                 row(Empty, FixedHorizontalTrack(), EndingTrack, FixedHorizontalTrack(), FixedHorizontalTrack(), FixedHorizontalTrack())
-                row(Empty, Empty, HorizontalBarrier(DARK_GREEN, false), DownLeftRightFork(action = ToggleBarrier(LIGHT_GREEN)), Empty, FixedHorizontalTrack())
+                row(Empty, Empty, HorizontalBarrier(DARK_GREEN, false), DownLeftRightFork(fixed = true, action = ToggleBarrier(LIGHT_GREEN)), Empty, FixedHorizontalTrack())
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
             },
             carColor = RED,
@@ -902,7 +902,7 @@ object Levels {
                 row(Empty, Empty, Empty, FixedHorizontalTrack(), Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, LeftTunnel(BROWN, CarPosition(0, 3, DOWN)), Empty, Empty, Empty)
-                row(Empty, UpRightTurn(action = ToggleBarrier(DARK_GREEN)), Empty, Empty, Empty, Empty, Empty)
+                row(Empty, UpRightTurn(fixed = true, action = ToggleBarrier(DARK_GREEN)), Empty, Empty, Empty, Empty, Empty)
             },
             carColor = RED,
             cars = immutableArrayOf(
