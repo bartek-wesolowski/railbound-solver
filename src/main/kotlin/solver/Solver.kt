@@ -39,7 +39,7 @@ class Solver {
     fun findSolutions(level: Level): Set<Board> {
         val statesToCheck = PriorityQueue<SolverState>(compareBy { it.tracksUsed })
         val statesChecked = mutableSetOf<SolverState>()
-        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap()))
+        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()))
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.poll()
@@ -63,7 +63,7 @@ class Solver {
             depth2.compareTo(depth1)
         })
         val statesChecked = mutableSetOf<SolverState>()
-        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap()) to 1)
+        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()) to 1)
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val (state, depth) = statesToCheck.poll()
@@ -148,9 +148,14 @@ class Solver {
         carIndex: Int
     ): List<PartialSolverState> {
         val state = partialState.state
-        val position = state.activeCars[carIndex].position
-        val tile = state.board[position.row, position.column]
-        val newCarPosition = tile.getNextPosition(position)
+        val carPosition = state.activeCars[carIndex].position
+        val position = carPosition.asPosition()
+        val tile = if (position in state.enterTiles) {
+            state.enterTiles.getValue(position)
+        } else {
+            state.board[carPosition.row, carPosition.column]
+        }
+        val newCarPosition = tile.getNextPosition(carPosition)
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
@@ -214,6 +219,11 @@ class Solver {
                     } else {
                         partialState.state.traverseDirections
                     }
+                    val enterTiles = if (newTile is Fork && newTile.color != null) {
+                        partialState.state.enterTiles + (newPosition to newTile)
+                    } else {
+                        partialState.state.enterTiles
+                    }
                     if (newTile is Barrier && !newTile.open) {
                         add(PartialSolverState(state, partialState.actions))
                     } else {
@@ -226,7 +236,8 @@ class Solver {
                             PartialSolverState(
                                 state.copy(
                                     activeCars = newCars,
-                                    traverseDirections = traverseDirections
+                                    traverseDirections = traverseDirections,
+                                    enterTiles = enterTiles,
                                 ),
                                 actions
                             )

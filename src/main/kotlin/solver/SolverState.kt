@@ -6,6 +6,7 @@ import model.Board
 import model.Car
 import model.Direction
 import model.Position
+import model.Tile
 import java.util.EnumSet
 
 data class SolverState(
@@ -14,6 +15,7 @@ data class SolverState(
     val tracksUsed: Int,
     val expectedCar: Int,
     val traverseDirections: Map<Position, EnumSet<Direction>>,
+    val enterTiles: Map<Position, Tile>,
 ) {
     private val hashCode by lazy(LazyThreadSafetyMode.NONE) {
         var result = board.hashCode()
@@ -24,10 +26,6 @@ data class SolverState(
     }
 
     override fun hashCode(): Int = hashCode
-
-    override fun toString(): String {
-        return "SolverState(\nboard=$board,\nactiveCars=$activeCars,\ntracksUsed=$tracksUsed,\nexpectedCar=$expectedCar\n)"
-    }
 
     fun apply(action: Action): SolverState {
         return copy(board = board.apply(action))

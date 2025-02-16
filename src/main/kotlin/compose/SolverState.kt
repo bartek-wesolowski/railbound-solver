@@ -44,6 +44,7 @@ private fun SolverStatePreview() {
             tracksUsed = 0,
             expectedCar = 1,
             traverseDirections = emptyMap(),
+            enterTiles = emptyMap(),
         ),
         carColor = CarColor.RED,
         tileSize = 100.dp
