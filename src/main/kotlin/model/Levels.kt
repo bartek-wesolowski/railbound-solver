@@ -7,6 +7,7 @@ import model.Board.Companion.row
 import model.CarColor.BLUE
 import model.CarColor.RED
 import model.Color.DARK_GREEN
+import model.Color.LIGHT_BLUE
 import model.Color.LIGHT_GREEN
 import model.Color.ORANGE
 import model.Color.PINK
@@ -1158,6 +1159,25 @@ object Levels {
             ),
             tracks = 7
         )
+        val level_4_9 = Level(
+            name = "4-9",
+            board = buildBoard(rows = 7, requireFixed = true) {
+                row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, FixedVerticalTrack(), Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, VerticalBarrier(Color.PURPLE, false), Empty, Empty)
+                row(Empty, DownRightLeftFork(fixed = true, color = Color.PURPLE), Empty, Empty, Empty, VerticalBarrier(ORANGE, false), Empty, Empty)
+                row(FixedVerticalTrack(Toggle(Color.PURPLE)), FixedVerticalTrack(Toggle(ORANGE)), FixedVerticalTrack(Toggle(LIGHT_BLUE)), Empty, Empty, VerticalBarrier(LIGHT_BLUE, false), Empty, Empty)
+                row(Empty, UpLeftRightFork(fixed = true, color = LIGHT_BLUE), Empty, Empty, Empty, Empty, FixedHorizontalTrack(), EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(0, 1, DOWN)),
+                Car(2, CarPosition(0, 5, DOWN)),
+                Car(3, CarPosition(6, 1, UP)),
+            ),
+            tracks = 11
+        )
 
         val levels = listOf(
             level4_1,
@@ -1168,6 +1188,7 @@ object Levels {
             level4_6,
             level4_7,
             level4_8,
+            level_4_9,
         ).associateBy { it.name }
     }
 

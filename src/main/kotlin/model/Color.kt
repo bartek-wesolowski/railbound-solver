@@ -6,4 +6,5 @@ enum class Color(val color: Long) {
     PINK(0xFFFF3475),
     PURPLE(0xFFB6548A),
     ORANGE(0xFFE5B01F),
+    LIGHT_BLUE(0xFF3FACD8),
 }

@@ -4,6 +4,7 @@ import model.Action.Toggle
 import model.Board.Companion.buildBoard
 import model.Board.Companion.row
 import model.Color.DARK_GREEN
+import model.Color.LIGHT_BLUE
 import model.Color.LIGHT_GREEN
 import model.Color.ORANGE
 import model.Color.PINK
@@ -1295,6 +1296,17 @@ object Solutions {
                 row(Empty, UpRightBarrier(Color.PURPLE, true), EndingTrack)
             }
         )
+        val level4_9 = setOf(
+            buildBoard(rows = 7) {
+                row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, FixedVerticalTrack(), Empty, Empty)
+                row(Empty, UpRightTurn(), DownLeftTurn(), Empty, Empty, VerticalBarrier(Color.PURPLE, true), Empty, Empty)
+                row(DownRightTurn(), DownLeftRightFork(fixed = true, color = Color.PURPLE), VerticalTrack(), Empty, Empty, VerticalBarrier(ORANGE, true), Empty, Empty)
+                row(FixedVerticalTrack(Toggle(Color.PURPLE)), FixedVerticalTrack(Toggle(ORANGE)), FixedVerticalTrack(Toggle(LIGHT_BLUE)), Empty, Empty, VerticalBarrier(LIGHT_BLUE, true), Empty, Empty)
+                row(VerticalTrack(), UpRightLeftFork(fixed = true, color = LIGHT_BLUE), UpRightLeftFork(), HorizontalTrack(), HorizontalTrack(), UpRightLeftFork(), FixedHorizontalTrack(), EndingTrack)
+                row(UpRightTurn(), DownLeftTurn(), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "4-1" to level4_1,
@@ -1305,6 +1317,7 @@ object Solutions {
             "4-6" to level4_6,
             "4-7" to level4_7,
             "4-8" to level4_8,
+            "4-9" to level4_9,
         )
     }
 
