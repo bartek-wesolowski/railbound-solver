@@ -1284,6 +1284,18 @@ object Solutions {
                 row(FixedVerticalTrack(), Empty, FixedVerticalTrack(), UpRightTurn(fixed = true), EndingTrack)
             }
         )
+        val level4_8 = setOf(
+            buildBoard(rows = 7) {
+                row(Empty, FixedVerticalTrack(), Empty)
+                row(DownRightTurn(), UpLeftRightFork(), DownLeftTurn())
+                row(FixedVerticalTrack(Toggle(Color.PURPLE)), Obstacle, FixedVerticalTrack(Toggle(ORANGE)))
+                row(UpRightDownFork(fixed = true, color = ORANGE), HorizontalTrack(), DownLeftUpFork(fixed = true, color = Color.PURPLE))
+                row(UpRightTurn(), DownRightLeftFork(), UpLeftTurn())
+                row(Empty, FixedVerticalTrack(), Empty)
+                row(Empty, UpRightBarrier(Color.PURPLE, true), EndingTrack)
+            }
+        )
+
         val solutions = mapOf(
             "4-1" to level4_1,
             "4-2" to level4_2,
@@ -1292,6 +1304,7 @@ object Solutions {
             "4-5" to level4_5,
             "4-6" to level4_6,
             "4-7" to level4_7,
+            "4-8" to level4_8,
         )
     }
 

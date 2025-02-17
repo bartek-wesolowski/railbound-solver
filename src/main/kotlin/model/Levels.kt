@@ -33,6 +33,7 @@ import model.Tile.RightTunnel
 import model.Tile.UpLeftDownFork
 import model.Tile.UpLeftRightFork
 import model.Tile.UpLeftTurn
+import model.Tile.UpRightBarrier
 import model.Tile.UpRightDownFork
 import model.Tile.UpRightLeftFork
 import model.Tile.UpRightTurn
@@ -1139,6 +1140,24 @@ object Levels {
             ),
             tracks = 6
         )
+        val level4_8 = Level(
+            name = "4-8",
+            buildBoard(rows = 3, requireFixed = true) {
+                row(Empty, FixedVerticalTrack(), Empty)
+                row(Empty, Empty, Empty)
+                row(FixedVerticalTrack(Toggle(Color.PURPLE)), Obstacle, FixedVerticalTrack(Toggle(ORANGE)))
+                row(UpRightDownFork(fixed = true, color = ORANGE), Empty, UpLeftDownFork(fixed = true, color = Color.PURPLE))
+                row(Empty, Empty, Empty)
+                row(Empty, FixedVerticalTrack(), Empty)
+                row(Empty, UpRightBarrier(Color.PURPLE, false), EndingTrack)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(0, 1, DOWN)),
+                Car(2, CarPosition(5, 1, UP)),
+            ),
+            tracks = 7
+        )
 
         val levels = listOf(
             level4_1,
@@ -1148,6 +1167,7 @@ object Levels {
             level4_5,
             level4_6,
             level4_7,
+            level4_8,
         ).associateBy { it.name }
     }
 

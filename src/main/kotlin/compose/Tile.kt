@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.Action
 import model.Action.*
-import model.Color.DARK_GREEN
+import model.Barrier
 import model.Fork
 import model.HasAction
 import model.Tile
@@ -42,14 +42,15 @@ fun Tile(
         when (tile) {
             is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
             is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
-            is HorizontalBarrier -> drawHorizontalBarrier(size, tile.color, tile.open)
+            is HorizontalBarrier -> drawHorizontalBarrier(size, tile.getColor(), tile.open)
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
-            is VerticalBarrier -> drawVerticalBarrier(size, tile.color, tile.open)
-            is DownRightTurn -> drawDownRightTurn(size, tile.getColor())
-            is DownLeftTurn -> drawDownLeftTurn(size, tile.getColor())
-            is UpRightTurn -> drawUpRightTurn(size, tile.getColor())
-            is UpLeftTurn -> drawUpLeftTurn(size, tile.getColor())
+            is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
+            is DownRightTurn -> drawDownRightTurn(size, tile.getTrackColor())
+            is DownLeftTurn -> drawDownLeftTurn(size, tile.getTrackColor())
+            is UpRightTurn -> drawUpRightTurn(size, tile.getTrackColor())
+            is UpLeftTurn -> drawUpLeftTurn(size, tile.getTrackColor())
+            is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
             is DownLeftRightFork -> drawDownLeftRightFork(size, tile.getColor())
             is DownLeftUpFork -> drawDownLeftUpFork(size, tile.getColor())
             is DownRightLeftFork -> drawDownRightLeftFork(size, tile.getColor())
@@ -72,9 +73,11 @@ fun Tile(
     }
 }
 
-private fun Turn.getColor(): Color {
+private fun Turn.getTrackColor(): Color {
     return if (fixed) fixedTrackColor else trackColor
 }
+
+private fun Barrier.getColor() = Color(color.color)
 
 private fun Fork.getColor(): Color {
     return if (color != null) Color(color!!.color) else (if (fixed) fixedTrackColor else trackColor)
@@ -98,7 +101,7 @@ private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
     )
 }
 
-private fun DrawScope.drawVerticalBarrier(size: Dp, color: model.Color, open: Boolean) {
+private fun DrawScope.drawVerticalBarrier(size: Dp, color: Color, open: Boolean) {
     drawVerticalTrack(size, fixedTrackColor)
     val trackStrokeWidth = getTrackStrokeWidth(size)
     if (open) {
@@ -107,7 +110,7 @@ private fun DrawScope.drawVerticalBarrier(size: Dp, color: model.Color, open: Bo
         val x2 = (size * 0.35f).toPx()
         val y2 = (size * 0.05f).toPx()
         drawLine(
-            color = Color(color.color),
+            color = color,
             start = Offset(x1, y1),
             end = Offset(x2, y2),
             strokeWidth = trackStrokeWidth
@@ -117,7 +120,7 @@ private fun DrawScope.drawVerticalBarrier(size: Dp, color: model.Color, open: Bo
         val x2 = (size * 0.75f).toPx()
         val y = (size / 2).toPx()
         drawLine(
-            color = Color(color.color),
+            color = color,
             start = Offset(x1, y),
             end = Offset(x2, y),
             strokeWidth = trackStrokeWidth
@@ -165,7 +168,7 @@ private fun DrawScope.drawHorizontalTrack(size: Dp, color: Color) {
     )
 }
 
-private fun DrawScope.drawHorizontalBarrier(size: Dp, color: model.Color, open: Boolean) {
+private fun DrawScope.drawHorizontalBarrier(size: Dp, color: Color, open: Boolean) {
     drawHorizontalTrack(size, fixedTrackColor)
     val trackStrokeWidth = getTrackStrokeWidth(size)
     if (open) {
@@ -174,7 +177,7 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: model.Color, open: 
         val y2 = (size * 0.65f).toPx()
         val x2 = (size * 0.95f).toPx()
         drawLine(
-            color = Color(color.color),
+            color = color,
             start = Offset(x1, y1),
             end = Offset(x2, y2),
             strokeWidth = trackStrokeWidth
@@ -184,9 +187,37 @@ private fun DrawScope.drawHorizontalBarrier(size: Dp, color: model.Color, open: 
         val y2 = (size * 0.75f).toPx()
         val x = (size / 2).toPx()
         drawLine(
-            color = Color(color.color),
+            color = color,
             start = Offset(x, y1),
             end = Offset(x, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    }
+}
+
+private fun DrawScope.drawUpRightBarrier(size: Dp, color: Color, open: Boolean) {
+    drawUpRightTurn(size, fixedTrackColor)
+    val trackStrokeWidth = getTrackStrokeWidth(size)
+    if (open) {
+        val x1 = (size * 0.2f).toPx()
+        val y1 = (size * 0.8f).toPx()
+        val x2 = (size * 0.4f).toPx()
+        val y2 = (size * 0.15f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    } else {
+        val x1 = (size * 0.2f).toPx()
+        val y1 = (size * 0.8f).toPx()
+        val x2 = (size * 0.8f).toPx()
+        val y2 = (size * 0.2f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
             strokeWidth = trackStrokeWidth
         )
     }
@@ -362,7 +393,7 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = FixedHorizontalTrack(Toggle(DARK_GREEN)),
+        tile = UpRightBarrier(model.Color.PURPLE, open = true),
         size = 100.dp
     )
 }

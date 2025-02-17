@@ -303,6 +303,27 @@ sealed class Tile(
         }
     }
 
+    data class UpRightBarrier(
+        override val color: Color,
+        override val open: Boolean,
+    ): Tile(
+        incomingDirections = EnumSet.of(DOWN, LEFT),
+    ), Turn, Barrier {
+        override val fixed: Boolean = true
+
+        override fun getNextPosition(position: CarPosition) = when (position.direction) {
+            DOWN -> position.turnLeft()
+            LEFT -> position.turnRight()
+            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+        }
+
+        override fun toggled() = UpRightBarrier(color, !open)
+
+        override fun matches(solution: Tile): Boolean {
+            return solution is UpRightBarrier && solution.color == color
+        }
+    }
+
     data class UpLeftTurn(
         override val fixed: Boolean = false,
         override val action: Action? = null,
@@ -351,6 +372,15 @@ sealed class Tile(
         }
 
         override fun toggled() = DownRightLeftFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is DownLeftRightFork &&  solution.color == color) ||
+                        (solution is DownRightLeftFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class DownLeftUpFork(
@@ -366,6 +396,15 @@ sealed class Tile(
         }
 
         override fun toggled() = UpLeftDownFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is DownLeftUpFork &&  solution.color == color) ||
+                        (solution is UpLeftDownFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class DownRightLeftFork(
@@ -381,6 +420,15 @@ sealed class Tile(
         }
 
         override fun toggled() = DownLeftRightFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is DownRightLeftFork &&  solution.color == color) ||
+                        (solution is DownLeftRightFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class DownRightUpFork(
@@ -396,6 +444,15 @@ sealed class Tile(
         }
 
         override fun toggled() = UpRightDownFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is DownRightUpFork &&  solution.color == color) ||
+                        (solution is UpRightDownFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class UpLeftRightFork(
@@ -411,6 +468,15 @@ sealed class Tile(
         }
 
         override fun toggled() = UpRightLeftFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is UpLeftRightFork &&  solution.color == color) ||
+                        (solution is UpRightLeftFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class UpLeftDownFork(
@@ -426,6 +492,15 @@ sealed class Tile(
         }
 
         override fun toggled() = DownLeftUpFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is UpLeftDownFork &&  solution.color == color) ||
+                        (solution is DownLeftUpFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class UpRightLeftFork(
@@ -441,6 +516,15 @@ sealed class Tile(
         }
 
         override fun toggled() = UpLeftRightFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is UpRightLeftFork &&  solution.color == color) ||
+                        (solution is UpLeftRightFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     data class UpRightDownFork(
@@ -456,6 +540,15 @@ sealed class Tile(
         }
 
         override fun toggled() = DownRightUpFork(fixed, color, action)
+
+        override fun matches(solution: Tile): Boolean {
+            return if (color != null) {
+                (solution is UpRightDownFork &&  solution.color == color) ||
+                        (solution is DownRightUpFork && solution.color == color)
+            } else {
+                super.matches(solution)
+            }
+        }
     }
 
     // Tunnels
