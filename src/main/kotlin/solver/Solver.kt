@@ -90,12 +90,7 @@ class Solver {
             for (partialState in partialStates) {
                 val state = partialState.state
                     val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
-                    updatedPartialStates.addAll(
-                        getMoves(
-                            PartialSolverState(state, partialState.actions),
-                            adjustedCarIndex
-                        )
-                    )
+                    updatedPartialStates.addAll(getMoves(partialState, adjustedCarIndex))
             }
             partialStates = updatedPartialStates.filterNoCollisions(board, this, carIndex)
         }
@@ -173,8 +168,8 @@ class Solver {
                     )
                 }
                 .map { insertedTile ->
-                    PartialSolverState(
-                        state.copy(
+                    partialState.copy(
+                        state = state.copy(
                             board = state.board.withInserted(
                                 newCarPosition.row,
                                 newCarPosition.column,
@@ -188,8 +183,7 @@ class Solver {
                             } else {
                                 state.traverseDirections
                             }
-                        ),
-                        partialState.actions
+                        )
                     )
                 }
 
@@ -198,12 +192,11 @@ class Solver {
                 state.expectedCar == car.number
             ) {
                 listOf(
-                    PartialSolverState(
-                        state.copy(
+                    partialState.copy(
+                        state = state.copy(
                             activeCars = state.activeCars.removeAt(carIndex),
                             expectedCar = state.expectedCar + 1
-                        ),
-                        partialState.actions
+                        )
                     )
                 )
             } else {
@@ -225,7 +218,7 @@ class Solver {
                         partialState.state.enterTiles
                     }
                     if (newTile is Barrier && !newTile.open) {
-                        add(PartialSolverState(state, partialState.actions))
+                        add(partialState)
                     } else {
                         val actions = if (newTile is HasAction && newTile.action != null) {
                             partialState.actions + newTile.action!!
@@ -233,13 +226,13 @@ class Solver {
                             partialState.actions
                         }
                         add(
-                            PartialSolverState(
-                                state.copy(
+                            partialState.copy(
+                                state = state.copy(
                                     activeCars = newCars,
                                     traverseDirections = traverseDirections,
-                                    enterTiles = enterTiles,
+                                    enterTiles = enterTiles
                                 ),
-                                actions
+                                actions = actions,
                             )
                         )
                     }
@@ -267,16 +260,15 @@ class Solver {
                                     )
                                 }
                                 .map { modifiedTile ->
-                                    PartialSolverState(
-                                        state.copy(
+                                    partialState.copy(
+                                        state = state.copy(
                                             board = state.board.with(
                                                 newCarPosition.row,
                                                 newCarPosition.column,
                                                 modifiedTile
                                             ),
                                             activeCars = newCars,
-                                        ),
-                                        partialState.actions
+                                        )
                                     )
                                 }
                                 .asIterable()
@@ -285,7 +277,7 @@ class Solver {
                 }
             }
 
-            is Tunnel -> listOf(PartialSolverState(state.copy(activeCars = newCars), partialState.actions))
+            is Tunnel -> listOf(partialState.copy(state = state.copy(activeCars = newCars)))
         }
     }
 
