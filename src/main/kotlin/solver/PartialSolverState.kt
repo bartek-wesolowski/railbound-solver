@@ -15,6 +15,6 @@ data class PartialSolverState(
         for (action in actions) {
             newState = newState.apply(action)
         }
-        return newState.copy(enterTiles = enterTiles)
+        return newState
     }
 }

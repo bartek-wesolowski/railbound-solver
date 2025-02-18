@@ -101,7 +101,10 @@ class Solver {
             }
             partialStates = updatedPartialStates.filterNoCollisions(board, this, carIndex)
         }
-        return partialStates.map { it.applyActions() }
+        return partialStates.map { partialState ->
+            partialState.applyActions()
+                .copy(enterTiles = partialState.enterTiles)
+        }
     }
 
     private fun List<PartialSolverState>.filterNoCollisions(
