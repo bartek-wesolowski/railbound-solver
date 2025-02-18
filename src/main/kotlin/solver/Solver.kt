@@ -84,7 +84,14 @@ class Solver {
     }
 
     private fun SolverState.nextStates(): List<SolverState> {
-        var partialStates = getMoves(PartialSolverState(this, immutableArrayOf()), 0)
+        var partialStates = getMoves(
+            partialState = PartialSolverState(
+                state = this,
+                actions = immutableArrayOf(),
+                enterTiles = emptyMap()
+            ),
+            carIndex = 0
+        )
         for (carIndex in 1..activeCars.lastIndex) {
             val updatedPartialStates = mutableListOf<PartialSolverState>()
             for (partialState in partialStates) {
@@ -213,9 +220,9 @@ class Solver {
                         partialState.state.traverseDirections
                     }
                     val enterTiles = if (newTile is Fork && newTile.color != null) {
-                        partialState.state.enterTiles + (newPosition to newTile)
+                        partialState.enterTiles + (newPosition to newTile)
                     } else {
-                        partialState.state.enterTiles
+                        partialState.enterTiles
                     }
                     if (newTile is Barrier && !newTile.open) {
                         add(partialState)
@@ -230,9 +237,9 @@ class Solver {
                                 state = state.copy(
                                     activeCars = newCars,
                                     traverseDirections = traverseDirections,
-                                    enterTiles = enterTiles
                                 ),
-                                actions = actions,
+                                actions,
+                                enterTiles = enterTiles
                             )
                         )
                     }
