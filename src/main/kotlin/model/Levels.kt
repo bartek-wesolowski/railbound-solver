@@ -39,6 +39,7 @@ import model.Tile.UpRightDownFork
 import model.Tile.UpRightLeftFork
 import model.Tile.UpRightTurn
 import model.Tile.UpTunnel
+import model.TunnelColor.BEIGE
 import model.TunnelColor.BROWN
 import model.TunnelColor.GRAY
 import model.TunnelColor.GREEN
@@ -1318,6 +1319,23 @@ object Levels {
             ),
             tracks = 8
         )
+        val level4_8B = Level(
+            name = "4-8B",
+            board = buildBoard(rows = 6, requireFixed = true) {
+                row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(3, 7, LEFT)), Empty, Empty, Empty)
+                row(Empty, FixedVerticalTrack(Toggle(Color.PURPLE)), Empty, Empty, UpRightTurn(fixed = true), HorizontalBarrier(ORANGE, false), FixedHorizontalTrack(), EndingTrack)
+                row(Empty, Empty, Empty, FixedHorizontalTrack(Toggle(ORANGE)), Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 0, RIGHT)), DownLeftUpFork(fixed = true, ORANGE), Empty, FixedHorizontalTrack(Toggle(Color.PURPLE)), DownRightLeftFork(fixed = true, Color.PURPLE), UpLeftRightFork(fixed = true, ORANGE), FixedHorizontalTrack(), LeftTunnel(BEIGE, CarPosition(0, 4, DOWN)))
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(5, 2, UP)),
+                Car(2, CarPosition(5, 4, UP)),
+            ),
+            tracks = 12
+        )
         val level_4_9 = Level(
             name = "4-9",
             board = buildBoard(rows = 7, requireFixed = true) {
@@ -1357,6 +1375,7 @@ object Levels {
             level4_7B,
             level4_8,
             level4_8A,
+            level4_8B,
             level_4_9,
         ).associateBy { it.name }
     }

@@ -1503,6 +1503,16 @@ object Solutions {
                 row(Empty, Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level4_8B = setOf(
+            buildBoard(rows = 6) {
+                row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), DownRightLeftFork(), DownLeftTurn(), Empty, DownTunnel(BEIGE, CarPosition(3, 7, LEFT)), Empty, Empty, Empty)
+                row(Empty, FixedVerticalTrack(Toggle(Color.PURPLE)), VerticalTrack(), Empty, UpRightTurn(fixed = true), HorizontalBarrier(ORANGE, true), FixedHorizontalTrack(), EndingTrack)
+                row(Empty, VerticalTrack(), DownRightUpFork(), FixedHorizontalTrack(Toggle(ORANGE)), HorizontalTrack(), DownLeftTurn(), Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(0, 0, RIGHT)), UpLeftDownFork(fixed = true, ORANGE), UpRightTurn(), FixedHorizontalTrack(Toggle(Color.PURPLE)), DownRightLeftFork(fixed = true, Color.PURPLE), UpRightLeftFork(fixed = true, ORANGE), FixedHorizontalTrack(), LeftTunnel(BEIGE, CarPosition(0, 4, DOWN)))
+                row(Empty, UpRightTurn(), DownLeftRightFork(), HorizontalTrack(), UpLeftDownFork(), Empty, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty, Empty)
+            }
+        )
         val level4_9 = setOf(
             buildBoard(rows = 7) {
                 row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, FixedVerticalTrack(), Empty, Empty)
@@ -1534,6 +1544,7 @@ object Solutions {
             "4-7B" to level4_7B,
             "4-8" to level4_8,
             "4-8A" to level4_8A,
+            "4-8B" to level4_8B,
             "4-9" to level4_9,
         )
     }
