@@ -62,6 +62,14 @@ data class Board(
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Board) return false
+        return tiles == other.tiles
+    }
+
+    override fun hashCode(): Int = tiles.hashCode()
+
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
     }
