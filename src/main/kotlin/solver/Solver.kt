@@ -180,10 +180,9 @@ class Solver {
                 .map { insertedTile ->
                     partialState.copy(
                         state = state.copy(
-                            board = state.board.withInserted(
+                            board = state.board.with(
                                 newCarPosition.row,
                                 newCarPosition.column,
-                                car.direction,
                                 insertedTile
                             ),
                             activeCars = newCars,
