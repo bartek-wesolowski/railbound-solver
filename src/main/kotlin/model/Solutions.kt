@@ -1275,6 +1275,13 @@ object Solutions {
                 row(UpRightTurn(), UpRightLeftFork(), UpRightLeftFork(fixed = true, color = Color.PURPLE), UpLeftTurn(), Empty, Empty)
             }
         )
+        val level4_6A = setOf(
+            buildBoard(rows = 3) {
+                row(DownRightTurn(fixed = true), DownLeftTurn(fixed = true), Empty, Empty, DownRightTurn(), HorizontalBarrier(Color.PURPLE, true), EndingTrack)
+                row(UpRightDownFork(fixed = true, color = Color.PURPLE), UpLeftRightFork(fixed = true, color = Color.PURPLE), DownLeftTurn(), DownRightTurn(), UpLeftDownFork(), Empty, Empty)
+                row(FixedVerticalTrack(), Empty, UpRightTurn(), UpRightLeftFork(fixed = true, action = Toggle(Color.PURPLE)), UpLeftRightFork(), FixedHorizontalTrack(), Empty)
+            }
+        )
         val level4_7 = setOf(
             buildBoard(rows = 5) {
                 row(DownRightTurn(fixed=true, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=true, color=null, action=null), DownLeftTurn(fixed=true, action=null), Empty)
@@ -1395,6 +1402,7 @@ object Solutions {
             "4-5" to level4_5,
             "4-5A" to level4_5A,
             "4-6" to level4_6,
+            "4-6A" to level4_6A,
             "4-7" to level4_7,
             "4-8" to level4_8,
             "4-9" to level4_9,
