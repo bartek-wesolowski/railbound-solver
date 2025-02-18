@@ -1336,7 +1336,7 @@ object Levels {
             ),
             tracks = 12
         )
-        val level_4_9 = Level(
+        val level4_9 = Level(
             name = "4-9",
             board = buildBoard(rows = 7, requireFixed = true) {
                 row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, FixedVerticalTrack(), Empty, Empty)
@@ -1354,6 +1354,24 @@ object Levels {
                 Car(3, CarPosition(6, 1, UP)),
             ),
             tracks = 11
+        )
+        val level4_9A = Level(
+            name = "4-9A",
+            board = buildBoard(rows = 7, requireFixed = true) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty, DownLeftTurn(fixed = true, Toggle(ORANGE)), Empty, UpRightTurn(fixed = true), FixedHorizontalTrack(), HorizontalBarrier(ORANGE, false), FixedHorizontalTrack(), EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(1, 0, RIGHT)), Empty, UpLeftTurn(fixed = true, Toggle(Color.PURPLE)), Empty, FixedHorizontalTrack(Toggle(Color.PURPLE)), Empty, Empty, DownRightLeftFork(fixed = true, Color.PURPLE), LeftTunnel(BEIGE, CarPosition(0, 4, DOWN)))
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(6, 3, UP)),
+                Car(2, CarPosition(6, 5, UP)),
+            ),
+            tracks = 15
         )
 
         val levels = listOf(
@@ -1376,7 +1394,8 @@ object Levels {
             level4_8,
             level4_8A,
             level4_8B,
-            level_4_9,
+            level4_9,
+            level4_9A,
         ).associateBy { it.name }
     }
 
