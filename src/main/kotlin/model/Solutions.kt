@@ -1598,6 +1598,19 @@ object Solutions {
                 row(Empty, Empty, Empty, FixedVerticalTrack(action=null), Empty, FixedVerticalTrack(action=null), Empty, Empty, Empty)
             }
         )
+        val level4_9B = setOf(
+            buildBoard(rows = 9) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
+                row(RightTunnel(MINT, CarPosition(7, 8, LEFT)), HorizontalTrack(), DownLeftTurn(fixed = true, Toggle(ORANGE)), Empty, UpRightTurn(fixed = true), FixedHorizontalTrack(), HorizontalBarrier(ORANGE, true), FixedHorizontalTrack(), EndingTrack)
+                row(Empty, Empty, VerticalTrack(), Obstacle, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, VerticalTrack(), Obstacle, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(7, 0, RIGHT)), HorizontalTrack(), UpLeftTurn(fixed = true, Toggle(Color.PURPLE)), DownRightTurn(), FixedHorizontalTrack(Toggle(Color.PURPLE)), HorizontalTrack(), HorizontalTrack(), DownRightLeftFork(fixed = true, Color.PURPLE), LeftTunnel(BEIGE, CarPosition(0, 4, DOWN)))
+                row(Empty, Empty, Empty, VerticalTrack(), Obstacle, Empty, Empty, VerticalTrack(), Empty)
+                row(Empty, Empty, Empty, VerticalTrack(), Empty, Empty, DownRightTurn(), UpLeftDownFork(), Empty)
+                row(RightTunnel(GRAY, CarPosition(4, 0, RIGHT)), HorizontalTrack(), DownLeftTurn(), UpRightTurn(), DownRightLeftFork(), HorizontalTrack(), UpRightLeftFork(), UpLeftRightFork(fixed = true, Color.PURPLE), LeftTunnel(MINT, CarPosition(1, 0, RIGHT)))
+                row(Empty, Empty, FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "4-1" to level4_1,
@@ -1621,6 +1634,7 @@ object Solutions {
             "4-8B" to level4_8B,
             "4-9" to level4_9,
             "4-9A" to level4_9A,
+            "4-9B" to level4_9B,
         )
     }
 

@@ -43,6 +43,7 @@ import model.TunnelColor.BEIGE
 import model.TunnelColor.BROWN
 import model.TunnelColor.GRAY
 import model.TunnelColor.GREEN
+import model.TunnelColor.MINT
 import model.TunnelColor.PURPLE
 
 object Levels {
@@ -1373,6 +1374,26 @@ object Levels {
             ),
             tracks = 15
         )
+        val level4_9B = Level(
+            name = "4-9B",
+            board = buildBoard(rows = 9, requireFixed = true) {
+                row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
+                row(RightTunnel(MINT, CarPosition(7, 8, LEFT)), Empty, DownLeftTurn(fixed = true, Toggle(ORANGE)), Empty, UpRightTurn(fixed = true), FixedHorizontalTrack(), HorizontalBarrier(ORANGE, false), FixedHorizontalTrack(), EndingTrack)
+                row(Empty, Empty, Empty, Obstacle, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Obstacle, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(7, 0, RIGHT)), Empty, UpLeftTurn(fixed = true, Toggle(Color.PURPLE)), Empty, FixedHorizontalTrack(Toggle(Color.PURPLE)), Empty, Empty, DownRightLeftFork(fixed = true, Color.PURPLE), LeftTunnel(BEIGE, CarPosition(0, 4, DOWN)))
+                row(Empty, Empty, Empty, Empty, Obstacle, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty, Empty, Empty, Empty, Empty, Empty, UpLeftRightFork(fixed = true, Color.PURPLE), LeftTunnel(MINT, CarPosition(1, 0, RIGHT)))
+                row(Empty, Empty, FixedVerticalTrack(), Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(8, 2, UP)),
+                Car(2, CarPosition(8, 4, UP)),
+            ),
+            tracks = 18
+        )
 
         val levels = listOf(
             level4_1,
@@ -1396,6 +1417,7 @@ object Levels {
             level4_8B,
             level4_9,
             level4_9A,
+            level4_9B,
         ).associateBy { it.name }
     }
 
