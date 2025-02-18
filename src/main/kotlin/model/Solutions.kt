@@ -1458,6 +1458,29 @@ object Solutions {
                 row(Empty, Empty, UpRightTurn(fixed=false, action=null), HorizontalTrack(action=null), UpLeftRightFork(fixed=true, color=ORANGE, action=null), HorizontalBarrier(color=Color.PURPLE, open=true), FixedHorizontalTrack(action=Toggle(color=ORANGE)), UpLeftTurn(fixed=false, action=null), Empty)
             }
         )
+        val level4_7B = setOf(
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), FixedHorizontalTrack(action=Toggle(color=ORANGE)), DownLeftRightFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), HorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), Empty)
+                row(Empty, Empty, UpRightTurn(fixed=false, action=null), DownRightLeftFork(fixed=false, color=null, action=null), HorizontalBarrier(color=Color.PURPLE, open=true), EndingTrack)
+                row(Empty, DownRightTurn(fixed=true, action=null), DownLeftTurn(fixed=true, action=null), UpRightTurn(fixed=false, action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=true, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), UpLeftTurn(fixed=false, action=null), Empty)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), FixedHorizontalTrack(action=Toggle(color=ORANGE)), DownLeftRightFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(VerticalTrack(action=null), Empty, Empty, UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), HorizontalTrack(action=null), HorizontalTrack(action=null), DownRightLeftFork(fixed=false, color=null, action=null), HorizontalBarrier(color=Color.PURPLE, open=true), EndingTrack)
+                row(Empty, DownRightTurn(fixed=true, action=null), DownLeftTurn(fixed=true, action=null), UpRightTurn(fixed=false, action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=true, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), FixedHorizontalTrack(action=Toggle(color=Color.PURPLE)), UpLeftTurn(fixed=false, action=null), Empty)
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(), FixedHorizontalTrack(), FixedHorizontalTrack(Toggle(ORANGE)), DownLeftRightFork(), DownLeftTurn(), Empty)
+                row(UpRightTurn(), DownLeftTurn(), Empty, UpRightTurn(), UpLeftTurn(), Empty)
+                row(Empty, UpRightTurn(), HorizontalTrack(), DownRightLeftFork(), HorizontalBarrier(Color.PURPLE, true), EndingTrack)
+                row(Empty, DownRightTurn(fixed = true), DownLeftTurn(fixed = true), UpRightTurn(), DownLeftTurn(), Empty)
+                row(FixedHorizontalTrack(), UpRightLeftFork(fixed = true), UpRightLeftFork(fixed = true, color = ORANGE), FixedHorizontalTrack(Toggle(Color.PURPLE)), UpLeftTurn(), Empty)
+            }
+        )
         val level4_8 = setOf(
             buildBoard(rows = 7) {
                 row(Empty, FixedVerticalTrack(), Empty)
@@ -1497,6 +1520,7 @@ object Solutions {
             "4-6C" to level4_6C,
             "4-7" to level4_7,
             "4-7A" to level4_7A,
+            "4-7B" to level4_7B,
             "4-8" to level4_8,
             "4-9" to level4_9,
         )

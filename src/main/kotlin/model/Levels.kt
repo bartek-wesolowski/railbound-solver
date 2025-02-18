@@ -1265,6 +1265,22 @@ object Levels {
             ),
             tracks = 11
         )
+        val level4_7B = Level(
+            name = "4-7B",
+            board = buildBoard(rows = 5, requireFixed = true) {
+                row(Empty, FixedHorizontalTrack(), FixedHorizontalTrack(Toggle(ORANGE)), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
+                row(Empty, DownRightTurn(fixed = true), DownLeftTurn(fixed = true), Empty, Empty, Empty)
+                row(FixedHorizontalTrack(), UpRightLeftFork(fixed = true), UpRightLeftFork(fixed = true, color = ORANGE), FixedHorizontalTrack(Toggle(Color.PURPLE)), Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(0, 1, RIGHT)),
+                Car(2, CarPosition(4, 0, RIGHT)),
+            ),
+            tracks = 13
+        )
         val level4_8 = Level(
             name = "4-8",
             buildBoard(rows = 3, requireFixed = true) {
@@ -1319,6 +1335,7 @@ object Levels {
             level4_6C,
             level4_7,
             level4_7A,
+            level4_7B,
             level4_8,
             level_4_9,
         ).associateBy { it.name }
