@@ -238,7 +238,7 @@ class Solver {
                                     activeCars = newCars,
                                     traverseDirections = traverseDirections,
                                 ),
-                                actions,
+                                actions = actions,
                                 enterTiles = enterTiles
                             )
                         )
