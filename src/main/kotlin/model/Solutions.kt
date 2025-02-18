@@ -1229,6 +1229,43 @@ object Solutions {
                 row(Empty, UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), UpRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), Empty, Empty)
             }
         )
+        val level4_5A = setOf(
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownRightTurn(), HorizontalTrack(), DownLeftTurn(), Empty)
+                row(Empty, Empty, VerticalTrack(), DownRightTurn(fixed = true, action = Toggle(ORANGE)), UpLeftTurn(), Empty)
+                row(DownRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=Color.PURPLE, action=null), EndingTrack)
+                row(UpRightDownFork(), HorizontalTrack(), DownLeftTurn(), Empty, UpRightTurn(fixed = true, action = Toggle(Color.PURPLE)), DownLeftTurn())
+                row(UpRightTurn(), FixedHorizontalTrack(), UpLeftRightFork(), HorizontalTrack(), HorizontalTrack(), UpLeftTurn())
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownRightTurn(fixed=false, action=null), HorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(DownRightTurn(fixed=false, action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null), DownRightTurn(fixed=true, action=Toggle(color=ORANGE)), UpLeftTurn(fixed=false, action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=Color.PURPLE, action=null), EndingTrack)
+                row(Empty, Empty, UpRightDownFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), UpRightTurn(fixed=true, action=Toggle(color=Color.PURPLE)), DownLeftTurn(fixed=false, action=null))
+                row(Empty, FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpLeftRightFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null))
+            },
+            buildBoard(rows = 5) {
+                row(DownRightTurn(fixed=false, action=null), HorizontalTrack(action=null), HorizontalTrack(action=null), HorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(VerticalTrack(action=null), Empty, Empty, DownRightTurn(fixed=true, action=Toggle(color=ORANGE)), UpLeftTurn(fixed=false, action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=Color.PURPLE, action=null), EndingTrack)
+                row(Empty, Empty, UpRightDownFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), UpRightTurn(fixed=true, action=Toggle(color=Color.PURPLE)), DownLeftTurn(fixed=false, action=null))
+                row(Empty, FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpLeftRightFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null))
+            },
+            buildBoard(rows = 5) {
+                row(Empty, DownRightTurn(fixed=false, action=null), HorizontalTrack(action=null), HorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(DownRightTurn(fixed=false, action=null), UpLeftTurn(fixed=false, action=null), Empty, DownRightTurn(fixed=true, action=Toggle(color=ORANGE)), UpLeftTurn(fixed=false, action=null), Empty)
+                row(UpRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), DownRightLeftFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=Color.PURPLE, action=null), EndingTrack)
+                row(Empty, Empty, UpRightDownFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), UpRightTurn(fixed=true, action=Toggle(color=Color.PURPLE)), DownLeftTurn(fixed=false, action=null))
+                row(Empty, FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpLeftRightFork(fixed=false, color=null, action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null))
+            },
+            buildBoard(rows = 5) {
+                row(Empty, Empty, DownRightTurn(fixed=false, action=null), HorizontalTrack(action=null), DownLeftTurn(fixed=false, action=null), Empty)
+                row(Empty, Empty, VerticalTrack(action=null), DownRightTurn(fixed=true, action=Toggle(color=ORANGE)), UpLeftTurn(fixed=false, action=null), Empty)
+                row(DownRightTurn(fixed=false, action=null), FixedHorizontalTrack(action=null), UpRightLeftFork(fixed=false, color=null, action=null), UpRightLeftFork(fixed=true, color=ORANGE, action=null), DownRightLeftFork(fixed=true, color=Color.PURPLE, action=null), EndingTrack)
+                row(UpRightTurn(fixed=false, action=null), HorizontalTrack(action=null), DownLeftRightFork(fixed=false, color=null, action=null), DownLeftTurn(fixed=false, action=null), UpRightTurn(fixed=true, action=Toggle(color=Color.PURPLE)), DownLeftTurn(fixed=false, action=null))
+                row(Empty, FixedHorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null), UpRightTurn(fixed=false, action=null), HorizontalTrack(action=null), UpLeftTurn(fixed=false, action=null))
+            }
+        )
         val level4_6 = setOf(
             buildBoard(rows = 5) {
                 row(DownRightTurn(), DownLeftTurn(), FixedVerticalTrack(), Empty, Empty, Empty)
@@ -1356,6 +1393,7 @@ object Solutions {
             "4-4" to level4_4,
             "4-4A" to level4_4A,
             "4-5" to level4_5,
+            "4-5A" to level4_5A,
             "4-6" to level4_6,
             "4-7" to level4_7,
             "4-8" to level4_8,

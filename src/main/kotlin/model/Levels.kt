@@ -1155,6 +1155,22 @@ object Levels {
             ),
             tracks = 12
         )
+        val level4_5A = Level(
+            name = "4-5A",
+            board = buildBoard(rows = 5, requireFixed = true) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, DownRightTurn(fixed = true, action = Toggle(ORANGE)), Empty, Empty)
+                row(Empty, FixedHorizontalTrack(), Empty, UpLeftRightFork(fixed = true, color = ORANGE), DownLeftRightFork(fixed = true, color = Color.PURPLE), EndingTrack)
+                row(Empty, Empty, Empty, Empty, UpRightTurn(fixed = true, action = Toggle(Color.PURPLE)), Empty)
+                row(Empty, FixedHorizontalTrack(), Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = immutableArrayOf(
+                Car(1, CarPosition(2, 1, RIGHT)),
+                Car(2, CarPosition(4, 1, RIGHT)),
+            ),
+            tracks = 16
+        )
         val level4_6 = Level(
             name = "4-6",
             board = buildBoard(rows = 5, requireFixed = true) {
@@ -1234,6 +1250,7 @@ object Levels {
             level4_4,
             level4_4A,
             level4_5,
+            level4_5A,
             level4_6,
             level4_7,
             level4_8,
