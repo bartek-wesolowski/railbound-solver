@@ -1492,6 +1492,17 @@ object Solutions {
                 row(Empty, UpRightBarrier(Color.PURPLE, true), EndingTrack)
             }
         )
+        val level4_8A = setOf(
+            buildBoard(rows = 7) {
+                row(Empty, Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn(), DownLeftTurn(), Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack(), DownRightLeftFork(), DownRightLeftFork(fixed = true, color = Color.PURPLE), DownLeftUpFork(), Empty, Empty, Empty, Empty)
+                row(Empty, VerticalTrack(), FixedVerticalTrack(Toggle(Color.PURPLE)), FixedVerticalTrack(Toggle(ORANGE)), Empty, Empty, Empty, Empty)
+                row(Empty, UpRightDownFork(), UpRightLeftFork(fixed = true, color = ORANGE), UpRightLeftFork(fixed = true), FixedHorizontalTrack(), HorizontalBarrier(ORANGE, true), HorizontalBarrier(Color.PURPLE, true), EndingTrack)
+                row(Empty, UpRightTurn(), DownLeftTurn(), Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack(), Empty, Empty, Empty, Empty, Empty)
+            }
+        )
         val level4_9 = setOf(
             buildBoard(rows = 7) {
                 row(Empty, FixedVerticalTrack(), Empty, Empty, Empty, FixedVerticalTrack(), Empty, Empty)
@@ -1522,6 +1533,7 @@ object Solutions {
             "4-7A" to level4_7A,
             "4-7B" to level4_7B,
             "4-8" to level4_8,
+            "4-8A" to level4_8A,
             "4-9" to level4_9,
         )
     }
