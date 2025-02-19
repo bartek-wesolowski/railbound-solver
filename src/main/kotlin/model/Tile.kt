@@ -3,6 +3,7 @@ package model
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import com.danrusu.pods4k.immutableArrays.immutableArrayOf
+import model.Action.Toggle
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
@@ -12,16 +13,12 @@ import java.util.EnumSet
 
 sealed interface StraightTrack
 
-sealed interface Turn {
-    val fixed: Boolean
-}
-
 sealed interface Toggleable {
     val color: Color?
     fun toggled(): Tile
 }
 
-sealed interface Fork: Toggleable {
+sealed interface Fork : Toggleable {
     val fixed: Boolean
     override val color: Color?
     override fun toggled(): Tile
@@ -38,7 +35,7 @@ sealed interface ModifiableTile {
     ): EnumMap<Direction, ImmutableArray<Tile>>
 }
 
-sealed interface Barrier: Toggleable {
+sealed interface Barrier : Toggleable {
     override val color: Color
     val open: Boolean
     override fun toggled(): Tile
@@ -196,161 +193,177 @@ sealed class Tile(
         }
     }
 
-    // Turns
-    data class DownRightTurn(
-        override val fixed: Boolean = false,
-        override val action: Action? = null,
-    ) : Tile(
-        incomingDirections = EnumSet.of(UP, LEFT),
-    ), Turn, ModifiableTile, HasAction {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            UP -> position.turnRight()
-            LEFT -> position.turnLeft()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
+    sealed class Turn(
+        incomingDirections: EnumSet<Direction>,
+        open val fixed: Boolean
+    ) : Tile(incomingDirections) {
+        sealed class BaseDownRightTurn(
+            fixed: Boolean,
+        ) : Turn(
+            incomingDirections = EnumSet.of(UP, LEFT),
+            fixed = fixed
+        ) {
+            override fun getNextPosition(position: CarPosition) = when (position.direction) {
+                UP -> position.turnRight()
+                LEFT -> position.turnLeft()
+                else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+            }
 
-        override fun getIncomingDirectionsAfterModification(
-            traverseDirections: EnumSet<Direction>
-        ): EnumMap<Direction, ImmutableArray<Tile>> {
-            return if (!fixed) {
-                EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                    put(DOWN, immutableArrayOf(DownRightUpFork()))
-                    put(RIGHT, immutableArrayOf(DownRightLeftFork()))
+            data object DownRightTurn : BaseDownRightTurn(fixed = false), ModifiableTile {
+                override fun getIncomingDirectionsAfterModification(
+                    traverseDirections: EnumSet<Direction>
+                ): EnumMap<Direction, ImmutableArray<Tile>> {
+                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
+                        put(DOWN, immutableArrayOf(DownRightUpFork()))
+                        put(RIGHT, immutableArrayOf(DownRightLeftFork()))
+                    }
                 }
-            } else {
-                EnumMap(Direction::class.java)
-            }
-        }
 
-        override fun matches(solution: Tile): Boolean {
-            if (fixed) return super.matches(solution)
-            if (solution is DownRightUpFork || solution is DownRightLeftFork) {
-                return true
-            }
-            return super.matches(solution)
-        }
-    }
-
-    data class DownLeftTurn(
-        override val fixed: Boolean = false,
-        override val action: Action? = null,
-    ) : Tile(
-        incomingDirections = EnumSet.of(UP, RIGHT),
-    ), Turn, ModifiableTile, HasAction {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            UP -> position.turnLeft()
-            RIGHT -> position.turnRight()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-
-        override fun getIncomingDirectionsAfterModification(
-            traverseDirections: EnumSet<Direction>
-        ): EnumMap<Direction, ImmutableArray<Tile>> {
-            return if (!fixed) {
-                EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                    put(DOWN, immutableArrayOf(DownLeftUpFork()))
-                    put(LEFT, immutableArrayOf(DownLeftRightFork()))
+                override fun matches(solution: Tile): Boolean {
+                    if (solution is DownRightUpFork || solution is DownRightLeftFork) {
+                        return true
+                    }
+                    return super.matches(solution)
                 }
-            } else {
-                EnumMap(Direction::class.java)
+            }
+
+            data object FixedDownRightTurn : BaseDownRightTurn(fixed = true)
+
+            data class DownRightToggle(
+                override val action: Action
+            ) : BaseDownRightTurn(fixed = true), HasAction {
+                constructor(color: Color) : this(Toggle(color))
             }
         }
 
-        override fun matches(solution: Tile): Boolean {
-            if (fixed) return super.matches(solution)
-            if (solution is DownLeftUpFork || solution is DownLeftRightFork) {
-                return true
+        sealed class BaseDownLeftTurn(
+            fixed: Boolean,
+        ) : Turn(
+            incomingDirections = EnumSet.of(UP, RIGHT),
+            fixed = fixed
+        ) {
+            override fun getNextPosition(position: CarPosition) = when (position.direction) {
+                UP -> position.turnLeft()
+                RIGHT -> position.turnRight()
+                else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
             }
-            return super.matches(solution)
-        }
-    }
 
-    data class UpRightTurn(
-        override val fixed: Boolean = false,
-        override val action: Action? = null,
-    ) : Tile(
-        incomingDirections = EnumSet.of(DOWN, LEFT),
-    ), Turn, ModifiableTile, HasAction {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            DOWN -> position.turnLeft()
-            LEFT -> position.turnRight()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-
-        override fun getIncomingDirectionsAfterModification(
-            traverseDirections: EnumSet<Direction>
-        ): EnumMap<Direction, ImmutableArray<Tile>> {
-            return if (!fixed) {
-                EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                    put(UP, immutableArrayOf(UpRightDownFork()))
-                    put(RIGHT, immutableArrayOf(UpRightLeftFork()))
+            data object DownLeftTurn : BaseDownLeftTurn(fixed = false), ModifiableTile {
+                override fun getIncomingDirectionsAfterModification(
+                    traverseDirections: EnumSet<Direction>
+                ): EnumMap<Direction, ImmutableArray<Tile>> {
+                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
+                        put(DOWN, immutableArrayOf(DownLeftUpFork()))
+                        put(LEFT, immutableArrayOf(DownLeftRightFork()))
+                    }
                 }
-            } else {
-                EnumMap(Direction::class.java)
-            }
-        }
 
-        override fun matches(solution: Tile): Boolean {
-            if (fixed) return super.matches(solution)
-            if (solution is UpRightDownFork || solution is UpRightLeftFork) {
-                return true
-            }
-            return super.matches(solution)
-        }
-    }
-
-    data class UpRightBarrier(
-        override val color: Color,
-        override val open: Boolean,
-    ): Tile(
-        incomingDirections = EnumSet.of(DOWN, LEFT),
-    ), Turn, Barrier {
-        override val fixed: Boolean = true
-
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            DOWN -> position.turnLeft()
-            LEFT -> position.turnRight()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-
-        override fun toggled() = UpRightBarrier(color, !open)
-
-        override fun matches(solution: Tile): Boolean {
-            return solution is UpRightBarrier && solution.color == color
-        }
-    }
-
-    data class UpLeftTurn(
-        override val fixed: Boolean = false,
-        override val action: Action? = null,
-    ) : Tile(
-        incomingDirections = EnumSet.of(DOWN, RIGHT),
-    ), Turn, ModifiableTile, HasAction {
-        override fun getNextPosition(position: CarPosition) = when (position.direction) {
-            DOWN -> position.turnRight()
-            RIGHT -> position.turnLeft()
-            else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
-        }
-
-        override fun getIncomingDirectionsAfterModification(
-            traverseDirections: EnumSet<Direction>
-        ): EnumMap<Direction, ImmutableArray<Tile>> {
-            return if (!fixed) {
-                EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                    put(UP, immutableArrayOf(UpLeftDownFork()))
-                    put(LEFT, immutableArrayOf(UpLeftRightFork()))
+                override fun matches(solution: Tile): Boolean {
+                    if (solution is DownLeftUpFork || solution is DownLeftRightFork) {
+                        return true
+                    }
+                    return super.matches(solution)
                 }
-            } else {
-                EnumMap(Direction::class.java)
+            }
+
+            data object FixedDownLeftTurn : BaseDownLeftTurn(fixed = true)
+
+            data class DownLeftToggle(
+                override val action: Action
+            ) : BaseDownLeftTurn(fixed = true), HasAction {
+                constructor(color: Color) : this(Toggle(color))
             }
         }
 
-        override fun matches(solution: Tile): Boolean {
-            if (fixed) return super.matches(solution)
-            if (solution is UpLeftDownFork || solution is UpLeftRightFork) {
-                return true
+        sealed class BaseUpRightTurn(
+            fixed: Boolean,
+        ) : Turn(
+            incomingDirections = EnumSet.of(DOWN, LEFT),
+            fixed = fixed
+        ) {
+            override fun getNextPosition(position: CarPosition) = when (position.direction) {
+                DOWN -> position.turnLeft()
+                LEFT -> position.turnRight()
+                else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
             }
-            return super.matches(solution)
+
+            data object UpRightTurn : BaseUpRightTurn(fixed = false), ModifiableTile {
+                override fun getIncomingDirectionsAfterModification(
+                    traverseDirections: EnumSet<Direction>
+                ): EnumMap<Direction, ImmutableArray<Tile>> {
+                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
+                        put(UP, immutableArrayOf(UpRightDownFork()))
+                        put(RIGHT, immutableArrayOf(UpRightLeftFork()))
+                    }
+                }
+
+                override fun matches(solution: Tile): Boolean {
+                    if (solution is UpRightDownFork || solution is UpRightLeftFork) {
+                        return true
+                    }
+                    return super.matches(solution)
+                }
+            }
+
+            data object FixedUpRightTurn : BaseUpRightTurn(fixed = true)
+
+            data class UpRightToggle(
+                override val action: Action
+            ) : BaseUpRightTurn(fixed = true), HasAction {
+                constructor(color: Color) : this(Toggle(color))
+            }
+
+            data class UpRightBarrier(
+                override val color: Color,
+                override val open: Boolean,
+            ) : BaseUpRightTurn(
+                fixed = true
+            ), Barrier {
+                override fun toggled() = UpRightBarrier(color, !open)
+
+                override fun matches(solution: Tile): Boolean {
+                    return solution is UpRightBarrier && solution.color == color
+                }
+            }
+        }
+
+        sealed class BaseUpLeftTurn(
+            fixed: Boolean,
+        ) : Turn(
+            incomingDirections = EnumSet.of(DOWN, RIGHT),
+            fixed = fixed
+        ) {
+            override fun getNextPosition(position: CarPosition) = when (position.direction) {
+                DOWN -> position.turnRight()
+                RIGHT -> position.turnLeft()
+                else -> throw IllegalStateException("$position Invalid direction: ${position.direction}")
+            }
+
+            data object UpLeftTurn : BaseUpLeftTurn(fixed = false), ModifiableTile {
+                override fun getIncomingDirectionsAfterModification(
+                    traverseDirections: EnumSet<Direction>
+                ): EnumMap<Direction, ImmutableArray<Tile>> {
+                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
+                        put(UP, immutableArrayOf(UpLeftDownFork()))
+                        put(LEFT, immutableArrayOf(UpLeftRightFork()))
+                    }
+                }
+
+                override fun matches(solution: Tile): Boolean {
+                    if (solution is UpLeftDownFork || solution is UpLeftRightFork) {
+                        return true
+                    }
+                    return super.matches(solution)
+                }
+            }
+
+            data object FixedUpLeftTurn : BaseUpLeftTurn(fixed = true)
+
+            data class UpLeftToggle(
+                override val action: Action
+            ) : BaseUpLeftTurn(fixed = true), HasAction {
+                constructor(color: Color) : this(Toggle(color))
+            }
         }
     }
 
@@ -371,7 +384,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is DownLeftRightFork &&  solution.color == color) ||
+                (solution is DownLeftRightFork && solution.color == color) ||
                         (solution is DownRightLeftFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -395,7 +408,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is DownLeftUpFork &&  solution.color == color) ||
+                (solution is DownLeftUpFork && solution.color == color) ||
                         (solution is UpLeftDownFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -419,7 +432,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is DownRightLeftFork &&  solution.color == color) ||
+                (solution is DownRightLeftFork && solution.color == color) ||
                         (solution is DownLeftRightFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -443,7 +456,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is DownRightUpFork &&  solution.color == color) ||
+                (solution is DownRightUpFork && solution.color == color) ||
                         (solution is UpRightDownFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -467,7 +480,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is UpLeftRightFork &&  solution.color == color) ||
+                (solution is UpLeftRightFork && solution.color == color) ||
                         (solution is UpRightLeftFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -491,7 +504,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is UpLeftDownFork &&  solution.color == color) ||
+                (solution is UpLeftDownFork && solution.color == color) ||
                         (solution is DownLeftUpFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -515,7 +528,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is UpRightLeftFork &&  solution.color == color) ||
+                (solution is UpRightLeftFork && solution.color == color) ||
                         (solution is UpLeftRightFork && solution.color == color)
             } else {
                 super.matches(solution)
@@ -539,7 +552,7 @@ sealed class Tile(
 
         override fun matches(solution: Tile): Boolean {
             return if (color != null) {
-                (solution is UpRightDownFork &&  solution.color == color) ||
+                (solution is UpRightDownFork && solution.color == color) ||
                         (solution is DownRightUpFork && solution.color == color)
             } else {
                 super.matches(solution)

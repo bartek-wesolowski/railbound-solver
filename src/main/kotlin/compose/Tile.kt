@@ -25,8 +25,19 @@ import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
 import model.Tile.BaseVerticalTrack.VerticalTrack
+import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
+import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
+import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
+import model.Tile.Turn.BaseDownRightTurn.DownRightToggle
+import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
+import model.Tile.Turn.BaseDownRightTurn.FixedDownRightTurn
+import model.Tile.Turn.BaseUpLeftTurn.FixedUpLeftTurn
+import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
+import model.Tile.Turn.BaseUpRightTurn.FixedUpRightTurn
+import model.Tile.Turn.BaseUpRightTurn.UpRightBarrier
+import model.Tile.Turn.BaseUpRightTurn.UpRightToggle
+import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
 import model.TunnelColor
-import model.Turn
 
 private val trackColor = Color.Gray
 private val fixedTrackColor = Color.Black
@@ -46,10 +57,30 @@ fun Tile(
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
             is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
-            is DownRightTurn -> drawDownRightTurn(size, tile.getTrackColor())
-            is DownLeftTurn -> drawDownLeftTurn(size, tile.getTrackColor())
-            is UpRightTurn -> drawUpRightTurn(size, tile.getTrackColor())
-            is UpLeftTurn -> drawUpLeftTurn(size, tile.getTrackColor())
+            is DownRightTurn -> drawDownRightTurn(size, trackColor)
+            is FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
+            is DownRightToggle -> {
+                drawDownRightTurn(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is DownLeftTurn -> drawDownLeftTurn(size, trackColor)
+            is FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
+            is DownLeftToggle -> {
+                drawDownLeftTurn(size, trackColor)
+                drawAction(size, tile.action)
+            }
+            is UpRightTurn -> drawUpRightTurn(size, trackColor)
+            is FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
+            is UpRightToggle -> {
+                drawUpRightTurn(size, trackColor)
+                drawAction(size, tile.action)
+            }
+            is UpLeftTurn -> drawUpLeftTurn(size, trackColor)
+            is FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
+            is Turn.BaseUpLeftTurn.UpLeftToggle -> {
+                drawUpLeftTurn(size, trackColor)
+                drawAction(size, tile.action)
+            }
             is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
             is DownLeftRightFork -> drawDownLeftRightFork(size, tile.getColor())
             is DownLeftUpFork -> drawDownLeftUpFork(size, tile.getColor())
@@ -71,10 +102,6 @@ fun Tile(
             drawAction(size, tile.action)
         }
     }
-}
-
-private fun Turn.getTrackColor(): Color {
-    return if (fixed) fixedTrackColor else trackColor
 }
 
 private fun Barrier.getColor() = Color(color.color)

@@ -21,15 +21,15 @@ import model.StraightTrack
 import model.Tile
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.VerticalTrack
-import model.Tile.DownLeftTurn
-import model.Tile.DownRightTurn
 import model.Tile.Empty
 import model.Tile.EndingTrack
 import model.Tile.Obstacle
-import model.Tile.UpLeftTurn
-import model.Tile.UpRightTurn
+import model.Tile.Turn
+import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
+import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
+import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
+import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
 import model.Tunnel
-import model.Turn
 import util.mapAt
 import util.removeAt
 import java.util.EnumSet
@@ -303,10 +303,10 @@ class Solver {
 
     companion object {
         private val availableTilesByDirection = mapOf<Direction, Set<Tile>>(
-            LEFT to setOf(HorizontalTrack, UpRightTurn(), DownRightTurn()),
-            RIGHT to setOf(HorizontalTrack, UpLeftTurn(), DownLeftTurn()),
-            UP to setOf(VerticalTrack, DownLeftTurn(), DownRightTurn()),
-            DOWN to setOf(VerticalTrack, UpLeftTurn(), UpRightTurn()),
+            LEFT to setOf(HorizontalTrack, UpRightTurn, DownRightTurn),
+            RIGHT to setOf(HorizontalTrack, UpLeftTurn, DownLeftTurn),
+            UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
+            DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
         )
     }
 }
