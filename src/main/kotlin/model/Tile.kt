@@ -75,9 +75,7 @@ sealed class Tile(
     ), StraightTrack {
         override fun getNextPosition(position: CarPosition) = position.moveForward()
 
-        data class VerticalTrack(
-            override val action: Action? = null,
-        ) : BaseVerticalTrack(), ModifiableTile, HasAction {
+        data object VerticalTrack : BaseVerticalTrack(), ModifiableTile {
             override fun getIncomingDirectionsAfterModification(
                 traverseDirections: EnumSet<Direction>
             ): EnumMap<Direction, ImmutableArray<Tile>> {

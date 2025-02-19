@@ -305,8 +305,8 @@ class Solver {
         private val availableTilesByDirection = mapOf<Direction, Set<Tile>>(
             LEFT to setOf(HorizontalTrack, UpRightTurn(), DownRightTurn()),
             RIGHT to setOf(HorizontalTrack, UpLeftTurn(), DownLeftTurn()),
-            UP to setOf(VerticalTrack(), DownLeftTurn(), DownRightTurn()),
-            DOWN to setOf(VerticalTrack(), UpLeftTurn(), UpRightTurn()),
+            UP to setOf(VerticalTrack, DownLeftTurn(), DownRightTurn()),
+            DOWN to setOf(VerticalTrack, UpLeftTurn(), UpRightTurn()),
         )
     }
 }
