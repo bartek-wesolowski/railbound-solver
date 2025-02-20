@@ -12,7 +12,6 @@ import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
-import model.Fork
 import model.HasAction
 import model.Level
 import model.ModifiableTile
@@ -23,12 +22,14 @@ import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.VerticalTrack
 import model.Tile.Empty
 import model.Tile.EndingTrack
+import model.Tile.Fork
 import model.Tile.Obstacle
 import model.Tile.Turn
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
 import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
 import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
 import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
+import model.Toggleable
 import model.Tunnel
 import util.mapAt
 import util.removeAt
@@ -221,7 +222,7 @@ class Solver {
                     } else {
                         partialState.state.traverseDirections
                     }
-                    val enterTiles = if (newTile is Fork && newTile.color != null) {
+                    val enterTiles = if (newTile is Fork && newTile is Toggleable) {
                         partialState.enterTiles + (newPosition to newTile)
                     } else {
                         partialState.enterTiles

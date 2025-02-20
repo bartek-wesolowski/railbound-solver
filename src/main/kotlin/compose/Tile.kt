@@ -13,18 +13,55 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.Action
-import model.Action.*
+import model.Action.Toggle
 import model.Barrier
-import model.Fork
 import model.HasAction
 import model.Tile
-import model.Tile.*
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
 import model.Tile.BaseVerticalTrack.VerticalTrack
+import model.Tile.DownTunnel
+import model.Tile.Empty
+import model.Tile.EndingTrack
+import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightFork
+import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggle
+import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggleableFork
+import model.Tile.Fork.BaseDownLeftRightFork.FixedDownLeftRightFork
+import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpFork
+import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggle
+import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggleableFork
+import model.Tile.Fork.BaseDownLeftUpFork.FixedDownLeftUpFork
+import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftFork
+import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftToggle
+import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftToggleableFork
+import model.Tile.Fork.BaseDownRightLeftFork.FixedDownRightLeftFork
+import model.Tile.Fork.BaseDownRightUpFork.DownRightUpFork
+import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggle
+import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
+import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
+import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
+import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownFork
+import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggle
+import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
+import model.Tile.Fork.BaseUpLeftRightFork.FixedUpLeftRightFork
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightFork
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
+import model.Tile.Fork.BaseUpRightDownFork.FixedUpRightDownFork
+import model.Tile.Fork.BaseUpRightDownFork.UpRightDownFork
+import model.Tile.Fork.BaseUpRightDownFork.UpRightDownToggle
+import model.Tile.Fork.BaseUpRightDownFork.UpRightDownToggleableFork
+import model.Tile.Fork.BaseUpRightLeftFork.FixedUpRightLeftFork
+import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftFork
+import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggle
+import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggleableFork
+import model.Tile.LeftTunnel
+import model.Tile.Obstacle
+import model.Tile.RightTunnel
+import model.Tile.Turn
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
 import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
@@ -37,6 +74,7 @@ import model.Tile.Turn.BaseUpRightTurn.FixedUpRightTurn
 import model.Tile.Turn.BaseUpRightTurn.UpRightBarrier
 import model.Tile.Turn.BaseUpRightTurn.UpRightToggle
 import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
+import model.Tile.UpTunnel
 import model.TunnelColor
 
 private val trackColor = Color.Gray
@@ -82,14 +120,71 @@ fun Tile(
                 drawAction(size, tile.action)
             }
             is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
-            is DownLeftRightFork -> drawDownLeftRightFork(size, tile.getColor())
-            is DownLeftUpFork -> drawDownLeftUpFork(size, tile.getColor())
-            is DownRightLeftFork -> drawDownRightLeftFork(size, tile.getColor())
-            is DownRightUpFork -> drawDownRightUpFork(size, tile.getColor())
-            is UpLeftDownFork -> drawUpLeftDownFork(size, tile.getColor())
-            is UpLeftRightFork -> drawUpLeftRightFork(size, tile.getColor())
-            is UpRightDownFork -> drawUpRightDownFork(size, tile.getColor())
-            is UpRightLeftFork -> drawUpRightLeftFork(size, tile.getColor())
+
+            is DownLeftRightFork -> drawDownLeftRightFork(size, trackColor)
+            is FixedDownLeftRightFork -> drawDownLeftRightFork(size, fixedTrackColor)
+            is DownLeftRightToggle -> {
+                drawDownLeftRightFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is DownLeftRightToggleableFork -> drawDownLeftRightFork(size, Color(tile.color.color))
+
+            is DownLeftUpFork -> drawDownLeftUpFork(size, trackColor)
+            is FixedDownLeftUpFork -> drawDownLeftUpFork(size, fixedTrackColor)
+            is DownLeftUpToggle -> {
+                drawDownLeftUpFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is DownLeftUpToggleableFork -> drawDownLeftUpFork(size, Color(tile.color.color))
+
+            is DownRightLeftFork -> drawDownRightLeftFork(size, trackColor)
+            is FixedDownRightLeftFork -> drawDownRightLeftFork(size, fixedTrackColor)
+            is DownRightLeftToggle -> {
+                drawDownRightLeftFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is DownRightLeftToggleableFork -> drawDownRightLeftFork(size, Color(tile.color.color))
+
+            is DownRightUpFork -> drawDownRightUpFork(size, trackColor)
+            is FixedDownRightUpFork -> drawDownRightUpFork(size, fixedTrackColor)
+            is DownRightUpToggle -> {
+                drawDownRightUpFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is DownRightUpToggleableFork -> drawDownRightUpFork(size, Color(tile.color.color))
+
+            is UpLeftDownFork -> drawUpLeftDownFork(size, trackColor)
+            is FixedUpLeftDownFork -> drawUpLeftDownFork(size, fixedTrackColor)
+            is UpLeftDownToggle -> {
+                drawUpLeftDownFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is UpLeftDownToggleableFork -> drawUpLeftDownFork(size, Color(tile.color.color))
+
+            is UpLeftRightFork -> drawUpLeftRightFork(size, trackColor)
+            is FixedUpLeftRightFork -> drawUpLeftRightFork(size, fixedTrackColor)
+            is UpLeftRightToggleableFork -> drawUpLeftRightFork(size, Color(tile.color.color))
+            is UpLeftRightToggle -> {
+                drawUpLeftRightFork(size, trackColor)
+                drawAction(size, tile.action)
+            }
+
+            is UpRightDownFork -> drawUpRightDownFork(size, trackColor)
+            is FixedUpRightDownFork -> drawUpRightDownFork(size, fixedTrackColor)
+            is UpRightDownToggle -> {
+                drawUpRightDownFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is UpRightDownToggleableFork -> drawUpRightDownFork(size, Color(tile.color.color))
+
+            is UpRightLeftFork -> drawUpRightLeftFork(size, trackColor)
+            is FixedUpRightLeftFork -> drawUpRightLeftFork(size, fixedTrackColor)
+            is UpRightLeftToggle -> {
+                drawUpRightLeftFork(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
+            is UpRightLeftToggleableFork -> drawUpRightLeftFork(size, Color(tile.color.color))
+
             Empty -> {}
             EndingTrack -> drawEndingTrack(size)
             Obstacle -> drawObstacle(size)
@@ -105,10 +200,6 @@ fun Tile(
 }
 
 private fun Barrier.getColor() = Color(color.color)
-
-private fun Fork.getColor(): Color {
-    return if (color != null) Color(color!!.color) else (if (fixed) fixedTrackColor else trackColor)
-}
 
 private fun DrawScope.drawVerticalTrack(size: Dp, color: Color) {
     val x1 = (size * 0.25f).toPx()
