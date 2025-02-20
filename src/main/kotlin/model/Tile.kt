@@ -124,9 +124,13 @@ sealed class Tile(
             }
         }
 
-        data class FixedVerticalTrack(
-            override val action: Action? = null,
-        ) : BaseVerticalTrack(), HasAction
+        data object FixedVerticalTrack : BaseVerticalTrack()
+
+        data class VerticalToggle(
+            override val action: Action
+        ) : BaseVerticalTrack(), HasAction {
+            constructor(color: Color) : this(Toggle(color))
+        }
 
         data class VerticalBarrier(
             override val color: Color,
@@ -187,9 +191,13 @@ sealed class Tile(
             }
         }
 
-        data class FixedHorizontalTrack(
-            override val action: Action? = null,
-        ) : BaseHorizontalTrack(), HasAction
+        data object FixedHorizontalTrack : BaseHorizontalTrack()
+
+        data class HorizontalToggle(
+            override val action: Action
+        ) : BaseHorizontalTrack(), HasAction {
+            constructor(color: Color) : this(Toggle(color))
+        }
 
         data class HorizontalBarrier(
             override val color: Color,

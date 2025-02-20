@@ -19,9 +19,11 @@ import model.HasAction
 import model.Tile
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalToggle
 import model.Tile.BaseVerticalTrack.VerticalTrack
 import model.Tile.DownTunnel
 import model.Tile.Empty
@@ -91,9 +93,18 @@ fun Tile(
         when (tile) {
             is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
             is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
+            is HorizontalToggle -> {
+                drawHorizontalTrack(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
             is HorizontalBarrier -> drawHorizontalBarrier(size, tile.getColor(), tile.open)
+
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
+            is VerticalToggle -> {
+                drawVerticalTrack(size, fixedTrackColor)
+                drawAction(size, tile.action)
+            }
             is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
             is DownRightTurn -> drawDownRightTurn(size, trackColor)
             is FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)

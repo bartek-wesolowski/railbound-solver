@@ -11,6 +11,7 @@ import model.Direction.UP
 import model.Tile.*
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseVerticalTrack.*
 import util.mapAt
 import java.util.EnumSet
@@ -25,8 +26,8 @@ data class Board(
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
                     val tile = tiles[r][c]
-                    if (tile is Toggleable && tile.color != null) {
-                        val color = tile.color!!
+                    if (tile is Toggleable) {
+                        val color = tile.color
                         val position = Position(r, c)
                         if (color in keys) {
                             put(color, getValue(color) + position)
@@ -45,13 +46,15 @@ data class Board(
                     val tile = tiles[r][c]
                     require(
                         tile is Empty ||
-                        tile is EndingTrack ||
-                        tile is Obstacle ||
-                        tile is Tunnel ||
-                        tile is HorizontalBarrier ||
-                        tile is VerticalBarrier ||
-                        tile is FixedHorizontalTrack ||
+                                tile is EndingTrack ||
+                                tile is Obstacle ||
+                                tile is Tunnel ||
+                                tile is HorizontalBarrier ||
+                                tile is VerticalBarrier ||
+                                tile is FixedHorizontalTrack ||
+                                tile is HorizontalToggle ||
                                 tile is FixedVerticalTrack ||
+                                tile is VerticalToggle ||
                                 (tile is Turn && tile.fixed) ||
                                 (tile is Fork && tile.fixed)
                     ) {
