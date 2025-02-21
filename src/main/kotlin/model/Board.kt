@@ -2,7 +2,6 @@ package model
 
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableArray
-import com.danrusu.pods4k.immutableArrays.toImmutableArray
 import model.Action.Toggle
 import model.Direction.DOWN
 import model.Direction.LEFT
@@ -17,10 +16,10 @@ import util.mapAt
 import java.util.EnumSet
 
 data class Board(
-    val tiles: ImmutableArray<ImmutableArray<Tile>>,
+    val tiles: ImmutableArray<Row>,
     val toggleables: Map<Color, List<Position>>,
 ) {
-    constructor(tiles: ImmutableArray<ImmutableArray<Tile>>, requireFixed: Boolean) : this(
+    constructor(tiles: ImmutableArray<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
         toggleables = buildMap {
             for (r in tiles.indices) {
@@ -82,7 +81,7 @@ data class Board(
     }
 
     val rows: Int = tiles.size
-    val columns: Int = tiles.first().size
+    val columns: Int = tiles.first().columns
 
     override fun toString(): String {
         val sb = StringBuilder("[\n")
@@ -128,7 +127,7 @@ data class Board(
 
     fun with(row: Int, column: Int, tile: Tile): Board = copy(
         tiles = tiles.mapAt(row) { rowTiles ->
-            rowTiles.mapAt(column) { tile }
+            rowTiles.mapAt(column, tile)
         }
     )
 
@@ -136,9 +135,7 @@ data class Board(
 
     fun matches(solution: Board): Boolean {
         for (r in tiles.indices) {
-            for (c in tiles[r].indices) {
-                if (!tiles[r][c].matches(solution.tiles[r][c])) return false
-            }
+            if (!tiles[r].matches(solution.tiles[r])) return false
         }
         return true
     }
@@ -163,7 +160,7 @@ data class Board(
         fun buildBoard(
             rows: Int,
             requireFixed: Boolean = false,
-            initializer: ImmutableArray.Builder<ImmutableArray<Tile>>.() -> Unit
+            initializer: ImmutableArray.Builder<Row>.() -> Unit
         ) = Board(
             buildImmutableArray(rows) {
                 initializer()
@@ -171,8 +168,8 @@ data class Board(
             requireFixed
         )
 
-        fun ImmutableArray.Builder<ImmutableArray<Tile>>.row(vararg tiles: Tile) {
-            add(tiles.toImmutableArray())
+        fun ImmutableArray.Builder<Row>.row(vararg tiles: Tile) {
+            add(Row(Array(tiles.size) { i -> tiles[i] }))
         }
     }
 }
