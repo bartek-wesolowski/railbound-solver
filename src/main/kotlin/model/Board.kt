@@ -1,25 +1,28 @@
 package model
 
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
-import com.danrusu.pods4k.immutableArrays.buildImmutableArray
 import model.Action.Toggle
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
-import model.Tile.*
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
 import model.Tile.BaseHorizontalTrack.HorizontalToggle
-import model.Tile.BaseVerticalTrack.*
-import util.mapAt
+import model.Tile.BaseVerticalTrack.FixedVerticalTrack
+import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalToggle
+import model.Tile.Empty
+import model.Tile.EndingTrack
+import model.Tile.Fork
+import model.Tile.Obstacle
+import model.Tile.Turn
 import java.util.EnumSet
 
 data class Board(
-    val tiles: ImmutableArray<Row>,
+    val tiles: Array<Row>,
     val toggleables: Map<Color, List<Position>>,
 ) {
-    constructor(tiles: ImmutableArray<Row>, requireFixed: Boolean) : this(
+    constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
         toggleables = buildMap {
             for (r in tiles.indices) {
@@ -67,7 +70,7 @@ data class Board(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Board) return false
-        return tiles == other.tiles
+        return tiles.contentEquals(other.tiles)
     }
 
     override fun hashCode(): Int = tiles.hashCode()
@@ -131,6 +134,9 @@ data class Board(
         }
     )
 
+    private fun <T> Array<T>.mapAt(index: Int, transform: (T) -> T): Array<T> = copyOf()
+        .also { it[index] = transform(it[index]) }
+
     fun with(position: Position, tile: Tile): Board = with(position.row, position.column, tile)
 
     fun matches(solution: Board): Boolean {
@@ -158,17 +164,16 @@ data class Board(
 
     companion object {
         fun buildBoard(
-            rows: Int,
             requireFixed: Boolean = false,
-            initializer: ImmutableArray.Builder<Row>.() -> Unit
+            initializer: MutableList<Row>.() -> Unit
         ) = Board(
-            buildImmutableArray(rows) {
+            tiles = buildList {
                 initializer()
-            },
-            requireFixed
+            }.toTypedArray(),
+            requireFixed = requireFixed
         )
 
-        fun ImmutableArray.Builder<Row>.row(vararg tiles: Tile) {
+        fun MutableList<Row>.row(vararg tiles: Tile) {
             add(Row(Array(tiles.size) { i -> tiles[i] }))
         }
     }

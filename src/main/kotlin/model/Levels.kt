@@ -65,7 +65,7 @@ object Levels {
     object World1 {
         val level1_1 = Level(
             name = "1-1",
-            board = buildBoard(rows = 1, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
             },
             carColor = RED,
@@ -76,7 +76,7 @@ object Levels {
         )
         val level1_2 = Level(
             name = "1-2",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Obstacle, Empty, EndingTrack)
                 row(Empty, Obstacle, Empty, Obstacle, Empty, Obstacle)
                 row(FixedVerticalTrack, Obstacle, Empty, Empty, Empty, Obstacle)
@@ -89,7 +89,7 @@ object Levels {
         )
         val level1_3 = Level(
             name = "1-3",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, FixedDownLeftRightFork, FixedHorizontalTrack, Empty, EndingTrack)
                 row(Empty, FixedVerticalTrack, Empty, FixedVerticalTrack, Empty)
                 row(Empty, FixedUpRightTurn, FixedHorizontalTrack, FixedUpLeftTurn, Empty)
@@ -102,7 +102,7 @@ object Levels {
         )
         val level1_4 = Level(
             name = "1-4",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, FixedDownRightTurn, Empty, FixedDownLeftTurn, Empty)
                 row(FixedHorizontalTrack, Empty, Obstacle, Empty, EndingTrack)
@@ -117,7 +117,7 @@ object Levels {
         )
         val level1_5 = Level(
             name = "1-5",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, EndingTrack)
                 row(Empty, Obstacle, Obstacle, Obstacle)
                 row(Empty, Empty, Empty, FixedHorizontalTrack)
@@ -130,7 +130,7 @@ object Levels {
         )
         val level1_6 = Level(
             name = "1-6",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -143,7 +143,7 @@ object Levels {
         )
         val level1_7 = Level(
             name = "1-7",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Empty, Empty)
                 row(Empty, Obstacle, Empty)
                 row(Empty, Empty, EndingTrack)
@@ -156,7 +156,7 @@ object Levels {
         )
         val level1_8 = Level(
             name = "1-8",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, FixedHorizontalTrack, FixedDownRightLeftFork, EndingTrack)
                 row(Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, Empty)
@@ -169,7 +169,7 @@ object Levels {
         )
         val level1_9 = Level(
             name = "1-9",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Obstacle, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Obstacle, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack)
@@ -183,7 +183,7 @@ object Levels {
         )
         val level1_10 = Level(
             name = "1-10",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, FixedDownRightTurn, Empty, FixedDownLeftTurn, Empty)
                 row(Empty, FixedVerticalTrack, Obstacle, FixedUpRightDownFork, EndingTrack)
@@ -199,7 +199,7 @@ object Levels {
         )
         val level1_11 = Level(
             name = "1-11",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedHorizontalTrack, Empty, Empty)
                 row(Empty, Obstacle, Empty, EndingTrack)
                 row(Empty, FixedHorizontalTrack, Empty, Empty)
@@ -213,7 +213,7 @@ object Levels {
         )
         val level1_11A = Level(
             name = "1-11A",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty)
@@ -232,7 +232,7 @@ object Levels {
         )
         val level1_11B = Level(
             name = "1-11B",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty)
@@ -251,7 +251,7 @@ object Levels {
         )
         val level1_12 = Level(
             name = "1-12",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, FixedHorizontalTrack, Empty, Empty)
@@ -265,7 +265,7 @@ object Levels {
         )
         val level1_12A = Level(
             name = "1-12A",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -279,7 +279,7 @@ object Levels {
         )
         val level1_13 = Level(
             name = "1-13",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Obstacle, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -295,7 +295,7 @@ object Levels {
         )
         val level1_13A = Level(
             name = "1-13A",
-            board = buildBoard(rows = 6, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -313,7 +313,7 @@ object Levels {
         )
         val level1_14 = Level(
             name = "1-14",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
@@ -327,7 +327,7 @@ object Levels {
         )
         val level1_14A = Level(
             name = "1-14A",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -342,7 +342,7 @@ object Levels {
         )
         val level1_15 = Level(
             name = "1-15",
-            board = buildBoard(rows = 4, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, FixedHorizontalTrack)
                 row(Empty, Empty, FixedUpLeftTurn, FixedUpRightTurn, Empty, Empty)
                 row(Empty, Empty, FixedDownLeftTurn, FixedDownRightTurn, Empty, Empty)
@@ -358,7 +358,7 @@ object Levels {
         )
         val level1_15A = Level(
             name = "1-15A",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty, Empty, FixedHorizontalTrack, FixedHorizontalTrack)
                 row(Empty, Empty, FixedUpLeftTurn, Empty, FixedUpRightTurn, Empty, Empty)
@@ -402,7 +402,7 @@ object Levels {
     object World2 {
         val level2_1 = Level(
             name = "2-1",
-            board = buildBoard(rows = 4, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, RightTunnel(GRAY, CarPosition(3, 3, LEFT)), Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -416,7 +416,7 @@ object Levels {
         )
         val level2_2 = Level(
             name = "2-2",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(2, 4, LEFT)), Empty, Empty, Empty, LeftTunnel(GRAY, CarPosition(2, 0, RIGHT)))
@@ -431,7 +431,7 @@ object Levels {
         )
         val level2_3 = Level(
             name = "2-3",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
@@ -447,7 +447,7 @@ object Levels {
         )
         val level2_3A = Level(
             name = "2-3A",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(RightTunnel(GRAY, CarPosition(5, 0, RIGHT)), Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Obstacle, FixedVerticalTrack, Empty, Empty, Empty)
                 row(Obstacle, Empty, FixedHorizontalTrack, Empty, Empty)
@@ -466,7 +466,7 @@ object Levels {
         )
         val level2_3B = Level(
             name = "2-3B",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, RightTunnel(GRAY, CarPosition(5, 6, LEFT)), Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Obstacle, Empty, Empty, Obstacle, Empty)
                 row(Empty, Empty, Obstacle, Empty, FixedHorizontalTrack, Obstacle, Empty)
@@ -485,7 +485,7 @@ object Levels {
         )
         val level2_4 = Level(
             name = "2-4",
-            board = buildBoard(rows = 4, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, DownTunnel(GRAY, CarPosition(2, 0, RIGHT)), Empty)
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(0, 4, DOWN)), Empty, Empty, Empty, Empty, Empty)
@@ -500,7 +500,7 @@ object Levels {
         )
         val level2_4A = Level(
             name = "2-4A",
-            board = buildBoard(rows = 6, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, DownTunnel(GRAY, CarPosition(5, 1, RIGHT)), Empty, Empty)
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -517,7 +517,7 @@ object Levels {
         )
         val level2_5 = Level(
             name = "2-5",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(RightTunnel(BROWN, CarPosition(4, 4, UP)), Empty, Empty, Empty, DownTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty, Empty)
                 row(Empty, FixedVerticalTrack, Empty, Empty, FixedUpLeftDownFork, Empty, Empty)
                 row(Empty, FixedVerticalTrack, FixedVerticalTrack, FixedVerticalTrack, Empty, Empty, EndingTrack)
@@ -533,7 +533,7 @@ object Levels {
         )
         val level2_5A = Level(
             name = "2-5A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Empty, DownTunnel(GRAY, CarPosition(4, 2, UP)), Empty, FixedVerticalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Obstacle, Empty, Empty, Empty, Obstacle)
@@ -550,7 +550,7 @@ object Levels {
         )
         val level2_5B = Level(
             name = "2-5B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Empty, DownTunnel(BROWN, CarPosition(4, 2, UP)), Empty, FixedVerticalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(2, 4, LEFT)), Empty, Obstacle, Empty, LeftTunnel(GRAY, CarPosition(2, 0, RIGHT)))
@@ -567,7 +567,7 @@ object Levels {
         )
         val level2_6 = Level(
             name = "2-6",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, LeftTunnel(BROWN, CarPosition(4, 5, UP)), Empty, Empty, DownTunnel(GRAY, CarPosition(4, 2, LEFT)), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Obstacle, Obstacle, Empty, Empty, Empty, Empty, EndingTrack)
@@ -583,7 +583,7 @@ object Levels {
         )
         val level2_6A = Level(
             name = "2-6A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(RightTunnel(BROWN, CarPosition(4, 5, UP)), Empty, Empty, FixedHorizontalTrack, Empty, DownTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty)
                 row(Empty, Obstacle, Obstacle, Obstacle, Empty, FixedDownRightUpFork, EndingTrack)
@@ -599,7 +599,7 @@ object Levels {
         )
         val level2_7 = Level(
             name = "2-7",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, DownTunnel(GRAY, CarPosition(4, 4, UP)), Empty, Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
@@ -615,7 +615,7 @@ object Levels {
         )
         val level2_7A = Level(
             name = "2-7A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, DownTunnel(GRAY, CarPosition(4, 3, UP)), Empty, DownTunnel(PURPLE, CarPosition(4, 5, UP)), Empty, DownTunnel(BROWN, CarPosition(4, 1, UP)), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
@@ -632,7 +632,7 @@ object Levels {
         )
         val level2_7B = Level(
             name = "2-7B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, DownTunnel(BROWN, CarPosition(4, 4, UP)), Empty, DownTunnel(GRAY, CarPosition(4, 2, UP)), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, Empty, EndingTrack)
@@ -649,7 +649,7 @@ object Levels {
         )
         val level2_8 = Level(
             name = "2-8",
-            board = buildBoard(rows = 6, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, RightTunnel(GRAY, CarPosition(5, 0, RIGHT)), Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
@@ -667,7 +667,7 @@ object Levels {
         )
         val level2_9 = Level(
             name = "2-9",
-            board = buildBoard(rows = 8, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, DownTunnel(BROWN, CarPosition(7, 0, RIGHT)), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -709,7 +709,7 @@ object Levels {
     object World3 {
         val level3_1 = Level(
             name = "3-1",
-            board = buildBoard(rows = 4, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, HorizontalBarrier(DARK_GREEN, false), Empty, Empty, Empty, FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, VerticalToggle(DARK_GREEN), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -724,7 +724,7 @@ object Levels {
         )
         val level3_2 = Level(
             name = "3-2",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, VerticalBarrier(DARK_GREEN, false), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
@@ -740,7 +740,7 @@ object Levels {
         )
         val level3_3 = Level(
             name = "3-3",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, HorizontalBarrier(DARK_GREEN, false), FixedHorizontalTrack, Empty, FixedDownLeftRightFork, FixedHorizontalTrack)
                 row(Empty, Empty, Empty, Empty, VerticalToggle(DARK_GREEN), Empty)
                 row(Empty, Empty, Empty, Empty, FixedUpRightTurn, EndingTrack)
@@ -754,7 +754,7 @@ object Levels {
         )
         val level3_3A = Level(
             name = "3-3A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
@@ -770,7 +770,7 @@ object Levels {
         )
         val level3_4 = Level(
             name = "3-4",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty, HorizontalBarrier(DARK_GREEN, false), FixedDownLeftTurn)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, FixedDownRightTurn, FixedUpLeftTurn)
                 row(Empty, HorizontalToggle(DARK_GREEN), Empty, Empty, HorizontalToggle(DARK_GREEN), Empty, FixedUpRightTurn, FixedDownLeftTurn)
@@ -786,7 +786,7 @@ object Levels {
         )
         val level3_5 = Level(
             name = "3-5",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, HorizontalBarrier(DARK_GREEN, false), Empty, Empty, HorizontalBarrier(DARK_GREEN, true), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, HorizontalToggle(DARK_GREEN), FixedHorizontalTrack, HorizontalBarrier(DARK_GREEN, true), Empty, EndingTrack)
@@ -800,7 +800,7 @@ object Levels {
         )
         val level3_6 = Level(
             name = "3-6",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, FixedHorizontalTrack, HorizontalToggle(DARK_GREEN), Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, VerticalBarrier(DARK_GREEN, false), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, HorizontalToggle(DARK_GREEN), HorizontalBarrier(DARK_GREEN, true), EndingTrack)
@@ -816,7 +816,7 @@ object Levels {
         )
         val level3_7 = Level(
             name = "3-7",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, HorizontalBarrier(LIGHT_GREEN, false), HorizontalToggle(DARK_GREEN), FixedHorizontalTrack)
                 row(Empty, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack)
@@ -832,7 +832,7 @@ object Levels {
         )
         val level3_7A = Level(
             name = "3-7A",
-            board = buildBoard(rows = 4, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(DARK_GREEN, true), EndingTrack)
                 row(Empty, Empty, HorizontalToggle(LIGHT_GREEN), Empty, FixedHorizontalTrack)
                 row(Empty, Empty, HorizontalToggle(DARK_GREEN), Empty, Empty)
@@ -847,7 +847,7 @@ object Levels {
         )
         val level3_8 = Level(
             name = "3-8",
-            board = buildBoard(rows = 6, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedVerticalTrack, Empty, Empty, FixedVerticalTrack, Empty)
                 row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty)
                 row(Empty, Empty, Empty, Empty, VerticalBarrier(DARK_GREEN, false), Empty)
@@ -864,7 +864,7 @@ object Levels {
         )
         val level3_8A = Level(
             name = "3-8A",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedHorizontalTrack, Empty, HorizontalBarrier(DARK_GREEN, false), HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(PINK, false), EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, HorizontalToggle(PINK), Empty, HorizontalToggle(LIGHT_GREEN), Empty, HorizontalToggle(DARK_GREEN), Empty)
@@ -877,7 +877,7 @@ object Levels {
         )
         val level3_8B = Level(
             name = "3-8B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, HorizontalToggle(DARK_GREEN), Empty, HorizontalToggle(Color.PURPLE), Empty, HorizontalToggle(DARK_GREEN), Empty, HorizontalToggle(Color.PURPLE), Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Obstacle, VerticalToggle(DARK_GREEN), Obstacle, VerticalToggle(LIGHT_GREEN), Obstacle, VerticalToggle(PINK), Obstacle, Empty, LeftTunnel(BROWN, CarPosition(4, 0, RIGHT)))
                 row(Empty, Empty, HorizontalToggle(LIGHT_GREEN), Empty, HorizontalToggle(PINK), Empty, HorizontalToggle(LIGHT_GREEN), Empty, HorizontalToggle(PINK), Empty, Empty)
@@ -893,7 +893,7 @@ object Levels {
         )
         val level3_9 = Level(
             name = "3-9",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, VerticalBarrier(PINK, false), Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, VerticalToggle(LIGHT_GREEN), Empty, VerticalToggle(DARK_GREEN), Empty, Empty)
@@ -911,7 +911,7 @@ object Levels {
         )
         val level3_10 = Level(
             name = "3-10",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(DownTunnel(BROWN, CarPosition(4, 3, RIGHT)), Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(VerticalToggle(DARK_GREEN), Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -926,7 +926,7 @@ object Levels {
         )
         val level3_10A = Level(
             name = "3-10A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, DownTunnel(BROWN, CarPosition(4, 3, LEFT)), Empty, RightTunnel(GRAY, CarPosition(4, 1, RIGHT)), Empty, HorizontalToggle(DARK_GREEN), Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, FixedHorizontalTrack, Empty, Empty, HorizontalBarrier(LIGHT_GREEN, true), HorizontalBarrier(DARK_GREEN, false), EndingTrack)
@@ -941,7 +941,7 @@ object Levels {
         )
         val level3_10B = Level(
             name = "3-10B",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Empty, Empty, DownTunnel(BROWN, CarPosition(5, 3, LEFT)), Empty, Empty, Empty)
                 row(FixedUpRightTurn, HorizontalBarrier(DARK_GREEN, false), Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -959,7 +959,7 @@ object Levels {
         )
         val level3_10C = Level(
             name = "3-10C",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(RightTunnel(GREEN, CarPosition(1, 4, DOWN)), Empty, HorizontalToggle(DARK_GREEN), FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, HorizontalToggle(PINK), Empty, LeftTunnel(GRAY, CarPosition(6, 0, RIGHT)))
                 row(Empty, Empty, Empty, Empty, DownTunnel(GREEN, CarPosition(0, 0, RIGHT)), Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -977,7 +977,7 @@ object Levels {
         )
         val level3_11 = Level(
             name = "3-11",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, DownTunnel(BROWN, CarPosition(4, 4, UP)), Empty, DownTunnel(GRAY, CarPosition(4, 2, UP)), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, VerticalToggle(DARK_GREEN), Empty, Empty)
                 row(FixedHorizontalTrack, Empty, Empty, Empty, FixedDownRightUpFork, FixedHorizontalTrack, EndingTrack)
@@ -992,7 +992,7 @@ object Levels {
         )
         val level3_11A = Level(
             name = "3-11A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, DownTunnel(BROWN, CarPosition(4, 4, UP)), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, HorizontalToggle(LIGHT_GREEN), Empty, Empty, HorizontalBarrier(LIGHT_GREEN, false), FixedHorizontalTrack, EndingTrack)
@@ -1008,7 +1008,7 @@ object Levels {
         )
         val level3_11B = Level(
             name = "3-11B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, FixedHorizontalTrack, HorizontalBarrier(DARK_GREEN, true), FixedHorizontalTrack, HorizontalBarrier(DARK_GREEN, false), FixedHorizontalTrack)
                 row(Empty, Empty, HorizontalToggle(DARK_GREEN), Empty, Empty, Empty, Empty)
                 row(RightTunnel(BROWN, CarPosition(4, 0, RIGHT)), Empty, Empty, Empty, Empty, Empty, Empty)
@@ -1051,7 +1051,7 @@ object Levels {
     object World4 {
         val level4_1 = Level(
             name = "4-1",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, HorizontalToggle(Color.PURPLE), Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(DownRightUpToggleableFork(Color.PURPLE), FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack, FixedHorizontalTrack)
@@ -1067,7 +1067,7 @@ object Levels {
         )
         val level4_2 = Level(
             name = "4-2",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Obstacle, Obstacle, VerticalToggle(Color.PURPLE), Empty, Empty)
@@ -1083,7 +1083,7 @@ object Levels {
         )
         val level4_3 = Level(
             name = "4-3",
-            board = buildBoard(rows = 4, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, DownLeftUpToggleableFork(Color.PURPLE), Obstacle, UpRightDownToggleableFork(Color.PURPLE), EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -1097,7 +1097,7 @@ object Levels {
         )
         val level4_3A = Level(
             name = "4-3A",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, HorizontalToggle(Color.PURPLE), Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, UpLeftDownToggleableFork(Color.PURPLE), FixedHorizontalTrack, Empty, VerticalToggle(Color.PURPLE), UpRightDownToggleableFork(Color.PURPLE), EndingTrack)
                 row(Empty, Empty, HorizontalToggle(Color.PURPLE), Empty, Empty, Empty, Empty)
@@ -1111,7 +1111,7 @@ object Levels {
         )
         val level4_3B = Level(
             name = "4-3B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty)
                 row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, VerticalToggle(Color.PURPLE), Empty, Empty, EndingTrack)
@@ -1127,7 +1127,7 @@ object Levels {
         )
         val level4_4 = Level(
             name = "4-4",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(FixedVerticalTrack, DownRightToggle(Color.PURPLE), DownLeftToggle(Color.PURPLE), DownRightUpToggleableFork(Color.PURPLE), EndingTrack)
@@ -1142,7 +1142,7 @@ object Levels {
         )
         val level4_4A = Level(
             name = "4-4A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, FixedHorizontalTrack)
                 row(Empty, Empty, FixedDownRightUpFork, FixedDownLeftTurn, Empty)
                 row(Empty, DownLeftUpToggle(Color.PURPLE), VerticalToggle(Color.PURPLE), DownRightUpToggleableFork(Color.PURPLE), EndingTrack)
@@ -1158,7 +1158,7 @@ object Levels {
         )
         val level4_5 = Level(
             name = "4-5",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, VerticalToggle(Color.PURPLE), Empty, Empty)
                 row(FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, UpLeftRightToggleableFork(ORANGE), DownLeftRightToggleableFork(Color.PURPLE), EndingTrack)
@@ -1174,7 +1174,7 @@ object Levels {
         )
         val level4_5A = Level(
             name = "4-5A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, DownRightToggle(ORANGE), Empty, Empty)
                 row(Empty, FixedHorizontalTrack, Empty, UpLeftRightToggleableFork(ORANGE), DownLeftRightToggleableFork(Color.PURPLE), EndingTrack)
@@ -1190,7 +1190,7 @@ object Levels {
         )
         val level4_6 = Level(
             name = "4-6",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(VerticalToggle(Color.PURPLE), Empty, FixedVerticalTrack, Empty, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
@@ -1206,7 +1206,7 @@ object Levels {
         )
         val level4_6A = Level(
             name = "4-6A",
-            board = buildBoard(rows = 3, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedDownRightTurn, FixedDownLeftTurn, Empty, Empty, Empty, HorizontalBarrier(Color.PURPLE, true), EndingTrack)
                 row(UpRightDownToggleableFork(Color.PURPLE), UpLeftRightToggleableFork(Color.PURPLE), Empty, Empty, Empty, Empty, Empty)
                 row(FixedVerticalTrack, Empty, Empty, UpRightLeftToggle(Color.PURPLE), Empty, FixedHorizontalTrack, Empty)
@@ -1220,7 +1220,7 @@ object Levels {
         )
         val level4_6B = Level(
             name = "4-6B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedHorizontalTrack, HorizontalToggle(Color.PURPLE), Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, HorizontalBarrier(Color.PURPLE, true), EndingTrack)
@@ -1236,7 +1236,7 @@ object Levels {
         )
         val level4_6C = Level(
             name = "4-6C",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedVerticalTrack, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
                 row(Empty, FixedVerticalTrack, DownRightUpToggleableFork(Color.PURPLE), HorizontalBarrier(Color.PURPLE, false), EndingTrack)
@@ -1252,7 +1252,7 @@ object Levels {
         )
         val level4_7 = Level(
             name = "4-7",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedDownRightTurn, FixedHorizontalTrack, FixedDownRightLeftFork, FixedDownLeftTurn, Empty)
                 row(DownRightUpToggleableFork(Color.PURPLE), HorizontalToggle(Color.PURPLE), FixedDownLeftUpFork, FixedVerticalTrack, Empty)
                 row(Empty, Empty, Empty, FixedVerticalTrack, Empty)
@@ -1268,7 +1268,7 @@ object Levels {
         )
         val level4_7A = Level(
             name = "4-7A",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(FixedHorizontalTrack, Empty, HorizontalToggle(Color.PURPLE), HorizontalBarrier(ORANGE, false), DownLeftToggle(Color.PURPLE), Empty, Empty, FixedVerticalTrack, Empty)
                 row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, EndingTrack)
@@ -1284,7 +1284,7 @@ object Levels {
         )
         val level4_7B = Level(
             name = "4-7B",
-            board = buildBoard(rows = 5, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedHorizontalTrack, HorizontalToggle(ORANGE), Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
@@ -1300,7 +1300,7 @@ object Levels {
         )
         val level4_8 = Level(
             name = "4-8",
-            buildBoard(rows = 3, requireFixed = true) {
+            buildBoard(requireFixed = true) {
                 row(Empty, FixedVerticalTrack, Empty)
                 row(Empty, Empty, Empty)
                 row(VerticalToggle(Color.PURPLE), Obstacle, VerticalToggle(ORANGE))
@@ -1318,7 +1318,7 @@ object Levels {
         )
         val level4_8A = Level(
             name = "4-8A",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
                 row(FixedHorizontalTrack, Empty, DownLeftRightToggleableFork(Color.PURPLE), Empty, Empty, Empty, Empty, Empty)
@@ -1337,7 +1337,7 @@ object Levels {
         )
         val level4_8B = Level(
             name = "4-8B",
-            board = buildBoard(rows = 6, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(3, 7, LEFT)), Empty, Empty, Empty)
                 row(Empty, VerticalToggle(Color.PURPLE), Empty, Empty, FixedUpRightTurn, HorizontalBarrier(ORANGE, false), FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, HorizontalToggle(ORANGE), Empty, Empty, Empty, Empty)
@@ -1354,7 +1354,7 @@ object Levels {
         )
         val level4_9 = Level(
             name = "4-9",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, FixedVerticalTrack, Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, VerticalBarrier(Color.PURPLE, false), Empty, Empty)
                 row(Empty, DownRightLeftToggleableFork(Color.PURPLE), Empty, Empty, Empty, VerticalBarrier(ORANGE, false), Empty, Empty)
@@ -1373,7 +1373,7 @@ object Levels {
         )
         val level4_9A = Level(
             name = "4-9A",
-            board = buildBoard(rows = 7, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(4, 0, RIGHT)), Empty, DownLeftToggle(ORANGE), Empty, FixedUpRightTurn, FixedHorizontalTrack, HorizontalBarrier(ORANGE, false), FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
@@ -1391,7 +1391,7 @@ object Levels {
         )
         val level4_9B = Level(
             name = "4-9B",
-            board = buildBoard(rows = 9, requireFixed = true) {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
                 row(RightTunnel(MINT, CarPosition(7, 8, LEFT)), Empty, DownLeftToggle(ORANGE), Empty, FixedUpRightTurn, FixedHorizontalTrack, HorizontalBarrier(ORANGE, false), FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Obstacle, Empty, Empty, Empty, Empty, Empty)
