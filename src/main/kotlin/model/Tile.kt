@@ -1,8 +1,5 @@
 package model
 
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
-import com.danrusu.pods4k.immutableArrays.buildImmutableArray
-import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import model.Action.Toggle
 import model.Direction.DOWN
 import model.Direction.LEFT
@@ -42,7 +39,7 @@ sealed interface Tunnel {
 sealed interface ModifiableTile {
     fun getIncomingDirectionsAfterModification(
         traverseDirections: EnumSet<Direction>
-    ): EnumMap<Direction, ImmutableArray<Tile>>
+    ): EnumMap<Direction, List<Tile>>
 }
 
 sealed interface Barrier : Toggleable {
@@ -85,28 +82,28 @@ sealed class Tile(
         data object VerticalTrack : BaseVerticalTrack(), ModifiableTile {
             override fun getIncomingDirectionsAfterModification(
                 traverseDirections: EnumSet<Direction>
-            ): EnumMap<Direction, ImmutableArray<Tile>> {
+            ): EnumMap<Direction, List<Tile>> {
                 if (UP in traverseDirections && DOWN in traverseDirections) return EnumMap(Direction::class.java)
-                return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
+                return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
                     put(
                         LEFT,
-                        buildImmutableArray {
+                        buildList {
                             if (UP !in traverseDirections) add(DownRightUpFork)
                             if (DOWN !in traverseDirections) add(UpRightDownFork)
                         }
                     )
                     put(
                         RIGHT,
-                        buildImmutableArray {
+                        buildList {
                             if (UP !in traverseDirections) add(DownLeftUpFork)
                             if (DOWN !in traverseDirections) add(UpLeftDownFork)
                         }
                     )
                     if (UP !in traverseDirections) {
-                        put(UP, immutableArrayOf(DownLeftUpFork, DownRightUpFork))
+                        put(UP, listOf(DownLeftUpFork, DownRightUpFork))
                     }
                     if (DOWN !in traverseDirections) {
-                        put(DOWN, immutableArrayOf(UpLeftDownFork, UpRightDownFork))
+                        put(DOWN, listOf(UpLeftDownFork, UpRightDownFork))
                     }
                 }
             }
@@ -152,28 +149,28 @@ sealed class Tile(
         data object HorizontalTrack : BaseHorizontalTrack(), ModifiableTile {
             override fun getIncomingDirectionsAfterModification(
                 traverseDirections: EnumSet<Direction>
-            ): EnumMap<Direction, ImmutableArray<Tile>> {
+            ): EnumMap<Direction, List<Tile>> {
                 if (LEFT in traverseDirections && RIGHT in traverseDirections) return EnumMap(Direction::class.java)
-                return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
+                return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
                     put(
                         UP,
-                        buildImmutableArray {
+                        buildList {
                             if (LEFT !in traverseDirections) add(DownRightLeftFork)
                             if (RIGHT !in traverseDirections) add(DownLeftRightFork)
                         }
                     )
                     put(
                         DOWN,
-                        buildImmutableArray {
+                        buildList {
                             if (LEFT !in traverseDirections) add(UpRightLeftFork)
                             if (RIGHT !in traverseDirections) add(UpLeftRightFork)
                         }
                     )
                     if (LEFT !in traverseDirections) {
-                        put(LEFT, immutableArrayOf(UpRightLeftFork, DownRightLeftFork))
+                        put(LEFT, listOf(UpRightLeftFork, DownRightLeftFork))
                     }
                     if (RIGHT !in traverseDirections) {
-                        put(RIGHT, immutableArrayOf(UpLeftRightFork, DownLeftRightFork))
+                        put(RIGHT, listOf(UpLeftRightFork, DownLeftRightFork))
                     }
                 }
             }
@@ -230,10 +227,10 @@ sealed class Tile(
             data object DownRightTurn : BaseDownRightTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
                     traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, ImmutableArray<Tile>> {
-                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                        put(DOWN, immutableArrayOf(DownRightUpFork))
-                        put(RIGHT, immutableArrayOf(DownRightLeftFork))
+                ): EnumMap<Direction, List<Tile>> {
+                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                        put(DOWN, listOf(DownRightUpFork))
+                        put(RIGHT, listOf(DownRightLeftFork))
                     }
                 }
 
@@ -269,10 +266,10 @@ sealed class Tile(
             data object DownLeftTurn : BaseDownLeftTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
                     traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, ImmutableArray<Tile>> {
-                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                        put(DOWN, immutableArrayOf(DownLeftUpFork))
-                        put(LEFT, immutableArrayOf(DownLeftRightFork))
+                ): EnumMap<Direction, List<Tile>> {
+                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                        put(DOWN, listOf(DownLeftUpFork))
+                        put(LEFT, listOf(DownLeftRightFork))
                     }
                 }
 
@@ -308,10 +305,10 @@ sealed class Tile(
             data object UpRightTurn : BaseUpRightTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
                     traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, ImmutableArray<Tile>> {
-                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                        put(UP, immutableArrayOf(UpRightDownFork))
-                        put(RIGHT, immutableArrayOf(UpRightLeftFork))
+                ): EnumMap<Direction, List<Tile>> {
+                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                        put(UP, listOf(UpRightDownFork))
+                        put(RIGHT, listOf(UpRightLeftFork))
                     }
                 }
 
@@ -360,10 +357,10 @@ sealed class Tile(
             data object UpLeftTurn : BaseUpLeftTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
                     traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, ImmutableArray<Tile>> {
-                    return EnumMap<Direction, ImmutableArray<Tile>>(Direction::class.java).apply {
-                        put(UP, immutableArrayOf(UpLeftDownFork))
-                        put(LEFT, immutableArrayOf(UpLeftRightFork))
+                ): EnumMap<Direction, List<Tile>> {
+                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                        put(UP, listOf(UpLeftDownFork))
+                        put(LEFT, listOf(UpLeftRightFork))
                     }
                 }
 

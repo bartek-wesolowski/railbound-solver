@@ -1,13 +1,12 @@
 package solver
 
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import model.Action
 import model.Position
 import model.Tile
 
 data class PartialSolverState(
     val state: SolverState,
-    val actions: ImmutableArray<Action>,
+    val actions: List<Action>,
     val enterTiles: Map<Position, Tile>,
 ) {
     fun applyActions(): SolverState {

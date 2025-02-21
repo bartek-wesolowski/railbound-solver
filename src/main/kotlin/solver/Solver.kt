@@ -1,9 +1,5 @@
 package solver
 
-import com.danrusu.pods4k.immutableArrays.immutableArrayOf
-import com.danrusu.pods4k.immutableArrays.indexOf
-import com.danrusu.pods4k.immutableArrays.multiplicativeSpecializations.map
-import com.danrusu.pods4k.immutableArrays.plus
 import model.Barrier
 import model.Board
 import model.Car
@@ -88,7 +84,7 @@ class Solver {
         var partialStates = getMoves(
             partialState = PartialSolverState(
                 state = this,
-                actions = immutableArrayOf(),
+                actions = listOf(),
                 enterTiles = emptyMap()
             ),
             carIndex = 0
