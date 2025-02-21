@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import model.Board
 import model.Car
 import model.CarColor
@@ -19,7 +18,7 @@ import model.CarColor
 @Composable
 fun Solutions(
     solutions: Iterable<Board>,
-    cars: ImmutableArray<Car>,
+    cars: List<Car>,
     carColor: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier,

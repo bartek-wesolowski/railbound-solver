@@ -5,7 +5,7 @@ class Row(val tiles: Array<Tile>) {
         require(tiles.isNotEmpty())
     }
 
-    private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) { tiles.hashCode() }
+    private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) { tiles.contentHashCode() }
 
     val columns: Int get() = tiles.size
 
@@ -35,5 +35,9 @@ class Row(val tiles: Array<Tile>) {
         if (this === other) return true
         if (other !is Row) return false
         return tiles.contentEquals(other.tiles)
+    }
+
+    override fun toString(): String {
+        return tiles.joinToString(prefix = "[", postfix = "]")
     }
 }

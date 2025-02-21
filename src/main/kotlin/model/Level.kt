@@ -1,6 +1,5 @@
 package model
 
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 
@@ -8,7 +7,7 @@ data class Level(
     val name: String,
     val board: Board,
     val carColor: CarColor,
-    val cars: ImmutableArray<Car>,
+    val cars: List<Car>,
     val tracks: Int,
 ) {
     init {

@@ -1,6 +1,5 @@
 package solver
 
-import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import model.Action
 import model.Board
 import model.Car
@@ -11,7 +10,7 @@ import java.util.EnumSet
 
 data class SolverState(
     val board: Board,
-    val activeCars: ImmutableArray<Car>,
+    val activeCars: List<Car>,
     val tracksUsed: Int,
     val expectedCar: Int,
     val traverseDirections: Map<Position, EnumSet<Direction>>,

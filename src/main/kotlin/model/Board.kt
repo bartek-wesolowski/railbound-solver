@@ -16,6 +16,7 @@ import model.Tile.EndingTrack
 import model.Tile.Fork
 import model.Tile.Obstacle
 import model.Tile.Turn
+import util.mapAt
 import java.util.EnumSet
 
 data class Board(
@@ -73,7 +74,7 @@ data class Board(
         return tiles.contentEquals(other.tiles)
     }
 
-    override fun hashCode(): Int = tiles.hashCode()
+    override fun hashCode(): Int = tiles.contentHashCode()
 
     operator fun get(row: Int, column: Int): Tile {
         return tiles[row][column]
@@ -133,9 +134,6 @@ data class Board(
             rowTiles.mapAt(column, tile)
         }
     )
-
-    private fun <T> Array<T>.mapAt(index: Int, transform: (T) -> T): Array<T> = copyOf()
-        .also { it[index] = transform(it[index]) }
 
     fun with(position: Position, tile: Tile): Board = with(position.row, position.column, tile)
 
