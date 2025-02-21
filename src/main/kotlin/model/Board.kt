@@ -17,15 +17,16 @@ import model.Tile.Fork
 import model.Tile.Obstacle
 import model.Tile.Turn
 import util.mapAt
+import java.util.EnumMap
 import java.util.EnumSet
 
 data class Board(
     val tiles: Array<Row>,
-    val toggleables: Map<Color, List<Position>>,
+    val toggleables: EnumMap<Color, List<Position>>,
 ) {
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
-        toggleables = buildMap {
+        toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
                     val tile = tiles[r][c]
