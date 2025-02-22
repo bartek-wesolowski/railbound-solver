@@ -34,12 +34,12 @@ import java.util.PriorityQueue
 
 class Solver {
     fun findSolutions(level: Level): Set<Board> {
-        val statesToCheck = PriorityQueue<SolverState>(compareBy { it.tracksUsed })
+        val statesToCheck = ArrayList<SolverState>()
         val statesChecked = mutableSetOf<SolverState>()
         statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()))
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
-            val state = statesToCheck.poll()
+            val state = statesToCheck.removeLast()
             if (state.isSolved()) {
                 solutions.add(state.board)
                 continue
