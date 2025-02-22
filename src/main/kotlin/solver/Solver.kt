@@ -35,7 +35,7 @@ import java.util.PriorityQueue
 class Solver {
     fun findSolutions(level: Level): Set<Board> {
         val statesToCheck = ArrayList<SolverState>()
-        val statesChecked = mutableSetOf<SolverState>()
+        val statesChecked = hashSetOf<SolverState>()
         statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()))
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
@@ -59,7 +59,7 @@ class Solver {
             val depth2 = p2.second
             depth2.compareTo(depth1)
         })
-        val statesChecked = mutableSetOf<SolverState>()
+        val statesChecked = hashSetOf<SolverState>()
         statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()) to 1)
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
