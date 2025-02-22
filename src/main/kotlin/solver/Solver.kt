@@ -72,7 +72,8 @@ class Solver {
             statesChecked.add(state)
             val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
-            statesToCheck.addAll((nextStates.toSet() - statesChecked).map { it to depth + 1 })
+                .filter { it !in statesChecked }
+            statesToCheck.addAll(nextStates.map { it to depth + 1 })
         }
     }
 
