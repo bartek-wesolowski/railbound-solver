@@ -13,10 +13,10 @@ class Row(val tiles: Array<Tile>) {
 
     operator fun get(column: Int): Tile = tiles[column]
 
-    fun matches(other: Row): Boolean {
-        require(columns == other.columns)
+    fun matches(solution: Row): Boolean {
+        require(columns == solution.columns)
         for (column in 0 until columns) {
-            if (tiles[column] != other[column]) return false
+            if (!tiles[column].matches(solution[column])) return false
         }
         return true
     }
