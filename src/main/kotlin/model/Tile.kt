@@ -133,7 +133,8 @@ sealed class Tile(
             override val color: Color,
             override val open: Boolean,
         ) : BaseVerticalTrack(), Barrier {
-            override fun toggled() = VerticalBarrier(color, !open)
+            private val toggled by lazy(LazyThreadSafetyMode.NONE) { VerticalBarrier(color, !open) }
+            override fun toggled() = toggled
 
             override fun matches(solution: Tile): Boolean {
                 return solution is VerticalBarrier && solution.color == color
@@ -200,7 +201,8 @@ sealed class Tile(
             override val color: Color,
             override val open: Boolean,
         ) : BaseHorizontalTrack(), Barrier {
-            override fun toggled() = HorizontalBarrier(color, !open)
+            private val toggled by lazy(LazyThreadSafetyMode.NONE) { HorizontalBarrier(color, !open) }
+            override fun toggled() = toggled
 
             override fun matches(solution: Tile): Boolean {
                 return solution is HorizontalBarrier && solution.color == color
@@ -334,7 +336,8 @@ sealed class Tile(
             ) : BaseUpRightTurn(
                 fixed = true
             ), Barrier {
-                override fun toggled() = UpRightBarrier(color, !open)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpRightBarrier(color, !open) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return solution is UpRightBarrier && solution.color == color
@@ -412,7 +415,8 @@ sealed class Tile(
             data class DownLeftRightToggleableFork(
                 override val color: Color
             ) : BaseDownLeftRightFork(fixed = true), Toggleable {
-                override fun toggled() = DownRightLeftToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownRightLeftToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is DownLeftRightToggleableFork && solution.color == color) ||
@@ -447,7 +451,8 @@ sealed class Tile(
             data class DownLeftUpToggleableFork(
                 override val color: Color
             ) : BaseDownLeftUpFork(fixed = true), Toggleable {
-                override fun toggled() = UpLeftDownToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpLeftDownToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is DownLeftUpToggleableFork && solution.color == color) ||
@@ -482,7 +487,8 @@ sealed class Tile(
             data class DownRightLeftToggleableFork(
                 override val color: Color
             ) : BaseDownRightLeftFork(fixed = true), Toggleable {
-                override fun toggled() = DownLeftRightToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownLeftRightToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is DownRightLeftToggleableFork && solution.color == color) ||
@@ -517,7 +523,8 @@ sealed class Tile(
             data class DownRightUpToggleableFork(
                 override val color: Color
             ) : BaseDownRightUpFork(fixed = true), Toggleable {
-                override fun toggled() = UpRightDownToggleableFork(color)
+                val toggled by lazy(LazyThreadSafetyMode.NONE) { UpRightDownToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is DownRightUpToggleableFork && solution.color == color) ||
@@ -552,7 +559,8 @@ sealed class Tile(
             data class UpLeftRightToggleableFork(
                 override val color: Color
             ) : BaseUpLeftRightFork(fixed = true), Toggleable {
-                override fun toggled() = UpRightLeftToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpRightLeftToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is UpLeftRightToggleableFork && solution.color == color) ||
@@ -587,7 +595,8 @@ sealed class Tile(
             data class UpLeftDownToggleableFork(
                 override val color: Color
             ) : BaseUpLeftDownFork(fixed = true), Toggleable {
-                override fun toggled() = DownLeftUpToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownLeftUpToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is UpLeftDownToggleableFork && solution.color == color) ||
@@ -622,7 +631,8 @@ sealed class Tile(
             data class UpRightLeftToggleableFork(
                 override val color: Color
             ) : BaseUpRightLeftFork(fixed = true), Toggleable {
-                override fun toggled() = UpLeftRightToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpLeftRightToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is UpRightLeftToggleableFork && solution.color == color) ||
@@ -657,7 +667,8 @@ sealed class Tile(
             data class UpRightDownToggleableFork(
                 override val color: Color
             ) : BaseUpRightDownFork(fixed = true), Toggleable {
-                override fun toggled() = DownRightUpToggleableFork(color)
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownRightUpToggleableFork(color) }
+                override fun toggled() = toggled
 
                 override fun matches(solution: Tile): Boolean {
                     return (solution is UpRightDownToggleableFork && solution.color == color) ||
