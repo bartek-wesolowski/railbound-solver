@@ -1390,7 +1390,7 @@ object Levels {
         )
         val level4_9B = Level(
             name = "4-9B",
-            board = buildBoard(requireFixed = true) {
+            board = buildBoard {
                 row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
                 row(RightTunnel(MINT, CarPosition(7, 8, LEFT)), Empty, DownLeftToggle(ORANGE), Empty, FixedUpRightTurn, FixedHorizontalTrack, HorizontalBarrier(ORANGE, false), FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Obstacle, Empty, Empty, Empty, Empty, Empty)
