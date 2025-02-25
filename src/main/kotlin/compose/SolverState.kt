@@ -7,8 +7,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import model.CarColor
+import model.Color
 import model.Levels
 import solver.SolverState
+import java.util.EnumSet
+import java.util.LinkedHashSet
 
 @Composable
 fun SolverState(
@@ -45,6 +48,8 @@ private fun SolverStatePreview() {
             expectedCar = 1,
             traverseDirections = emptyMap(),
             enterTiles = emptyMap(),
+            toggledColors = EnumSet.noneOf(Color::class.java),
+            breadcrumbs = LinkedHashSet(),
         ),
         carColor = CarColor.RED,
         tileSize = 100.dp

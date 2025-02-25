@@ -2,7 +2,9 @@ package solver
 
 import model.Action
 import model.Board
+import model.Breadcrumb
 import model.Car
+import model.Color
 import model.Direction
 import model.Position
 import model.Tile
@@ -15,6 +17,8 @@ data class SolverState(
     val expectedCar: Int,
     val traverseDirections: Map<Position, EnumSet<Direction>>,
     val enterTiles: Map<Position, Tile>,
+    val toggledColors: EnumSet<Color>,
+    val breadcrumbs: LinkedHashSet<Breadcrumb>,
 ) {
     private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) {
         var result = board.hashCode()

@@ -1,8 +1,12 @@
 package solver
 
+import model.Action
+import model.Action.Toggle
 import model.Barrier
 import model.Board
+import model.Breadcrumb
 import model.Car
+import model.Color
 import model.Direction
 import model.Direction.DOWN
 import model.Direction.LEFT
@@ -31,12 +35,23 @@ import util.mapAt
 import util.removeAt
 import java.util.EnumSet
 import java.util.PriorityQueue
+import kotlin.collections.LinkedHashSet
 
 class Solver {
     fun findSolutions(level: Level): Set<Board> {
         val statesToCheck = ArrayList<SolverState>()
-        val statesChecked = hashSetOf<SolverState>()
-        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()))
+        statesToCheck.add(
+            SolverState(
+                board = level.board,
+                activeCars = level.cars,
+                tracksUsed = 0,
+                expectedCar = 1,
+                traverseDirections = emptyMap(),
+                enterTiles = emptyMap(),
+                toggledColors = EnumSet.noneOf(Color::class.java),
+                breadcrumbs = LinkedHashSet()
+            )
+        )
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.removeLast()
@@ -44,10 +59,9 @@ class Solver {
                 solutions.add(state.board)
                 continue
             }
-            statesChecked.add(state)
             val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
-                .filter { it !in statesChecked }
+                .filter { Breadcrumb(it.activeCars, it.toggledColors) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates)
         }
         return solutions
@@ -59,8 +73,18 @@ class Solver {
             val depth2 = p2.second
             depth2.compareTo(depth1)
         })
-        val statesChecked = hashSetOf<SolverState>()
-        statesToCheck.add(SolverState(level.board, level.cars, 0, 1, emptyMap(), emptyMap()) to 1)
+        statesToCheck.add(
+            SolverState(
+                board = level.board,
+                activeCars = level.cars,
+                tracksUsed = 0,
+                expectedCar = 1,
+                traverseDirections = emptyMap(),
+                enterTiles = emptyMap(),
+                toggledColors = EnumSet.noneOf(Color::class.java),
+                breadcrumbs = LinkedHashSet(),
+            ) to 1
+        )
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val (state, depth) = statesToCheck.poll()
@@ -69,10 +93,9 @@ class Solver {
                 solutions.add(state.board)
                 continue
             }
-            statesChecked.add(state)
             val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
-                .filter { it !in statesChecked }
+                .filter { Breadcrumb(it.activeCars, it.toggledColors) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates.map { it to depth + 1 })
         }
     }
@@ -101,7 +124,16 @@ class Solver {
         }
         return partialStates.map { partialState ->
             partialState.applyActions()
-                .copy(enterTiles = partialState.enterTiles)
+                .copy(
+                    enterTiles = partialState.enterTiles,
+                    toggledColors = partialState.state.toggledColors.withUpdatedToggledColors(partialState.actions),
+                    breadcrumbs = partialState.state.breadcrumbs.plus(
+                        Breadcrumb(
+                            cars = activeCars,
+                            toggledColors = toggledColors
+                        )
+                    ) as LinkedHashSet<Breadcrumb>
+                )
         }
     }
 
@@ -137,6 +169,24 @@ class Solver {
             }
         }
         true
+    }
+
+    private fun EnumSet<Color>.withUpdatedToggledColors(actions: List<Action>): EnumSet<Color> {
+        return if (isEmpty()) {
+            EnumSet.noneOf(Color::class.java)
+        } else {
+            EnumSet.copyOf(this)
+        }.apply {
+            actions.forEach { action ->
+                if (action is Toggle) {
+                    if (action.color in this) {
+                        remove(action.color)
+                    } else {
+                        add(action.color)
+                    }
+                }
+            }
+        }
     }
 
     private fun arePositionsSwitched(initialCarA: Car, carA: Car, initialCarB: Car, carB: Car): Boolean {
