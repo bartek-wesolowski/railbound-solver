@@ -1,5 +1,6 @@
 package solver
 
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentSet
 import model.Action
 import model.Board
@@ -13,7 +14,7 @@ import java.util.EnumSet
 
 data class SolverState(
     val board: Board,
-    val activeCars: List<Car>,
+    val activeCars: PersistentList<Car>,
     val tracksUsed: Int,
     val expectedCar: Int,
     val traverseDirections: Map<Position, EnumSet<Direction>>,

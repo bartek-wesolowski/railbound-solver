@@ -1,5 +1,6 @@
 package solver
 
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentSetOf
 import model.Action
 import model.Action.Toggle
@@ -7,6 +8,7 @@ import model.Barrier
 import model.Board
 import model.Breadcrumb
 import model.Car
+import model.CarPosition
 import model.Color
 import model.Direction
 import model.Direction.DOWN
@@ -32,8 +34,6 @@ import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
 import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
 import model.Toggleable
 import model.Tunnel
-import util.mapAt
-import util.removeAt
 import java.util.EnumSet
 import java.util.PriorityQueue
 
@@ -213,7 +213,6 @@ class Solver {
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
         val car = state.activeCars[carIndex].copy(position = newCarPosition)
-        val newCars = state.activeCars.mapAt(carIndex) { it.copy(position = newCarPosition) }
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
             Empty -> availableTilesByDirection.getValue(car.direction)
@@ -233,7 +232,7 @@ class Solver {
                                 newCarPosition.column,
                                 insertedTile
                             ),
-                            activeCars = newCars,
+                            activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                             tracksUsed = state.tracksUsed + 1,
                             traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
                                 state.traverseDirections.with(newPosition, car.direction)
@@ -285,7 +284,7 @@ class Solver {
                         add(
                             partialState.copy(
                                 state = state.copy(
-                                    activeCars = newCars,
+                                    activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                                     traverseDirections = traverseDirections,
                                 ),
                                 actions = actions,
@@ -324,7 +323,7 @@ class Solver {
                                                 newCarPosition.column,
                                                 modifiedTile
                                             ),
-                                            activeCars = newCars,
+                                            activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                                         )
                                     )
                                 }
@@ -334,8 +333,20 @@ class Solver {
                 }
             }
 
-            is Tunnel -> listOf(partialState.copy(state = state.copy(activeCars = newCars)))
+            is Tunnel -> listOf(
+                partialState.copy(
+                    state = state.copy(
+                        activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition)
+                    )
+                )
+            )
         }
+    }
+
+    private fun PersistentList<Car>.withNewCarPosition(carIndex: Int, carPosition: CarPosition): PersistentList<Car> {
+        val builder = builder()
+        builder[carIndex] = get(carIndex).copy(position = carPosition)
+        return builder.build()
     }
 
     private fun Map<Position, EnumSet<Direction>>.with(
