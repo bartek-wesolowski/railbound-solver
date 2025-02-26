@@ -1,5 +1,6 @@
 package solver
 
+import kotlinx.collections.immutable.PersistentSet
 import model.Action
 import model.Board
 import model.Breadcrumb
@@ -18,7 +19,7 @@ data class SolverState(
     val traverseDirections: Map<Position, EnumSet<Direction>>,
     val enterTiles: Map<Position, Tile>,
     val toggledColors: EnumSet<Color>,
-    val breadcrumbs: LinkedHashSet<Breadcrumb>,
+    val breadcrumbs: PersistentSet<Breadcrumb>,
 ) {
     private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) {
         var result = board.hashCode()

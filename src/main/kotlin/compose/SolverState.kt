@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.persistentSetOf
 import model.CarColor
 import model.Color
 import model.Levels
 import solver.SolverState
 import java.util.EnumSet
-import java.util.LinkedHashSet
 
 @Composable
 fun SolverState(
@@ -49,7 +49,7 @@ private fun SolverStatePreview() {
             traverseDirections = emptyMap(),
             enterTiles = emptyMap(),
             toggledColors = EnumSet.noneOf(Color::class.java),
-            breadcrumbs = LinkedHashSet(),
+            breadcrumbs = persistentSetOf(),
         ),
         carColor = CarColor.RED,
         tileSize = 100.dp

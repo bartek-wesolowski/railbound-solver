@@ -1,5 +1,6 @@
 package solver
 
+import kotlinx.collections.immutable.persistentSetOf
 import model.Action
 import model.Action.Toggle
 import model.Barrier
@@ -35,7 +36,6 @@ import util.mapAt
 import util.removeAt
 import java.util.EnumSet
 import java.util.PriorityQueue
-import kotlin.collections.LinkedHashSet
 
 class Solver {
     fun findSolutions(level: Level): Set<Board> {
@@ -49,7 +49,7 @@ class Solver {
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
-                breadcrumbs = LinkedHashSet()
+                breadcrumbs = persistentSetOf()
             )
         )
         val solutions = mutableSetOf<Board>()
@@ -82,7 +82,7 @@ class Solver {
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
-                breadcrumbs = LinkedHashSet(),
+                breadcrumbs = persistentSetOf(),
             ) to 1
         )
         val solutions = mutableSetOf<Board>()
@@ -127,12 +127,12 @@ class Solver {
                 .copy(
                     enterTiles = partialState.enterTiles,
                     toggledColors = partialState.state.toggledColors.withUpdatedToggledColors(partialState.actions),
-                    breadcrumbs = partialState.state.breadcrumbs.plus(
+                    breadcrumbs = partialState.state.breadcrumbs.add(
                         Breadcrumb(
                             cars = activeCars,
                             toggledColors = toggledColors
                         )
-                    ) as LinkedHashSet<Breadcrumb>
+                    )
                 )
         }
     }
