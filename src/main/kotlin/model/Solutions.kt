@@ -1668,8 +1668,8 @@ object Solutions {
             buildBoard {
                 row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
                 row(RightTunnel(MINT, CarPosition(7, 8, LEFT)), HorizontalTrack, DownLeftToggle(ORANGE), Empty, FixedUpRightTurn, FixedHorizontalTrack, HorizontalBarrier(ORANGE, open=true), FixedHorizontalTrack, EndingTrack)
-                row(Empty, DownRightTurn, UpLeftDownFork, Obstacle, Empty, Empty, Empty, Empty, Empty)
-                row(Empty, UpRightDownFork, DownLeftUpFork, Obstacle, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightTurn, UpLeftTurn, Obstacle, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, UpRightDownFork, DownLeftTurn, Obstacle, Empty, Empty, Empty, Empty, Empty)
                 row(RightTunnel(GRAY, CarPosition(7, 0, RIGHT)), UpRightLeftFork, UpLeftToggle(Color.PURPLE), Empty, HorizontalToggle(Color.PURPLE), Empty, DownRightTurn, DownRightLeftToggleableFork(Color.PURPLE), LeftTunnel(BEIGE, CarPosition(0, 4, DOWN)))
                 row(Empty, Empty, Empty, Empty, Obstacle, Empty, UpRightTurn, DownLeftUpFork, Empty)
                 row(Empty, Empty, Empty, Empty, Empty, Empty, DownRightTurn, UpLeftDownFork, Empty)
