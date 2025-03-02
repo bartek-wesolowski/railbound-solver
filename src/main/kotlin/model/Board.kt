@@ -22,27 +22,27 @@ import java.util.EnumSet
 
 data class Board(
     val tiles: Array<Row>,
-    val toggleables: EnumMap<Color, List<Position>>,
 ) {
-    constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
-        tiles = tiles,
-        toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
-            for (r in tiles.indices) {
-                for (c in tiles[r].indices) {
-                    val tile = tiles[r][c]
-                    if (tile is Toggleable) {
-                        val color = tile.color
-                        val position = Position(r, c)
-                        if (color in keys) {
-                            put(color, getValue(color) + position)
-                        } else {
-                            put(color, listOf(position))
-                        }
+    private val toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
+        for (r in tiles.indices) {
+            for (c in tiles[r].indices) {
+                val tile = tiles[r][c]
+                if (tile is Toggleable) {
+                    val color = tile.color
+                    val position = Position(r, c)
+                    if (color in keys) {
+                        put(color, getValue(color) + position)
+                    } else {
+                        put(color, listOf(position))
                     }
                 }
             }
-            require(values.all { it.isNotEmpty() })
-        },
+        }
+        require(values.all { it.isNotEmpty() })
+    }
+
+    constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
+        tiles = tiles,
     ) {
         if (requireFixed) {
             for (r in tiles.indices) {
