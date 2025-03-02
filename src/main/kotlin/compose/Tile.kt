@@ -2,16 +2,21 @@ package compose
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import model.Action
 import model.Action.Toggle
 import model.Barrier
@@ -19,10 +24,12 @@ import model.HasAction
 import model.Tile
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseHorizontalTrack.HorizontalStop
 import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalStop
 import model.Tile.BaseVerticalTrack.VerticalToggle
 import model.Tile.BaseVerticalTrack.VerticalTrack
 import model.Tile.DownTunnel
@@ -62,6 +69,11 @@ import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggle
 import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggleableFork
 import model.Tile.LeftTunnel
 import model.Tile.Obstacle
+import model.Tile.Platform
+import model.Tile.Platform.DownPlatform
+import model.Tile.Platform.LeftPlatform
+import model.Tile.Platform.RightPlatform
+import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
@@ -98,6 +110,7 @@ fun Tile(
                 drawAction(size, tile.action)
             }
             is HorizontalBarrier -> drawHorizontalBarrier(size, tile.getColor(), tile.open)
+            is HorizontalStop ->drawHorizontalTrack(size, fixedTrackColor)
 
             is VerticalTrack -> drawVerticalTrack(size, trackColor)
             is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
@@ -106,6 +119,8 @@ fun Tile(
                 drawAction(size, tile.action)
             }
             is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
+            is VerticalStop -> drawVerticalTrack(size, fixedTrackColor)
+
             is DownRightTurn -> drawDownRightTurn(size, trackColor)
             is FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
             is DownRightToggle -> {
@@ -199,6 +214,12 @@ fun Tile(
             Empty -> {}
             EndingTrack -> drawEndingTrack(size)
             Obstacle -> drawObstacle(size)
+
+            is DownPlatform -> drawDownPlatform(size, tile.isFull)
+            is LeftPlatform -> drawLeftPlatform(size, tile.isFull)
+            is RightPlatform -> drawRightPlatform(size, tile.isFull)
+            is UpPlatform -> drawUpPlatform(size, tile.isFull)
+
             is DownTunnel -> drawDownTunnel(size, tile.color)
             is LeftTunnel -> drawLeftTunnel(size, tile.color)
             is RightTunnel -> drawRightTunnel(size, tile.color)
@@ -206,6 +227,48 @@ fun Tile(
         }
         if (tile is HasAction) {
             drawAction(size, tile.action)
+        }
+    }
+    if (tile is Platform) {
+        when (tile) {
+            is DownPlatform -> Text(
+                tile.number.toString(),
+                fontSize = 32.sp,
+                modifier = Modifier.padding(
+                    start = size * 0.6f,
+                    top = size * 0.42f,
+                )
+            )
+            is LeftPlatform -> Text(
+                tile.number.toString(),
+                fontSize = 32.sp,
+                modifier = Modifier.padding(
+                    start = size * 0.37f,
+                    top = size * 0.5f,
+                )
+                    .rotate(90f)
+            )
+
+            is RightPlatform -> Text(
+                tile.number.toString(),
+                fontSize = 32.sp,
+                modifier = Modifier.padding(
+                    start = size * 0.5f,
+                    top = size * 0.2f,
+                )
+                    .rotate(270f)
+            )
+
+            is UpPlatform -> Text(
+                tile.number.toString(),
+                fontSize = 32.sp,
+                modifier = Modifier.padding(
+                    start = size * 0.17f,
+                    top = size * 0.17f,
+                )
+                    .rotate(180f)
+            )
+
         }
     }
 }
@@ -454,6 +517,66 @@ private fun DrawScope.drawUpRightLeftFork(size: Dp, color: Color) {
     drawHorizontalTrack(size, color)
 }
 
+private fun DrawScope.drawDownPlatform(size: Dp, full: Boolean) {
+    drawRect(
+        color = fixedTrackColor,
+        topLeft = Offset(0f, size.toPx() * 0.25f),
+        size = Size(size.toPx(), size.toPx() * 0.75f),
+        style = Stroke(width = getTrackStrokeWidth(size))
+    )
+    drawCircle(
+        color = fixedTrackColor,
+        radius = size.toPx() * 0.125f,
+        center = Offset(size.toPx() * 0.25f, size.toPx() * 0.625f),
+        style = if (full) Fill else Stroke(width = getTrackStrokeWidth(size))
+    )
+}
+
+private fun DrawScope.drawLeftPlatform(size: Dp, full: Boolean) {
+    drawRect(
+        color = fixedTrackColor,
+        topLeft = Offset(0f, 0f),
+        size = Size(size.toPx() * 0.75f, size.toPx()),
+        style = Stroke(width = getTrackStrokeWidth(size))
+    )
+    drawCircle(
+        color = fixedTrackColor,
+        radius = size.toPx() * 0.125f,
+        center = Offset(size.toPx() * 0.375f, size.toPx() * 0.25f),
+        style = if (full) Fill else Stroke(width = getTrackStrokeWidth(size))
+    )
+}
+
+private fun DrawScope.drawRightPlatform(size: Dp, full: Boolean) {
+    drawRect(
+        color = fixedTrackColor,
+        topLeft = Offset(size.toPx() * 0.25f, 0f),
+        size = Size(size.toPx() * 0.75f, size.toPx()),
+        style = Stroke(width = getTrackStrokeWidth(size))
+    )
+    drawCircle(
+        color = fixedTrackColor,
+        radius = size.toPx() * 0.125f,
+        center = Offset(size.toPx() * 0.625f, size.toPx() * 0.75f),
+        style = if (full) Fill else Stroke(width = getTrackStrokeWidth(size))
+    )
+}
+
+private fun DrawScope.drawUpPlatform(size: Dp, full: Boolean) {
+    drawRect(
+        color = fixedTrackColor,
+        topLeft = Offset(0f, 0f),
+        size = Size(size.toPx(), size.toPx() * 0.75f),
+        style = Stroke(width = getTrackStrokeWidth(size))
+    )
+    drawCircle(
+        color = fixedTrackColor,
+        radius = size.toPx() * 0.125f,
+        center = Offset(size.toPx() * 0.75f, size.toPx() * 0.375f),
+        style = if (full) Fill else Stroke(width = getTrackStrokeWidth(size))
+    )
+}
+
 private fun DrawScope.drawDownTunnel(size: Dp, color: TunnelColor) {
     drawVerticalTrack(size, fixedTrackColor)
     drawArc(
@@ -522,7 +645,7 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 @Composable
 private fun TilePreview() {
     Tile(
-        tile = UpRightBarrier(model.Color.PURPLE, open = true),
+        tile = UpPlatform(1, true),
         size = 100.dp
     )
 }

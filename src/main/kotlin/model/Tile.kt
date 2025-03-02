@@ -140,6 +140,8 @@ sealed class Tile(
                 return solution is VerticalBarrier && solution.color == color
             }
         }
+
+        data object VerticalStop : BaseVerticalTrack()
     }
 
     sealed class BaseHorizontalTrack : Tile(
@@ -208,6 +210,8 @@ sealed class Tile(
                 return solution is HorizontalBarrier && solution.color == color
             }
         }
+
+        data object HorizontalStop : BaseHorizontalTrack()
     }
 
     sealed class Turn(
@@ -739,8 +743,49 @@ sealed class Tile(
     }
 
     data object EndingTrack : Tile(RIGHT) {
-        override fun getNextPosition(position: CarPosition): CarPosition {
+        override fun getNextPosition(position: CarPosition): Nothing {
             throw IllegalStateException("Ending track should not be used")
+        }
+    }
+
+    sealed class Platform(
+        open val number: Int,
+        open val isFull: Boolean,
+    ) : Tile() {
+        data class LeftPlatform(
+            override val number: Int,
+            override val isFull: Boolean,
+        ) : Platform(number, isFull) {
+            override fun getNextPosition(position: CarPosition): Nothing {
+                throw IllegalStateException("Left platform should not be used")
+            }
+        }
+
+        data class RightPlatform(
+            override val number: Int,
+            override val isFull: Boolean,
+        ) : Platform(number, isFull) {
+            override fun getNextPosition(position: CarPosition): Nothing {
+                throw IllegalStateException("Right platform should not be used")
+            }
+        }
+
+        data class UpPlatform(
+            override val number: Int,
+            override val isFull: Boolean,
+        ) : Platform(number, isFull) {
+            override fun getNextPosition(position: CarPosition): Nothing {
+                throw IllegalStateException("Up platform should not be used")
+            }
+        }
+
+        data class DownPlatform(
+            override val number: Int,
+            override val isFull: Boolean,
+        ) : Platform(number, isFull) {
+            override fun getNextPosition(position: CarPosition): Nothing {
+                throw IllegalStateException("Down platform should not be used")
+            }
         }
     }
 

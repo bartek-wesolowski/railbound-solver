@@ -27,6 +27,7 @@ import model.Tile.Empty
 import model.Tile.EndingTrack
 import model.Tile.Fork
 import model.Tile.Obstacle
+import model.Tile.Platform
 import model.Tile.Turn
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
 import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
@@ -215,6 +216,7 @@ class Solver {
         val car = state.activeCars[carIndex].copy(position = newCarPosition)
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
+            is Platform -> emptyList()
             Empty -> availableTilesByDirection.getValue(car.direction)
                 .filter { availableTile ->
                     state.board.canInsert(
