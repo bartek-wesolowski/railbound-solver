@@ -209,7 +209,7 @@ class Solver {
         } else {
             state.board[carPosition.row, carPosition.column]
         }
-        val newCarPosition = tile.getNextPosition(carPosition)
+        val newCarPosition = tile.getNextPosition(partialState.state.board, carPosition)
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
