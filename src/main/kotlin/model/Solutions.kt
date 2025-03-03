@@ -13,6 +13,7 @@ import model.Direction.RIGHT
 import model.Direction.UP
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseHorizontalTrack.HorizontalStop
 import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
@@ -50,6 +51,7 @@ import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggle
 import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggleableFork
 import model.Tile.LeftTunnel
 import model.Tile.Obstacle
+import model.Tile.Platform.DownPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
@@ -1704,8 +1706,24 @@ object Solutions {
         )
     }
 
+    object World5 {
+        val level5_1 = setOf(
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(Empty, DownRightTurn, HorizontalStop(1), DownLeftTurn, Empty)
+                row(Empty, VerticalTrack, Empty, VerticalTrack, Empty)
+                row(FixedHorizontalTrack, UpLeftTurn, Empty, UpRightTurn, EndingTrack)
+            }
+        )
+
+        val solutions = mapOf(
+            "5-1" to level5_1,
+        )
+    }
+
     val solutions = World1.solutions +
             World2.solutions +
             World3.solutions +
-            World4.solutions
+            World4.solutions +
+            World5.solutions
 }

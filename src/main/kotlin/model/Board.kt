@@ -1,20 +1,24 @@
 package model
 
-import model.Action.Toggle
+import model.Action.TakePassenger
+import model.Action.ToggleColor
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
 import model.Direction.UP
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
+import model.Tile.BaseHorizontalTrack.HorizontalStop
 import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalStop
 import model.Tile.BaseVerticalTrack.VerticalToggle
 import model.Tile.Empty
 import model.Tile.EndingTrack
 import model.Tile.Fork
 import model.Tile.Obstacle
+import model.Tile.Platform
 import model.Tile.Turn
 import util.mapAt
 import java.util.EnumMap
@@ -23,6 +27,9 @@ import java.util.EnumSet
 data class Board(
     val tiles: Array<Row>,
 ) {
+    val rows: Int = tiles.size
+    val columns: Int = tiles.first().columns
+
     private val toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
         for (r in tiles.indices) {
             for (c in tiles[r].indices) {
@@ -39,6 +46,29 @@ data class Board(
             }
         }
         require(values.all { it.isNotEmpty() })
+    }
+
+    private val platforms: Map<Stop, Position> = buildMap {
+        for (r in tiles.indices) {
+            for (c in tiles[r].indices) {
+                val tile = tiles[r][c]
+                if (tile is HorizontalStop) {
+                    if (r > 0 && tiles[r - 1][c] is Platform) {
+                        put(tile, Position(r - 1, c))
+                    }
+                    if (r < rows - 1 && tiles[r + 1][c] is Platform) {
+                        put(tile, Position(r + 1, c))
+                    }
+                } else if (tile is VerticalStop) {
+                    if (c > 0 && tiles[r][c - 1] is Platform) {
+                        put(tile, Position(r, c - 1))
+                    }
+                    if (c < columns - 1 && tiles[r][c + 1] is Platform) {
+                        put(tile, Position(r, c + 1))
+                    }
+                }
+            }
+        }
     }
 
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
@@ -85,9 +115,6 @@ data class Board(
         return tiles[position.row][position.column]
     }
 
-    val rows: Int = tiles.size
-    val columns: Int = tiles.first().columns
-
     override fun toString(): String {
         val sb = StringBuilder("[\n")
         for (row in tiles) {
@@ -96,6 +123,12 @@ data class Board(
         sb.append("]")
         return sb.toString()
     }
+
+    fun getPlatformPosition(stop: Stop): Position = platforms.getValue(stop)
+
+    fun getPlatform(stop: Stop): Platform = this[getPlatformPosition(stop)] as Platform
+
+    fun isAllPlatformsEmpty(): Boolean = platforms.keys.all { !getPlatform(it).isFull }
 
     fun canInsert(row: Int, column: Int, tile: Tile, traverseDirections: EnumSet<Direction>): Boolean {
         if (row < 0 || row >= rows) return false
@@ -147,8 +180,8 @@ data class Board(
 
     fun apply(action: Action): Board {
         return when (action) {
-            is Toggle -> {
-                val barrierPositions = toggleables.get(action.color).orEmpty()
+            is ToggleColor -> {
+                val barrierPositions = toggleables[action.color].orEmpty()
                 var updatedBoard: Board = this
                 for (position in barrierPositions) {
                     updatedBoard = updatedBoard.with(
@@ -157,6 +190,13 @@ data class Board(
                     )
                 }
                 updatedBoard
+            }
+
+            is TakePassenger -> {
+                with(
+                    action.platformPosition,
+                    (this[action.platformPosition] as Platform).withoutPassenger()
+                )
             }
         }
     }
