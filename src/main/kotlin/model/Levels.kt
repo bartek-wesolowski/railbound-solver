@@ -20,6 +20,7 @@ import model.Tile.BaseHorizontalTrack.HorizontalStop
 import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalStop
 import model.Tile.BaseVerticalTrack.VerticalToggle
 import model.Tile.DownTunnel
 import model.Tile.Empty
@@ -45,6 +46,7 @@ import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggleableFork
 import model.Tile.LeftTunnel
 import model.Tile.Obstacle
 import model.Tile.Platform.DownPlatform
+import model.Tile.Platform.LeftPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
@@ -1453,9 +1455,25 @@ object Levels {
             ),
             tracks = 6,
         )
+        val level5_2 = Level(
+            name = "5-2",
+            board = buildBoard {
+                row(Empty, Empty, Empty, EndingTrack)
+                row(VerticalStop(1), LeftPlatform(1, true), Empty, Empty)
+                row(FixedVerticalTrack, Empty, Empty, Empty)
+                row(Empty, Empty, FixedHorizontalTrack, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(2, 0, UP)),
+                Car(2, CarPosition(3, 2, LEFT)),
+            ),
+            tracks = 5,
+        )
 
         val levels = listOf(
-            level5_1
+            level5_1,
+            level5_2,
         ).associateBy { it.name }
     }
 

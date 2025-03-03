@@ -18,6 +18,7 @@ import model.Tile.BaseHorizontalTrack.HorizontalToggle
 import model.Tile.BaseHorizontalTrack.HorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 import model.Tile.BaseVerticalTrack.VerticalBarrier
+import model.Tile.BaseVerticalTrack.VerticalStop
 import model.Tile.BaseVerticalTrack.VerticalToggle
 import model.Tile.BaseVerticalTrack.VerticalTrack
 import model.Tile.DownTunnel
@@ -52,6 +53,7 @@ import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggleableFork
 import model.Tile.LeftTunnel
 import model.Tile.Obstacle
 import model.Tile.Platform.DownPlatform
+import model.Tile.Platform.LeftPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
@@ -1715,9 +1717,18 @@ object Solutions {
                 row(FixedHorizontalTrack, UpLeftTurn, Empty, UpRightTurn, EndingTrack)
             }
         )
+        val level5_2 = setOf(
+            buildBoard {
+                row(DownRightTurn, HorizontalTrack, HorizontalTrack, EndingTrack)
+                row(VerticalStop(1), LeftPlatform(1, false), Empty, Empty)
+                row(FixedVerticalTrack, Empty, Empty, Empty)
+                row(UpRightTurn, HorizontalTrack, FixedHorizontalTrack, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "5-1" to level5_1,
+            "5-2" to level5_2,
         )
     }
 
