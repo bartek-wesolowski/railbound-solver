@@ -49,6 +49,7 @@ class Solver {
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
+                passengersTaken = emptySet(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 breadcrumbs = persistentSetOf()
             )
@@ -84,6 +85,7 @@ class Solver {
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
+                passengersTaken = emptySet(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 breadcrumbs = persistentSetOf(),
             ) to 1
@@ -110,7 +112,7 @@ class Solver {
             partialState = PartialSolverState(
                 state = this,
                 actions = listOf(),
-                enterTiles = emptyMap()
+                enterTiles = emptyMap(),
             ),
             carIndex = 0
         )
@@ -127,6 +129,10 @@ class Solver {
             partialState.applyActions()
                 .copy(
                     enterTiles = partialState.enterTiles,
+                    passengersTaken = partialState.actions
+                        .filterIsInstance<TakePassenger>()
+                        .map { it.platformPosition }
+                        .toSet(),
                     toggledColors = partialState.state.toggledColors.withUpdatedToggledColors(partialState.actions),
                     breadcrumbs = partialState.state.breadcrumbs.add(
                         Breadcrumb(
@@ -210,7 +216,7 @@ class Solver {
         } else {
             state.board[carPosition.row, carPosition.column]
         }
-        val newCarPosition = tile.getNextPosition(partialState.state.board, car)
+        val newCarPosition = tile.getNextPosition(partialState.state.board, partialState.state.passengersTaken, car)
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()

@@ -89,6 +89,8 @@ data class Board(
                                 tile is HorizontalToggle ||
                                 tile is FixedVerticalTrack ||
                                 tile is VerticalToggle ||
+                                tile is Platform ||
+                                tile is Stop ||
                                 (tile is Turn && tile.fixed) ||
                                 (tile is Fork && tile.fixed)
                     ) {

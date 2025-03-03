@@ -48,6 +48,7 @@ private fun SolverStatePreview() {
             expectedCar = 1,
             traverseDirections = emptyMap(),
             enterTiles = emptyMap(),
+            passengersTaken = emptySet(),
             toggledColors = EnumSet.noneOf(Color::class.java),
             breadcrumbs = persistentSetOf(),
         ),

@@ -1395,7 +1395,7 @@ object Levels {
         )
         val level4_9B = Level(
             name = "4-9B",
-            board = buildBoard {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, Empty, DownTunnel(BEIGE, CarPosition(4, 8, LEFT)), Empty, Empty, Empty, Empty)
                 row(RightTunnel(MINT, CarPosition(7, 8, LEFT)), Empty, DownLeftToggle(ORANGE), Empty, FixedUpRightTurn, FixedHorizontalTrack, HorizontalBarrier(ORANGE, false), FixedHorizontalTrack, EndingTrack)
                 row(Empty, Empty, Empty, Obstacle, Empty, Empty, Empty, Empty, Empty)
@@ -1443,7 +1443,7 @@ object Levels {
     object World5 {
         val level5_1 = Level(
             name = "5-1",
-            board = buildBoard {
+            board = buildBoard(requireFixed = true) {
                 row(Obstacle, Obstacle, DownPlatform(1, true), Obstacle, Obstacle)
                 row(Empty, Empty, HorizontalStop(1), Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
@@ -1457,7 +1457,7 @@ object Levels {
         )
         val level5_2 = Level(
             name = "5-2",
-            board = buildBoard {
+            board = buildBoard(requireFixed = true) {
                 row(Empty, Empty, Empty, EndingTrack)
                 row(VerticalStop(1), LeftPlatform(1, true), Empty, Empty)
                 row(FixedVerticalTrack, Empty, Empty, Empty)
@@ -1470,15 +1470,33 @@ object Levels {
             ),
             tracks = 5,
         )
+        val level5_3 = Level(
+            name = "5-3",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, Empty, FixedHorizontalTrack, Empty, Empty)
+                row(Obstacle, Obstacle, DownPlatform(2, true), Empty, EndingTrack)
+                row(FixedHorizontalTrack, Empty, HorizontalStop(2), Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(1, 0, RIGHT)),
+                Car(2, CarPosition(3, 0, RIGHT)),
+            ),
+            tracks = 8,
+        )
 
         val levels = listOf(
             level5_1,
             level5_2,
+            level5_3,
         ).associateBy { it.name }
     }
 
     val levels = World1.levels +
             World2.levels +
             World3.levels +
-            World4.levels
+            World4.levels +
+            World5.levels
 }

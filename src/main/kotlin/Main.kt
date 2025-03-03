@@ -14,7 +14,7 @@ import model.Solutions
 import solver.Solver
 
 private val tileSize = 70.dp
-private const val levelName = "4-9B"
+private const val levelName = "5-3"
 private val level = Levels.levels.getValue(levelName)
 private val predefinedSolutions = Solutions.solutions.getValue(levelName)
 private val solver = Solver()
