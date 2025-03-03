@@ -2,6 +2,7 @@ package compose
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import model.Barrier
 import model.Board
 import model.Board.Companion.buildBoard
+import model.Board.Companion.row
 import model.Tile
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
@@ -100,172 +102,188 @@ fun Tile(
     tile: Tile,
     size: Dp
 ) {
-    Canvas(modifier = Modifier.size(size)) {
-        drawBorder()
-        when (tile) {
-            is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
-            is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
-            is HorizontalToggle -> {
-                drawHorizontalTrack(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is HorizontalBarrier -> drawHorizontalBarrier(size, tile.getColor(), tile.open)
-            is HorizontalStop ->drawHorizontalTrack(size, fixedTrackColor)
+    Box {
+        Canvas(modifier = Modifier.size(size)) {
+            drawBorder()
+            when (tile) {
+                is HorizontalTrack -> drawHorizontalTrack(size, trackColor)
+                is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
+                is HorizontalToggle -> {
+                    drawHorizontalTrack(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
 
-            is VerticalTrack -> drawVerticalTrack(size, trackColor)
-            is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
-            is VerticalToggle -> {
-                drawVerticalTrack(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
-            is VerticalStop -> drawVerticalTrack(size, fixedTrackColor)
+                is HorizontalBarrier -> drawHorizontalBarrier(size, tile.getColor(), tile.open)
+                is HorizontalStop -> drawHorizontalTrack(size, fixedTrackColor)
 
-            is DownRightTurn -> drawDownRightTurn(size, trackColor)
-            is FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
-            is DownRightToggle -> {
-                drawDownRightTurn(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is DownLeftTurn -> drawDownLeftTurn(size, trackColor)
-            is FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
-            is DownLeftToggle -> {
-                drawDownLeftTurn(size, trackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is UpRightTurn -> drawUpRightTurn(size, trackColor)
-            is FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
-            is UpRightToggle -> {
-                drawUpRightTurn(size, trackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is UpLeftTurn -> drawUpLeftTurn(size, trackColor)
-            is FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
-            is Turn.BaseUpLeftTurn.UpLeftToggle -> {
-                drawUpLeftTurn(size, trackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
+                is VerticalTrack -> drawVerticalTrack(size, trackColor)
+                is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
+                is VerticalToggle -> {
+                    drawVerticalTrack(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
 
-            is DownLeftRightFork -> drawDownLeftRightFork(size, trackColor)
-            is FixedDownLeftRightFork -> drawDownLeftRightFork(size, fixedTrackColor)
-            is DownLeftRightToggle -> {
-                drawDownLeftRightFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
+                is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
+                is VerticalStop -> drawVerticalTrack(size, fixedTrackColor)
+
+                is DownRightTurn -> drawDownRightTurn(size, trackColor)
+                is FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
+                is DownRightToggle -> {
+                    drawDownRightTurn(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is DownLeftTurn -> drawDownLeftTurn(size, trackColor)
+                is FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
+                is DownLeftToggle -> {
+                    drawDownLeftTurn(size, trackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpRightTurn -> drawUpRightTurn(size, trackColor)
+                is FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
+                is UpRightToggle -> {
+                    drawUpRightTurn(size, trackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpLeftTurn -> drawUpLeftTurn(size, trackColor)
+                is FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
+                is Turn.BaseUpLeftTurn.UpLeftToggle -> {
+                    drawUpLeftTurn(size, trackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
+
+                is DownLeftRightFork -> drawDownLeftRightFork(size, trackColor)
+                is FixedDownLeftRightFork -> drawDownLeftRightFork(size, fixedTrackColor)
+                is DownLeftRightToggle -> {
+                    drawDownLeftRightFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is DownLeftRightToggleableFork -> drawDownLeftRightFork(size, Color(tile.color.color))
+
+                is DownLeftUpFork -> drawDownLeftUpFork(size, trackColor)
+                is FixedDownLeftUpFork -> drawDownLeftUpFork(size, fixedTrackColor)
+                is DownLeftUpToggle -> {
+                    drawDownLeftUpFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is DownLeftUpToggleableFork -> drawDownLeftUpFork(size, Color(tile.color.color))
+
+                is DownRightLeftFork -> drawDownRightLeftFork(size, trackColor)
+                is FixedDownRightLeftFork -> drawDownRightLeftFork(size, fixedTrackColor)
+                is DownRightLeftToggle -> {
+                    drawDownRightLeftFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is DownRightLeftToggleableFork -> drawDownRightLeftFork(size, Color(tile.color.color))
+
+                is DownRightUpFork -> drawDownRightUpFork(size, trackColor)
+                is FixedDownRightUpFork -> drawDownRightUpFork(size, fixedTrackColor)
+                is DownRightUpToggle -> {
+                    drawDownRightUpFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is DownRightUpToggleableFork -> drawDownRightUpFork(size, Color(tile.color.color))
+
+                is UpLeftDownFork -> drawUpLeftDownFork(size, trackColor)
+                is FixedUpLeftDownFork -> drawUpLeftDownFork(size, fixedTrackColor)
+                is UpLeftDownToggle -> {
+                    drawUpLeftDownFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpLeftDownToggleableFork -> drawUpLeftDownFork(size, Color(tile.color.color))
+
+                is UpLeftRightFork -> drawUpLeftRightFork(size, trackColor)
+                is FixedUpLeftRightFork -> drawUpLeftRightFork(size, fixedTrackColor)
+                is UpLeftRightToggleableFork -> drawUpLeftRightFork(size, Color(tile.color.color))
+                is UpLeftRightToggle -> {
+                    drawUpLeftRightFork(size, trackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpRightDownFork -> drawUpRightDownFork(size, trackColor)
+                is FixedUpRightDownFork -> drawUpRightDownFork(size, fixedTrackColor)
+                is UpRightDownToggle -> {
+                    drawUpRightDownFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpRightDownToggleableFork -> drawUpRightDownFork(size, Color(tile.color.color))
+
+                is UpRightLeftFork -> drawUpRightLeftFork(size, trackColor)
+                is FixedUpRightLeftFork -> drawUpRightLeftFork(size, fixedTrackColor)
+                is UpRightLeftToggle -> {
+                    drawUpRightLeftFork(size, fixedTrackColor)
+                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                }
+
+                is UpRightLeftToggleableFork -> drawUpRightLeftFork(size, Color(tile.color.color))
+
+                Empty -> {}
+                EndingTrack -> drawEndingTrack(size)
+                Obstacle -> drawObstacle(size)
+
+                is DownPlatform -> drawDownPlatform(size, tile.isFull)
+                is LeftPlatform -> drawLeftPlatform(size, tile.isFull)
+                is RightPlatform -> drawRightPlatform(size, tile.isFull)
+                is UpPlatform -> drawUpPlatform(size, tile.isFull)
+
+                is DownTunnel -> drawDownTunnel(size, tile.color)
+                is LeftTunnel -> drawLeftTunnel(size, tile.color)
+                is RightTunnel -> drawRightTunnel(size, tile.color)
+                is UpTunnel -> drawUpTunnel(size, tile.color)
             }
-            is DownLeftRightToggleableFork -> drawDownLeftRightFork(size, Color(tile.color.color))
-
-            is DownLeftUpFork -> drawDownLeftUpFork(size, trackColor)
-            is FixedDownLeftUpFork -> drawDownLeftUpFork(size, fixedTrackColor)
-            is DownLeftUpToggle -> {
-                drawDownLeftUpFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is DownLeftUpToggleableFork -> drawDownLeftUpFork(size, Color(tile.color.color))
-
-            is DownRightLeftFork -> drawDownRightLeftFork(size, trackColor)
-            is FixedDownRightLeftFork -> drawDownRightLeftFork(size, fixedTrackColor)
-            is DownRightLeftToggle -> {
-                drawDownRightLeftFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is DownRightLeftToggleableFork -> drawDownRightLeftFork(size, Color(tile.color.color))
-
-            is DownRightUpFork -> drawDownRightUpFork(size, trackColor)
-            is FixedDownRightUpFork -> drawDownRightUpFork(size, fixedTrackColor)
-            is DownRightUpToggle -> {
-                drawDownRightUpFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is DownRightUpToggleableFork -> drawDownRightUpFork(size, Color(tile.color.color))
-
-            is UpLeftDownFork -> drawUpLeftDownFork(size, trackColor)
-            is FixedUpLeftDownFork -> drawUpLeftDownFork(size, fixedTrackColor)
-            is UpLeftDownToggle -> {
-                drawUpLeftDownFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is UpLeftDownToggleableFork -> drawUpLeftDownFork(size, Color(tile.color.color))
-
-            is UpLeftRightFork -> drawUpLeftRightFork(size, trackColor)
-            is FixedUpLeftRightFork -> drawUpLeftRightFork(size, fixedTrackColor)
-            is UpLeftRightToggleableFork -> drawUpLeftRightFork(size, Color(tile.color.color))
-            is UpLeftRightToggle -> {
-                drawUpLeftRightFork(size, trackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-
-            is UpRightDownFork -> drawUpRightDownFork(size, trackColor)
-            is FixedUpRightDownFork -> drawUpRightDownFork(size, fixedTrackColor)
-            is UpRightDownToggle -> {
-                drawUpRightDownFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is UpRightDownToggleableFork -> drawUpRightDownFork(size, Color(tile.color.color))
-
-            is UpRightLeftFork -> drawUpRightLeftFork(size, trackColor)
-            is FixedUpRightLeftFork -> drawUpRightLeftFork(size, fixedTrackColor)
-            is UpRightLeftToggle -> {
-                drawUpRightLeftFork(size, fixedTrackColor)
-                drawSwitch(size, Color(tile.getAction(board).color.color))
-            }
-            is UpRightLeftToggleableFork -> drawUpRightLeftFork(size, Color(tile.color.color))
-
-            Empty -> {}
-            EndingTrack -> drawEndingTrack(size)
-            Obstacle -> drawObstacle(size)
-
-            is DownPlatform -> drawDownPlatform(size, tile.isFull)
-            is LeftPlatform -> drawLeftPlatform(size, tile.isFull)
-            is RightPlatform -> drawRightPlatform(size, tile.isFull)
-            is UpPlatform -> drawUpPlatform(size, tile.isFull)
-
-            is DownTunnel -> drawDownTunnel(size, tile.color)
-            is LeftTunnel -> drawLeftTunnel(size, tile.color)
-            is RightTunnel -> drawRightTunnel(size, tile.color)
-            is UpTunnel -> drawUpTunnel(size, tile.color)
         }
-    }
-    if (tile is Platform) {
-        when (tile) {
-            is DownPlatform -> Text(
-                tile.number.toString(),
-                fontSize = 32.sp,
-                modifier = Modifier.padding(
-                    start = size * 0.6f,
-                    top = size * 0.42f,
+        if (tile is Platform) {
+            when (tile) {
+                is DownPlatform -> Text(
+                    tile.number.toString(),
+                    fontSize = 32.sp,
+                    modifier = Modifier.padding(
+                        start = size * 0.6f,
+                        top = size * 0.42f,
+                    )
                 )
-            )
-            is LeftPlatform -> Text(
-                tile.number.toString(),
-                fontSize = 32.sp,
-                modifier = Modifier.padding(
-                    start = size * 0.37f,
-                    top = size * 0.5f,
-                )
-                    .rotate(90f)
-            )
 
-            is RightPlatform -> Text(
-                tile.number.toString(),
-                fontSize = 32.sp,
-                modifier = Modifier.padding(
-                    start = size * 0.5f,
-                    top = size * 0.2f,
+                is LeftPlatform -> Text(
+                    tile.number.toString(),
+                    fontSize = 32.sp,
+                    modifier = Modifier.padding(
+                        start = size * 0.37f,
+                        top = size * 0.5f,
+                    )
+                        .rotate(90f)
                 )
-                    .rotate(270f)
-            )
 
-            is UpPlatform -> Text(
-                tile.number.toString(),
-                fontSize = 32.sp,
-                modifier = Modifier.padding(
-                    start = size * 0.17f,
-                    top = size * 0.17f,
+                is RightPlatform -> Text(
+                    tile.number.toString(),
+                    fontSize = 32.sp,
+                    modifier = Modifier.padding(
+                        start = size * 0.5f,
+                        top = size * 0.2f,
+                    )
+                        .rotate(270f)
                 )
-                    .rotate(180f)
-            )
 
+                is UpPlatform -> Text(
+                    tile.number.toString(),
+                    fontSize = 32.sp,
+                    modifier = Modifier.padding(
+                        start = size * 0.17f,
+                        top = size * 0.17f,
+                    )
+                        .rotate(180f)
+                )
+
+            }
         }
     }
 }
@@ -632,8 +650,11 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 @Composable
 private fun TilePreview() {
     Tile(
-        board = buildBoard {},
-        tile = UpPlatform(1, true),
-        size = 100.dp
+        board = buildBoard {
+            row(DownPlatform(2, true))
+            row(HorizontalStop(2))
+        },
+        tile = DownPlatform(2, true),
+        size = 70.dp
     )
 }

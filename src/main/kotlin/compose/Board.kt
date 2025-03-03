@@ -31,7 +31,7 @@ fun Board(
 @Composable
 private fun BoardPreview() {
     Board(
-        Solutions.World1.level1_11A.first(),
+        Solutions.World5.level5_3.first(),
         tileSize = 100.dp
     )
 }
