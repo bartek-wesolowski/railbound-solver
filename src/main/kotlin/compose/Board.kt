@@ -20,7 +20,7 @@ fun Board(
         board.tiles.forEach { row ->
             Row {
                 row.forEach { tile ->
-                    Tile(tile, tileSize)
+                    Tile(board, tile, tileSize)
                 }
             }
         }

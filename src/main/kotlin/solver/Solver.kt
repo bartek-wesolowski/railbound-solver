@@ -3,7 +3,7 @@ package solver
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentSetOf
 import model.Action
-import model.Action.Toggle
+import model.Action.*
 import model.Barrier
 import model.Board
 import model.Breadcrumb
@@ -56,8 +56,10 @@ class Solver {
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
             val state = statesToCheck.removeLast()
-            if (state.isSolved()) {
-                solutions.add(state.board)
+            if (state.activeCars.isEmpty()) {
+                if (state.board.isAllPlatformsEmpty()) {
+                    solutions.add(state.board)
+                }
                 continue
             }
             val nextStates = state.nextStates()
@@ -90,8 +92,10 @@ class Solver {
         while (statesToCheck.isNotEmpty()) {
             val (state, depth) = statesToCheck.poll()
             yield(state)
-            if (state.isSolved()) {
-                solutions.add(state.board)
+            if (state.activeCars.isEmpty()) {
+                if (state.board.isAllPlatformsEmpty()) {
+                    solutions.add(state.board)
+                }
                 continue
             }
             val nextStates = state.nextStates()
@@ -99,10 +103,6 @@ class Solver {
                 .filter { Breadcrumb(it.activeCars, it.toggledColors) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates.map { it to depth + 1 })
         }
-    }
-
-    private fun SolverState.isSolved(): Boolean {
-        return activeCars.isEmpty()
     }
 
     private fun SolverState.nextStates(): List<SolverState> {
@@ -179,7 +179,7 @@ class Solver {
             EnumSet.copyOf(this)
         }.apply {
             actions.forEach { action ->
-                if (action is Toggle) {
+                if (action is ToggleColor) {
                     if (action.color in this) {
                         remove(action.color)
                     } else {
@@ -202,22 +202,23 @@ class Solver {
         carIndex: Int
     ): List<PartialSolverState> {
         val state = partialState.state
-        val carPosition = state.activeCars[carIndex].position
+        val car = state.activeCars[carIndex]
+        val carPosition = car.position
         val position = carPosition.asPosition()
         val tile = if (position in state.enterTiles) {
             state.enterTiles.getValue(position)
         } else {
             state.board[carPosition.row, carPosition.column]
         }
-        val newCarPosition = tile.getNextPosition(partialState.state.board, carPosition)
+        val newCarPosition = tile.getNextPosition(partialState.state.board, car)
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
-        val car = state.activeCars[carIndex].copy(position = newCarPosition)
+        val newCar = state.activeCars[carIndex].copy(position = newCarPosition)
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
             is Platform -> emptyList()
-            Empty -> availableTilesByDirection.getValue(car.direction)
+            Empty -> availableTilesByDirection.getValue(newCar.direction)
                 .filter { availableTile ->
                     state.board.canInsert(
                         newCarPosition.row,
@@ -237,7 +238,7 @@ class Solver {
                             activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                             tracksUsed = state.tracksUsed + 1,
                             traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
-                                state.traverseDirections.with(newPosition, car.direction)
+                                state.traverseDirections.with(newPosition, newCar.direction)
                             } else {
                                 state.traverseDirections
                             }
@@ -246,8 +247,8 @@ class Solver {
                 }
 
             EndingTrack -> if (
-                car.direction in newTile.incomingDirections &&
-                state.expectedCar == car.number
+                newCar.direction in newTile.incomingDirections &&
+                state.expectedCar == newCar.number
             ) {
                 listOf(
                     partialState.copy(
@@ -264,9 +265,9 @@ class Solver {
             is StraightTrack,
             is Turn,
             is Fork -> buildList {
-                if (car.direction in newTile.incomingDirections) {
+                if (newCar.direction in newTile.incomingDirections) {
                     val traverseDirections = if (newTile is VerticalTrack || newTile is HorizontalTrack) {
-                        partialState.state.traverseDirections.with(newPosition, car.direction)
+                        partialState.state.traverseDirections.with(newPosition, newCar.direction)
                     } else {
                         partialState.state.traverseDirections
                     }
@@ -278,8 +279,8 @@ class Solver {
                     if (newTile is Barrier && !newTile.open) {
                         add(partialState)
                     } else {
-                        val actions = if (newTile is HasAction && newTile.action != null) {
-                            partialState.actions + newTile.action!!
+                        val actions = if (newTile is HasAction && newTile.getAction(partialState.state.board) != null) {
+                            partialState.actions + newTile.getAction(partialState.state.board)!!
                         } else {
                             partialState.actions
                         }
@@ -302,10 +303,10 @@ class Solver {
                             EnumSet.noneOf(Direction::class.java)
                         )
                     )
-                    if (car.direction in incomingDirectionsAfterModification) {
+                    if (newCar.direction in incomingDirectionsAfterModification) {
                         addAll(
                             incomingDirectionsAfterModification
-                                .getValue(car.direction)
+                                .getValue(newCar.direction)
                                 .filter { modifiedTile ->
                                     state.board.canInsert(
                                         newCarPosition.row,
