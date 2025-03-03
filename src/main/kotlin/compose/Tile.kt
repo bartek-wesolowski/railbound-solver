@@ -19,9 +19,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.Barrier
-import model.Board
-import model.Board.Companion.buildBoard
-import model.Board.Companion.row
 import model.Tile
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseHorizontalTrack.HorizontalBarrier
@@ -98,7 +95,6 @@ private const val trackStrokeWidthPercent = 0.05f
 
 @Composable
 fun Tile(
-    board: Board,
     tile: Tile,
     size: Dp
 ) {
@@ -110,7 +106,7 @@ fun Tile(
                 is FixedHorizontalTrack -> drawHorizontalTrack(size, fixedTrackColor)
                 is HorizontalToggle -> {
                     drawHorizontalTrack(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is HorizontalBarrier -> drawHorizontalBarrier(size, tile.getColor(), tile.open)
@@ -120,7 +116,7 @@ fun Tile(
                 is FixedVerticalTrack -> drawVerticalTrack(size, fixedTrackColor)
                 is VerticalToggle -> {
                     drawVerticalTrack(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is VerticalBarrier -> drawVerticalBarrier(size, tile.getColor(), tile.open)
@@ -130,28 +126,28 @@ fun Tile(
                 is FixedDownRightTurn -> drawDownRightTurn(size, fixedTrackColor)
                 is DownRightToggle -> {
                     drawDownRightTurn(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is DownLeftTurn -> drawDownLeftTurn(size, trackColor)
                 is FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
                 is DownLeftToggle -> {
                     drawDownLeftTurn(size, trackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpRightTurn -> drawUpRightTurn(size, trackColor)
                 is FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
                 is UpRightToggle -> {
                     drawUpRightTurn(size, trackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpLeftTurn -> drawUpLeftTurn(size, trackColor)
                 is FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
                 is Turn.BaseUpLeftTurn.UpLeftToggle -> {
                     drawUpLeftTurn(size, trackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
@@ -160,7 +156,7 @@ fun Tile(
                 is FixedDownLeftRightFork -> drawDownLeftRightFork(size, fixedTrackColor)
                 is DownLeftRightToggle -> {
                     drawDownLeftRightFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is DownLeftRightToggleableFork -> drawDownLeftRightFork(size, Color(tile.color.color))
@@ -169,7 +165,7 @@ fun Tile(
                 is FixedDownLeftUpFork -> drawDownLeftUpFork(size, fixedTrackColor)
                 is DownLeftUpToggle -> {
                     drawDownLeftUpFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is DownLeftUpToggleableFork -> drawDownLeftUpFork(size, Color(tile.color.color))
@@ -178,7 +174,7 @@ fun Tile(
                 is FixedDownRightLeftFork -> drawDownRightLeftFork(size, fixedTrackColor)
                 is DownRightLeftToggle -> {
                     drawDownRightLeftFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is DownRightLeftToggleableFork -> drawDownRightLeftFork(size, Color(tile.color.color))
@@ -187,7 +183,7 @@ fun Tile(
                 is FixedDownRightUpFork -> drawDownRightUpFork(size, fixedTrackColor)
                 is DownRightUpToggle -> {
                     drawDownRightUpFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is DownRightUpToggleableFork -> drawDownRightUpFork(size, Color(tile.color.color))
@@ -196,7 +192,7 @@ fun Tile(
                 is FixedUpLeftDownFork -> drawUpLeftDownFork(size, fixedTrackColor)
                 is UpLeftDownToggle -> {
                     drawUpLeftDownFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpLeftDownToggleableFork -> drawUpLeftDownFork(size, Color(tile.color.color))
@@ -206,14 +202,14 @@ fun Tile(
                 is UpLeftRightToggleableFork -> drawUpLeftRightFork(size, Color(tile.color.color))
                 is UpLeftRightToggle -> {
                     drawUpLeftRightFork(size, trackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpRightDownFork -> drawUpRightDownFork(size, trackColor)
                 is FixedUpRightDownFork -> drawUpRightDownFork(size, fixedTrackColor)
                 is UpRightDownToggle -> {
                     drawUpRightDownFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpRightDownToggleableFork -> drawUpRightDownFork(size, Color(tile.color.color))
@@ -222,7 +218,7 @@ fun Tile(
                 is FixedUpRightLeftFork -> drawUpRightLeftFork(size, fixedTrackColor)
                 is UpRightLeftToggle -> {
                     drawUpRightLeftFork(size, fixedTrackColor)
-                    drawSwitch(size, Color(tile.getAction(board).color.color))
+                    drawSwitch(size, Color(tile.color.color))
                 }
 
                 is UpRightLeftToggleableFork -> drawUpRightLeftFork(size, Color(tile.color.color))
@@ -650,11 +646,7 @@ private fun DrawScope.getTrackStrokeWidth(size: Dp): Float = (size * trackStroke
 @Composable
 private fun TilePreview() {
     Tile(
-        board = buildBoard {
-            row(DownPlatform(2, true))
-            row(HorizontalStop(2))
-        },
         tile = DownPlatform(2, true),
-        size = 70.dp
+        size = 100.dp
     )
 }

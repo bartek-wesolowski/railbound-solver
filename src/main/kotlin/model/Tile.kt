@@ -52,12 +52,12 @@ sealed interface Barrier : Toggleable {
 sealed interface Stop
 
 sealed interface HasAction {
-    fun getAction(board: Board): Action?
+    fun getAction(board: Board, car: Car): Action?
 }
 
 sealed interface Toggle: HasAction {
     val color: Color
-    override fun getAction(board: Board) = ToggleColor(color)
+    override fun getAction(board: Board, car: Car) = ToggleColor(color)
 }
 
 sealed class Tile(
@@ -160,9 +160,9 @@ sealed class Tile(
                 }
             }
 
-            override fun getAction(board: Board): Action? {
+            override fun getAction(board: Board, car: Car): Action? {
                 val platform = board.getPlatform(this)
-                return if (platform.isFull) {
+                return if (platform.number == car.number && platform.isFull) {
                     TakePassenger(board.getPlatformPosition(this))
                 } else {
                     null
@@ -253,9 +253,9 @@ sealed class Tile(
                 }
             }
 
-            override fun getAction(board: Board): Action? {
+            override fun getAction(board: Board, car: Car): Action? {
                 val platform = board.getPlatform(this)
-                return if (platform.isFull) {
+                return if (platform.number == car.number && platform.isFull) {
                     TakePassenger(board.getPlatformPosition(this))
                 } else {
                     null

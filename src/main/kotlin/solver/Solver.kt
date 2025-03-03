@@ -285,11 +285,12 @@ class Solver {
                     if (newTile is Barrier && !newTile.open) {
                         add(partialState)
                     } else {
-                        val actions = if (newTile is HasAction && newTile.getAction(partialState.state.board) != null) {
-                            partialState.actions + newTile.getAction(partialState.state.board)!!
-                        } else {
-                            partialState.actions
-                        }
+                        val actions =
+                            if (newTile is HasAction && newTile.getAction(partialState.state.board, car) != null) {
+                                partialState.actions + newTile.getAction(partialState.state.board, car)!!
+                            } else {
+                                partialState.actions
+                            }
                         add(
                             partialState.copy(
                                 state = state.copy(
