@@ -54,6 +54,7 @@ import model.Tile.LeftTunnel
 import model.Tile.Obstacle
 import model.Tile.Platform.DownPlatform
 import model.Tile.Platform.LeftPlatform
+import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
@@ -1734,11 +1735,21 @@ object Solutions {
                 row(Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level5_4 = setOf(
+            buildBoard {
+                row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, DownLeftTurn, Empty)
+                row(DownRightTurn, HorizontalTrack, HorizontalTrack, UpLeftTurn, Empty)
+                row(UpRightTurn, HorizontalStop(2), HorizontalStop(1), DownLeftTurn, Empty)
+                row(Empty, UpPlatform(2, false), UpPlatform(1, false), VerticalTrack, Empty)
+                row(Empty, Empty, Empty, UpRightTurn, EndingTrack)
+            }
+        )
 
         val solutions = mapOf(
             "5-1" to level5_1,
             "5-2" to level5_2,
             "5-3" to level5_3,
+            "5-4" to level5_4,
         )
     }
 

@@ -47,6 +47,7 @@ import model.Tile.LeftTunnel
 import model.Tile.Obstacle
 import model.Tile.Platform.DownPlatform
 import model.Tile.Platform.LeftPlatform
+import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
@@ -1486,11 +1487,28 @@ object Levels {
             ),
             tracks = 8,
         )
+        val level5_4 = Level(
+            name = "5-4",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, HorizontalStop(2), HorizontalStop(1), Empty, Empty)
+                row(Empty, UpPlatform(2, true), UpPlatform(1, true), Empty, Empty)
+                row(Empty, Empty, Empty, Empty, EndingTrack)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(0, 2, RIGHT)),
+                Car(2, CarPosition(0, 1, RIGHT)),
+            ),
+            tracks = 9,
+        )
 
         val levels = listOf(
             level5_1,
             level5_2,
             level5_3,
+            level5_4,
         ).associateBy { it.name }
     }
 
