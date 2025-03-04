@@ -1767,6 +1767,29 @@ object Solutions {
                 row(Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle, Obstacle)
             }
         )
+        val level5_7 = setOf(
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, UpLeftDownToggleableFork(LIGHT_BLUE), UpRightTurn, DownRightLeftFork, EndingTrack)
+                row(Empty, Empty, Empty, UpRightDownFork, DownLeftTurn, UpRightTurn, DownLeftTurn)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalToggle(LIGHT_BLUE), UpLeftTurn, UpRightTurn, HorizontalStop(3), UpLeftTurn)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(3, false), Obstacle)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, UpLeftDownToggleableFork(LIGHT_BLUE), UpRightTurn, HorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, UpRightDownFork, DownLeftRightFork, HorizontalTrack, DownLeftTurn)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalToggle(LIGHT_BLUE), UpLeftTurn, UpRightTurn, HorizontalStop(3), UpLeftTurn)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(3, false), Obstacle)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, HorizontalTrack, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, UpLeftDownToggleableFork(LIGHT_BLUE), Empty, UpRightTurn, EndingTrack)
+                row(Empty, Empty, Empty, UpRightDownFork, DownLeftRightFork, HorizontalTrack, DownLeftTurn)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalToggle(LIGHT_BLUE), UpLeftTurn, UpRightTurn, HorizontalStop(3), UpLeftTurn)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(3, false), Obstacle)
+            }
+        )
 
         val solutions = mapOf(
             "5-1" to level5_1,
@@ -1775,6 +1798,7 @@ object Solutions {
             "5-4" to level5_4,
             "5-5" to level5_5,
             "5-6" to level5_6,
+            "5-7" to level5_7,
         )
     }
 
