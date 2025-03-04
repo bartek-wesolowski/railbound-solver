@@ -74,6 +74,7 @@ import model.TunnelColor.BEIGE
 import model.TunnelColor.BROWN
 import model.TunnelColor.GRAY
 import model.TunnelColor.GREEN
+import model.TunnelColor.LIGHT_GRAY
 import model.TunnelColor.MINT
 import model.TunnelColor.PURPLE
 
@@ -1754,6 +1755,18 @@ object Solutions {
                 row(UpRightTurn, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack, FixedHorizontalTrack)
             }
         )
+        val level5_6 = setOf(
+            buildBoard {
+                row(Empty, Empty, DownTunnel(LIGHT_GRAY, CarPosition(5, 7, LEFT)), Empty, Empty, DownTunnel(GRAY, CarPosition(4, 1, RIGHT)), Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(Empty, Empty, VerticalTrack, Empty, Empty, FixedUpRightTurn, FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, RightTunnel(GRAY, CarPosition(0, 5, DOWN)), UpLeftRightFork, HorizontalTrack, HorizontalStop(1), HorizontalTrack, DownLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, UpPlatform(1, false), DownRightTurn, UpRightLeftFork, LeftTunnel(LIGHT_GRAY, CarPosition(0, 2, DOWN)))
+                row(Empty, FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalStop(2), UpLeftTurn, Obstacle, Empty)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle, Obstacle)
+            }
+        )
 
         val solutions = mapOf(
             "5-1" to level5_1,
@@ -1761,6 +1774,7 @@ object Solutions {
             "5-3" to level5_3,
             "5-4" to level5_4,
             "5-5" to level5_5,
+            "5-6" to level5_6,
         )
     }
 
