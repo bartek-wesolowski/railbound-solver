@@ -1503,12 +1503,30 @@ object Levels {
             ),
             tracks = 9,
         )
+        val level5_5 = Level(
+            name = "5-5",
+            board = buildBoard(requireFixed = true) {
+                row(Obstacle, Obstacle, DownPlatform(2, true), Obstacle, Obstacle)
+                row(Empty, FixedHorizontalTrack, HorizontalStop(2), Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(Empty, FixedHorizontalTrack, HorizontalStop(1), Empty, Empty)
+                row(FixedVerticalTrack, Empty, UpPlatform(1, true), Empty, Empty)
+                row(Empty, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack, FixedHorizontalTrack)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(1, 1, RIGHT)),
+                Car(2, CarPosition(4, 0, UP)),
+            ),
+            tracks = 9,
+        )
 
         val levels = listOf(
             level5_1,
             level5_2,
             level5_3,
             level5_4,
+            level5_5,
         ).associateBy { it.name }
     }
 
