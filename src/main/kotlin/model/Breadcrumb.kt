@@ -5,5 +5,6 @@ import java.util.EnumSet
 
 data class Breadcrumb(
     val cars: PersistentList<Car>,
-    val toggledColors: EnumSet<Color>
+    val toggledColors: EnumSet<Color>,
+    val getInProgress: Map<Int, Int>,
 )

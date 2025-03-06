@@ -1790,6 +1790,14 @@ object Solutions {
                 row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(3, false), Obstacle)
             }
         )
+        val level5_8 = setOf(
+            buildBoard {
+                row(DownRightTurn, HorizontalStop(1), HorizontalTrack, DownRightLeftToggleableFork(LIGHT_BLUE), HorizontalTrack, DownLeftTurn, DownRightTurn, DownLeftTurn)
+                row(VerticalToggle(LIGHT_BLUE), UpPlatform(1, false), Empty, VerticalTrack, Obstacle, VerticalTrack, VerticalToggle(LIGHT_BLUE), VerticalTrack)
+                row(UpRightTurn, HorizontalTrack, FixedHorizontalTrack, DownLeftUpFork, FixedHorizontalTrack, UpRightLeftFork, UpLeftRightFork, UpLeftTurn)
+                row(Empty, Empty, Obstacle, UpRightTurn, HorizontalBarrier(LIGHT_BLUE, true), FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
+            }
+        )
 
         val solutions = mapOf(
             "5-1" to level5_1,
@@ -1799,6 +1807,7 @@ object Solutions {
             "5-5" to level5_5,
             "5-6" to level5_6,
             "5-7" to level5_7,
+            "5-8" to level5_8,
         )
     }
 

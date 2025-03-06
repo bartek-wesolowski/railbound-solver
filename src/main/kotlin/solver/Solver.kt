@@ -49,7 +49,7 @@ class Solver {
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
-                passengersTaken = emptySet(),
+                getInProgress = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 breadcrumbs = persistentSetOf()
             )
@@ -65,7 +65,7 @@ class Solver {
             }
             val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
-                .filter { Breadcrumb(it.activeCars, it.toggledColors) !in state.breadcrumbs }
+                .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates)
         }
         return solutions
@@ -85,7 +85,7 @@ class Solver {
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
-                passengersTaken = emptySet(),
+                getInProgress = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 breadcrumbs = persistentSetOf(),
             ) to 1
@@ -102,7 +102,7 @@ class Solver {
             }
             val nextStates = state.nextStates()
                 .filter { it.tracksUsed <= level.tracks }
-                .filter { Breadcrumb(it.activeCars, it.toggledColors) !in state.breadcrumbs }
+                .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates.map { it to depth + 1 })
         }
     }
@@ -129,15 +129,18 @@ class Solver {
             partialState.applyActions()
                 .copy(
                     enterTiles = partialState.enterTiles,
-                    passengersTaken = partialState.actions
-                        .filterIsInstance<TakePassenger>()
-                        .map { it.platformPosition }
-                        .toSet(),
+                    getInProgress = partialState.state.getInProgress
+                        .mapValues { it.value + 1 }
+                        .filterValues { it < 2 } +
+                            partialState.actions
+                                .filterIsInstance<TakePassenger>()
+                                .associate { it.carNumber to 0 },
                     toggledColors = partialState.state.toggledColors.withUpdatedToggledColors(partialState.actions),
                     breadcrumbs = partialState.state.breadcrumbs.add(
                         Breadcrumb(
                             cars = activeCars,
-                            toggledColors = toggledColors
+                            toggledColors = toggledColors,
+                            getInProgress = getInProgress,
                         )
                     )
                 )
@@ -216,7 +219,7 @@ class Solver {
         } else {
             state.board[carPosition.row, carPosition.column]
         }
-        val newCarPosition = tile.getNextPosition(partialState.state.board, partialState.state.passengersTaken, car)
+        val newCarPosition = tile.getNextPosition(car, partialState.state.getInProgress[car.number])
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()

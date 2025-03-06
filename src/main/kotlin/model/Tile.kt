@@ -72,7 +72,7 @@ sealed class Tile(
     )
 
     data object Empty : Tile() {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+        override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
             throw IllegalStateException("Empty tile should not be used")
         }
 
@@ -85,7 +85,7 @@ sealed class Tile(
     sealed class BaseVerticalTrack : Tile(
         incomingDirections = EnumSet.of(UP, DOWN),
     ), StraightTrack {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition =
+        override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
             car.position.moveForward()
 
         data object VerticalTrack : BaseVerticalTrack(), ModifiableTile {
@@ -151,19 +151,18 @@ sealed class Tile(
         data class VerticalStop(
             val number: Int
         ) : BaseVerticalTrack(), Stop, HasAction {
-            override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
-                val platformPosition = board.getPlatformPosition(this)
-                return if (platformPosition in passengersTaken) {
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition {
+                return if (getInProgress != null) {
                     car.position
                 } else {
-                    super.getNextPosition(board, passengersTaken, car)
+                    super.getNextPosition(car, getInProgress)
                 }
             }
 
             override fun getAction(board: Board, car: Car): Action? {
                 val platform = board.getPlatform(this)
                 return if (platform.number == car.number && platform.isFull) {
-                    TakePassenger(board.getPlatformPosition(this))
+                    TakePassenger(car.number, board.getPlatformPosition(this))
                 } else {
                     null
                 }
@@ -178,7 +177,7 @@ sealed class Tile(
     sealed class BaseHorizontalTrack : Tile(
         incomingDirections = EnumSet.of(LEFT, RIGHT),
     ), StraightTrack {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition =
+        override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
             car.position.moveForward()
 
         data object HorizontalTrack : BaseHorizontalTrack(), ModifiableTile {
@@ -244,19 +243,18 @@ sealed class Tile(
         data class HorizontalStop(
             val number: Int
         ) : BaseHorizontalTrack(), Stop, HasAction {
-            override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
-                val platformPosition = board.getPlatformPosition(this)
-                return if (platformPosition in passengersTaken) {
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition {
+                return if (getInProgress != null) {
                     car.position
                 } else {
-                    super.getNextPosition(board, passengersTaken, car)
+                    super.getNextPosition(car, getInProgress)
                 }
             }
 
             override fun getAction(board: Board, car: Car): Action? {
                 val platform = board.getPlatform(this)
                 return if (platform.number == car.number && platform.isFull) {
-                    TakePassenger(board.getPlatformPosition(this))
+                    TakePassenger(car.number, board.getPlatformPosition(this))
                 } else {
                     null
                 }
@@ -278,15 +276,12 @@ sealed class Tile(
             incomingDirections = EnumSet.of(UP, LEFT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                UP -> car.position.turnRight()
-                LEFT -> car.position.turnLeft()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    UP -> car.position.turnRight()
+                    LEFT -> car.position.turnLeft()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object DownRightTurn : BaseDownRightTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
@@ -319,15 +314,12 @@ sealed class Tile(
             incomingDirections = EnumSet.of(UP, RIGHT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                UP -> car.position.turnLeft()
-                RIGHT -> car.position.turnRight()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    UP -> car.position.turnLeft()
+                    RIGHT -> car.position.turnRight()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object DownLeftTurn : BaseDownLeftTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
@@ -360,15 +352,12 @@ sealed class Tile(
             incomingDirections = EnumSet.of(DOWN, LEFT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                DOWN -> car.position.turnLeft()
-                LEFT -> car.position.turnRight()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    DOWN -> car.position.turnLeft()
+                    LEFT -> car.position.turnRight()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object UpRightTurn : BaseUpRightTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
@@ -415,15 +404,12 @@ sealed class Tile(
             incomingDirections = EnumSet.of(DOWN, RIGHT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                DOWN -> car.position.turnRight()
-                RIGHT -> car.position.turnLeft()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    DOWN -> car.position.turnRight()
+                    RIGHT -> car.position.turnLeft()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object UpLeftTurn : BaseUpLeftTurn(fixed = false), ModifiableTile {
                 override fun getIncomingDirectionsAfterModification(
@@ -461,16 +447,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(UP, RIGHT, LEFT),
             fixed = fixed,
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                UP -> car.position.turnLeft()
-                RIGHT -> car.position.turnRight()
-                LEFT -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    UP -> car.position.turnLeft()
+                    RIGHT -> car.position.turnRight()
+                    LEFT -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object DownLeftRightFork : BaseDownLeftRightFork(fixed = false)
 
@@ -499,16 +482,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(UP, RIGHT, DOWN),
             fixed = fixed,
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                UP -> car.position.turnLeft()
-                RIGHT -> car.position.turnRight()
-                DOWN -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    UP -> car.position.turnLeft()
+                    RIGHT -> car.position.turnRight()
+                    DOWN -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object DownLeftUpFork : BaseDownLeftUpFork(fixed = false)
 
@@ -537,16 +517,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(UP, RIGHT, LEFT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                UP -> car.position.turnRight()
-                LEFT -> car.position.turnLeft()
-                RIGHT -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    UP -> car.position.turnRight()
+                    LEFT -> car.position.turnLeft()
+                    RIGHT -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object DownRightLeftFork : BaseDownRightLeftFork(fixed = false)
 
@@ -575,16 +552,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(UP, LEFT, DOWN),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                UP -> car.position.turnRight()
-                LEFT -> car.position.turnLeft()
-                DOWN -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    UP -> car.position.turnRight()
+                    LEFT -> car.position.turnLeft()
+                    DOWN -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object DownRightUpFork : BaseDownRightUpFork(fixed = false)
 
@@ -613,16 +587,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(DOWN, RIGHT, LEFT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                DOWN -> car.position.turnRight()
-                RIGHT -> car.position.turnLeft()
-                LEFT -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    DOWN -> car.position.turnRight()
+                    RIGHT -> car.position.turnLeft()
+                    LEFT -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object UpLeftRightFork : BaseUpLeftRightFork(fixed = false)
 
@@ -651,16 +622,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(DOWN, RIGHT, UP),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                DOWN -> car.position.turnRight()
-                RIGHT -> car.position.turnLeft()
-                UP -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    DOWN -> car.position.turnRight()
+                    RIGHT -> car.position.turnLeft()
+                    UP -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object UpLeftDownFork : BaseUpLeftDownFork(fixed = false)
 
@@ -689,16 +657,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(DOWN, RIGHT, LEFT),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                DOWN -> car.position.turnLeft()
-                LEFT -> car.position.turnRight()
-                RIGHT -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    DOWN -> car.position.turnLeft()
+                    LEFT -> car.position.turnRight()
+                    RIGHT -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object UpRightLeftFork : BaseUpRightLeftFork(fixed = false)
 
@@ -727,16 +692,13 @@ sealed class Tile(
             incomingDirections = EnumSet.of(DOWN, LEFT, UP),
             fixed = fixed
         ) {
-            override fun getNextPosition(
-                board: Board,
-                passengersTaken: Set<Position>,
-                car: Car
-            ): CarPosition = when (car.direction) {
-                DOWN -> car.position.turnLeft()
-                LEFT -> car.position.turnRight()
-                UP -> car.position.moveForward()
-                else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
-            }
+            override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+                when (car.direction) {
+                    DOWN -> car.position.turnLeft()
+                    LEFT -> car.position.turnRight()
+                    UP -> car.position.moveForward()
+                    else -> throw IllegalStateException("$car Invalid direction: ${car.direction}")
+                }
 
             data object UpRightDownFork : BaseUpRightDownFork(fixed = false)
 
@@ -765,63 +727,59 @@ sealed class Tile(
         override val color: TunnelColor,
         override val exitPosition: CarPosition,
     ) : Tile(RIGHT), Tunnel {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
-            return when (car.direction) {
+        override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+            when (car.direction) {
                 RIGHT -> exitPosition.moveForward()
                 LEFT -> car.position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in LeftTunnel: ${car.direction}")
             }
-        }
     }
 
     data class RightTunnel(
         override val color: TunnelColor,
         override val exitPosition: CarPosition,
     ) : Tile(LEFT), Tunnel {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
-            return when (car.direction) {
+        override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+            when (car.direction) {
                 LEFT -> exitPosition.moveForward()
                 RIGHT -> car.position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in RightTunnel: ${car.direction}")
             }
-        }
     }
 
     data class UpTunnel(
         override val color: TunnelColor,
         override val exitPosition: CarPosition,
     ) : Tile(DOWN), Tunnel {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
-            return when (car.direction) {
+        override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+            when (car.direction) {
                 DOWN -> exitPosition.moveForward()
                 UP -> car.position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in UpTunnel: ${car.direction}")
             }
-        }
     }
 
     data class DownTunnel(
         override val color: TunnelColor,
         override val exitPosition: CarPosition,
     ) : Tile(UP), Tunnel {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
-            return when (car.direction) {
+        override fun getNextPosition(car: Car, getInProgress: Int?): CarPosition =
+            when (car.direction) {
                 UP -> exitPosition.moveForward()
                 DOWN -> car.position.moveForward()
                 else -> throw IllegalStateException("Invalid direction in DownTunnel: ${car.direction}")
             }
-        }
     }
 
     // Other
     data object Obstacle : Tile() {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+        override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
             throw IllegalStateException("Obstacle should not be used")
         }
     }
 
     data object EndingTrack : Tile(RIGHT) {
-        override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+        override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
             throw IllegalStateException("Ending track should not be used")
         }
     }
@@ -834,7 +792,7 @@ sealed class Tile(
             override val number: Int,
             override val isFull: Boolean,
         ) : Platform(number, isFull) {
-            override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+            override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
                 throw IllegalStateException("Left platform should not be used")
             }
 
@@ -847,7 +805,7 @@ sealed class Tile(
             override val number: Int,
             override val isFull: Boolean,
         ) : Platform(number, isFull) {
-            override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+            override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
                 throw IllegalStateException("Right platform should not be used")
             }
 
@@ -860,7 +818,7 @@ sealed class Tile(
             override val number: Int,
             override val isFull: Boolean,
         ) : Platform(number, isFull) {
-            override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+            override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
                 throw IllegalStateException("Up platform should not be used")
             }
 
@@ -873,7 +831,7 @@ sealed class Tile(
             override val number: Int,
             override val isFull: Boolean,
         ) : Platform(number, isFull) {
-            override fun getNextPosition(board: Board, passengersTaken: Set<Position>, car: Car): CarPosition {
+            override fun getNextPosition(car: Car, getInProgress: Int?): Nothing {
                 throw IllegalStateException("Down platform should not be used")
             }
 
@@ -901,8 +859,7 @@ sealed class Tile(
     open fun matches(solution: Tile): Boolean = this == solution
 
     abstract fun getNextPosition(
-        board: Board,
-        passengersTaken: Set<Position>,
-        car: Car
+        car: Car,
+        getInProgress: Int?
     ): CarPosition
 }
