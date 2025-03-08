@@ -1738,9 +1738,27 @@ object Solutions {
         )
         val level5_3A = setOf(
             buildBoard {
+                row(DownRightTurn, HorizontalStop(1), HorizontalTrack, DownRightLeftFork, DownLeftTurn, Empty, Empty)
+                row(VerticalTrack, UpPlatform(1, false), DownRightTurn, UpLeftTurn, UpRightTurn, DownLeftTurn, Empty)
+                row(UpRightTurn, FixedHorizontalTrack, UpLeftTurn, FixedHorizontalTrack, DownRightLeftFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
+            },
+            buildBoard {
                 row(DownRightTurn, HorizontalStop(1), DownRightLeftFork, DownRightLeftFork, DownLeftTurn, Empty, Empty)
                 row(VerticalTrack, UpPlatform(1, false), UpRightTurn, UpLeftTurn, UpRightTurn, DownLeftTurn, Empty)
                 row(UpRightTurn, FixedHorizontalTrack, Empty, FixedHorizontalTrack, DownRightLeftFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
+            },
+            buildBoard {
+                row(DownRightTurn, HorizontalStop(1), DownRightLeftFork, HorizontalTrack, DownRightLeftFork, DownLeftTurn, Empty)
+                row(VerticalTrack, UpPlatform(1, false), UpRightTurn, HorizontalTrack, UpLeftTurn, VerticalTrack, Empty)
+                row(UpRightTurn, FixedHorizontalTrack, Empty, FixedHorizontalTrack, DownRightLeftFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
+            },
+            buildBoard {
+                row(DownRightTurn, HorizontalStop(1), HorizontalTrack, DownRightLeftFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(VerticalTrack, UpPlatform(1, false), DownRightTurn, UpLeftTurn, Empty, VerticalTrack, Empty)
+                row(UpRightTurn, FixedHorizontalTrack, UpLeftTurn, FixedHorizontalTrack, DownRightLeftFork, UpLeftTurn, Empty)
                 row(Empty, Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
             },
             buildBoard {

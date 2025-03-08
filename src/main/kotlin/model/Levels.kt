@@ -1501,7 +1501,7 @@ object Levels {
                 Car(1, CarPosition(2, 1, LEFT)),
                 Car(2, CarPosition(2, 3, RIGHT)),
             ),
-            tracks = 13,
+            tracks = 14,
         )
         val level5_3B = Level(
             name = "5-3B",
