@@ -1736,6 +1736,20 @@ object Solutions {
                 row(Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level5_3A = setOf(
+            buildBoard {
+                row(DownRightTurn, HorizontalStop(1), DownRightLeftFork, DownRightLeftFork, DownLeftTurn, Empty, Empty)
+                row(VerticalTrack, UpPlatform(1, false), UpRightTurn, UpLeftTurn, UpRightTurn, DownLeftTurn, Empty)
+                row(UpRightTurn, FixedHorizontalTrack, Empty, FixedHorizontalTrack, DownRightLeftFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
+            },
+            buildBoard {
+                row(DownRightTurn, HorizontalStop(1), DownRightLeftFork, DownRightLeftFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(VerticalTrack, UpPlatform(1, false), UpRightTurn, UpLeftTurn, Empty, VerticalTrack, Empty)
+                row(UpRightTurn, FixedHorizontalTrack, Empty, FixedHorizontalTrack, DownRightLeftFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
+            }
+        )
         val level5_4 = setOf(
             buildBoard {
                 row(Empty, FixedHorizontalTrack, FixedHorizontalTrack, DownLeftTurn, Empty)
@@ -1803,6 +1817,7 @@ object Solutions {
             "5-1" to level5_1,
             "5-2" to level5_2,
             "5-3" to level5_3,
+            "5-3A" to level5_3A,
             "5-4" to level5_4,
             "5-5" to level5_5,
             "5-6" to level5_6,
