@@ -1796,6 +1796,148 @@ object Solutions {
                 row(UpRightTurn, HorizontalTrack, HorizontalTrack, UpLeftTurn, Empty)
             }
         )
+        val level5_4B = setOf(
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, Empty, DownRightTurn, DownLeftTurn)
+                row(UpRightTurn, DownLeftRightFork, HorizontalTrack, DownLeftUpFork, FixedVerticalTrack)
+                row(DownRightTurn, DownLeftUpFork, Empty, VerticalTrack, FixedVerticalTrack)
+                row(FixedVerticalTrack, DownRightUpFork, HorizontalTrack, UpLeftDownFork, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftRightFork, HorizontalTrack, HorizontalTrack, DownLeftTurn)
+                row(UpRightTurn, DownLeftRightFork, DownLeftTurn, Empty, FixedVerticalTrack)
+                row(DownRightTurn, DownLeftUpFork, VerticalTrack, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, VerticalTrack, UpRightTurn, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftRightFork, HorizontalTrack, HorizontalTrack, DownLeftTurn)
+                row(UpRightTurn, DownLeftRightFork, DownLeftTurn, Empty, FixedVerticalTrack)
+                row(DownRightTurn, DownLeftUpFork, UpRightTurn, DownLeftTurn, FixedVerticalTrack)
+                row(FixedVerticalTrack, VerticalTrack, Empty, VerticalTrack, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftRightFork, HorizontalTrack, HorizontalTrack, DownLeftTurn)
+                row(UpRightTurn, DownLeftRightFork, HorizontalTrack, DownLeftTurn, FixedVerticalTrack)
+                row(DownRightTurn, DownLeftUpFork, Empty, VerticalTrack, FixedVerticalTrack)
+                row(FixedVerticalTrack, VerticalTrack, Empty, VerticalTrack, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftRightFork, HorizontalTrack, HorizontalTrack, DownLeftTurn)
+                row(UpRightTurn, DownLeftTurn, Empty, Empty, FixedVerticalTrack)
+                row(DownRightTurn, UpRightLeftFork, DownLeftRightFork, DownLeftTurn, FixedVerticalTrack)
+                row(FixedVerticalTrack, DownRightTurn, UpLeftTurn, VerticalTrack, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftRightFork, DownLeftTurn, DownRightTurn, DownLeftTurn)
+                row(UpRightDownFork, DownLeftTurn, UpRightTurn, UpLeftTurn, FixedVerticalTrack)
+                row(UpRightDownFork, DownLeftUpFork, Empty, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, UpRightDownFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftRightFork, DownLeftTurn, DownRightTurn, DownLeftTurn)
+                row(UpRightDownFork, DownLeftTurn, UpRightTurn, UpLeftTurn, FixedVerticalTrack)
+                row(VerticalTrack, VerticalTrack, Empty, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, UpRightDownFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, Empty, DownRightTurn, DownLeftTurn)
+                row(UpRightDownFork, DownLeftRightFork, HorizontalTrack, DownLeftUpFork, FixedVerticalTrack)
+                row(VerticalTrack, DownRightUpFork, HorizontalTrack, UpLeftDownFork, FixedVerticalTrack)
+                row(FixedVerticalTrack, VerticalTrack, Empty, VerticalTrack, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, Empty, DownRightTurn, DownLeftTurn)
+                row(UpRightDownFork, DownLeftRightFork, HorizontalTrack, DownLeftUpFork, FixedVerticalTrack)
+                row(VerticalTrack, VerticalTrack, Empty, VerticalTrack, FixedVerticalTrack)
+                row(FixedVerticalTrack, DownRightUpFork, HorizontalTrack, UpLeftDownFork, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, DownRightTurn, HorizontalTrack, DownLeftTurn)
+                row(UpRightDownFork, DownLeftRightFork, DownLeftUpFork, Empty, FixedVerticalTrack)
+                row(VerticalTrack, DownRightUpFork, UpLeftTurn, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, UpRightDownFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), DownRightLeftFork, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, DownRightTurn, UpLeftRightFork, DownLeftTurn)
+                row(UpRightDownFork, DownLeftTurn, VerticalTrack, Empty, FixedVerticalTrack)
+                row(VerticalTrack, DownRightUpFork, UpLeftTurn, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, UpRightDownFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, DownRightTurn, HorizontalTrack, DownLeftTurn)
+                row(UpRightDownFork, DownLeftRightFork, DownLeftUpFork, Empty, FixedVerticalTrack)
+                row(VerticalTrack, DownRightUpFork, UpLeftDownFork, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, VerticalTrack, UpRightTurn, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(number = 1, isFull = false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(number = 1), DownRightLeftFork, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, DownRightTurn, UpLeftRightFork, DownLeftTurn)
+                row(UpRightDownFork, DownLeftTurn, VerticalTrack, Empty, FixedVerticalTrack)
+                row(VerticalTrack, DownRightUpFork, UpLeftDownFork, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, VerticalTrack, UpRightTurn, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(number = 2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(number = 2, isFull = false), Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle)
+                row(FixedVerticalTrack, DownRightTurn, HorizontalStop(1), HorizontalTrack, EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, Empty, DownRightTurn, DownLeftTurn)
+                row(UpRightDownFork, DownRightLeftFork, DownLeftRightFork, UpLeftTurn, FixedVerticalTrack)
+                row(UpRightDownFork, DownLeftUpFork, VerticalTrack, Empty, FixedVerticalTrack)
+                row(FixedVerticalTrack, UpRightDownFork, UpRightLeftFork, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, UpRightTurn, HorizontalStop(2), UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
+            }
+        )
         val level5_5 = setOf(
             buildBoard {
                 row(Obstacle, Obstacle, DownPlatform(2, false), Obstacle, Obstacle)
@@ -1858,6 +2000,7 @@ object Solutions {
             "5-3B" to level5_3B,
             "5-4" to level5_4,
             "5-4A" to level5_4A,
+            "5-4B" to level5_4B,
             "5-5" to level5_5,
             "5-6" to level5_6,
             "5-7" to level5_7,
