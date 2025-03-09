@@ -54,6 +54,7 @@ import model.Tile.LeftTunnel
 import model.Tile.Obstacle
 import model.Tile.Platform.DownPlatform
 import model.Tile.Platform.LeftPlatform
+import model.Tile.Platform.RightPlatform
 import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
@@ -1938,6 +1939,17 @@ object Solutions {
                 row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle)
             }
         )
+        val level5_4C = setOf(
+            buildBoard {
+                row(Obstacle, DownRightTurn, HorizontalTrack, HorizontalTrack, HorizontalTrack, DownLeftTurn, Empty)
+                row(RightPlatform(3, false), VerticalStop(3), Empty, DownRightTurn, FixedHorizontalTrack, UpLeftTurn, Empty)
+                row(Obstacle, VerticalTrack, DownRightTurn, UpLeftDownFork, Empty, Empty, Empty)
+                row(Obstacle, VerticalTrack, VerticalTrack, UpRightTurn, FixedHorizontalTrack, DownRightTurn, EndingTrack)
+                row(Obstacle, DownRightUpFork, UpLeftRightFork, DownRightLeftFork, HorizontalTrack, UpLeftTurn, Empty)
+                row(RightPlatform(1, false), VerticalStop(1), Empty, UpRightDownFork, FixedHorizontalTrack, DownLeftTurn, Empty)
+                row(Obstacle, UpRightTurn, HorizontalTrack, UpLeftRightFork, HorizontalTrack, UpLeftTurn, Empty)
+            }
+        )
         val level5_5 = setOf(
             buildBoard {
                 row(Obstacle, Obstacle, DownPlatform(2, false), Obstacle, Obstacle)
@@ -2001,6 +2013,7 @@ object Solutions {
             "5-4" to level5_4,
             "5-4A" to level5_4A,
             "5-4B" to level5_4B,
+            "5-4C" to level5_4C,
             "5-5" to level5_5,
             "5-6" to level5_6,
             "5-7" to level5_7,

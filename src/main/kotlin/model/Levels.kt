@@ -47,6 +47,7 @@ import model.Tile.LeftTunnel
 import model.Tile.Obstacle
 import model.Tile.Platform.DownPlatform
 import model.Tile.Platform.LeftPlatform
+import model.Tile.Platform.RightPlatform
 import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
@@ -1573,6 +1574,25 @@ object Levels {
             ),
             tracks = 18,
         )
+        val level5_4C = Level(
+            name = "5-4C",
+            board = buildBoard(requireFixed = true) {
+                row(Obstacle, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightPlatform(3, true), VerticalStop(3), Empty, Empty, FixedHorizontalTrack, Empty, Empty)
+                row(Obstacle, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Obstacle, Empty, Empty, Empty, FixedHorizontalTrack, Empty, EndingTrack)
+                row(Obstacle, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(RightPlatform(1, true), VerticalStop(1), Empty, Empty, FixedHorizontalTrack, Empty, Empty)
+                row(Obstacle, Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(1, 4, RIGHT)),
+                Car(2, CarPosition(3, 4, LEFT)),
+                Car(3, CarPosition(5, 4, RIGHT)),
+            ),
+            tracks = 26,
+        )
         val level5_5 = Level(
             name = "5-5",
             board = buildBoard(requireFixed = true) {
@@ -1651,6 +1671,7 @@ object Levels {
             level5_4,
             level5_4A,
             level5_4B,
+            level5_4C,
             level5_5,
             level5_6,
             level5_7,
