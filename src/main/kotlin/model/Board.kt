@@ -30,77 +30,81 @@ import java.util.EnumSet
 
 data class Board(
     val tiles: Array<Row>,
+    private val toggleables: Map<Color, List<Position>>,
+    private val platforms: PersistentMap<Stop, Position>,
+    val requiredTiles: PersistentSet<Position>
 ) {
     val rows: Int = tiles.size
     val columns: Int = tiles.first().columns
 
-    private val toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
-        for (r in tiles.indices) {
-            for (c in tiles[r].indices) {
-                val tile = tiles[r][c]
-                if (tile is Toggleable) {
-                    val color = tile.color
-                    val position = Position(r, c)
-                    if (color in keys) {
-                        put(color, getValue(color) + position)
-                    } else {
-                        put(color, listOf(position))
+    constructor(tiles: Array<Row>) : this(
+        tiles = tiles,
+        toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    if (tile is Toggleable) {
+                        val color = tile.color
+                        val position = Position(r, c)
+                        if (color in keys) {
+                            put(color, getValue(color) + position)
+                        } else {
+                            put(color, listOf(position))
+                        }
                     }
                 }
             }
-        }
-        require(values.all { it.isNotEmpty() })
-    }
-
-    private val platforms: PersistentMap<Stop, Position> = buildMap<Stop, Position> {
-        for (r in tiles.indices) {
-            for (c in tiles[r].indices) {
-                val tile = tiles[r][c]
-                if (tile is HorizontalStop) {
-                    if (r > 0 && tiles[r - 1][c] is Platform && (tiles[r - 1][c] as Platform).number == tile.number) {
-                        put(tile, Position(r - 1, c))
-                    } else if (r < rows - 1 && tiles[r + 1][c] is Platform && (tiles[r + 1][c] as Platform).number == tile.number) {
-                        put(tile, Position(r + 1, c))
-                    } else {
-                        throw IllegalStateException("Missing stop for platform row: $r, column $c")
-                    }
-                } else if (tile is VerticalStop) {
-                    if (c > 0 && tiles[r][c - 1] is Platform && (tiles[r][c - 1] as Platform).number == tile.number) {
-                        put(tile, Position(r, c - 1))
-                    } else if (c < columns - 1 && tiles[r][c + 1] is Platform && (tiles[r][c + 1] as Platform).number == tile.number) {
-                        put(tile, Position(r, c + 1))
-                    } else {
-                        throw IllegalStateException("Missing stop for platform row: $r, column $c")
+            require(values.all { it.isNotEmpty() })
+        },
+        platforms = buildMap<Stop, Position> {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    if (tile is HorizontalStop) {
+                        if (r > 0 && tiles[r - 1][c] is Platform && (tiles[r - 1][c] as Platform).number == tile.number) {
+                            put(tile, Position(r - 1, c))
+                        } else if (r < tiles.size - 1 && tiles[r + 1][c] is Platform && (tiles[r + 1][c] as Platform).number == tile.number) {
+                            put(tile, Position(r + 1, c))
+                        } else {
+                            throw IllegalStateException("Missing stop for platform row: $r, column $c")
+                        }
+                    } else if (tile is VerticalStop) {
+                        if (c > 0 && tiles[r][c - 1] is Platform && (tiles[r][c - 1] as Platform).number == tile.number) {
+                            put(tile, Position(r, c - 1))
+                        } else if (c < tiles[0].columns - 1 && tiles[r][c + 1] is Platform && (tiles[r][c + 1] as Platform).number == tile.number) {
+                            put(tile, Position(r, c + 1))
+                        } else {
+                            throw IllegalStateException("Missing stop for platform row: $r, column $c")
+                        }
                     }
                 }
             }
-        }
-    }.toPersistentMap()
+        }.toPersistentMap(),
+        requiredTiles = buildSet {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    when (tile) {
+                        is HorizontalStop -> {
+                            if (tiles[r][c - 1] is Empty) add(Position(r, c - 1))
+                            if (tiles[r][c + 1] is Empty) add(Position(r, c + 1))
+                        }
 
-    val requiredTiles: PersistentSet<Position> = buildSet {
-        for (r in tiles.indices) {
-            for (c in tiles[r].indices) {
-                val tile = tiles[r][c]
-                when (tile) {
-                    is HorizontalStop -> {
-                        if (tiles[r][c - 1] is Empty) add(Position(r, c - 1))
-                        if (tiles[r][c + 1] is Empty) add(Position(r, c + 1))
+                        is VerticalStop -> {
+                            if (tiles[r - 1][c] is Empty) add(Position(r - 1, c))
+                            if (tiles[r + 1][c] is Empty) add(Position(r + 1, c))
+                        }
+
+                        is EndingTrack -> {
+                            if (tiles[r][c - 1] is Empty) add(Position(r, c - 1))
+                        }
+
+                        else -> Unit
                     }
-
-                    is VerticalStop -> {
-                        if (tiles[r - 1][c] is Empty) add(Position(r - 1, c))
-                        if (tiles[r + 1][c] is Empty) add(Position(r + 1, c))
-                    }
-
-                    is EndingTrack -> {
-                        if (tiles[r][c - 1] is Empty) add(Position(r, c - 1))
-                    }
-
-                    else -> Unit
                 }
             }
-        }
-    }.toPersistentSet()
+        }.toPersistentSet()
+    )
 
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
