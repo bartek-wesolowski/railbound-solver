@@ -2051,6 +2051,22 @@ object Solutions {
                 row(Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(1, false), Obstacle, Obstacle, Obstacle)
             }
         )
+        val level5_6B = setOf(
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
+                row(RightTunnel(LIGHT_GRAY, CarPosition(3, 5, RIGHT)), DownLeftRightFork, HorizontalStop(1), DownLeftTurn, Empty, RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, Empty, Empty)
+                row(Empty, UpRightTurn, HorizontalTrack, UpLeftRightFork, DownLeftTurn, Obstacle, Empty, DownRightTurn, EndingTrack)
+                row(RightTunnel(GRAY, CarPosition(1, 5, RIGHT)), HorizontalTrack, HorizontalStop(2), HorizontalTrack, UpLeftTurn, RightTunnel(LIGHT_GRAY, CarPosition(1, 0, RIGHT)), FixedHorizontalTrack, UpLeftTurn, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
+            },
+            buildBoard {
+                row(Obstacle, Obstacle, DownPlatform(1, false), Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
+                row(RightTunnel(LIGHT_GRAY, CarPosition(3, 5, RIGHT)), HorizontalTrack, HorizontalStop(1), DownRightLeftFork, DownLeftTurn, RightTunnel(GRAY, CarPosition(3, 0, RIGHT)), FixedHorizontalTrack, DownLeftTurn, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, VerticalTrack, Obstacle, Empty, UpRightTurn, EndingTrack)
+                row(RightTunnel(GRAY, CarPosition(1, 5, RIGHT)), HorizontalTrack, HorizontalStop(2), UpLeftRightFork, UpLeftTurn, RightTunnel(LIGHT_GRAY, CarPosition(1, 0, RIGHT)), FixedHorizontalTrack, Empty, Empty)
+                row(Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, Obstacle)
+            }
+        )
         val level5_7 = setOf(
             buildBoard {
                 row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty)
@@ -2098,6 +2114,7 @@ object Solutions {
             "5-5B" to level5_5B,
             "5-6" to level5_6,
             "5-6A" to level5_6A,
+            "5-6B" to level5_6B,
             "5-7" to level5_7,
             "5-8" to level5_8,
         )
