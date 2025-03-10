@@ -4,7 +4,8 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.minus
 import kotlinx.collections.immutable.persistentSetOf
 import model.Action
-import model.Action.*
+import model.Action.TakePassenger
+import model.Action.ToggleColor
 import model.Barrier
 import model.Board
 import model.Breadcrumb
@@ -53,7 +54,8 @@ class Solver {
                 getInProgress = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 requiredTilesRemaining = level.board.requiredTiles,
-                breadcrumbs = persistentSetOf()
+                breadcrumbs = persistentSetOf(),
+                carBreadcrumbs = CarBreadcrumbs(),
             )
         )
         val solutions = mutableSetOf<Board>()
@@ -90,6 +92,7 @@ class Solver {
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
+                carBreadcrumbs = CarBreadcrumbs(),
             ) to 1
         )
         val solutions = mutableSetOf<Board>()
@@ -225,7 +228,11 @@ class Solver {
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
         val newCar = state.activeCars[carIndex].copy(position = newCarPosition)
-        return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
+        val newTile = state.board[newCarPosition.row, newCarPosition.column]
+        if (car.position != newCarPosition && state.carBreadcrumbs.contains(car.number, newCarPosition)) {
+            return emptyList()
+        }
+        return when (newTile) {
             Obstacle -> emptyList()
             is Platform -> emptyList()
             Empty -> if (state.tracks > 0) {
@@ -261,7 +268,8 @@ class Solver {
                                         partialState.state.requiredTilesRemaining.minus(newPosition)
                                     } else {
                                         partialState.state.requiredTilesRemaining
-                                    }
+                                    },
+                                    carBreadcrumbs = partialState.state.carBreadcrumbs.plus(car.number, newCarPosition),
                                 )
                             )
                         }
@@ -297,6 +305,11 @@ class Solver {
                     } else {
                         partialState.state.traverseDirections
                     }
+                    val carBreadcrumbs = if (newTile is Toggleable) {
+                        state.carBreadcrumbs.reset(car.number)
+                    } else {
+                        state.carBreadcrumbs.plus(car.number, newCarPosition)
+                    }
                     val enterTiles = if (newTile is Fork && newTile is Toggleable) {
                         partialState.enterTiles + (newPosition to newTile)
                     } else {
@@ -316,9 +329,10 @@ class Solver {
                                 state = state.copy(
                                     activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                                     traverseDirections = traverseDirections,
+                                    carBreadcrumbs = carBreadcrumbs,
                                 ),
                                 actions = actions,
-                                enterTiles = enterTiles
+                                enterTiles = enterTiles,
                             )
                         )
                     }
@@ -354,6 +368,7 @@ class Solver {
                                                 modifiedTile
                                             ),
                                             activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                                            carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
                                         )
                                     )
                                 }
@@ -366,7 +381,8 @@ class Solver {
             is Tunnel -> listOf(
                 partialState.copy(
                     state = state.copy(
-                        activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition)
+                        activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                        carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
                     )
                 )
             )

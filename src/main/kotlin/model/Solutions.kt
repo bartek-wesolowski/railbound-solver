@@ -1946,8 +1946,8 @@ object Solutions {
                 row(RightPlatform(3, false), VerticalStop(3), Empty, DownRightTurn, FixedHorizontalTrack, UpLeftTurn, Empty)
                 row(Obstacle, VerticalTrack, DownRightTurn, UpLeftDownFork, Empty, Empty, Empty)
                 row(Obstacle, VerticalTrack, VerticalTrack, UpRightTurn, FixedHorizontalTrack, DownRightTurn, EndingTrack)
-                row(Obstacle, DownRightUpFork, UpLeftRightFork, DownRightLeftFork, HorizontalTrack, UpLeftTurn, Empty)
-                row(RightPlatform(1, false), VerticalStop(1), Empty, UpRightDownFork, FixedHorizontalTrack, DownLeftTurn, Empty)
+                row(Obstacle, DownRightUpFork, UpLeftTurn, DownRightTurn, HorizontalTrack, UpLeftTurn, Empty)
+                row(RightPlatform(1, false), VerticalStop(1), Empty, VerticalTrack, FixedHorizontalTrack, DownLeftTurn, Empty)
                 row(Obstacle, UpRightTurn, HorizontalTrack, UpLeftRightFork, HorizontalTrack, UpLeftTurn, Empty)
             }
         )

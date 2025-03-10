@@ -23,6 +23,7 @@ data class SolverState(
     val toggledColors: EnumSet<Color>,
     val requiredTilesRemaining: PersistentSet<Position>,
     val breadcrumbs: PersistentSet<Breadcrumb>,
+    val carBreadcrumbs: CarBreadcrumbs,
 ) {
     private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) {
         var result = board.hashCode()

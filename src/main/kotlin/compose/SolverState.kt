@@ -10,6 +10,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import model.CarColor
 import model.Color
 import model.Levels
+import solver.CarBreadcrumbs
 import solver.SolverState
 import java.util.EnumSet
 
@@ -52,6 +53,7 @@ private fun SolverStatePreview() {
             toggledColors = EnumSet.noneOf(Color::class.java),
             requiredTilesRemaining = persistentSetOf(),
             breadcrumbs = persistentSetOf(),
+            carBreadcrumbs = CarBreadcrumbs(),
         ),
         carColor = CarColor.RED,
         tileSize = 100.dp
