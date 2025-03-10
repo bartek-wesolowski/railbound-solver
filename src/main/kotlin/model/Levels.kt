@@ -37,6 +37,7 @@ import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.FixedUpRightDownFork
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownToggleableFork
@@ -1717,6 +1718,24 @@ object Levels {
             ),
             tracks = 12,
         )
+        val level5_7A = Level(
+            name = "5-7A",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, VerticalStop(2), LeftPlatform(2, true))
+                row(Empty, Empty, Empty, FixedHorizontalTrack, Empty, UpRightDownToggleableFork(LIGHT_BLUE), EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, VerticalStop(1), LeftPlatform(1, true))
+                row(Empty, FixedHorizontalTrack, Empty, Empty, UpLeftRightToggle(LIGHT_BLUE), Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(0, 1, LEFT)),
+                Car(2, CarPosition(4, 1, LEFT)),
+                Car(3, CarPosition(2, 3, LEFT)),
+            ),
+            tracks = 18,
+        )
+
         val level5_8 = Level(
             name = "5-8",
             board = buildBoard(requireFixed = true) {
@@ -1750,6 +1769,7 @@ object Levels {
             level5_6A,
             level5_6B,
             level5_7,
+            level5_7A,
             level5_8
         ).associateBy { it.name }
     }

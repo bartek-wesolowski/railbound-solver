@@ -42,6 +42,7 @@ import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightFork
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.FixedUpRightDownFork
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownFork
@@ -2090,6 +2091,22 @@ object Solutions {
                 row(Obstacle, Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(3, false), Obstacle)
             }
         )
+        val level5_7A = setOf(
+            buildBoard {
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftFork, HorizontalTrack, HorizontalTrack, DownLeftTurn, Empty)
+                row(UpRightDownFork, HorizontalTrack, UpLeftTurn, Empty, Empty, VerticalStop(2), LeftPlatform(2, false))
+                row(VerticalTrack, Empty, DownRightTurn, FixedHorizontalTrack, Empty, UpRightDownToggleableFork(LIGHT_BLUE), EndingTrack)
+                row(VerticalTrack, Empty, UpRightTurn, HorizontalTrack, DownLeftTurn, VerticalStop(1), LeftPlatform(1, false))
+                row(UpRightTurn, FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, UpLeftRightToggle(LIGHT_BLUE), UpLeftTurn, Empty)
+            },
+            buildBoard {
+                row(DownRightTurn, FixedHorizontalTrack, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(VerticalTrack, Empty, Empty, Empty, VerticalTrack, VerticalStop(2), LeftPlatform(2, false))
+                row(DownRightUpFork, DownLeftTurn, DownRightTurn, FixedHorizontalTrack, UpLeftDownFork, UpRightDownToggleableFork(LIGHT_BLUE), EndingTrack)
+                row(DownRightUpFork, UpLeftTurn, UpRightDownFork, HorizontalTrack, UpLeftDownFork, VerticalStop(1), LeftPlatform(1, false))
+                row(UpRightTurn, FixedHorizontalTrack, UpRightLeftFork, HorizontalTrack, UpLeftRightToggle(LIGHT_BLUE), UpLeftTurn, Empty)
+            }
+        )
         val level5_8 = setOf(
             buildBoard {
                 row(DownRightTurn, HorizontalStop(1), HorizontalTrack, DownRightLeftToggleableFork(LIGHT_BLUE), HorizontalTrack, DownLeftTurn, DownRightTurn, DownLeftTurn)
@@ -2116,6 +2133,7 @@ object Solutions {
             "5-6A" to level5_6A,
             "5-6B" to level5_6B,
             "5-7" to level5_7,
+            "5-7A" to level5_7A,
             "5-8" to level5_8,
         )
     }
