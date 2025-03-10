@@ -21,7 +21,7 @@ data class SolverState(
     val enterTiles: Map<Position, Tile>,
     val getInProgress: Map<Int, Int>,
     val toggledColors: EnumSet<Color>,
-    val requiredTilesRemaining: Set<Position>,
+    val requiredTilesRemaining: PersistentSet<Position>,
     val breadcrumbs: PersistentSet<Breadcrumb>,
 ) {
     private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) {

@@ -50,7 +50,7 @@ private fun SolverStatePreview() {
             enterTiles = emptyMap(),
             getInProgress = emptyMap(),
             toggledColors = EnumSet.noneOf(Color::class.java),
-            requiredTilesRemaining = emptySet(),
+            requiredTilesRemaining = persistentSetOf(),
             breadcrumbs = persistentSetOf(),
         ),
         carColor = CarColor.RED,

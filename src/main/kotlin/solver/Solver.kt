@@ -1,6 +1,7 @@
 package solver
 
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.minus
 import kotlinx.collections.immutable.persistentSetOf
 import model.Action
 import model.Action.*

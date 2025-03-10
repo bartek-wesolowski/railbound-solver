@@ -1,5 +1,9 @@
 package model
 
+import kotlinx.collections.immutable.PersistentMap
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.toPersistentMap
+import kotlinx.collections.immutable.toPersistentSet
 import model.Action.TakePassenger
 import model.Action.ToggleColor
 import model.Direction.DOWN
@@ -48,7 +52,7 @@ data class Board(
         require(values.all { it.isNotEmpty() })
     }
 
-    private val platforms: Map<Stop, Position> = buildMap {
+    private val platforms: PersistentMap<Stop, Position> = buildMap<Stop, Position> {
         for (r in tiles.indices) {
             for (c in tiles[r].indices) {
                 val tile = tiles[r][c]
@@ -71,9 +75,9 @@ data class Board(
                 }
             }
         }
-    }
+    }.toPersistentMap()
 
-    val requiredTiles: Set<Position> = buildSet {
+    val requiredTiles: PersistentSet<Position> = buildSet {
         for (r in tiles.indices) {
             for (c in tiles[r].indices) {
                 val tile = tiles[r][c]
@@ -96,7 +100,7 @@ data class Board(
                 }
             }
         }
-    }
+    }.toPersistentSet()
 
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
