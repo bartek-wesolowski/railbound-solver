@@ -1,6 +1,6 @@
 # Solver for the game Railbound by Afterburn
 
-It can solve all levels in worlds 1-4. The remaining levels are in progress.
+It can solve all levels in worlds 1-5 except 5-4C and 5-5B. The remaining levels are in progress.
 
 There's a simple UI written in Jetpack Compose for Desktop to visualize the solutions.
 
