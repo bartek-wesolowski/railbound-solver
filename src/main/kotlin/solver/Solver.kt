@@ -55,7 +55,7 @@ class Solver {
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
-                carBreadcrumbs = CarBreadcrumbs(),
+                carBreadcrumbs = CarBreadcrumbs(level.cars),
             )
         )
         val solutions = mutableSetOf<Board>()
@@ -92,7 +92,7 @@ class Solver {
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
-                carBreadcrumbs = CarBreadcrumbs(),
+                carBreadcrumbs = CarBreadcrumbs(level.cars),
             ) to 1
         )
         val solutions = mutableSetOf<Board>()

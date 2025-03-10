@@ -53,7 +53,7 @@ private fun SolverStatePreview() {
             toggledColors = EnumSet.noneOf(Color::class.java),
             requiredTilesRemaining = persistentSetOf(),
             breadcrumbs = persistentSetOf(),
-            carBreadcrumbs = CarBreadcrumbs(),
+            carBreadcrumbs = CarBreadcrumbs(level.cars),
         ),
         carColor = CarColor.RED,
         tileSize = 100.dp
