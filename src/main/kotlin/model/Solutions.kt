@@ -2039,6 +2039,18 @@ object Solutions {
                 row(Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(2, false), Obstacle, Obstacle, Obstacle)
             }
         )
+        val level5_6A = setOf(
+            buildBoard {
+                row(Empty, Empty, DownTunnel(LIGHT_GRAY, CarPosition(5, 7, LEFT)), Empty, Empty, DownTunnel(GRAY, CarPosition(4, 1, RIGHT)), Empty, Empty)
+                row(Empty, Empty, FixedVerticalTrack, Empty, Empty, FixedVerticalTrack, Empty, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, FixedUpLeftTurn, Empty, Empty, FixedUpRightTurn, FixedHorizontalTrack, EndingTrack)
+                row(UpRightTurn, HorizontalTrack, DownLeftTurn, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, RightTunnel(GRAY, CarPosition(0, 5, DOWN)), UpLeftTurn, DownRightTurn, HorizontalStop(2), HorizontalTrack, DownLeftTurn, Empty)
+                row(Empty, Empty, Empty, VerticalTrack, UpPlatform(2, false), DownRightTurn, UpRightLeftFork, LeftTunnel(LIGHT_GRAY, CarPosition(0, 2, DOWN)))
+                row(Empty, FixedHorizontalTrack, HorizontalTrack, UpRightLeftFork, HorizontalStop(1), UpLeftTurn, Obstacle, Empty)
+                row(Obstacle, Obstacle, Obstacle, Obstacle, UpPlatform(1, false), Obstacle, Obstacle, Obstacle)
+            }
+        )
         val level5_7 = setOf(
             buildBoard {
                 row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty)
@@ -2085,6 +2097,7 @@ object Solutions {
             "5-5A" to level5_5A,
             "5-5B" to level5_5B,
             "5-6" to level5_6,
+            "5-6A" to level5_6A,
             "5-7" to level5_7,
             "5-8" to level5_8,
         )
