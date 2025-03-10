@@ -53,18 +53,20 @@ data class Board(
             for (c in tiles[r].indices) {
                 val tile = tiles[r][c]
                 if (tile is HorizontalStop) {
-                    if (r > 0 && tiles[r - 1][c] is Platform) {
+                    if (r > 0 && tiles[r - 1][c] is Platform && (tiles[r - 1][c] as Platform).number == tile.number) {
                         put(tile, Position(r - 1, c))
-                    }
-                    if (r < rows - 1 && tiles[r + 1][c] is Platform) {
+                    } else if (r < rows - 1 && tiles[r + 1][c] is Platform && (tiles[r + 1][c] as Platform).number == tile.number) {
                         put(tile, Position(r + 1, c))
+                    } else {
+                        throw IllegalStateException("Missing stop for platform row: $r, column $c")
                     }
                 } else if (tile is VerticalStop) {
-                    if (c > 0 && tiles[r][c - 1] is Platform) {
+                    if (c > 0 && tiles[r][c - 1] is Platform && (tiles[r][c - 1] as Platform).number == tile.number) {
                         put(tile, Position(r, c - 1))
-                    }
-                    if (c < columns - 1 && tiles[r][c + 1] is Platform) {
+                    } else if (c < columns - 1 && tiles[r][c + 1] is Platform && (tiles[r][c + 1] as Platform).number == tile.number) {
                         put(tile, Position(r, c + 1))
+                    } else {
+                        throw IllegalStateException("Missing stop for platform row: $r, column $c")
                     }
                 }
             }
