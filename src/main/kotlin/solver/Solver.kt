@@ -45,12 +45,13 @@ class Solver {
             SolverState(
                 board = level.board,
                 activeCars = level.cars,
-                tracksUsed = 0,
+                tracks = level.tracks,
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
                 getInProgress = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
+                requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf()
             )
         )
@@ -64,7 +65,6 @@ class Solver {
                 continue
             }
             val nextStates = state.nextStates()
-                .filter { it.tracksUsed <= level.tracks }
                 .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates)
         }
@@ -81,12 +81,13 @@ class Solver {
             SolverState(
                 board = level.board,
                 activeCars = level.cars,
-                tracksUsed = 0,
+                tracks = level.tracks,
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
                 getInProgress = emptyMap(),
                 toggledColors = EnumSet.noneOf(Color::class.java),
+                requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
             ) to 1
         )
@@ -101,7 +102,6 @@ class Solver {
                 continue
             }
             val nextStates = state.nextStates()
-                .filter { it.tracksUsed <= level.tracks }
                 .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
             statesToCheck.addAll(nextStates.map { it to depth + 1 })
         }
@@ -208,7 +208,7 @@ class Solver {
 
     private fun getMoves(
         partialState: PartialSolverState,
-        carIndex: Int
+        carIndex: Int,
     ): List<PartialSolverState> {
         val state = partialState.state
         val car = state.activeCars[carIndex]
@@ -227,33 +227,49 @@ class Solver {
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
             is Platform -> emptyList()
-            Empty -> availableTilesByDirection.getValue(newCar.direction)
-                .filter { availableTile ->
-                    state.board.canInsert(
-                        newCarPosition.row,
-                        newCarPosition.column,
-                        availableTile,
-                        state.traverseDirections.getOrDefault(newPosition, EnumSet.noneOf(Direction::class.java))
-                    )
-                }
-                .map { insertedTile ->
-                    partialState.copy(
-                        state = state.copy(
-                            board = state.board.with(
+            Empty -> if (state.tracks > 0) {
+                if (state.tracks - state.requiredTilesRemaining.size > 0 || newPosition in state.requiredTilesRemaining) {
+                    availableTilesByDirection.getValue(newCar.direction)
+                        .filter { availableTile ->
+                            state.board.canInsert(
                                 newCarPosition.row,
                                 newCarPosition.column,
-                                insertedTile
-                            ),
-                            activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
-                            tracksUsed = state.tracksUsed + 1,
-                            traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
-                                state.traverseDirections.with(newPosition, newCar.direction)
-                            } else {
-                                state.traverseDirections
-                            }
-                        )
-                    )
+                                availableTile,
+                                state.traverseDirections.getOrDefault(
+                                    newPosition,
+                                    EnumSet.noneOf(Direction::class.java)
+                                )
+                            )
+                        }
+                        .map { insertedTile ->
+                            partialState.copy(
+                                state = state.copy(
+                                    board = state.board.with(
+                                        newCarPosition.row,
+                                        newCarPosition.column,
+                                        insertedTile
+                                    ),
+                                    activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                                    tracks = state.tracks - 1,
+                                    traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
+                                        state.traverseDirections.with(newPosition, newCar.direction)
+                                    } else {
+                                        state.traverseDirections
+                                    },
+                                    requiredTilesRemaining = if (newPosition in partialState.state.requiredTilesRemaining) {
+                                        partialState.state.requiredTilesRemaining.minus(newPosition)
+                                    } else {
+                                        partialState.state.requiredTilesRemaining
+                                    }
+                                )
+                            )
+                        }
+                } else {
+                    emptyList()
                 }
+            } else {
+                emptyList()
+            }
 
             EndingTrack -> if (
                 newCar.direction in newTile.incomingDirections &&

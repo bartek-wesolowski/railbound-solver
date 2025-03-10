@@ -15,12 +15,13 @@ import java.util.EnumSet
 data class SolverState(
     val board: Board,
     val activeCars: PersistentList<Car>,
-    val tracksUsed: Int,
+    val tracks: Int,
     val expectedCar: Int,
     val traverseDirections: Map<Position, EnumSet<Direction>>,
     val enterTiles: Map<Position, Tile>,
     val getInProgress: Map<Int, Int>,
     val toggledColors: EnumSet<Color>,
+    val requiredTilesRemaining: Set<Position>,
     val breadcrumbs: PersistentSet<Breadcrumb>,
 ) {
     private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) {

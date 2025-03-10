@@ -73,6 +73,31 @@ data class Board(
         }
     }
 
+    val requiredTiles: Set<Position> = buildSet {
+        for (r in tiles.indices) {
+            for (c in tiles[r].indices) {
+                val tile = tiles[r][c]
+                when (tile) {
+                    is HorizontalStop -> {
+                        if (tiles[r][c - 1] is Empty) add(Position(r, c - 1))
+                        if (tiles[r][c + 1] is Empty) add(Position(r, c + 1))
+                    }
+
+                    is VerticalStop -> {
+                        if (tiles[r - 1][c] is Empty) add(Position(r - 1, c))
+                        if (tiles[r + 1][c] is Empty) add(Position(r + 1, c))
+                    }
+
+                    is EndingTrack -> {
+                        if (tiles[r][c - 1] is Empty) add(Position(r, c - 1))
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
     ) {
