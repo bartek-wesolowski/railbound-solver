@@ -4,7 +4,6 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.minus
 import kotlinx.collections.immutable.persistentSetOf
 import model.Action
-import model.Action.TakePassenger
 import model.Action.ToggleColor
 import model.Barrier
 import model.Board
@@ -51,7 +50,7 @@ class Solver {
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
-                getInProgress = emptyMap(),
+                getInProgress = GetInProgress(level.cars),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
@@ -88,7 +87,7 @@ class Solver {
                 expectedCar = 1,
                 traverseDirections = emptyMap(),
                 enterTiles = emptyMap(),
-                getInProgress = emptyMap(),
+                getInProgress = GetInProgress(level.cars),
                 toggledColors = EnumSet.noneOf(Color::class.java),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
@@ -133,12 +132,7 @@ class Solver {
             partialState.applyActions()
                 .copy(
                     enterTiles = partialState.enterTiles,
-                    getInProgress = partialState.state.getInProgress
-                        .mapValues { it.value + 1 }
-                        .filterValues { it < 2 } +
-                            partialState.actions
-                                .filterIsInstance<TakePassenger>()
-                                .associate { it.carNumber to 0 },
+                    getInProgress = partialState.state.getInProgress.update(partialState.actions),
                     toggledColors = partialState.state.toggledColors.withUpdatedToggledColors(partialState.actions),
                     breadcrumbs = partialState.state.breadcrumbs.add(
                         Breadcrumb(

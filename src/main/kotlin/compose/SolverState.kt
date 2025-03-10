@@ -11,6 +11,7 @@ import model.CarColor
 import model.Color
 import model.Levels
 import solver.CarBreadcrumbs
+import solver.GetInProgress
 import solver.SolverState
 import java.util.EnumSet
 
@@ -49,7 +50,7 @@ private fun SolverStatePreview() {
             expectedCar = 1,
             traverseDirections = emptyMap(),
             enterTiles = emptyMap(),
-            getInProgress = emptyMap(),
+            getInProgress = GetInProgress(level.cars),
             toggledColors = EnumSet.noneOf(Color::class.java),
             requiredTilesRemaining = persistentSetOf(),
             breadcrumbs = persistentSetOf(),

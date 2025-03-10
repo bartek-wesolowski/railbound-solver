@@ -19,7 +19,7 @@ data class SolverState(
     val expectedCar: Int,
     val traverseDirections: Map<Position, EnumSet<Direction>>,
     val enterTiles: Map<Position, Tile>,
-    val getInProgress: Map<Int, Int>,
+    val getInProgress: GetInProgress,
     val toggledColors: EnumSet<Color>,
     val requiredTilesRemaining: PersistentSet<Position>,
     val breadcrumbs: PersistentSet<Breadcrumb>,
