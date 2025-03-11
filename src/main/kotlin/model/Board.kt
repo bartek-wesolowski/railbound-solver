@@ -167,37 +167,37 @@ data class Board(
 
     fun isAllPlatformsEmpty(): Boolean = platforms.keys.all { !getPlatform(it).isFull }
 
-    fun canInsert(row: Int, column: Int, tile: Tile, traverseDirections: EnumSet<Direction>): Boolean {
-        if (row < 0 || row >= rows) return false
-        if (column < 0 || column >= columns) return false
+    fun tryInsert(row: Int, column: Int, tile: Tile, traverseDirections: EnumSet<Direction>): Board? {
+        if (row < 0 || row >= rows) return null
+        if (column < 0 || column >= columns) return null
 
-        if (DOWN in tile.incomingDirections && row == 0) return false
-        if (UP in tile.incomingDirections && row == rows - 1) return false
-        if (RIGHT in tile.incomingDirections && column == 0) return false
-        if (LEFT in tile.incomingDirections && column == columns - 1) return false
+        if (DOWN in tile.incomingDirections && row == 0) return null
+        if (UP in tile.incomingDirections && row == rows - 1) return null
+        if (RIGHT in tile.incomingDirections && column == 0) return null
+        if (LEFT in tile.incomingDirections && column == columns - 1) return null
 
         if (
             DOWN in tile.incomingDirections &&
             tiles[row - 1][column] != Empty &&
             !tiles[row - 1][column].isValidIncomingDirection(UP, traverseDirections)
-        ) return false
+        ) return null
         if (
             UP in tile.incomingDirections &&
             tiles[row + 1][column] != Empty &&
             !tiles[row + 1][column].isValidIncomingDirection(DOWN, traverseDirections)
-        ) return false
+        ) return null
         if (
             RIGHT in tile.incomingDirections &&
             tiles[row][column - 1] != Empty &&
             !tiles[row][column - 1].isValidIncomingDirection(LEFT, traverseDirections)
-        ) return false
+        ) return null
         if (
             LEFT in tile.incomingDirections &&
             tiles[row][column + 1] != Empty &&
             !tiles[row][column + 1].isValidIncomingDirection(RIGHT, traverseDirections)
-        ) return false
+        ) return null
 
-        return true
+        return with(row, column, tile)
     }
 
     fun with(row: Int, column: Int, tile: Tile): Board = copy(

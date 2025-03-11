@@ -231,22 +231,19 @@ class Solver {
             Empty -> if (state.tracks > 0) {
                 if (state.tracks - state.requiredTilesRemaining.size > 0 || newPosition in state.requiredTilesRemaining) {
                     availableTilesByDirection.getValue(newCar.direction)
-                        .filter { availableTile ->
-                            state.board.canInsert(
+                        .mapNotNull { availableTile ->
+                            val updatedBoard =  state.board.tryInsert(
                                 newCarPosition.row,
                                 newCarPosition.column,
                                 availableTile,
                                 noTraverseDirections
                             )
+                            if (updatedBoard != null) availableTile to updatedBoard else null
                         }
-                        .map { insertedTile ->
+                        .map { (insertedTile, updatedBoard) ->
                             partialState.copy(
                                 state = state.copy(
-                                    board = state.board.with(
-                                        newCarPosition.row,
-                                        newCarPosition.column,
-                                        insertedTile
-                                    ),
+                                    board = updatedBoard,
                                     activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                                     tracks = state.tracks - 1,
                                     traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
@@ -330,32 +327,22 @@ class Solver {
                 if (newTile is ModifiableTile) {
                     val modifiedTiles = newTile.getPossibleModifications(
                         newCar.direction,
-                        state.traverseDirections.getOrDefault(
-                            newPosition,
-                            EnumSet.noneOf(Direction::class.java)
-                        )
+                        state.traverseDirections.getOrDefault(newPosition, noTraverseDirections)
                     )
                     addAll(
                         modifiedTiles
-                            .filter { modifiedTile ->
-                                state.board.canInsert(
+                            .mapNotNull { modifiedTile ->
+                                state.board.tryInsert(
                                     newCarPosition.row,
                                     newCarPosition.column,
                                     modifiedTile,
-                                    state.traverseDirections.getOrDefault(
-                                        newPosition,
-                                        EnumSet.noneOf(Direction::class.java)
-                                    )
+                                    state.traverseDirections.getOrDefault(newPosition, noTraverseDirections)
                                 )
                             }
-                            .map { modifiedTile ->
+                            .map { updatedBoard ->
                                 partialState.copy(
                                     state = state.copy(
-                                        board = state.board.with(
-                                            newCarPosition.row,
-                                            newCarPosition.column,
-                                            modifiedTile
-                                        ),
+                                        board = updatedBoard,
                                         activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                                         carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
                                     )
