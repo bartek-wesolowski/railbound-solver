@@ -38,9 +38,10 @@ sealed interface Tunnel {
 }
 
 sealed interface ModifiableTile {
-    fun getIncomingDirectionsAfterModification(
+    fun getPossibleModifications(
+        incomingDirection: Direction,
         traverseDirections: EnumSet<Direction>
-    ): EnumMap<Direction, List<Tile>>
+    ): List<Tile>
 }
 
 sealed interface Barrier : Toggleable {
@@ -89,30 +90,32 @@ sealed class Tile(
             car.position.moveForward()
 
         data object VerticalTrack : BaseVerticalTrack(), ModifiableTile {
-            override fun getIncomingDirectionsAfterModification(
+            override fun getPossibleModifications(
+                incomingDirection: Direction,
                 traverseDirections: EnumSet<Direction>
-            ): EnumMap<Direction, List<Tile>> {
-                if (UP in traverseDirections && DOWN in traverseDirections) return EnumMap(Direction::class.java)
-                return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-                    put(
-                        LEFT,
-                        buildList {
-                            if (UP !in traverseDirections) add(DownRightUpFork)
-                            if (DOWN !in traverseDirections) add(UpRightDownFork)
-                        }
-                    )
-                    put(
-                        RIGHT,
-                        buildList {
-                            if (UP !in traverseDirections) add(DownLeftUpFork)
-                            if (DOWN !in traverseDirections) add(UpLeftDownFork)
-                        }
-                    )
-                    if (UP !in traverseDirections) {
-                        put(UP, listOf(DownLeftUpFork, DownRightUpFork))
+            ): List<Tile> {
+                if (UP in traverseDirections && DOWN in traverseDirections) return emptyList()
+                return when (incomingDirection) {
+                    LEFT -> buildList(2) {
+                        if (UP !in traverseDirections) add(DownRightUpFork)
+                        if (DOWN !in traverseDirections) add(UpRightDownFork)
                     }
-                    if (DOWN !in traverseDirections) {
-                        put(DOWN, listOf(UpLeftDownFork, UpRightDownFork))
+
+                    RIGHT -> buildList(2) {
+                        if (UP !in traverseDirections) add(DownLeftUpFork)
+                        if (DOWN !in traverseDirections) add(UpLeftDownFork)
+                    }
+
+                    UP -> if (UP !in traverseDirections) {
+                        listOf(DownLeftUpFork, DownRightUpFork)
+                    } else {
+                        emptyList()
+                    }
+
+                    DOWN -> if (DOWN !in traverseDirections) {
+                        listOf(UpLeftDownFork, UpRightDownFork)
+                    } else {
+                        emptyList()
                     }
                 }
             }
@@ -181,30 +184,32 @@ sealed class Tile(
             car.position.moveForward()
 
         data object HorizontalTrack : BaseHorizontalTrack(), ModifiableTile {
-            override fun getIncomingDirectionsAfterModification(
+            override fun getPossibleModifications(
+                incomingDirection: Direction,
                 traverseDirections: EnumSet<Direction>
-            ): EnumMap<Direction, List<Tile>> {
-                if (LEFT in traverseDirections && RIGHT in traverseDirections) return EnumMap(Direction::class.java)
-                return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-                    put(
-                        UP,
-                        buildList {
-                            if (LEFT !in traverseDirections) add(DownRightLeftFork)
-                            if (RIGHT !in traverseDirections) add(DownLeftRightFork)
-                        }
-                    )
-                    put(
-                        DOWN,
-                        buildList {
-                            if (LEFT !in traverseDirections) add(UpRightLeftFork)
-                            if (RIGHT !in traverseDirections) add(UpLeftRightFork)
-                        }
-                    )
-                    if (LEFT !in traverseDirections) {
-                        put(LEFT, listOf(UpRightLeftFork, DownRightLeftFork))
+            ): List<Tile> {
+                if (LEFT in traverseDirections && RIGHT in traverseDirections) return emptyList()
+                return when (incomingDirection) {
+                    UP -> buildList(2) {
+                        if (LEFT !in traverseDirections) add(DownRightLeftFork)
+                        if (RIGHT !in traverseDirections) add(DownLeftRightFork)
                     }
-                    if (RIGHT !in traverseDirections) {
-                        put(RIGHT, listOf(UpLeftRightFork, DownLeftRightFork))
+
+                    DOWN -> buildList(2) {
+                        if (LEFT !in traverseDirections) add(UpRightLeftFork)
+                        if (RIGHT !in traverseDirections) add(UpLeftRightFork)
+                    }
+
+                    LEFT -> if (LEFT !in traverseDirections) {
+                        listOf(UpRightLeftFork, DownRightLeftFork)
+                    } else {
+                        emptyList()
+                    }
+
+                    RIGHT -> if (RIGHT !in traverseDirections) {
+                        listOf(UpLeftRightFork, DownLeftRightFork)
+                    } else {
+                        emptyList()
                     }
                 }
             }
@@ -284,14 +289,15 @@ sealed class Tile(
                 }
 
             data object DownRightTurn : BaseDownRightTurn(fixed = false), ModifiableTile {
-                override fun getIncomingDirectionsAfterModification(
-                    traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, List<Tile>> {
-                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-                        put(DOWN, listOf(DownRightUpFork))
-                        put(RIGHT, listOf(DownRightLeftFork))
-                    }
+                private val possibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                    put(DOWN, listOf(DownRightUpFork))
+                    put(RIGHT, listOf(DownRightLeftFork))
                 }
+
+                override fun getPossibleModifications(
+                    incomingDirection: Direction,
+                    traverseDirections: EnumSet<Direction>
+                ): List<Tile> = possibleModifications[incomingDirection] ?: emptyList()
 
                 override fun matches(solution: Tile): Boolean {
                     if (solution is DownRightUpFork || solution is DownRightLeftFork) {
@@ -322,14 +328,15 @@ sealed class Tile(
                 }
 
             data object DownLeftTurn : BaseDownLeftTurn(fixed = false), ModifiableTile {
-                override fun getIncomingDirectionsAfterModification(
-                    traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, List<Tile>> {
-                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-                        put(DOWN, listOf(DownLeftUpFork))
-                        put(LEFT, listOf(DownLeftRightFork))
-                    }
+                private val possibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                    put(DOWN, listOf(DownLeftUpFork))
+                    put(LEFT, listOf(DownLeftRightFork))
                 }
+
+                override fun getPossibleModifications(
+                    incomingDirection: Direction,
+                    traverseDirections: EnumSet<Direction>
+                ): List<Tile> = possibleModifications[incomingDirection] ?: emptyList()
 
                 override fun matches(solution: Tile): Boolean {
                     if (solution is DownLeftUpFork || solution is DownLeftRightFork) {
@@ -360,14 +367,15 @@ sealed class Tile(
                 }
 
             data object UpRightTurn : BaseUpRightTurn(fixed = false), ModifiableTile {
-                override fun getIncomingDirectionsAfterModification(
-                    traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, List<Tile>> {
-                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-                        put(UP, listOf(UpRightDownFork))
-                        put(RIGHT, listOf(UpRightLeftFork))
-                    }
+                private val possibleModification = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                    put(UP, listOf(UpRightDownFork))
+                    put(RIGHT, listOf(UpRightLeftFork))
                 }
+
+                override fun getPossibleModifications(
+                    incomingDirection: Direction,
+                    traverseDirections: EnumSet<Direction>
+                ): List<Tile> = possibleModification[incomingDirection] ?: emptyList()
 
                 override fun matches(solution: Tile): Boolean {
                     if (solution is UpRightDownFork || solution is UpRightLeftFork) {
@@ -412,14 +420,15 @@ sealed class Tile(
                 }
 
             data object UpLeftTurn : BaseUpLeftTurn(fixed = false), ModifiableTile {
-                override fun getIncomingDirectionsAfterModification(
-                    traverseDirections: EnumSet<Direction>
-                ): EnumMap<Direction, List<Tile>> {
-                    return EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
-                        put(UP, listOf(UpLeftDownFork))
-                        put(LEFT, listOf(UpLeftRightFork))
-                    }
+                private val possibleModification = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                    put(UP, listOf(UpLeftDownFork))
+                    put(LEFT, listOf(UpLeftRightFork))
                 }
+
+                override fun getPossibleModifications(
+                    incomingDirection: Direction,
+                    traverseDirections: EnumSet<Direction>
+                ): List<Tile> = possibleModification[incomingDirection] ?: emptyList()
 
                 override fun matches(solution: Tile): Boolean {
                     if (solution is UpLeftDownFork || solution is UpLeftRightFork) {
@@ -848,11 +857,10 @@ sealed class Tile(
         }
     }
 
-    fun isValidIncomingDirection(direction: Direction, traverseDirections: EnumSet<Direction>): Boolean {
-        return direction in incomingDirections
+    fun isValidIncomingDirection(incomingDirection: Direction, traverseDirections: EnumSet<Direction>): Boolean {
+        return incomingDirection in incomingDirections
                 || (
-                this is ModifiableTile &&
-                        direction in getIncomingDirectionsAfterModification(traverseDirections = traverseDirections)
+                this is ModifiableTile && getPossibleModifications(incomingDirection, traverseDirections).isNotEmpty()
                 )
     }
 

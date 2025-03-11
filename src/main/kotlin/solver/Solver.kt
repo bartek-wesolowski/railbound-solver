@@ -331,43 +331,41 @@ class Solver {
                     }
                 }
                 if (newTile is ModifiableTile) {
-                    val incomingDirectionsAfterModification = newTile.getIncomingDirectionsAfterModification(
+                    val modifiedTiles = newTile.getPossibleModifications(
+                        newCar.direction,
                         state.traverseDirections.getOrDefault(
                             newPosition,
                             EnumSet.noneOf(Direction::class.java)
                         )
                     )
-                    if (newCar.direction in incomingDirectionsAfterModification) {
-                        addAll(
-                            incomingDirectionsAfterModification
-                                .getValue(newCar.direction)
-                                .filter { modifiedTile ->
-                                    state.board.canInsert(
-                                        newCarPosition.row,
-                                        newCarPosition.column,
-                                        modifiedTile,
-                                        state.traverseDirections.getOrDefault(
-                                            newPosition,
-                                            EnumSet.noneOf(Direction::class.java)
-                                        )
+                    addAll(
+                        modifiedTiles
+                            .filter { modifiedTile ->
+                                state.board.canInsert(
+                                    newCarPosition.row,
+                                    newCarPosition.column,
+                                    modifiedTile,
+                                    state.traverseDirections.getOrDefault(
+                                        newPosition,
+                                        EnumSet.noneOf(Direction::class.java)
                                     )
-                                }
-                                .map { modifiedTile ->
-                                    partialState.copy(
-                                        state = state.copy(
-                                            board = state.board.with(
-                                                newCarPosition.row,
-                                                newCarPosition.column,
-                                                modifiedTile
-                                            ),
-                                            activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
-                                            carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
-                                        )
+                                )
+                            }
+                            .map { modifiedTile ->
+                                partialState.copy(
+                                    state = state.copy(
+                                        board = state.board.with(
+                                            newCarPosition.row,
+                                            newCarPosition.column,
+                                            modifiedTile
+                                        ),
+                                        activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                                        carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
                                     )
-                                }
-                                .asIterable()
-                        )
-                    }
+                                )
+                            }
+                            .asIterable()
+                    )
                 }
             }
 
