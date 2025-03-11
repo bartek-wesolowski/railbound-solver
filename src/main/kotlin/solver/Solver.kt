@@ -221,12 +221,11 @@ class Solver {
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
-        val newCar = state.activeCars[carIndex].copy(position = newCarPosition)
-        val newTile = state.board[newCarPosition.row, newCarPosition.column]
         if (car.position != newCarPosition && state.carBreadcrumbs.contains(car.number, newCarPosition)) {
             return emptyList()
         }
-        return when (newTile) {
+        val newCar = state.activeCars[carIndex].copy(position = newCarPosition)
+        return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
             is Platform -> emptyList()
             Empty -> if (state.tracks > 0) {
