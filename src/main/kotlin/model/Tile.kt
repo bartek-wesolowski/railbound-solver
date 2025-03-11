@@ -90,33 +90,36 @@ sealed class Tile(
             car.position.moveForward()
 
         data object VerticalTrack : BaseVerticalTrack(), ModifiableTile {
+            private val untraversedPossibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(LEFT, listOf(DownRightUpFork, UpRightDownFork))
+                put(RIGHT, listOf(DownLeftUpFork, UpLeftDownFork))
+                put(UP, listOf(DownLeftUpFork, DownRightUpFork))
+                put(DOWN, listOf(UpLeftDownFork, UpRightDownFork))
+            }
+
+            private val upTraversedPossibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(LEFT, listOf(UpRightDownFork))
+                put(RIGHT, listOf(UpLeftDownFork))
+                put(DOWN, listOf(UpLeftDownFork, UpRightDownFork))
+            }
+
+            private val downTraversedPossibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(LEFT, listOf(DownRightUpFork))
+                put(RIGHT, listOf(DownLeftUpFork))
+                put(UP, listOf(DownLeftUpFork, DownRightUpFork))
+            }
+
             override fun getPossibleModifications(
                 incomingDirection: Direction,
                 traverseDirections: EnumSet<Direction>
             ): List<Tile> {
-                if (UP in traverseDirections && DOWN in traverseDirections) return emptyList()
-                return when (incomingDirection) {
-                    LEFT -> buildList(2) {
-                        if (UP !in traverseDirections) add(DownRightUpFork)
-                        if (DOWN !in traverseDirections) add(UpRightDownFork)
-                    }
-
-                    RIGHT -> buildList(2) {
-                        if (UP !in traverseDirections) add(DownLeftUpFork)
-                        if (DOWN !in traverseDirections) add(UpLeftDownFork)
-                    }
-
-                    UP -> if (UP !in traverseDirections) {
-                        listOf(DownLeftUpFork, DownRightUpFork)
-                    } else {
-                        emptyList()
-                    }
-
-                    DOWN -> if (DOWN !in traverseDirections) {
-                        listOf(UpLeftDownFork, UpRightDownFork)
-                    } else {
-                        emptyList()
-                    }
+                val upTraversed = UP in traverseDirections
+                val downTraversed = DOWN in traverseDirections
+                return when {
+                    !upTraversed && !downTraversed -> untraversedPossibleModifications[incomingDirection] ?: emptyList()
+                    !upTraversed && downTraversed -> downTraversedPossibleModifications[incomingDirection] ?: emptyList()
+                    upTraversed && !downTraversed -> upTraversedPossibleModifications[incomingDirection] ?: emptyList()
+                    else -> emptyList()
                 }
             }
 
@@ -184,33 +187,36 @@ sealed class Tile(
             car.position.moveForward()
 
         data object HorizontalTrack : BaseHorizontalTrack(), ModifiableTile {
+            private val untraversedPossibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(UP, listOf(DownRightLeftFork, DownLeftRightFork))
+                put(DOWN, listOf(UpRightLeftFork, UpLeftRightFork))
+                put(LEFT, listOf(UpRightLeftFork, DownRightLeftFork))
+                put(RIGHT, listOf(UpLeftRightFork, DownLeftRightFork))
+            }
+
+            private val leftTraversedPossibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(UP, listOf(DownLeftRightFork))
+                put(DOWN, listOf(UpLeftRightFork))
+                put(RIGHT, listOf(UpLeftRightFork, DownLeftRightFork))
+            }
+
+            private val rightTraversedPossibleModifications = EnumMap<Direction, List<Tile>>(Direction::class.java).apply {
+                put(UP, listOf(DownRightLeftFork))
+                put(DOWN, listOf(UpRightLeftFork))
+                put(LEFT, listOf(UpRightLeftFork, DownRightLeftFork))
+            }
+
             override fun getPossibleModifications(
                 incomingDirection: Direction,
                 traverseDirections: EnumSet<Direction>
             ): List<Tile> {
-                if (LEFT in traverseDirections && RIGHT in traverseDirections) return emptyList()
-                return when (incomingDirection) {
-                    UP -> buildList(2) {
-                        if (LEFT !in traverseDirections) add(DownRightLeftFork)
-                        if (RIGHT !in traverseDirections) add(DownLeftRightFork)
-                    }
-
-                    DOWN -> buildList(2) {
-                        if (LEFT !in traverseDirections) add(UpRightLeftFork)
-                        if (RIGHT !in traverseDirections) add(UpLeftRightFork)
-                    }
-
-                    LEFT -> if (LEFT !in traverseDirections) {
-                        listOf(UpRightLeftFork, DownRightLeftFork)
-                    } else {
-                        emptyList()
-                    }
-
-                    RIGHT -> if (RIGHT !in traverseDirections) {
-                        listOf(UpLeftRightFork, DownLeftRightFork)
-                    } else {
-                        emptyList()
-                    }
+                val leftTraversed = LEFT in traverseDirections
+                val rightTraversed = RIGHT in traverseDirections
+                return when {
+                    !leftTraversed && !rightTraversed -> untraversedPossibleModifications[incomingDirection] ?: emptyList()
+                    !leftTraversed && rightTraversed -> rightTraversedPossibleModifications[incomingDirection] ?: emptyList()
+                    leftTraversed && !rightTraversed -> leftTraversedPossibleModifications[incomingDirection] ?: emptyList()
+                    else -> emptyList()
                 }
             }
 
