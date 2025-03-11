@@ -236,10 +236,7 @@ class Solver {
                                 newCarPosition.row,
                                 newCarPosition.column,
                                 availableTile,
-                                state.traverseDirections.getOrDefault(
-                                    newPosition,
-                                    EnumSet.noneOf(Direction::class.java)
-                                )
+                                noTraverseDirections
                             )
                         }
                         .map { insertedTile ->
@@ -404,6 +401,8 @@ class Solver {
             UP to setOf(VerticalTrack, DownLeftTurn, DownRightTurn),
             DOWN to setOf(VerticalTrack, UpLeftTurn, UpRightTurn),
         )
+
+        private val noTraverseDirections = EnumSet.noneOf(Direction::class.java)
     }
 }
 
