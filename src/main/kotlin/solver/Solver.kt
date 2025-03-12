@@ -231,14 +231,13 @@ class Solver {
             Empty -> if (state.tracks > 0) {
                 if (state.tracks - state.requiredTilesRemaining.size > 0 || newPosition in state.requiredTilesRemaining) {
                     availableTilesByDirection.getValue(newCar.direction)
-                        .mapNotNull { availableTile ->
-                            val updatedBoard =  state.board.tryInsert(
+                        .flatMap { availableTile ->
+                            state.board.tryInsert(
                                 newCarPosition.row,
                                 newCarPosition.column,
                                 availableTile,
-                                noTraverseDirections
-                            )
-                            if (updatedBoard != null) availableTile to updatedBoard else null
+                                state.traverseDirections
+                            ).map { availableTile to it }
                         }
                         .map { (insertedTile, updatedBoard) ->
                             partialState.copy(
@@ -331,12 +330,12 @@ class Solver {
                     )
                     addAll(
                         modifiedTiles
-                            .mapNotNull { modifiedTile ->
+                            .flatMap { modifiedTile ->
                                 state.board.tryInsert(
                                     newCarPosition.row,
                                     newCarPosition.column,
                                     modifiedTile,
-                                    state.traverseDirections.getOrDefault(newPosition, noTraverseDirections)
+                                    state.traverseDirections
                                 )
                             }
                             .map { updatedBoard ->
