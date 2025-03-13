@@ -180,8 +180,9 @@ class Solver {
     }
 
     private fun EnumSet<Color>.withUpdatedToggledColors(actions: List<Action>): EnumSet<Color> {
+        if (actions.count { it is ToggleColor } == 0) return this
         return if (isEmpty()) {
-            emptyColorSet
+            EnumSet.noneOf(Color::class.java)
         } else {
             EnumSet.copyOf(this)
         }.apply {
