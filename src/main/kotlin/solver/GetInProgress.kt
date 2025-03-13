@@ -12,6 +12,7 @@ class GetInProgress private constructor(
     operator fun get(carNumber: Int) = progress[carNumber - 1]
 
     fun update(actions: List<Action>): GetInProgress {
+        if (progress.isEmpty() && actions.none { it is TakePassenger }) return this
         val newProgress = progress.copyOf()
         for (i in progress.indices) {
             val carProgress = progress[i]
