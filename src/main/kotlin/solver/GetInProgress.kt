@@ -29,7 +29,11 @@ class GetInProgress private constructor(
                 newProgress[action.carNumber - 1] = 0
             }
         }
-        return GetInProgress(newProgress)
+        return if (newProgress.all { it == null }) {
+            EMPTY[progress.size - 1]
+        } else {
+            GetInProgress(newProgress)
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -39,4 +43,13 @@ class GetInProgress private constructor(
     }
 
     override fun hashCode(): Int = progress.contentHashCode()
+
+    private companion object {
+        val EMPTY: Array<GetInProgress> = arrayOf(
+            GetInProgress(arrayOfNulls(1)),
+            GetInProgress(arrayOfNulls(2)),
+            GetInProgress(arrayOfNulls(3)),
+            GetInProgress(arrayOfNulls(4)),
+        )
+    }
 }
