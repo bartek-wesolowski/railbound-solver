@@ -181,7 +181,7 @@ class Solver {
 
     private fun EnumSet<Color>.withUpdatedToggledColors(actions: List<Action>): EnumSet<Color> {
         return if (isEmpty()) {
-            EnumSet.noneOf(Color::class.java)
+            emptyColorSet
         } else {
             EnumSet.copyOf(this)
         }.apply {
@@ -414,6 +414,7 @@ class Solver {
         )
 
         private val noTraverseDirections = EnumSet.noneOf(Direction::class.java)
+        private val emptyColorSet = EnumSet.noneOf(Color::class.java)
     }
 }
 
