@@ -260,14 +260,11 @@ data class Board(
         }
     }
 
-    private fun with(row: Int, column: Int, tile: Tile): Board {
-        val newBoard = copy(
-            tiles = tiles.mapAt(row) { rowTiles ->
-                rowTiles.mapAt(column, tile)
-            }
-        )
-        return newBoard
-    }
+    private fun with(row: Int, column: Int, tile: Tile): Board = copy(
+        tiles = tiles.mapAt(row) { rowTiles ->
+            rowTiles.mapAt(column, tile)
+        }
+    )
 
     private fun with(position: Position, tile: Tile): Board = with(position.row, position.column, tile)
 
