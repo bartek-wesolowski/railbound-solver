@@ -225,12 +225,13 @@ class Solver {
             return emptyList()
         }
         val newCar = state.activeCars[carIndex].copy(position = newCarPosition)
+        val newDirection = newCar.direction
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
             is Platform -> emptyList()
             Empty -> if (state.tracks > 0) {
                 if (state.tracks - state.requiredTilesRemaining.size > 0 || newPosition in state.requiredTilesRemaining) {
-                    availableTilesByDirection.getValue(newCar.direction)
+                    availableTilesByDirection.getValue(newDirection)
                         .flatMap { availableTile ->
                             state.board.tryInsert(
                                 newCarPosition.row,
@@ -246,7 +247,7 @@ class Solver {
                                     activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
                                     tracks = state.tracks - 1,
                                     traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
-                                        state.traverseDirections.with(newPosition, newCar.direction)
+                                        state.traverseDirections.with(newPosition, newDirection)
                                     } else {
                                         state.traverseDirections
                                     },
@@ -267,7 +268,7 @@ class Solver {
             }
 
             EndingTrack -> if (
-                newCar.direction in newTile.incomingDirections &&
+                newDirection in newTile.incomingDirections &&
                 state.expectedCar == newCar.number
             ) {
                 listOf(
@@ -285,9 +286,10 @@ class Solver {
             is StraightTrack,
             is Turn,
             is Fork -> buildList {
-                if (newCar.direction in newTile.incomingDirections) {
+                if (newDirection in newTile.incomingDirections) {
+                    if (partialState.isCarCycleOnFork(newTile, newCar)) return@buildList
                     val traverseDirections = if (newTile is VerticalTrack || newTile is HorizontalTrack) {
-                        partialState.state.traverseDirections.with(newPosition, newCar.direction)
+                        partialState.state.traverseDirections.with(newPosition, newDirection)
                     } else {
                         partialState.state.traverseDirections
                     }
@@ -325,11 +327,14 @@ class Solver {
                 }
                 if (newTile is ModifiableTile) {
                     val modifiedTiles = newTile.getPossibleModifications(
-                        newCar.direction,
+                        newDirection,
                         state.traverseDirections.getOrDefault(newPosition, noTraverseDirections)
                     )
                     addAll(
                         modifiedTiles
+                            .filter { modifiedTile ->
+                                !partialState.isCarCycleOnFork(modifiedTile, newCar)
+                            }
                             .flatMap { modifiedTile ->
                                 state.board.tryInsert(
                                     newCarPosition.row,
@@ -347,7 +352,6 @@ class Solver {
                                     )
                                 )
                             }
-                            .asIterable()
                     )
                 }
             }
@@ -378,6 +382,27 @@ class Solver {
             add(direction)
         }
         return plus(position to newDirections)
+    }
+
+    private fun PartialSolverState.isCarCycleOnFork(tile: Tile, car: Car): Boolean {
+        if (tile is Fork && tile !is Toggleable) {
+            val nextPosition = tile.getNextPosition(car, null)
+            for (direction in tile.incomingDirections) {
+                if (direction == car.direction) continue
+                val nextPosition2 = tile.getNextPosition(
+                    car.copy(position = car.position.copy(direction = direction)),
+                    null
+                )
+                if (nextPosition2 == nextPosition && state.carBreadcrumbs.contains(
+                        car.number,
+                        car.position.copy(direction = direction)
+                    )
+                ) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     companion object {
