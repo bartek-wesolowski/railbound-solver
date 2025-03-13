@@ -275,7 +275,15 @@ data class Board(
         return true
     }
 
-    fun apply(action: Action): Board {
+    fun withAppliedActions(actions: List<Action>): Board {
+        var updatedBoard = this
+        for (action in actions) {
+            updatedBoard = updatedBoard.withAppliedAction(action)
+        }
+        return updatedBoard
+    }
+
+    private fun withAppliedAction(action: Action): Board {
         return when (action) {
             is ToggleColor -> {
                 val barrierPositions = toggleables[action.color].orEmpty()

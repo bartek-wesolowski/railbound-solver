@@ -2,7 +2,6 @@ package solver
 
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentSet
-import model.Action
 import model.Board
 import model.Breadcrumb
 import model.Car
@@ -42,8 +41,4 @@ data class SolverState(
     }
 
     override fun hashCode(): Int = hashCode
-
-    fun apply(action: Action): SolverState {
-        return copy(board = board.apply(action))
-    }
 }

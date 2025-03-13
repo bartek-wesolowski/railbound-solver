@@ -129,19 +129,20 @@ class Solver {
             partialStates = updatedPartialStates.filterNoCollisions(board, this, carIndex)
         }
         return partialStates.map { partialState ->
-            partialState.applyActions()
-                .copy(
-                    enterTiles = partialState.enterTiles,
-                    getInProgress = partialState.state.getInProgress.update(partialState.actions),
-                    toggledColors = partialState.state.toggledColors.withUpdatedToggledColors(partialState.actions),
-                    breadcrumbs = partialState.state.breadcrumbs.add(
-                        Breadcrumb(
-                            cars = activeCars,
-                            toggledColors = toggledColors,
-                            getInProgress = getInProgress,
-                        )
+            val state = partialState.state
+            state.copy(
+                board = state.board.withAppliedActions(partialState.actions),
+                enterTiles = partialState.enterTiles,
+                getInProgress = state.getInProgress.update(partialState.actions),
+                toggledColors = state.toggledColors.withUpdatedToggledColors(partialState.actions),
+                breadcrumbs = state.breadcrumbs.add(
+                    Breadcrumb(
+                        cars = activeCars,
+                        toggledColors = toggledColors,
+                        getInProgress = getInProgress,
                     )
                 )
+            )
         }
     }
 
@@ -415,7 +416,6 @@ class Solver {
         )
 
         private val noTraverseDirections = EnumSet.noneOf(Direction::class.java)
-        private val emptyColorSet = EnumSet.noneOf(Color::class.java)
     }
 }
 
