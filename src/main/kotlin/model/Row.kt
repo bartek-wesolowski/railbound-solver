@@ -5,8 +5,6 @@ class Row(val tiles: Array<Tile>) {
         require(tiles.isNotEmpty())
     }
 
-    private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) { tiles.contentHashCode() }
-
     val columns: Int get() = tiles.size
 
     val indices: IntRange get() = tiles.indices
@@ -29,7 +27,7 @@ class Row(val tiles: Array<Tile>) {
         tiles.forEach(action)
     }
 
-    override fun hashCode(): Int = hashCode
+    override fun hashCode(): Int = tiles.contentHashCode()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
