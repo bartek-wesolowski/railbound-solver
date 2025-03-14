@@ -37,7 +37,6 @@ import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
 import model.Toggleable
 import model.Tunnel
 import java.util.EnumSet
-import java.util.PriorityQueue
 
 class Solver {
     fun findSolutions(level: Level): Set<Board> {
@@ -74,11 +73,7 @@ class Solver {
     }
 
     fun getSolverStates(level: Level): Sequence<SolverState> = sequence {
-        val statesToCheck = PriorityQueue(Comparator<Pair<SolverState, Int>> { p1, p2 ->
-            val depth1 = p1.second
-            val depth2 = p2.second
-            depth2.compareTo(depth1)
-        })
+        val statesToCheck = ArrayList<SolverState>()
         statesToCheck.add(
             SolverState(
                 board = level.board,
@@ -92,11 +87,11 @@ class Solver {
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
                 carBreadcrumbs = CarBreadcrumbs(level.cars),
-            ) to 1
+            )
         )
         val solutions = mutableSetOf<Board>()
         while (statesToCheck.isNotEmpty()) {
-            val (state, depth) = statesToCheck.poll()
+            val state = statesToCheck.removeLast()
             yield(state)
             if (state.activeCars.isEmpty()) {
                 if (state.board.isAllPlatformsEmpty()) {
@@ -106,7 +101,7 @@ class Solver {
             }
             val nextStates = state.nextStates()
                 .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
-            statesToCheck.addAll(nextStates.map { it to depth + 1 })
+            statesToCheck.addAll(nextStates)
         }
     }
 
