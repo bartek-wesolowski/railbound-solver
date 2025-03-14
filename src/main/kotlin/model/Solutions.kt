@@ -2136,7 +2136,7 @@ object Solutions {
             "5-4" to level5_4,
             "5-4A" to level5_4A,
             "5-4B" to level5_4B,
-//            "5-4C" to level5_4C,
+            "5-4C" to level5_4C,
             "5-5" to level5_5,
             "5-5A" to level5_5A,
             "5-5B" to level5_5B,
