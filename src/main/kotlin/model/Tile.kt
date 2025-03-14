@@ -32,6 +32,8 @@ sealed interface Toggleable {
     fun toggled(): Tile
 }
 
+sealed interface ToggleableFork: Toggleable
+
 sealed interface Tunnel {
     val color: TunnelColor
     val exitPosition: CarPosition
@@ -480,7 +482,7 @@ sealed class Tile(
 
             data class DownLeftRightToggleableFork(
                 override val color: Color
-            ) : BaseDownLeftRightFork(fixed = true), Toggleable {
+            ) : BaseDownLeftRightFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownRightLeftToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -515,7 +517,7 @@ sealed class Tile(
 
             data class DownLeftUpToggleableFork(
                 override val color: Color
-            ) : BaseDownLeftUpFork(fixed = true), Toggleable {
+            ) : BaseDownLeftUpFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpLeftDownToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -550,7 +552,7 @@ sealed class Tile(
 
             data class DownRightLeftToggleableFork(
                 override val color: Color
-            ) : BaseDownRightLeftFork(fixed = true), Toggleable {
+            ) : BaseDownRightLeftFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownLeftRightToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -585,7 +587,7 @@ sealed class Tile(
 
             data class DownRightUpToggleableFork(
                 override val color: Color
-            ) : BaseDownRightUpFork(fixed = true), Toggleable {
+            ) : BaseDownRightUpFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpRightDownToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -620,7 +622,7 @@ sealed class Tile(
 
             data class UpLeftRightToggleableFork(
                 override val color: Color
-            ) : BaseUpLeftRightFork(fixed = true), Toggleable {
+            ) : BaseUpLeftRightFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpRightLeftToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -655,7 +657,7 @@ sealed class Tile(
 
             data class UpLeftDownToggleableFork(
                 override val color: Color
-            ) : BaseUpLeftDownFork(fixed = true), Toggleable {
+            ) : BaseUpLeftDownFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownLeftUpToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -690,7 +692,7 @@ sealed class Tile(
 
             data class UpRightLeftToggleableFork(
                 override val color: Color
-            ) : BaseUpRightLeftFork(fixed = true), Toggleable {
+            ) : BaseUpRightLeftFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpLeftRightToggleableFork(color) }
                 override fun toggled() = toggled
 
@@ -725,7 +727,7 @@ sealed class Tile(
 
             data class UpRightDownToggleableFork(
                 override val color: Color
-            ) : BaseUpRightDownFork(fixed = true), Toggleable {
+            ) : BaseUpRightDownFork(fixed = true), ToggleableFork {
                 private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownRightUpToggleableFork(color) }
                 override fun toggled() = toggled
 

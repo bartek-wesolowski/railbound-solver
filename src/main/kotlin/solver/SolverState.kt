@@ -24,6 +24,8 @@ data class SolverState(
     val breadcrumbs: PersistentSet<Breadcrumb>,
     val carBreadcrumbs: CarBreadcrumbs,
 ) {
+    fun createBreadcrumb() = Breadcrumb(activeCars, toggledColors, getInProgress)
+
     private val hashCode: Int by lazy(LazyThreadSafetyMode.NONE) {
         var result = board.hashCode()
         result = 31 * result + activeCars.hashCode()

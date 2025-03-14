@@ -35,6 +35,7 @@ import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
 import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
 import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
 import model.Toggleable
+import model.ToggleableFork
 import model.Tunnel
 import java.util.EnumSet
 
@@ -65,8 +66,14 @@ class Solver {
                 }
                 continue
             }
-            val nextStates = state.nextStates()
-                .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
+            val nextStates = state.nextStates(level.board.hasToggleableForks).run {
+                if (level.board.hasToggleableForks) {
+                    filter { it.createBreadcrumb() !in state.breadcrumbs }
+                } else {
+                    val breadcrumb = state.createBreadcrumb()
+                    filter { it.createBreadcrumb() != breadcrumb }
+                }
+            }
             statesToCheck.addAll(nextStates)
         }
         return solutions
@@ -101,9 +108,10 @@ class Solver {
             }
             val nextStates = state.nextStates(level.board.hasToggleableForks).run {
                 if (level.board.hasToggleableForks) {
-                    filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
+                    filter { it.createBreadcrumb() !in state.breadcrumbs }
                 } else {
-                    this
+                    val breadcrumb = state.createBreadcrumb()
+                    filter { it.createBreadcrumb() != breadcrumb }
                 }
             }
             statesToCheck.addAll(nextStates)
@@ -299,7 +307,7 @@ class Solver {
                     } else {
                         partialState.state.traverseDirections
                     }
-                    val carBreadcrumbs = if (newTile is Toggleable) {
+                    val carBreadcrumbs = if (newTile is ToggleableFork) {
                         state.carBreadcrumbs.reset(car.number)
                     } else {
                         state.carBreadcrumbs.plus(car.number, newCarPosition)
