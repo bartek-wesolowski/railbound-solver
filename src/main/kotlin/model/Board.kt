@@ -23,15 +23,20 @@ import model.Tile.EndingTrack
 import model.Tile.Fork
 import model.Tile.Obstacle
 import model.Tile.Platform
+import model.Tile.Platform.DownPlatform
+import model.Tile.Platform.LeftPlatform
+import model.Tile.Platform.RightPlatform
+import model.Tile.Platform.UpPlatform
 import model.Tile.Turn
 import util.mapAt
 import java.util.EnumMap
 import java.util.EnumSet
+import java.util.IdentityHashMap
 
 data class Board(
     val tiles: Array<Row>,
     private val toggleables: Map<Color, List<Position>>,
-    private val platforms: PersistentMap<Stop, Position>,
+    private val platforms: Map<Stop, Position>,
     val requiredTiles: PersistentSet<Position>
 ) {
     val rows: Int = tiles.size
@@ -56,22 +61,22 @@ data class Board(
             }
             require(values.all { it.isNotEmpty() })
         },
-        platforms = buildMap<Stop, Position> {
+        platforms = IdentityHashMap<Stop, Position>().apply {
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
                     val tile = tiles[r][c]
                     if (tile is HorizontalStop) {
-                        if (r > 0 && tiles[r - 1][c] is Platform && (tiles[r - 1][c] as Platform).number == tile.number) {
+                        if (r > 0 && tiles[r - 1][c] is DownPlatform && (tiles[r - 1][c] as Platform).number == tile.number) {
                             put(tile, Position(r - 1, c))
-                        } else if (r < tiles.size - 1 && tiles[r + 1][c] is Platform && (tiles[r + 1][c] as Platform).number == tile.number) {
+                        } else if (r < tiles.size - 1 && tiles[r + 1][c] is UpPlatform && (tiles[r + 1][c] as Platform).number == tile.number) {
                             put(tile, Position(r + 1, c))
                         } else {
                             throw IllegalStateException("Missing stop for platform row: $r, column $c")
                         }
                     } else if (tile is VerticalStop) {
-                        if (c > 0 && tiles[r][c - 1] is Platform && (tiles[r][c - 1] as Platform).number == tile.number) {
+                        if (c > 0 && tiles[r][c - 1] is RightPlatform && (tiles[r][c - 1] as Platform).number == tile.number) {
                             put(tile, Position(r, c - 1))
-                        } else if (c < tiles[0].columns - 1 && tiles[r][c + 1] is Platform && (tiles[r][c + 1] as Platform).number == tile.number) {
+                        } else if (c < tiles[0].columns - 1 && tiles[r][c + 1] is LeftPlatform && (tiles[r][c + 1] as Platform).number == tile.number) {
                             put(tile, Position(r, c + 1))
                         } else {
                             throw IllegalStateException("Missing stop for platform row: $r, column $c")
@@ -79,7 +84,7 @@ data class Board(
                     }
                 }
             }
-        }.toPersistentMap(),
+        },
         requiredTiles = buildSet {
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
