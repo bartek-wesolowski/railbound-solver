@@ -1,8 +1,6 @@
 package model
 
-import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.PersistentSet
-import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.collections.immutable.toPersistentSet
 import model.Action.TakePassenger
 import model.Action.ToggleColor
@@ -37,7 +35,8 @@ data class Board(
     val tiles: Array<Row>,
     private val toggleables: Map<Color, List<Position>>,
     private val platforms: Map<Stop, Position>,
-    val requiredTiles: PersistentSet<Position>
+    val requiredTiles: PersistentSet<Position>,
+    val hasToggleableForks: Boolean,
 ) {
     val rows: Int = tiles.size
     val columns: Int = tiles.first().columns
@@ -108,7 +107,8 @@ data class Board(
                     }
                 }
             }
-        }.toPersistentSet()
+        }.toPersistentSet(),
+        hasToggleableForks = hasToggleableForks(tiles)
     )
 
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
@@ -327,6 +327,18 @@ data class Board(
 
         fun MutableList<Row>.row(vararg tiles: Tile) {
             add(Row(Array(tiles.size) { i -> tiles[i] }))
+        }
+
+        private fun hasToggleableForks(tiles: Array<Row>): Boolean {
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    if (tile is Fork && tile is Toggleable) {
+                        return true
+                    }
+                }
+            }
+            return false
         }
     }
 }

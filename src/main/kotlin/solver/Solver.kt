@@ -99,13 +99,18 @@ class Solver {
                 }
                 continue
             }
-            val nextStates = state.nextStates()
-                .filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
+            val nextStates = state.nextStates(level.board.hasToggleableForks).run {
+                if (level.board.hasToggleableForks) {
+                    filter { Breadcrumb(it.activeCars, it.toggledColors, it.getInProgress) !in state.breadcrumbs }
+                } else {
+                    this
+                }
+            }
             statesToCheck.addAll(nextStates)
         }
     }
 
-    private fun SolverState.nextStates(): List<SolverState> {
+    private fun SolverState.nextStates(hasToggleableForks: Boolean): List<SolverState> {
         var partialStates = getMoves(
             partialState = PartialSolverState(
                 state = this,
@@ -130,13 +135,17 @@ class Solver {
                 enterTiles = partialState.enterTiles,
                 getInProgress = state.getInProgress.update(partialState.actions),
                 toggledColors = state.toggledColors.withUpdatedToggledColors(partialState.actions),
-                breadcrumbs = state.breadcrumbs.add(
-                    Breadcrumb(
-                        cars = activeCars,
-                        toggledColors = toggledColors,
-                        getInProgress = getInProgress,
+                breadcrumbs = if (hasToggleableForks) {
+                    state.breadcrumbs.add(
+                        Breadcrumb(
+                            cars = activeCars,
+                            toggledColors = toggledColors,
+                            getInProgress = getInProgress,
+                        )
                     )
-                )
+                } else {
+                    state.breadcrumbs
+                }
             )
         }
     }
