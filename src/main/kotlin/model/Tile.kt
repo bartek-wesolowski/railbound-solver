@@ -865,13 +865,6 @@ sealed class Tile(
         }
     }
 
-    fun isValidIncomingDirection(incomingDirection: Direction, traverseDirections: EnumSet<Direction>): Boolean {
-        return incomingDirection in incomingDirections
-                || (
-                this is ModifiableTile && getPossibleModifications(incomingDirection, traverseDirections).isNotEmpty()
-                )
-    }
-
     open fun matches(solution: Tile): Boolean = this == solution
 
     abstract fun getNextPosition(
