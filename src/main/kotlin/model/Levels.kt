@@ -37,6 +37,7 @@ import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.FixedUpRightDownFork
@@ -1793,9 +1794,29 @@ object Levels {
         ).associateBy { it.name }
     }
 
+    object World6 {
+        val level6_1 = Level(
+            name = "6-1",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, Empty, FixedHorizontalTrack)
+                row(Empty, UpLeftRightSelfToggleableFork, EndingTrack)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(0, 2, LEFT)),
+            ),
+            tracks = 3,
+        )
+
+        val levels = listOf(
+            level6_1,
+        ).associateBy { it.name }
+    }
+
     val levels = World1.levels +
             World2.levels +
             World3.levels +
             World4.levels +
-            World5.levels
+            World5.levels +
+            World6.levels
 }

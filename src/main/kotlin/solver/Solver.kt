@@ -1,13 +1,15 @@
 package solver
 
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.minus
 import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import model.Action
 import model.Action.ToggleColor
+import model.Action.ToggleFork
 import model.Barrier
 import model.Board
-import model.Breadcrumb
 import model.Car
 import model.CarPosition
 import model.Color
@@ -51,6 +53,7 @@ class Solver {
                 enterTiles = emptyMap(),
                 getInProgress = GetInProgress(level.cars),
                 toggledColors = EnumSet.noneOf(Color::class.java),
+                toggledForks = persistentSetOf(),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
                 carBreadcrumbs = CarBreadcrumbs(level.cars),
@@ -90,6 +93,7 @@ class Solver {
                 enterTiles = emptyMap(),
                 getInProgress = GetInProgress(level.cars),
                 toggledColors = EnumSet.noneOf(Color::class.java),
+                toggledForks = persistentSetOf(),
                 requiredTilesRemaining = level.board.requiredTiles,
                 breadcrumbs = persistentSetOf(),
                 carBreadcrumbs = CarBreadcrumbs(level.cars),
@@ -142,14 +146,9 @@ class Solver {
                 enterTiles = partialState.enterTiles,
                 getInProgress = state.getInProgress.update(partialState.actions),
                 toggledColors = state.toggledColors.withUpdatedToggledColors(partialState.actions),
+                toggledForks = state.toggledForks.withUpdatedToggledForks(partialState.actions),
                 breadcrumbs = if (hasToggleableForks) {
-                    state.breadcrumbs.add(
-                        Breadcrumb(
-                            cars = activeCars,
-                            toggledColors = toggledColors,
-                            getInProgress = getInProgress,
-                        )
-                    )
+                    state.breadcrumbs.add(createBreadcrumb())
                 } else {
                     state.breadcrumbs
                 }
@@ -208,6 +207,22 @@ class Solver {
                 }
             }
         }
+    }
+
+    private fun PersistentSet<Position>.withUpdatedToggledForks(actions: List<Action>): PersistentSet<Position> {
+        if (actions.count { it is ToggleFork } == 0) return this
+        return HashSet(this).apply {
+            actions.forEach { action ->
+                if (action is ToggleFork) {
+                    val position = Position(action.row, action.column)
+                    if (position in this) {
+                        remove(position)
+                    } else {
+                        add(position)
+                    }
+                }
+            }
+        }.toPersistentSet()
     }
 
     private fun arePositionsSwitched(initialCarA: Car, carA: Car, initialCarB: Car, carB: Car): Boolean {
@@ -320,8 +335,8 @@ class Solver {
                         add(partialState)
                     } else {
                         val actions =
-                            if (newTile is HasAction && newTile.getAction(partialState.state.board, car) != null) {
-                                partialState.actions + newTile.getAction(partialState.state.board, car)!!
+                            if (newTile is HasAction && newTile.getAction(partialState.state.board, newCar) != null) {
+                                partialState.actions + newTile.getAction(partialState.state.board, newCar)!!
                             } else {
                                 partialState.actions
                             }

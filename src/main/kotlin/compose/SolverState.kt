@@ -52,6 +52,7 @@ private fun SolverStatePreview() {
             enterTiles = emptyMap(),
             getInProgress = GetInProgress(level.cars),
             toggledColors = EnumSet.noneOf(Color::class.java),
+            toggledForks = persistentSetOf(),
             requiredTilesRemaining = persistentSetOf(),
             breadcrumbs = persistentSetOf(),
             carBreadcrumbs = CarBreadcrumbs(level.cars),

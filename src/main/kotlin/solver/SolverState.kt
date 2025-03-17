@@ -20,9 +20,10 @@ data class SolverState(
     val enterTiles: Map<Position, Tile>,
     val getInProgress: GetInProgress,
     val toggledColors: EnumSet<Color>,
+    val toggledForks: PersistentSet<Position>,
     val requiredTilesRemaining: PersistentSet<Position>,
     val breadcrumbs: PersistentSet<Breadcrumb>,
     val carBreadcrumbs: CarBreadcrumbs,
 ) {
-    fun createBreadcrumb() = Breadcrumb(activeCars, toggledColors, getInProgress)
+    fun createBreadcrumb() = Breadcrumb(activeCars, toggledColors, toggledForks, getInProgress)
 }
