@@ -2191,12 +2191,23 @@ object Solutions {
                 row(UpRightTurn, UpRightLeftFork, UpLeftTurn, Empty, Empty, Empty)
             }
         )
+        val level6_5 = setOf(
+            buildBoard {
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn, Empty, DownTunnel(TunnelColor.NAVY, CarPosition(5, 0, RIGHT)))
+                row(Empty, DownRightTurn, UpLeftDownSelfToggleableFork, Empty, FixedVerticalTrack)
+                row(FixedHorizontalTrack, DownLeftUpFork, DownRightUpSelfToggleableFork, DownRightLeftFork, UpLeftTurn)
+                row(Empty, UpRightTurn, UpLeftRightSelfToggleableFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(RightTunnel(TunnelColor.NAVY, CarPosition(0, 4, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
             "6-2" to level6_2,
             "6-3" to level6_3,
             "6-4" to level6_4,
+            "6-5" to level6_5,
         )
     }
 

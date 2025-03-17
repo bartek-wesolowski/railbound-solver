@@ -8,4 +8,5 @@ enum class TunnelColor(val color: Long) {
     GREEN(0xFFA4AF53),
     BEIGE(0xFFDBC79A),
     MINT(0xFFA3CBC8),
+    NAVY(0xFF5378B2),
 }
