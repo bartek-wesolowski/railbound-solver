@@ -36,6 +36,7 @@ import model.Tile.Fork.BaseDownRightLeftFork.FixedDownRightLeftFork
 import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
+import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
@@ -1807,9 +1808,24 @@ object Levels {
             ),
             tracks = 3,
         )
+        val level6_2 = Level(
+            name = "6-2",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, Empty, FixedDownRightTurn, Empty, FixedDownLeftTurn, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, UpLeftDownSelfToggleableFork, Empty, FixedUpRightTurn, EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(1, 1, RIGHT)),
+                Car(2, CarPosition(1, 0, RIGHT)),
+            ),
+            tracks = 4,
+        )
 
         val levels = listOf(
             level6_1,
+            level6_2,
         ).associateBy { it.name }
     }
 

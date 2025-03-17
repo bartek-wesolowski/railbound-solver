@@ -40,6 +40,7 @@ import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownFork
+import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightSelfToggleableFork
@@ -2158,9 +2159,17 @@ object Solutions {
                 row(UpRightTurn, UpLeftRightSelfToggleableFork, EndingTrack)
             }
         )
+        val level6_2 = setOf(
+            buildBoard {
+                row(Empty, Empty, FixedDownRightTurn, DownRightLeftFork, FixedDownLeftTurn, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, UpLeftDownSelfToggleableFork, VerticalTrack, FixedUpRightTurn, EndingTrack)
+                row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
+            "6-2" to level6_2,
         )
     }
 
