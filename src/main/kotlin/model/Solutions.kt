@@ -51,6 +51,7 @@ import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.FixedUpRightDownFork
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownFork
+import model.Tile.Fork.BaseUpRightDownFork.UpRightDownSelfToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownToggleableFork
 import model.Tile.Fork.BaseUpRightLeftFork.FixedUpRightLeftFork
 import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftFork
@@ -2201,6 +2202,15 @@ object Solutions {
                 row(RightTunnel(TunnelColor.NAVY, CarPosition(0, 4, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
             }
         )
+        val level6_6 = setOf(
+            buildBoard {
+                row(DownRightTurn, FixedHorizontalTrack, FixedHorizontalTrack, Empty)
+                row(UpRightDownSelfToggleableFork, HorizontalTrack, DownLeftTurn, Empty)
+                row(FixedVerticalTrack, Empty, VerticalToggle(Color.PURPLE), Empty)
+                row(UpRightDownSelfToggleableFork, DownLeftRightFork, UpLeftTurn, Empty)
+                row(UpRightTurn, UpRightLeftFork, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
@@ -2208,6 +2218,7 @@ object Solutions {
             "6-3" to level6_3,
             "6-4" to level6_4,
             "6-5" to level6_5,
+            "6-6" to level6_6,
         )
     }
 
