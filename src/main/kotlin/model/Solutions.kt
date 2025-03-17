@@ -33,6 +33,7 @@ import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggle
 import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggleableFork
 import model.Tile.Fork.BaseDownLeftUpFork.FixedDownLeftUpFork
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftFork
+import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftSelfToggleableFork
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftToggleableFork
 import model.Tile.Fork.BaseDownRightLeftFork.FixedDownRightLeftFork
 import model.Tile.Fork.BaseDownRightUpFork.DownRightUpFork
@@ -2166,10 +2167,25 @@ object Solutions {
                 row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty)
             }
         )
+        val level6_3 = setOf(
+            buildBoard {
+                row(FixedHorizontalTrack, HorizontalTrack, DownRightLeftFork, DownRightLeftSelfToggleableFork, HorizontalTrack, HorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, UpRightDownFork, UpLeftTurn, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(FixedHorizontalTrack, HorizontalTrack, DownRightLeftFork, DownRightLeftSelfToggleableFork, HorizontalTrack, HorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, UpRightDownFork, DownLeftUpFork, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, UpLeftDownFork, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, FixedVerticalTrack, Empty, Empty, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
             "6-2" to level6_2,
+            "6-3" to level6_3,
         )
     }
 
