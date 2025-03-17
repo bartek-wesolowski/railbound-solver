@@ -28,12 +28,14 @@ import model.Tile.EndingTrack
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggle
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.FixedDownLeftRightFork
+import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpSelfToggleableFork
 import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggle
 import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggleableFork
 import model.Tile.Fork.BaseDownLeftUpFork.FixedDownLeftUpFork
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftSelfToggleableFork
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftToggleableFork
 import model.Tile.Fork.BaseDownRightLeftFork.FixedDownRightLeftFork
+import model.Tile.Fork.BaseDownRightUpFork.DownRightUpSelfToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
@@ -1838,11 +1840,27 @@ object Levels {
             ),
             tracks = 8,
         )
+        val level6_4 = Level(
+            name = "6-4",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, DownRightLeftSelfToggleableFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(Empty, Empty, DownRightUpSelfToggleableFork, UpLeftRightSelfToggleableFork, Empty, EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(1, 1, RIGHT)),
+                Car(2, CarPosition(1, 0, RIGHT)),
+            ),
+            tracks = 9,
+        )
 
         val levels = listOf(
             level6_1,
             level6_2,
             level6_3,
+            level6_4,
         ).associateBy { it.name }
     }
 
