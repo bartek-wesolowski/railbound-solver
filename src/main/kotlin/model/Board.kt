@@ -288,6 +288,21 @@ data class Board(
         return updatedBoard
     }
 
+    fun merge(other: Board): Board {
+        val newTiles = Array(rows) { r ->
+            Row(Array(columns) { c ->
+                val thisTile = tiles[r][c]
+                val otherTile = other.tiles[r][c]
+                if (thisTile is Empty) {
+                    otherTile
+                } else {
+                    thisTile
+                }
+            })
+        }
+        return Board(newTiles)
+    }
+
     private fun withAppliedAction(action: Action): Board {
         return when (action) {
             is ToggleColor -> {

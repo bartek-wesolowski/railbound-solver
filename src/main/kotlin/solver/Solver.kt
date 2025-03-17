@@ -62,7 +62,7 @@ class Solver {
             val state = statesToCheck.removeLast()
             if (state.activeCars.isEmpty()) {
                 if (state.board.isAllPlatformsEmpty()) {
-                    solutions.add(state.board)
+                    solutions.add(level.board.merge(state.board))
                 }
                 continue
             }
