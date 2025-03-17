@@ -34,35 +34,43 @@ import model.Tile.DownTunnel
 import model.Tile.Empty
 import model.Tile.EndingTrack
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightFork
+import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggle
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.FixedDownLeftRightFork
 import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpFork
+import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpSelfToggleableFork
 import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggle
 import model.Tile.Fork.BaseDownLeftUpFork.DownLeftUpToggleableFork
 import model.Tile.Fork.BaseDownLeftUpFork.FixedDownLeftUpFork
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftFork
+import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftSelfToggleableFork
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftToggle
 import model.Tile.Fork.BaseDownRightLeftFork.DownRightLeftToggleableFork
 import model.Tile.Fork.BaseDownRightLeftFork.FixedDownRightLeftFork
 import model.Tile.Fork.BaseDownRightUpFork.DownRightUpFork
+import model.Tile.Fork.BaseDownRightUpFork.DownRightUpSelfToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggle
 import model.Tile.Fork.BaseDownRightUpFork.DownRightUpToggleableFork
 import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownFork
+import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggle
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.FixedUpLeftRightFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightFork
+import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.FixedUpRightDownFork
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownFork
+import model.Tile.Fork.BaseUpRightDownFork.UpRightDownSelfToggleableFork
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownToggle
 import model.Tile.Fork.BaseUpRightDownFork.UpRightDownToggleableFork
 import model.Tile.Fork.BaseUpRightLeftFork.FixedUpRightLeftFork
 import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftFork
+import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftSelfToggleableFork
 import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggle
 import model.Tile.Fork.BaseUpRightLeftFork.UpRightLeftToggleableFork
 import model.Tile.LeftTunnel
@@ -160,6 +168,7 @@ fun Tile(
                 }
 
                 is DownLeftRightToggleableFork -> drawDownLeftRightFork(size, Color(tile.color.color))
+                is DownLeftRightSelfToggleableFork -> drawDownLeftRightFork(size, Color(model.Color.ORANGE.color))
 
                 is DownLeftUpFork -> drawDownLeftUpFork(size, trackColor)
                 is FixedDownLeftUpFork -> drawDownLeftUpFork(size, fixedTrackColor)
@@ -169,6 +178,7 @@ fun Tile(
                 }
 
                 is DownLeftUpToggleableFork -> drawDownLeftUpFork(size, Color(tile.color.color))
+                is DownLeftUpSelfToggleableFork -> drawDownLeftUpFork(size, Color(model.Color.ORANGE.color))
 
                 is DownRightLeftFork -> drawDownRightLeftFork(size, trackColor)
                 is FixedDownRightLeftFork -> drawDownRightLeftFork(size, fixedTrackColor)
@@ -178,6 +188,7 @@ fun Tile(
                 }
 
                 is DownRightLeftToggleableFork -> drawDownRightLeftFork(size, Color(tile.color.color))
+                is DownRightLeftSelfToggleableFork -> drawDownRightLeftFork(size, Color(model.Color.ORANGE.color))
 
                 is DownRightUpFork -> drawDownRightUpFork(size, trackColor)
                 is FixedDownRightUpFork -> drawDownRightUpFork(size, fixedTrackColor)
@@ -187,6 +198,7 @@ fun Tile(
                 }
 
                 is DownRightUpToggleableFork -> drawDownRightUpFork(size, Color(tile.color.color))
+                is DownRightUpSelfToggleableFork -> drawDownRightUpFork(size, Color(model.Color.ORANGE.color))
 
                 is UpLeftDownFork -> drawUpLeftDownFork(size, trackColor)
                 is FixedUpLeftDownFork -> drawUpLeftDownFork(size, fixedTrackColor)
@@ -196,14 +208,17 @@ fun Tile(
                 }
 
                 is UpLeftDownToggleableFork -> drawUpLeftDownFork(size, Color(tile.color.color))
+                is UpLeftDownSelfToggleableFork -> drawUpLeftDownFork(size, Color(model.Color.ORANGE.color))
 
                 is UpLeftRightFork -> drawUpLeftRightFork(size, trackColor)
                 is FixedUpLeftRightFork -> drawUpLeftRightFork(size, fixedTrackColor)
-                is UpLeftRightToggleableFork -> drawUpLeftRightFork(size, Color(tile.color.color))
                 is UpLeftRightToggle -> {
                     drawUpLeftRightFork(size, trackColor)
                     drawSwitch(size, Color(tile.color.color))
                 }
+
+                is UpLeftRightToggleableFork -> drawUpLeftRightFork(size, Color(tile.color.color))
+                is UpLeftRightSelfToggleableFork -> drawUpLeftRightFork(size, Color(model.Color.ORANGE.color))
 
                 is UpRightDownFork -> drawUpRightDownFork(size, trackColor)
                 is FixedUpRightDownFork -> drawUpRightDownFork(size, fixedTrackColor)
@@ -213,6 +228,7 @@ fun Tile(
                 }
 
                 is UpRightDownToggleableFork -> drawUpRightDownFork(size, Color(tile.color.color))
+                is UpRightDownSelfToggleableFork -> drawUpRightDownFork(size, Color(model.Color.ORANGE.color))
 
                 is UpRightLeftFork -> drawUpRightLeftFork(size, trackColor)
                 is FixedUpRightLeftFork -> drawUpRightLeftFork(size, fixedTrackColor)
@@ -222,6 +238,7 @@ fun Tile(
                 }
 
                 is UpRightLeftToggleableFork -> drawUpRightLeftFork(size, Color(tile.color.color))
+                is UpRightLeftSelfToggleableFork -> drawUpRightLeftFork(size, Color(model.Color.ORANGE.color))
 
                 Empty -> {}
                 EndingTrack -> drawEndingTrack(size)

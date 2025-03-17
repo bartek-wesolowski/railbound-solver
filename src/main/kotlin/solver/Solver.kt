@@ -34,7 +34,6 @@ import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
 import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
 import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
 import model.Tile.Turn.BaseUpRightTurn.UpRightTurn
-import model.Toggleable
 import model.ToggleableFork
 import model.Tunnel
 import java.util.EnumSet
@@ -312,7 +311,7 @@ class Solver {
                     } else {
                         state.carBreadcrumbs.plus(car.number, newCarPosition)
                     }
-                    val enterTiles = if (newTile is Fork && newTile is Toggleable) {
+                    val enterTiles = if (newTile is ToggleableFork) {
                         partialState.enterTiles + (newPosition to newTile)
                     } else {
                         partialState.enterTiles
@@ -399,7 +398,7 @@ class Solver {
     }
 
     private fun PartialSolverState.isCarCycleOnFork(tile: Tile, car: Car): Boolean {
-        if (tile is Fork && tile !is Toggleable) {
+        if (tile is Fork && tile !is ToggleableFork) {
             val nextPosition = tile.getNextPosition(car, null)
             for (direction in tile.incomingDirections) {
                 if (direction == car.direction) continue

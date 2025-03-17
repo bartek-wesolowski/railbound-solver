@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.toPersistentSet
 import model.Action.TakePassenger
 import model.Action.ToggleColor
+import model.Action.ToggleFork
 import model.Direction.DOWN
 import model.Direction.LEFT
 import model.Direction.RIGHT
@@ -47,7 +48,7 @@ data class Board(
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
                     val tile = tiles[r][c]
-                    if (tile is Toggleable) {
+                    if (tile is ColorToggleable) {
                         val color = tile.color
                         val position = Position(r, c)
                         if (color in keys) {
@@ -311,10 +312,18 @@ data class Board(
                 for (position in barrierPositions) {
                     updatedBoard = updatedBoard.with(
                         position,
-                        (tiles[position.row][position.column] as Toggleable).toggled()
+                        (tiles[position.row][position.column] as ColorToggleable).toggled()
                     )
                 }
                 updatedBoard
+            }
+
+            is ToggleFork -> {
+                with(
+                    action.row,
+                    action.column,
+                    (this[action.row, action.column] as ToggleableFork).toggled()
+                )
             }
 
             is TakePassenger -> {
@@ -348,7 +357,7 @@ data class Board(
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
                     val tile = tiles[r][c]
-                    if (tile is Fork && tile is Toggleable) {
+                    if (tile is ToggleableFork) {
                         return true
                     }
                 }
