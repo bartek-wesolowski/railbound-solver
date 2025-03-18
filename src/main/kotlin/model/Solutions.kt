@@ -2277,6 +2277,32 @@ object Solutions {
                 row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level6_10 = setOf(
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, UpLeftRightFork, UpLeftToggle(Color.PURPLE), DownPlatform(1, true), Empty, Empty, Empty)
+                row(Empty, UpRightTurn, DownRightLeftFork, HorizontalTrack, HorizontalStop(1), DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, UpLeftDownFork, Empty, Empty, UpRightDownSelfToggleableFork, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
+                row(Empty, Empty, UpRightTurn, HorizontalStop(2), HorizontalTrack, UpLeftTurn, Empty, Empty)
+                row(Empty, Empty, Empty, UpPlatform(2, true), Empty, Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, UpLeftRightFork, UpLeftToggle(Color.PURPLE), DownPlatform(1, true), Empty, Empty, Empty)
+                row(Empty, VerticalTrack, DownRightTurn, HorizontalTrack, HorizontalStop(1), DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftDownFork, Empty, Empty, UpRightDownSelfToggleableFork, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
+                row(Empty, Empty, UpRightTurn, HorizontalStop(2), HorizontalTrack, UpLeftTurn, Empty, Empty)
+                row(Empty, Empty, Empty, UpPlatform(2, true), Empty, Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, UpLeftRightFork, UpLeftToggle(Color.PURPLE), DownPlatform(1, true), Empty, Empty, Empty)
+                row(Empty, VerticalTrack, Empty, DownRightTurn, HorizontalStop(1), DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, DownRightLeftFork, UpLeftTurn, Empty, UpRightDownSelfToggleableFork, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
+                row(Empty, Empty, UpRightTurn, HorizontalStop(2), HorizontalTrack, UpLeftTurn, Empty, Empty)
+                row(Empty, Empty, Empty, UpPlatform(2, true), Empty, Empty, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
@@ -2288,6 +2314,7 @@ object Solutions {
             "6-7" to level6_7,
             "6-8" to level6_8,
             "6-9" to level6_9,
+            "6-10" to level6_10,
         )
     }
 
