@@ -2208,6 +2208,36 @@ object Solutions {
                 row(Empty, UpRightTurn, FixedHorizontalTrack, EndingTrack)
             }
         )
+        val level6_3B = setOf(
+            buildBoard {
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftSelfToggleableFork, DownLeftTurn, Empty, Empty, Empty)
+                row(VerticalTrack, Empty, DownRightUpFork, UpLeftRightSelfToggleableFork, DownLeftRightSelfToggleableFork, FixedHorizontalTrack, EndingTrack)
+                row(UpRightTurn, FixedHorizontalTrack, DownLeftUpSelfToggleableFork, DownRightTurn, UpLeftTurn, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftSelfToggleableFork, DownLeftTurn, Empty, Empty, Empty)
+                row(VerticalTrack, Empty, UpRightDownFork, UpLeftRightSelfToggleableFork, DownLeftRightSelfToggleableFork, FixedHorizontalTrack, EndingTrack)
+                row(UpRightTurn, FixedHorizontalTrack, DownLeftUpSelfToggleableFork, DownRightTurn, UpLeftTurn, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftSelfToggleableFork, DownLeftTurn, Empty, Empty, Empty)
+                row(VerticalTrack, Empty, DownRightUpFork, UpLeftRightSelfToggleableFork, DownLeftRightSelfToggleableFork, FixedHorizontalTrack, EndingTrack)
+                row(UpRightTurn, FixedHorizontalTrack, DownLeftUpSelfToggleableFork, Empty, VerticalTrack, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftSelfToggleableFork, DownLeftTurn, Empty, Empty, Empty)
+                row(VerticalTrack, Empty, UpRightDownFork, UpLeftRightSelfToggleableFork, DownLeftRightSelfToggleableFork, FixedHorizontalTrack, EndingTrack)
+                row(UpRightTurn, FixedHorizontalTrack, DownLeftUpSelfToggleableFork, Empty, VerticalTrack, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty, Empty)
+            }
+        )
         val level6_4 = setOf(
             buildBoard {
                 row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
@@ -2332,6 +2362,7 @@ object Solutions {
             "6-2A" to level6_2A,
             "6-3" to level6_3,
             "6-3A" to level6_3A,
+            "6-3B" to level6_3B,
             "6-4" to level6_4,
             "6-5" to level6_5,
             "6-6" to level6_6,
