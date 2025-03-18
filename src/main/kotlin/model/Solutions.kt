@@ -2172,6 +2172,16 @@ object Solutions {
                 row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty)
             }
         )
+        val level6_2A = setOf(
+            buildBoard {
+                row(Empty, Empty, FixedVerticalTrack, Empty)
+                row(Empty, DownRightTurn, UpLeftRightFork, DownLeftTurn)
+                row(FixedHorizontalTrack, UpRightLeftFork, DownLeftRightSelfToggleableFork, UpLeftDownFork)
+                row(Empty, Empty, DownRightUpFork, UpLeftTurn)
+                row(Empty, Empty, FixedVerticalTrack, Empty)
+                row(Empty, Empty, UpRightTurn, EndingTrack)
+            }
+        )
         val level6_3 = setOf(
             buildBoard {
                 row(FixedHorizontalTrack, HorizontalTrack, DownRightLeftFork, DownRightLeftSelfToggleableFork, HorizontalTrack, HorizontalTrack, FixedHorizontalTrack, EndingTrack)
@@ -2307,6 +2317,7 @@ object Solutions {
         val solutions = mapOf(
             "6-1" to level6_1,
             "6-2" to level6_2,
+            "6-2A" to level6_2A,
             "6-3" to level6_3,
             "6-4" to level6_4,
             "6-5" to level6_5,
