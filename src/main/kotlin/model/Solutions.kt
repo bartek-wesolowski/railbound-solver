@@ -2246,6 +2246,15 @@ object Solutions {
                 row(UpRightTurn, UpRightLeftFork, UpLeftTurn, Empty, Empty, Empty)
             }
         )
+        val level6_4A = setOf(
+            buildBoard {
+                row(DownRightTurn, DownLeftTurn, FixedVerticalTrack, DownRightTurn, EndingTrack)
+                row(FixedVerticalTrack, UpRightTurn, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(FixedVerticalTrack, Empty, UpRightDownSelfToggleableFork, UpLeftTurn, FixedVerticalTrack)
+                row(Empty, DownRightTurn, DownLeftUpSelfToggleableFork, Empty, FixedVerticalTrack)
+                row(Empty, UpRightTurn, UpLeftRightFork, HorizontalTrack, UpLeftTurn)
+            }
+        )
         val level6_5 = setOf(
             buildBoard {
                 row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn, Empty, DownTunnel(NAVY, CarPosition(5, 0, RIGHT)))
@@ -2364,6 +2373,7 @@ object Solutions {
             "6-3A" to level6_3A,
             "6-3B" to level6_3B,
             "6-4" to level6_4,
+            "6-4A" to level6_4A,
             "6-5" to level6_5,
             "6-6" to level6_6,
             "6-7" to level6_7,
