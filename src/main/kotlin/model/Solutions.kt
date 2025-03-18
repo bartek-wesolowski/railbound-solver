@@ -2255,6 +2255,50 @@ object Solutions {
                 row(Empty, UpRightTurn, UpLeftRightFork, HorizontalTrack, UpLeftTurn)
             }
         )
+        val level6_4B = setOf(
+            buildBoard {
+                row(Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftTurn, UpLeftRightSelfToggleableFork, Empty, Empty)
+                row(FixedHorizontalTrack, DownLeftUpFork, Empty, DownLeftUpSelfToggleableFork, Empty)
+                row(Empty, DownRightUpFork, DownLeftRightSelfToggleableFork, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
+            },
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, UpLeftRightSelfToggleableFork, UpLeftTurn, Empty)
+                row(FixedHorizontalTrack, DownLeftUpFork, Empty, DownLeftUpSelfToggleableFork, Empty)
+                row(Empty, DownRightUpFork, DownLeftRightSelfToggleableFork, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
+            },
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, UpLeftRightSelfToggleableFork, UpLeftDownFork, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, HorizontalTrack, DownLeftUpSelfToggleableFork, Empty)
+                row(Empty, DownRightTurn, DownLeftRightSelfToggleableFork, DownLeftUpFork, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
+            },
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, UpLeftRightSelfToggleableFork, VerticalTrack, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, HorizontalTrack, DownLeftUpSelfToggleableFork, Empty)
+                row(Empty, DownRightUpFork, DownLeftRightSelfToggleableFork, DownLeftUpFork, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
+            },
+            buildBoard {
+                row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, UpLeftRightSelfToggleableFork, DownLeftUpFork, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, HorizontalTrack, DownLeftUpSelfToggleableFork, Empty)
+                row(Empty, DownRightTurn, DownLeftRightSelfToggleableFork, DownLeftUpFork, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
+            },
+            buildBoard {
+                row(Empty, DownRightTurn, DownLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftRightSelfToggleableFork, DownLeftTurn, Empty)
+                row(FixedHorizontalTrack, DownRightLeftFork, HorizontalTrack, DownLeftUpSelfToggleableFork, Empty)
+                row(Empty, DownRightUpFork, DownLeftRightSelfToggleableFork, DownLeftUpFork, Empty)
+                row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
+            }
+        )
         val level6_5 = setOf(
             buildBoard {
                 row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn, Empty, DownTunnel(NAVY, CarPosition(5, 0, RIGHT)))
@@ -2374,6 +2418,7 @@ object Solutions {
             "6-3B" to level6_3B,
             "6-4" to level6_4,
             "6-4A" to level6_4A,
+            "6-4B" to level6_4B,
             "6-5" to level6_5,
             "6-6" to level6_6,
             "6-7" to level6_7,
