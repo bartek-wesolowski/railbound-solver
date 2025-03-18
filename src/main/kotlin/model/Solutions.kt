@@ -2299,6 +2299,50 @@ object Solutions {
                 row(FixedHorizontalTrack, UpRightLeftFork, UpLeftTurn, UpRightTurn, EndingTrack)
             }
         )
+        val level6_4C = setOf(
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(UpRightDownFork, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, UpRightTurn, EndingTrack)
+                row(UpRightDownFork, FixedHorizontalTrack, DownLeftRightFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(UpRightTurn, HorizontalTrack, UpLeftRightFork, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(UpRightTurn, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, UpRightTurn, EndingTrack)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(UpRightTurn, HorizontalTrack, UpLeftRightFork, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(Empty, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, UpRightTurn, EndingTrack)
+                row(UpRightDownFork, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(UpRightTurn, HorizontalTrack, UpLeftRightFork, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(Empty, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, UpRightTurn, EndingTrack)
+                row(VerticalTrack, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(UpRightTurn, HorizontalTrack, UpLeftRightFork, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(DownRightTurn, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(UpRightDownFork, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, UpRightTurn, EndingTrack)
+                row(VerticalTrack, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(UpRightTurn, HorizontalTrack, UpLeftRightFork, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(DownRightTurn, HorizontalTrack, DownLeftRightFork, DownLeftTurn, Empty, Empty)
+                row(DownRightUpFork, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, Empty, Empty)
+                row(DownRightUpFork, FixedHorizontalTrack, DownRightLeftFork, DownLeftUpSelfToggleableFork, DownRightTurn, EndingTrack)
+                row(UpRightTurn, FixedHorizontalTrack, UpLeftRightFork, DownLeftUpSelfToggleableFork, VerticalTrack, Empty)
+                row(Empty, Empty, Empty, UpRightTurn, UpLeftTurn, Empty)
+            }
+        )
         val level6_5 = setOf(
             buildBoard {
                 row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn, Empty, DownTunnel(NAVY, CarPosition(5, 0, RIGHT)))
@@ -2419,6 +2463,7 @@ object Solutions {
             "6-4" to level6_4,
             "6-4A" to level6_4A,
             "6-4B" to level6_4B,
+            "6-4C" to level6_4C,
             "6-5" to level6_5,
             "6-6" to level6_6,
             "6-7" to level6_7,
