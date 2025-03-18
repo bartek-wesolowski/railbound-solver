@@ -122,11 +122,12 @@ class Solver {
     }
 
     private fun SolverState.nextStates(hasToggleableForks: Boolean): List<SolverState> {
+        val carPositions = activeCars.map { Position(it.row, it.column) }
         var partialStates = getMoves(
             partialState = PartialSolverState(
                 state = this,
                 actions = listOf(),
-                enterTiles = emptyMap(),
+                enterTiles = enterTiles.filterKeys { it in carPositions },
             ),
             carIndex = 0
         )

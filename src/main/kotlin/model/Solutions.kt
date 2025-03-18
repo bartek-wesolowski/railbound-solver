@@ -25,6 +25,7 @@ import model.Tile.DownTunnel
 import model.Tile.Empty
 import model.Tile.EndingTrack
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightFork
+import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggle
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.FixedDownLeftRightFork
@@ -2260,6 +2261,22 @@ object Solutions {
                 row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
             }
         )
+        val level6_9 = setOf(
+            buildBoard {
+                row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(UpRightTurn, HorizontalToggle(Color.PURPLE), DownLeftTurn, DownLeftRightToggleableFork(PINK), Empty, Empty, Empty)
+                row(Empty, Empty, UpRightTurn, DownRightLeftFork, HorizontalBarrier(PINK, false), DownLeftRightSelfToggleableFork, EndingTrack)
+                row(DownRightTurn, HorizontalToggle(PINK), DownLeftTurn, UpLeftRightToggleableFork(Color.PURPLE), DownLeftRightFork, UpLeftTurn, Empty)
+                row(FixedVerticalTrack, Empty, UpRightTurn, HorizontalTrack, UpLeftTurn, Empty, Empty)
+            },
+            buildBoard {
+                row(FixedVerticalTrack, Empty, Empty, Empty, DownRightTurn, DownLeftTurn, Empty)
+                row(UpRightTurn, HorizontalToggle(Color.PURPLE), HorizontalTrack, DownLeftRightToggleableFork(PINK), UpLeftRightFork, UpLeftTurn, Empty)
+                row(Empty, Empty, Empty, DownRightUpFork, HorizontalBarrier(PINK, false), DownLeftRightSelfToggleableFork, EndingTrack)
+                row(DownRightTurn, HorizontalToggle(PINK), HorizontalTrack, UpLeftRightToggleableFork(Color.PURPLE), HorizontalTrack, UpLeftTurn, Empty)
+                row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
@@ -2270,6 +2287,7 @@ object Solutions {
             "6-6" to level6_6,
             "6-7" to level6_7,
             "6-8" to level6_8,
+            "6-9" to level6_9,
         )
     }
 

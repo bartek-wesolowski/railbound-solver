@@ -25,6 +25,7 @@ import model.Tile.BaseVerticalTrack.VerticalToggle
 import model.Tile.DownTunnel
 import model.Tile.Empty
 import model.Tile.EndingTrack
+import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggle
 import model.Tile.Fork.BaseDownLeftRightFork.DownLeftRightToggleableFork
 import model.Tile.Fork.BaseDownLeftRightFork.FixedDownLeftRightFork
@@ -1925,6 +1926,22 @@ object Levels {
             ),
             tracks = 10,
         )
+        val level6_9 = Level(
+            name = "6-9",
+            board = buildBoard(requireFixed = true) {
+                row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, HorizontalToggle(Color.PURPLE), Empty, DownLeftRightToggleableFork(PINK), Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, HorizontalBarrier(PINK, false), DownLeftRightSelfToggleableFork, EndingTrack)
+                row(Empty, HorizontalToggle(PINK), Empty, UpLeftRightToggleableFork(Color.PURPLE), Empty, Empty, Empty)
+                row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(4, 0, UP)),
+                Car(2, CarPosition(0, 0, DOWN)),
+            ),
+            tracks = 11,
+        )
 
         val levels = listOf(
             level6_1,
@@ -1935,6 +1952,7 @@ object Levels {
             level6_6,
             level6_7,
             level6_8,
+            level6_9,
         ).associateBy { it.name }
     }
 
