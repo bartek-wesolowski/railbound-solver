@@ -73,6 +73,7 @@ import model.TunnelColor.GRAY
 import model.TunnelColor.GREEN
 import model.TunnelColor.LIGHT_GRAY
 import model.TunnelColor.MINT
+import model.TunnelColor.NAVY
 import model.TunnelColor.PURPLE
 
 object Levels {
@@ -1859,12 +1860,12 @@ object Levels {
         val level6_5 = Level(
             name = "6-5",
             board = buildBoard(requireFixed = true) {
-                row(FixedHorizontalTrack, Empty, Empty, Empty, DownTunnel(TunnelColor.NAVY, CarPosition(5, 0, RIGHT)))
+                row(FixedHorizontalTrack, Empty, Empty, Empty, DownTunnel(NAVY, CarPosition(5, 0, RIGHT)))
                 row(Empty, Empty, UpLeftDownSelfToggleableFork, Empty, FixedVerticalTrack)
                 row(FixedHorizontalTrack, Empty, DownRightUpSelfToggleableFork, Empty, Empty)
                 row(Empty, Empty, UpLeftRightSelfToggleableFork, Empty, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(RightTunnel(TunnelColor.NAVY, CarPosition(0, 4, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
+                row(RightTunnel(NAVY, CarPosition(0, 4, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
             },
             carColor = RED,
             cars = persistentListOf(
@@ -1908,6 +1909,22 @@ object Levels {
             ),
             tracks = 10,
         )
+        val level6_8 = Level(
+            name = "6-8",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), Empty)
+                row(FixedHorizontalTrack, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, UpLeftDownSelfToggleableFork, Empty, HorizontalToggle(Color.PURPLE), EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(1, 0, RIGHT)),
+                Car(2, CarPosition(4, 0, RIGHT)),
+            ),
+            tracks = 10,
+        )
 
         val levels = listOf(
             level6_1,
@@ -1917,6 +1934,7 @@ object Levels {
             level6_5,
             level6_6,
             level6_7,
+            level6_8,
         ).associateBy { it.name }
     }
 

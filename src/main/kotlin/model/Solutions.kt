@@ -84,6 +84,7 @@ import model.TunnelColor.GRAY
 import model.TunnelColor.GREEN
 import model.TunnelColor.LIGHT_GRAY
 import model.TunnelColor.MINT
+import model.TunnelColor.NAVY
 import model.TunnelColor.PURPLE
 
 object Solutions {
@@ -2194,12 +2195,12 @@ object Solutions {
         )
         val level6_5 = setOf(
             buildBoard {
-                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn, Empty, DownTunnel(TunnelColor.NAVY, CarPosition(5, 0, RIGHT)))
+                row(FixedHorizontalTrack, HorizontalTrack, DownLeftTurn, Empty, DownTunnel(NAVY, CarPosition(5, 0, RIGHT)))
                 row(Empty, DownRightTurn, UpLeftDownSelfToggleableFork, Empty, FixedVerticalTrack)
                 row(FixedHorizontalTrack, DownLeftUpFork, DownRightUpSelfToggleableFork, DownRightLeftFork, UpLeftTurn)
                 row(Empty, UpRightTurn, UpLeftRightSelfToggleableFork, UpLeftTurn, Empty)
                 row(Empty, Empty, Empty, Empty, Empty)
-                row(RightTunnel(TunnelColor.NAVY, CarPosition(0, 4, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
+                row(RightTunnel(NAVY, CarPosition(0, 4, DOWN)), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack, FixedHorizontalTrack)
             }
         )
         val level6_6 = setOf(
@@ -2222,6 +2223,43 @@ object Solutions {
                 row(FixedVerticalTrack, Empty, FixedUpRightTurn, EndingTrack)
             }
         )
+        val level6_8 = setOf(
+            buildBoard {
+                row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), DownLeftTurn)
+                row(FixedHorizontalTrack, DownLeftTurn, DownRightTurn, DownLeftRightFork, HorizontalTrack, UpLeftTurn)
+                row(Empty, DownRightUpFork, UpLeftDownSelfToggleableFork, UpRightTurn, HorizontalToggle(Color.PURPLE), EndingTrack)
+                row(Empty, UpRightTurn, UpLeftTurn, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), DownLeftTurn)
+                row(FixedHorizontalTrack, DownRightLeftFork, DownLeftTurn, DownRightTurn, HorizontalTrack, UpLeftTurn)
+                row(Empty, UpRightTurn, UpLeftDownSelfToggleableFork, DownRightUpFork, HorizontalToggle(Color.PURPLE), EndingTrack)
+                row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), DownLeftTurn)
+                row(FixedHorizontalTrack, DownRightLeftFork, DownLeftRightFork, HorizontalTrack, HorizontalTrack, UpLeftTurn)
+                row(Empty, UpRightTurn, UpLeftDownSelfToggleableFork, DownRightTurn, HorizontalToggle(Color.PURPLE), EndingTrack)
+                row(Empty, Empty, UpRightTurn, UpLeftTurn, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), DownLeftTurn)
+                row(FixedHorizontalTrack, HorizontalTrack, DownRightLeftFork, DownLeftRightFork, HorizontalTrack, UpLeftTurn)
+                row(Empty, DownRightTurn, UpLeftDownSelfToggleableFork, UpRightTurn, HorizontalToggle(Color.PURPLE), EndingTrack)
+                row(Empty, UpRightTurn, UpLeftTurn, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
+            },
+            buildBoard {
+                row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), DownLeftTurn)
+                row(FixedHorizontalTrack, DownRightLeftFork, DownRightLeftFork, DownLeftRightFork, HorizontalTrack, UpLeftTurn)
+                row(Empty, UpRightTurn, UpLeftDownSelfToggleableFork, UpRightTurn, HorizontalToggle(Color.PURPLE), EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty)
+                row(FixedHorizontalTrack, FixedHorizontalTrack, LeftTunnel(NAVY, CarPosition(0, 2, RIGHT)), Empty, Empty, Empty)
+            }
+        )
 
         val solutions = mapOf(
             "6-1" to level6_1,
@@ -2231,6 +2269,7 @@ object Solutions {
             "6-5" to level6_5,
             "6-6" to level6_6,
             "6-7" to level6_7,
+            "6-8" to level6_8,
         )
     }
 
