@@ -115,6 +115,11 @@ data class Board(
     constructor(tiles: Array<Row>, requireFixed: Boolean) : this(
         tiles = tiles,
     ) {
+        for (row in tiles) {
+            if (row.columns != columns) {
+                throw IllegalArgumentException("All rows must have the same number of columns")
+            }
+        }
         if (requireFixed) {
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {
