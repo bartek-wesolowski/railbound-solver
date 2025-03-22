@@ -60,6 +60,7 @@ import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
+import model.Tile.Turn.BaseDownRightTurn.DownRightBarrier
 import model.Tile.Turn.BaseDownRightTurn.DownRightToggle
 import model.Tile.Turn.BaseDownRightTurn.FixedDownRightTurn
 import model.Tile.Turn.BaseUpLeftTurn.FixedUpLeftTurn
@@ -2045,6 +2046,22 @@ object Levels {
             ),
             tracks = 10,
         )
+        val level6_7A = Level(
+            name = "6-7A",
+            board = buildBoard(requireFixed = true) {
+                row(Obstacle, Empty, Empty, DownRightBarrier(Color.PURPLE, false), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(Obstacle, DownRightToggle(Color.PURPLE), Empty, FixedVerticalTrack, Empty, Empty, Obstacle)
+                row(Obstacle, Empty, Empty, Empty, Empty, Empty, Obstacle)
+                row(FixedHorizontalTrack, Empty, Empty, UpLeftRightSelfToggleableFork, Empty, Empty, FixedHorizontalTrack)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(3, 0, RIGHT)),
+                Car(2, CarPosition(3, 6, LEFT)),
+                Car(3, CarPosition(1, 3, DOWN)),
+            ),
+            tracks = 10,
+        )
         val level6_8 = Level(
             name = "6-8",
             board = buildBoard(requireFixed = true) {
@@ -2111,6 +2128,7 @@ object Levels {
             level6_6,
             level6_6A,
             level6_7,
+            level6_7A,
             level6_8,
             level6_9,
             level6_10,

@@ -68,6 +68,7 @@ import model.Tile.RightTunnel
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
 import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
+import model.Tile.Turn.BaseDownRightTurn.DownRightBarrier
 import model.Tile.Turn.BaseDownRightTurn.DownRightToggle
 import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
 import model.Tile.Turn.BaseDownRightTurn.FixedDownRightTurn
@@ -2396,6 +2397,20 @@ object Solutions {
                 row(FixedVerticalTrack, Empty, FixedUpRightTurn, EndingTrack)
             }
         )
+        val level6_7A = setOf(
+            buildBoard {
+                row(Obstacle, Empty, Empty, DownRightBarrier(Color.PURPLE, false), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(Obstacle, DownRightToggle(Color.PURPLE), DownLeftTurn, FixedVerticalTrack, Empty, Empty, Obstacle)
+                row(Obstacle, UpRightTurn, UpRightLeftFork, UpLeftDownFork, DownRightTurn, DownLeftTurn, Obstacle)
+                row(FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, UpLeftRightSelfToggleableFork, UpLeftTurn, UpRightTurn, FixedHorizontalTrack)
+            },
+            buildBoard {
+                row(Obstacle, Empty, Empty, DownRightBarrier(Color.PURPLE, false), FixedHorizontalTrack, FixedHorizontalTrack, EndingTrack)
+                row(Obstacle, DownRightToggle(Color.PURPLE), DownLeftTurn, FixedVerticalTrack, Empty, Empty, Obstacle)
+                row(Obstacle, VerticalTrack, UpRightTurn, UpLeftDownFork, DownRightTurn, DownLeftTurn, Obstacle)
+                row(FixedHorizontalTrack, UpRightLeftFork, HorizontalTrack, UpLeftRightSelfToggleableFork, UpLeftTurn, UpRightTurn, FixedHorizontalTrack)
+            }
+        )
         val level6_8 = setOf(
             buildBoard {
                 row(Empty, Empty, RightTunnel(NAVY, CarPosition(4, 2, LEFT)), FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), DownLeftTurn)
@@ -2492,6 +2507,7 @@ object Solutions {
             "6-6" to level6_6,
             "6-6A" to level6_6A,
             "6-7" to level6_7,
+            "6-7A" to level6_7A,
             "6-8" to level6_8,
             "6-9" to level6_9,
             "6-10" to level6_10,
