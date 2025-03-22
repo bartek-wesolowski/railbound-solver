@@ -2371,6 +2371,20 @@ object Solutions {
                 row(UpRightTurn, UpRightLeftFork, HorizontalBarrier(Color.PURPLE, false), EndingTrack)
             }
         )
+        val level6_6A = setOf(
+            buildBoard {
+                row(FixedDownRightTurn, HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(PINK, false), HorizontalBarrier(Color.PURPLE, true), EndingTrack, FixedHorizontalTrack)
+                row(DownRightUpSelfToggleableFork, HorizontalTrack, DownLeftToggle(Color.PURPLE), Empty, Empty, Empty)
+                row(VerticalToggle(LIGHT_GREEN), Empty, UpRightDownFork, HorizontalTrack, HorizontalTrack, DownLeftTurn)
+                row(FixedUpRightTurn, HorizontalToggle(PINK), UpRightLeftFork, FixedHorizontalTrack, FixedHorizontalTrack, UpLeftTurn)
+            },
+            buildBoard {
+                row(FixedDownRightTurn, HorizontalBarrier(LIGHT_GREEN, false), HorizontalBarrier(PINK, false), HorizontalBarrier(Color.PURPLE, true), EndingTrack, FixedHorizontalTrack)
+                row(DownRightUpSelfToggleableFork, HorizontalTrack, DownLeftToggle(Color.PURPLE), DownRightTurn, DownLeftTurn, Empty)
+                row(VerticalToggle(LIGHT_GREEN), Empty, UpRightTurn, UpLeftRightFork, UpLeftTurn, Empty)
+                row(FixedUpRightTurn, HorizontalToggle(PINK), HorizontalTrack, FixedHorizontalTrack, FixedHorizontalTrack, Empty)
+            }
+        )
         val level6_7 = setOf(
             buildBoard {
                 row(FixedVerticalTrack, DownRightToggle(Color.PURPLE), DownLeftTurn, Empty)
@@ -2476,6 +2490,7 @@ object Solutions {
             "6-5" to level6_5,
             "6-5A" to level6_5A,
             "6-6" to level6_6,
+            "6-6A" to level6_6A,
             "6-7" to level6_7,
             "6-8" to level6_8,
             "6-9" to level6_9,
