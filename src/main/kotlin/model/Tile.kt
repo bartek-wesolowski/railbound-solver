@@ -334,6 +334,20 @@ sealed class Tile(
             data class DownRightToggle(
                 override val color: Color
             ) : BaseDownRightTurn(fixed = true), Toggle
+
+            data class DownRightBarrier(
+                override val color: Color,
+                override val open: Boolean,
+            ) : BaseDownRightTurn(
+                fixed = true
+            ), Barrier {
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownRightBarrier(color, !open) }
+                override fun toggled() = toggled
+
+                override fun matches(solution: Tile): Boolean {
+                    return solution is DownRightBarrier && solution.color == color
+                }
+            }
         }
 
         sealed class BaseDownLeftTurn(
@@ -373,6 +387,20 @@ sealed class Tile(
             data class DownLeftToggle(
                 override val color: Color
             ) : BaseDownLeftTurn(fixed = true), Toggle
+
+            data class DownLeftBarrier(
+                override val color: Color,
+                override val open: Boolean,
+            ) : BaseDownLeftTurn(
+                fixed = true
+            ), Barrier {
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { DownLeftBarrier(color, !open) }
+                override fun toggled() = toggled
+
+                override fun matches(solution: Tile): Boolean {
+                    return solution is DownLeftBarrier && solution.color == color
+                }
+            }
         }
 
         sealed class BaseUpRightTurn(
@@ -465,6 +493,20 @@ sealed class Tile(
             data class UpLeftToggle(
                 override val color: Color
             ) : BaseUpLeftTurn(fixed = true), Toggle
+
+            data class UpLeftBarrier(
+                override val color: Color,
+                override val open: Boolean,
+            ) : BaseUpLeftTurn(
+                fixed = true
+            ), Barrier {
+                private val toggled by lazy(LazyThreadSafetyMode.NONE) { UpLeftBarrier(color, !open) }
+                override fun toggled() = toggled
+
+                override fun matches(solution: Tile): Boolean {
+                    return solution is UpLeftBarrier && solution.color == color
+                }
+            }
         }
     }
 

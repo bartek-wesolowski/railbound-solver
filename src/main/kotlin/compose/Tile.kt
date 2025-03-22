@@ -81,14 +81,17 @@ import model.Tile.Platform.LeftPlatform
 import model.Tile.Platform.RightPlatform
 import model.Tile.Platform.UpPlatform
 import model.Tile.RightTunnel
-import model.Tile.Turn
+import model.Tile.Turn.BaseDownLeftTurn.DownLeftBarrier
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftToggle
 import model.Tile.Turn.BaseDownLeftTurn.DownLeftTurn
 import model.Tile.Turn.BaseDownLeftTurn.FixedDownLeftTurn
+import model.Tile.Turn.BaseDownRightTurn.DownRightBarrier
 import model.Tile.Turn.BaseDownRightTurn.DownRightToggle
 import model.Tile.Turn.BaseDownRightTurn.DownRightTurn
 import model.Tile.Turn.BaseDownRightTurn.FixedDownRightTurn
 import model.Tile.Turn.BaseUpLeftTurn.FixedUpLeftTurn
+import model.Tile.Turn.BaseUpLeftTurn.UpLeftBarrier
+import model.Tile.Turn.BaseUpLeftTurn.UpLeftToggle
 import model.Tile.Turn.BaseUpLeftTurn.UpLeftTurn
 import model.Tile.Turn.BaseUpRightTurn.FixedUpRightTurn
 import model.Tile.Turn.BaseUpRightTurn.UpRightBarrier
@@ -136,6 +139,7 @@ fun Tile(
                     drawDownRightTurn(size, fixedTrackColor)
                     drawSwitch(size, Color(tile.color.color))
                 }
+                is DownRightBarrier -> drawDownRightBarrier(size, tile.getColor(), tile.open)
 
                 is DownLeftTurn -> drawDownLeftTurn(size, trackColor)
                 is FixedDownLeftTurn -> drawDownLeftTurn(size, fixedTrackColor)
@@ -143,6 +147,7 @@ fun Tile(
                     drawDownLeftTurn(size, trackColor)
                     drawSwitch(size, Color(tile.color.color))
                 }
+                is DownLeftBarrier -> drawDownLeftBarrier(size, tile.getColor(), tile.open)
 
                 is UpRightTurn -> drawUpRightTurn(size, trackColor)
                 is FixedUpRightTurn -> drawUpRightTurn(size, fixedTrackColor)
@@ -150,15 +155,15 @@ fun Tile(
                     drawUpRightTurn(size, trackColor)
                     drawSwitch(size, Color(tile.color.color))
                 }
+                is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
 
                 is UpLeftTurn -> drawUpLeftTurn(size, trackColor)
                 is FixedUpLeftTurn -> drawUpLeftTurn(size, fixedTrackColor)
-                is Turn.BaseUpLeftTurn.UpLeftToggle -> {
+                is UpLeftToggle -> {
                     drawUpLeftTurn(size, trackColor)
                     drawSwitch(size, Color(tile.color.color))
                 }
-
-                is UpRightBarrier -> drawUpRightBarrier(size, tile.getColor(), tile.open)
+                is UpLeftBarrier -> drawUpLeftBarrier(size, tile.getColor(), tile.open)
 
                 is DownLeftRightFork -> drawDownLeftRightFork(size, trackColor)
                 is FixedDownLeftRightFork -> drawDownLeftRightFork(size, fixedTrackColor)
@@ -424,6 +429,90 @@ private fun DrawScope.drawUpRightBarrier(size: Dp, color: Color, open: Boolean) 
         val y1 = (size * 0.8f).toPx()
         val x2 = (size * 0.8f).toPx()
         val y2 = (size * 0.2f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    }
+}
+
+private fun DrawScope.drawUpLeftBarrier(size: Dp, color: Color, open: Boolean) {
+    drawUpLeftTurn(size, fixedTrackColor)
+    val trackStrokeWidth = getTrackStrokeWidth(size)
+    if (open) {
+        val x1 = (size * 0.8f).toPx()
+        val y1 = (size * 0.8f).toPx()
+        val x2 = (size * 0.6f).toPx()
+        val y2 = (size * 0.15f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    } else {
+        val x1 = (size * 0.8f).toPx()
+        val y1 = (size * 0.8f).toPx()
+        val x2 = (size * 0.2f).toPx()
+        val y2 = (size * 0.2f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    }
+}
+
+private fun DrawScope.drawDownRightBarrier(size: Dp, color: Color, open: Boolean) {
+    drawDownRightTurn(size, fixedTrackColor)
+    val trackStrokeWidth = getTrackStrokeWidth(size)
+    if (open) {
+        val x1 = (size * 0.2f).toPx()
+        val y1 = (size * 0.2f).toPx()
+        val x2 = (size * 0.4f).toPx()
+        val y2 = (size * 0.85f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    } else {
+        val x1 = (size * 0.2f).toPx()
+        val y1 = (size * 0.2f).toPx()
+        val x2 = (size * 0.8f).toPx()
+        val y2 = (size * 0.8f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    }
+}
+
+private fun DrawScope.drawDownLeftBarrier(size: Dp, color: Color, open: Boolean) {
+    drawDownLeftTurn(size, fixedTrackColor)
+    val trackStrokeWidth = getTrackStrokeWidth(size)
+    if (open) {
+        val x1 = (size * 0.8f).toPx()
+        val y1 = (size * 0.2f).toPx()
+        val x2 = (size * 0.6f).toPx()
+        val y2 = (size * 0.85f).toPx()
+        drawLine(
+            color = color,
+            start = Offset(x1, y1),
+            end = Offset(x2, y2),
+            strokeWidth = trackStrokeWidth
+        )
+    } else {
+        val x1 = (size * 0.8f).toPx()
+        val y1 = (size * 0.2f).toPx()
+        val x2 = (size * 0.2f).toPx()
+        val y2 = (size * 0.8f).toPx()
         drawLine(
             color = color,
             start = Offset(x1, y1),
