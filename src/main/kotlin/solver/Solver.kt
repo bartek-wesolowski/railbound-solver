@@ -385,14 +385,18 @@ class Solver {
                 }
             }
 
-            is Tunnel -> listOf(
-                partialState.copy(
-                    state = state.copy(
-                        activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
-                        carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
+            is Tunnel -> if (newDirection in newTile.incomingDirections) {
+                listOf(
+                    partialState.copy(
+                        state = state.copy(
+                            activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                            carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
+                        )
                     )
                 )
-            )
+            } else {
+                emptyList()
+            }
         }
     }
 
