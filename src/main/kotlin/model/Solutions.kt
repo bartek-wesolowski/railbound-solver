@@ -2648,6 +2648,15 @@ object Solutions {
                 row(FixedVerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
             }
         )
+        val level6_9A = setOf(
+            buildBoard {
+                row(FixedVerticalTrack, Empty, DownRightTurn, DownRightLeftToggleableFork(PINK), DownLeftTurn, Empty)
+                row(UpRightTurn, HorizontalTrack, UpRightLeftFork, UpLeftTurn, VerticalToggle(PINK), Empty)
+                row(Empty, Obstacle, Empty, Obstacle, DownRightUpSelfToggleableFork, EndingTrack)
+                row(DownRightTurn, DownLeftTurn, DownRightTurn, DownLeftTurn, VerticalToggle(Color.PURPLE), Empty)
+                row(FixedVerticalTrack, UpRightTurn, UpRightLeftFork, UpLeftRightToggleableFork(Color.PURPLE), UpLeftTurn, Empty)
+            }
+        )
         val level6_10 = setOf(
             buildBoard {
                 row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
@@ -2696,6 +2705,7 @@ object Solutions {
             "6-8A" to level6_8A,
             "6-8B" to level6_8B,
             "6-9" to level6_9,
+            "6-9A" to level6_9A,
             "6-10" to level6_10,
         )
     }
