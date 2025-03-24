@@ -73,6 +73,10 @@ class SolverTest {
             val solutions = solver.findSolutions(Levels.World6.levels.getValue(levelName))
             assertTrue(solutions.containsAll(Solutions.World6.solutions.getValue(levelName)))
             assertEquals(70, solutions.size)
+        } else if (levelName == "6-9D") {
+            val solutions = solver.findSolutions(Levels.World6.levels.getValue(levelName))
+            assertTrue(solutions.containsAll(Solutions.World6.solutions.getValue(levelName)))
+            assertEquals(77, solutions.size)
         } else {
             assertEquals(
                 Solutions.World6.solutions.getValue(levelName),

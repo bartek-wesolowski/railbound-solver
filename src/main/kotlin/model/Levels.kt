@@ -42,6 +42,7 @@ import model.Tile.Fork.BaseDownRightUpFork.FixedDownRightUpFork
 import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
+import model.Tile.Fork.BaseUpLeftRightFork.FixedUpLeftRightFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggleableFork
@@ -2180,6 +2181,27 @@ object Levels {
             ),
             tracks = 15,
         )
+        val level6_9D = Level(
+            name = "6-9D",
+            board = buildBoard(requireFixed = true) {
+                row(Empty, DownTunnel(BROWN, CarPosition(1, 7, LEFT)), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightUpToggleableFork(PINK), FixedDownLeftRightFork, FixedHorizontalTrack, Empty, Empty, HorizontalToggle(Color.PURPLE), LeftTunnel(BROWN, CarPosition(0, 1, DOWN)))
+                row(Empty, UpRightDownToggleableFork(PINK), FixedUpLeftTurn, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, FixedUpRightDownFork, Empty, Empty, Empty, DownRightLeftSelfToggleableFork, FixedHorizontalTrack, EndingTrack)
+                row(Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightUpToggleableFork(Color.PURPLE), FixedDownLeftTurn, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, UpRightDownToggleableFork(Color.PURPLE), FixedUpLeftRightFork, FixedHorizontalTrack, Empty, Empty, HorizontalToggle(PINK), LeftTunnel(NAVY, CarPosition(8, 1, UP)))
+                row(Empty, UpTunnel(NAVY, CarPosition(7, 7, LEFT)), Empty, Empty, Empty, Empty, Empty, Empty)
+            },
+            carColor = RED,
+            cars = persistentListOf(
+                Car(1, CarPosition(4, 6, LEFT)),
+                Car(2, CarPosition(7, 3, LEFT)),
+                Car(3, CarPosition(1, 3, LEFT)),
+            ),
+            tracks = 13,
+        )
         val level6_10 = Level(
             name = "6-10",
             board = buildBoard(requireFixed = true) {
@@ -2222,6 +2244,7 @@ object Levels {
             level6_9A,
             level6_9B,
             level6_9C,
+            level6_9D,
             level6_10,
         ).associateBy { it.name }
     }

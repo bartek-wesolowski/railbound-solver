@@ -46,6 +46,7 @@ import model.Tile.Fork.BaseUpLeftDownFork.FixedUpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftDownFork.UpLeftDownToggleableFork
+import model.Tile.Fork.BaseUpLeftRightFork.FixedUpLeftRightFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightSelfToggleableFork
 import model.Tile.Fork.BaseUpLeftRightFork.UpLeftRightToggle
@@ -2682,6 +2683,19 @@ object Solutions {
                 row(FixedHorizontalTrack, HorizontalTrack, UpLeftRightSelfToggleableFork, UpRightTurn, UpLeftRightToggleableFork(Color.PURPLE), EndingTrack)
             }
         )
+        val level6_9D = setOf(
+            buildBoard {
+                row(Empty, DownTunnel(BROWN, CarPosition(1, 7, LEFT)), Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, DownRightUpToggleableFork(PINK), FixedDownLeftRightFork, FixedHorizontalTrack, HorizontalTrack, HorizontalTrack, HorizontalToggle(Color.PURPLE), LeftTunnel(BROWN, CarPosition(0, 1, DOWN)))
+                row(Empty, UpRightDownToggleableFork(PINK), FixedUpLeftTurn, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, VerticalTrack, Empty, Empty, Empty, Empty, Empty, Empty)
+                row(Empty, FixedUpRightDownFork, DownRightLeftFork, HorizontalTrack, DownRightLeftFork, DownRightLeftSelfToggleableFork, FixedHorizontalTrack, EndingTrack)
+                row(Empty, DownRightTurn, UpRightLeftFork, HorizontalTrack, UpLeftTurn, VerticalTrack, Empty, Empty)
+                row(Empty, DownRightUpToggleableFork(Color.PURPLE), FixedDownLeftTurn, Empty, Empty, VerticalTrack, Empty, Empty)
+                row(Empty, UpRightDownToggleableFork(Color.PURPLE), FixedUpLeftRightFork, FixedHorizontalTrack, Empty, UpRightTurn, HorizontalToggle(PINK), LeftTunnel(NAVY, CarPosition(8, 1, UP)))
+                row(Empty, UpTunnel(NAVY, CarPosition(7, 7, LEFT)), Empty, Empty, Empty, Empty, Empty, Empty)
+            }
+        )
         val level6_10 = setOf(
             buildBoard {
                 row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
@@ -2733,6 +2747,7 @@ object Solutions {
             "6-9A" to level6_9A,
             "6-9B" to level6_9B,
             "6-9C" to level6_9C,
+            "6-9D" to level6_9D,
             "6-10" to level6_10,
         )
     }
