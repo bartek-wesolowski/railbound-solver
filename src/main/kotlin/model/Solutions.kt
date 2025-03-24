@@ -2673,6 +2673,15 @@ object Solutions {
                 row(UpRightTurn, HorizontalTrack, FixedHorizontalTrack, HorizontalBarrier(Color.PURPLE, false), HorizontalTrack, UpLeftTurn, Empty)
             }
         )
+        val level6_9C = setOf(
+            buildBoard {
+                row(FixedHorizontalTrack, DownRightLeftFork, DownRightLeftSelfToggleableFork, DownLeftTurn, DownRightTurn, DownLeftTurn)
+                row(Empty, UpRightTurn, UpLeftDownFork, UpRightTurn, DownLeftUpFork, VerticalToggle(Color.PURPLE))
+                row(FixedHorizontalTrack, HorizontalTrack, UpLeftDownToggleableFork(Color.PURPLE), Empty, UpRightDownSelfToggleableFork, UpLeftTurn)
+                row(Empty, Empty, VerticalTrack, DownRightTurn, DownLeftUpFork, Empty)
+                row(FixedHorizontalTrack, HorizontalTrack, UpLeftRightSelfToggleableFork, UpRightTurn, UpLeftRightToggleableFork(Color.PURPLE), EndingTrack)
+            }
+        )
         val level6_10 = setOf(
             buildBoard {
                 row(Empty, Empty, DownRightTurn, DownLeftTurn, Empty, Empty, Empty, Empty)
@@ -2723,6 +2732,7 @@ object Solutions {
             "6-9" to level6_9,
             "6-9A" to level6_9A,
             "6-9B" to level6_9B,
+            "6-9C" to level6_9C,
             "6-10" to level6_10,
         )
     }
