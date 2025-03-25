@@ -34,6 +34,7 @@ import java.util.IdentityHashMap
 
 data class Board(
     val tiles: Array<Row>,
+    val tunnelExits: Map<CarPosition, CarPosition>,
     private val toggleables: Map<Color, List<Position>>,
     private val platforms: Map<Stop, Position>,
     val requiredTiles: PersistentSet<Position>,
@@ -44,6 +45,25 @@ data class Board(
 
     constructor(tiles: Array<Row>) : this(
         tiles = tiles,
+        tunnelExits = buildMap {
+            val entranceByColor = EnumMap<TunnelColor, CarPosition>(TunnelColor::class.java)
+            for (r in tiles.indices) {
+                for (c in tiles[r].indices) {
+                    val tile = tiles[r][c]
+                    if (tile !is Tunnel) continue
+                    val entrance1 = CarPosition(r, c, tile.incomingDirections.first())
+                    if (tile.color in entranceByColor) {
+                        if (contains(entrance1)) throw IllegalStateException("Tunnel already exists")
+                        val entrance2 = entranceByColor.getValue(tile.color)
+                        if (contains(entrance2)) throw IllegalStateException("Tunnel already exists")
+                        put(entrance1, CarPosition(entrance2.row, entrance2.column, entrance2.direction.opposite()))
+                        put(entrance2, CarPosition(entrance1.row, entrance1.column, entrance1.direction.opposite()))
+                    } else {
+                        entranceByColor.put(tile.color, entrance1)
+                    }
+                }
+            }
+        },
         toggleables = EnumMap<Color, List<Position>>(Color::class.java).apply {
             for (r in tiles.indices) {
                 for (c in tiles[r].indices) {

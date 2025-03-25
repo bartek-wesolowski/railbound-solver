@@ -246,7 +246,7 @@ class Solver {
         } else {
             state.board[carPosition.row, carPosition.column]
         }
-        val newCarPosition = tile.getNextPosition(car, partialState.state.getInProgress[car.number])
+        val newCarPosition = tile.getNextPosition(car, state.board.tunnelExits, state.getInProgress[car.number])
         val newPosition = newCarPosition.asPosition()
         if (newCarPosition.row < 0 || newCarPosition.row >= state.board.rows) return emptyList()
         if (newCarPosition.column < 0 || newCarPosition.column >= state.board.columns) return emptyList()
@@ -419,11 +419,12 @@ class Solver {
 
     private fun PartialSolverState.isCarCycleOnFork(tile: Tile, car: Car): Boolean {
         if (tile is Fork && tile !is ToggleableFork) {
-            val nextPosition = tile.getNextPosition(car, null)
+            val nextPosition = tile.getNextPosition(car, emptyMap(), null)
             for (direction in tile.incomingDirections) {
                 if (direction == car.direction) continue
                 val nextPosition2 = tile.getNextPosition(
                     car.copy(position = car.position.copy(direction = direction)),
+                    emptyMap(),
                     null
                 )
                 if (nextPosition2 == nextPosition && state.carBreadcrumbs.contains(
