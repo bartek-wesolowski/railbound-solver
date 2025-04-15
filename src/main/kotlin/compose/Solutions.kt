@@ -11,14 +11,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import model.Board
-import model.Car
 import model.CarColor
+import model.Cars
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Solutions(
     solutions: Iterable<Board>,
-    cars: List<Car>,
+    cars: Cars,
     carColor: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier,

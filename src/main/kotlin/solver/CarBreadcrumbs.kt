@@ -3,14 +3,14 @@ package solver
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.plus
-import model.Car
 import model.CarPosition
+import model.Cars
 
 @JvmInline
 value class CarBreadcrumbs private constructor(
     private val breadcrumbs: Array<PersistentSet<CarPosition>?>
 ) {
-    constructor(cars: Collection<Car>) : this(
+    constructor(cars: Cars) : this(
         Array(cars.size) { index ->
             persistentSetOf(cars.first { it.number - 1 == index }.position)
         }

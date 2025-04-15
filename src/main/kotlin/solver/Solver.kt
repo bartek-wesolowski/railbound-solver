@@ -1,6 +1,5 @@
 package solver
 
-import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.minus
 import kotlinx.collections.immutable.persistentSetOf
@@ -11,7 +10,6 @@ import model.Action.ToggleFork
 import model.Barrier
 import model.Board
 import model.Car
-import model.CarPosition
 import model.Color
 import model.Direction
 import model.Direction.DOWN
@@ -398,12 +396,6 @@ class Solver {
                 emptyList()
             }
         }
-    }
-
-    private fun PersistentList<Car>.withNewCarPosition(carIndex: Int, carPosition: CarPosition): PersistentList<Car> {
-        val builder = builder()
-        builder[carIndex] = get(carIndex).copy(position = carPosition)
-        return builder.build()
     }
 
     private fun Map<Position, EnumSet<Direction>>.with(

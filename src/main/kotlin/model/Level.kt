@@ -1,6 +1,5 @@
 package model
 
-import kotlinx.collections.immutable.PersistentList
 import model.Tile.BaseHorizontalTrack.FixedHorizontalTrack
 import model.Tile.BaseVerticalTrack.FixedVerticalTrack
 
@@ -8,7 +7,7 @@ data class Level(
     val name: String,
     val board: Board,
     val carColor: CarColor,
-    val cars: PersistentList<Car>,
+    val cars: Cars,
     val tracks: Int,
 ) {
     init {

@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import model.Car
 import model.CarColor
+import model.Cars
 
 @Composable
 fun Cars(
-    cars: List<Car>,
+    cars: Cars,
     carColor: CarColor,
     tileSize: Dp,
     modifier: Modifier = Modifier

@@ -2,12 +2,12 @@ package solver
 
 import model.Action
 import model.Action.TakePassenger
-import model.Car
+import model.Cars
 
 class GetInProgress private constructor(
     private val progress: Array<Int?>
 ) {
-    constructor(cars: Collection<Car>) : this(Array(cars.size) { null })
+    constructor(cars: Cars) : this(Array(cars.size) { null })
 
     operator fun get(carNumber: Int) = progress[carNumber - 1]
 
