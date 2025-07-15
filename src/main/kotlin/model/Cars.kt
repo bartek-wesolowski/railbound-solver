@@ -14,17 +14,28 @@ value class Cars(private val list: PersistentList<Car>): Iterable<Car> {
 
     fun isEmpty(): Boolean = list.isEmpty()
 
-    val lastIndex: Int
-        get() = list.lastIndex
+    val firstNumber: Int
+        get() = list.first().number
 
-    operator fun get(index: Int): Car = list[index]
+    val lastNumber: Int
+        get() = list.last().number
 
+    private fun index(carNumber: Int): Int = carNumber - firstNumber
 
-    fun withNewCarPosition(carIndex: Int, carPosition: CarPosition): Cars {
+    fun get(carNumber: Int): Car? {
+        val index = index(carNumber)
+        if (index < 0) return null
+        return list[index]
+    }
+
+    fun withNewCarPosition(carNumber: Int, carPosition: CarPosition): Cars {
         val builder = list.builder()
-        builder[carIndex] = get(carIndex).copy(position = carPosition)
+        val index = index(carNumber)
+        builder[index] = list[index].copy(position = carPosition)
         return Cars(builder.build())
     }
 
-    fun removeAt(position: Int): Cars = Cars(list.removeAt(position))
+    fun removeCar(carNumber: Int): Cars {
+        return Cars(list.removeAt(index(carNumber)))
+    }
 }

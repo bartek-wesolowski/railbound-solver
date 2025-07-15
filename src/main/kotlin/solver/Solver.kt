@@ -127,16 +127,14 @@ class Solver {
                 actions = listOf(),
                 enterTiles = enterTiles.filterKeys { it in carPositions },
             ),
-            carIndex = 0
+            carNumber = activeCars.firstNumber
         )
-        for (carIndex in 1..activeCars.lastIndex) {
+        for (carNumber in activeCars.firstNumber + 1..activeCars.lastNumber) {
             val updatedPartialStates = mutableListOf<PartialSolverState>()
             for (partialState in partialStates) {
-                val state = partialState.state
-                    val adjustedCarIndex = state.activeCars.indexOf(activeCars[carIndex])
-                    updatedPartialStates.addAll(getMoves(partialState, adjustedCarIndex))
+                updatedPartialStates.addAll(getMoves(partialState, carNumber))
             }
-            partialStates = updatedPartialStates.filterNoCollisions(board, this, carIndex)
+            partialStates = updatedPartialStates.filterNoCollisions(board, this, carNumber)
         }
         return partialStates.map { partialState ->
             val state = partialState.state
@@ -158,21 +156,17 @@ class Solver {
     private fun List<PartialSolverState>.filterNoCollisions(
         board: Board,
         previousState: SolverState,
-        carIndex: Int
+        carNumber: Int
     ): List<PartialSolverState> = filter { partialState ->
         val state = partialState.state
-        val carA = state.activeCars.firstOrNull {
-            it.number == previousState.activeCars[carIndex].number
-        } ?: return@filter true
+        val carA = state.activeCars.get(carNumber) ?: return@filter true
         for (carB in state.activeCars) {
             if (carB == carA) break
             if (carB.row == carA.row && carA.column == carB.column) {
                 return@filter false
             }
-            val initialCarB = previousState.activeCars.first {
-                it.number == carB.number
-            }
-            val initialCarA = previousState.activeCars[carIndex]
+            val initialCarB = previousState.activeCars.get(carB.number)!!
+            val initialCarA = previousState.activeCars.get(carNumber)!!
             val initialTileA = board[initialCarA.row, initialCarA.column]
             val initialTileB = board[initialCarB.row, initialCarB.column]
             if (initialTileA is Tunnel) {
@@ -233,10 +227,10 @@ class Solver {
 
     private fun getMoves(
         partialState: PartialSolverState,
-        carIndex: Int,
+        carNumber: Int,
     ): List<PartialSolverState> {
         val state = partialState.state
-        val car = state.activeCars[carIndex]
+        val car = state.activeCars.get(carNumber)!!
         val carPosition = car.position
         val position = carPosition.asPosition()
         val tile = if (position in state.enterTiles) {
@@ -251,7 +245,7 @@ class Solver {
         if (car.position != newCarPosition && state.carBreadcrumbs.contains(car.number, newCarPosition)) {
             return emptyList()
         }
-        val newCar = state.activeCars[carIndex].copy(position = newCarPosition)
+        val newCar = car.copy(position = newCarPosition)
         val newDirection = newCar.direction
         return when (val newTile = state.board[newCarPosition.row, newCarPosition.column]) {
             Obstacle -> emptyList()
@@ -271,7 +265,7 @@ class Solver {
                             partialState.copy(
                                 state = state.copy(
                                     board = updatedBoard,
-                                    activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                                    activeCars = state.activeCars.withNewCarPosition(carNumber, newCarPosition),
                                     tracks = state.tracks - 1,
                                     traverseDirections = if (insertedTile is VerticalTrack || insertedTile is HorizontalTrack) {
                                         state.traverseDirections.with(newPosition, newDirection)
@@ -301,7 +295,7 @@ class Solver {
                 listOf(
                     partialState.copy(
                         state = state.copy(
-                            activeCars = state.activeCars.removeAt(carIndex),
+                            activeCars = state.activeCars.removeCar(carNumber),
                             expectedCar = state.expectedCar + 1
                         )
                     )
@@ -342,7 +336,7 @@ class Solver {
                         add(
                             partialState.copy(
                                 state = state.copy(
-                                    activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                                    activeCars = state.activeCars.withNewCarPosition(carNumber, newCarPosition),
                                     traverseDirections = traverseDirections,
                                     carBreadcrumbs = carBreadcrumbs,
                                 ),
@@ -374,7 +368,7 @@ class Solver {
                                 partialState.copy(
                                     state = state.copy(
                                         board = updatedBoard,
-                                        activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                                        activeCars = state.activeCars.withNewCarPosition(carNumber, newCarPosition),
                                         carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
                                     )
                                 )
@@ -387,7 +381,7 @@ class Solver {
                 listOf(
                     partialState.copy(
                         state = state.copy(
-                            activeCars = state.activeCars.withNewCarPosition(carIndex, newCarPosition),
+                            activeCars = state.activeCars.withNewCarPosition(carNumber, newCarPosition),
                             carBreadcrumbs = state.carBreadcrumbs.plus(car.number, newCarPosition),
                         )
                     )
